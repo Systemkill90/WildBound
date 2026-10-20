@@ -2,7 +2,7 @@
 <p align="center"><strong>Build a home. Earn the wild’s trust. Grow a life together.</strong><br>A cooperative survival and homesteading game concept for Unreal Engine 5.</p>
 <p align="center"><a href="docs/vision.md">Game vision</a> · <a href="docs/world/biomes.md">Explore the world</a> · <a href="docs/systems/animals.md">Animals & husbandry</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="docs/project/CURRENT-STATE.md">Current status</a></p>
 
-> **Pre-production.** This repository contains design documents and an initial UE5 C++ scaffold. All gameplay is planned. There is no playable build, implemented animal simulation, validated dedicated server, or release date. The scaffold has not been compiled in Unreal Engine.
+> **Pre-production.** This repository contains design documents and an initial UE5 C++ scaffold. An initial animal-needs C++ component has been authored but **not compiled or gameplay tested**. There is no playable build, working animal simulation, validated dedicated server, or release date. The scaffold has not been compiled in Unreal Engine.
 
 ## A life at the edge of the familiar
 
@@ -20,7 +20,8 @@ Animals shape everyday life through wildlife observation, patient taming, respon
 | [Building homesteads](docs/systems/building.md) | Voxel construction and farm layouts |
 | [Cooperative worlds](docs/systems/multiplayer.md) | Dedicated servers, shared ownership, and persistence |
 | [Roadmap](ROADMAP.md) | Planned milestones and completion evidence |
-| [Developer setup](docs/developers/README.md) | Unreal layout and first validation steps |
+| [Developer setup](docs/developers/README.md) | Unreal layout and initial validation steps |
+| [First playable plan](docs/developers/FIRST-PLAYABLE.md) | Concrete Greenveil test steps and pass/fail gates |
 | [Project record](docs/project/CURRENT-STATE.md) | Current state, decisions, and session handoff |
 
 ## Planned experience
