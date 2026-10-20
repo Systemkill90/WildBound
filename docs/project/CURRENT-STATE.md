@@ -4,7 +4,7 @@ Updated: October 20, 2026.
 
 ## Authored in repository
 
-- Game vision, biome concepts, system proposals, and milestone roadmap.
+- Game vision, biome concepts, system proposals, milestone roadmap, and a [first-playable validation plan](../developers/FIRST-PLAYABLE.md).
 - Initial Unreal Engine 5 C++ game/editor/server target scaffold and project configuration.
 - **First gameplay code slice:** `UWildboundAnimalNeedsComponent` in `Source/Wildbound/Public` and `Private`. It defines hunger, thirst, and condition, server-only ticking and care entry points, and replicated condition variables.
 
