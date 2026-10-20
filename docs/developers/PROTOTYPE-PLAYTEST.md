@@ -28,7 +28,7 @@ Alternative Unreal build tools are fine as long as the exact command and result 
 ## First editor session — proposed procedure
 
 1. Open `Wildbound.uproject` after a successful compile.
-2. Create a new **Empty Level**, save it under `Content/Wildbound/Maps/` (the map asset does not exist in this repository yet).
+2. Create a new **Empty Level** and place a **PlayerStart** around (0, 0, 180 cm) so the pawn begins above the code-spawned ground. Save the level under `Content/Wildbound/Maps/` (the map asset does not exist in this repository yet).
 3. Check that the World Settings game mode inherits the project default `WildboundPrototypeGameMode`. If not, set it explicitly.
 4. Start Play In Editor. The C++ game mode should spawn a collision floor and one placeholder animal near its center. Check camera, pawn spawn and fall/ground collision.
 5. Walk to the sphere, look directly at it and inspect the condition HUD. Test feed, water and reassurance.
@@ -65,7 +65,7 @@ Alternative Unreal build tools are fine as long as the exact command and result 
 
 ## Automated checks already executed
 
-GitHub Actions runs compile and test portable animal simulation, grid-placement and versioned snapshot rules, alongside static Unreal source wiring checks. The initial [CI run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) passed animal and static checks. Check the [latest runs](https://github.com/Systemkill90/WildBound/actions) for new job results. Neither job has Unreal Engine installed. These checks cannot detect UHT problems, UE API incompatibility, replication failures or in-game rendering bugs.
+[GitHub Actions run 39516848594](https://github.com/Systemkill90/WildBound/actions/runs/39516848594) passed all four checks: animal simulation, grid-placement rules, versioned snapshot validation and static Unreal source wiring. These are still independent of Unreal Engine. Neither job has Unreal Engine installed. These checks cannot detect UHT problems, UE API incompatibility, replication failures or in-game rendering bugs.
 
 ## Known limitations and security follow-ups
 
