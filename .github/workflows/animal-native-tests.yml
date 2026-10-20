@@ -1,27 +1,37 @@
-name: Animal simulation (native C++)
+name: Wildbound source checks (no UE required)
 
 on:
   push:
     paths:
-      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
-      - 'Tests/Native/**'
+      - 'Source/**'
+      - 'Config/**'
+      - 'Tests/**'
       - '.github/workflows/animal-native-tests.yml'
   pull_request:
     paths:
-      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
-      - 'Tests/Native/**'
+      - 'Source/**'
+      - 'Config/**'
+      - 'Tests/**'
       - '.github/workflows/animal-native-tests.yml'
 
 jobs:
-  core-simulation:
+  native-animal-simulation:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Compile C++17 simulation tests
+      - name: Compile C++17 animal simulation
         run: |
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
             -I Source/Wildbound/Public \
             Tests/Native/AnimalSimulationTests.cpp -o /tmp/wildbound-animal-tests
-      - name: Test deterministic animal needs and care
+      - name: Run deterministic simulation tests
         run: /tmp/wildbound-animal-tests
+
+  static-project-wiring:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Unreal source layout without compiling UE
+        run: python3 Tests/Static/verify_scaffold.py
