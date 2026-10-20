@@ -4,6 +4,16 @@
 
 > **Pre-production.** This repository contains design documents and an initial UE5 C++ scaffold. An initial animal-needs C++ component has been authored but **not compiled or gameplay tested**. There is no playable build, working animal simulation, validated dedicated server, or release date. The scaffold has not been compiled in Unreal Engine.
 
+## World concept art
+
+<p align="center"><img src="docs/art/wildbound-key-art-v1.jpg" alt="A wilderness explorer overlooking a forested river valley and distant mountains" width="100%"></p>
+
+Early visual exploration for a grounded wilderness where real wildlife shares habitats with prehistoric dinosaurs and original fantasy fauna. Species and locations are candidates, not a locked production roster.
+
+![Four biome studies: forest with a bear and feathered dinosaur; alpine goats and a drake; prairie bison and ceratopsians; wetland moose, eagle, hadrosaurs, and a lake creature](docs/art/wildbound-biomes-and-creatures-v1.jpg)
+
+[Read the visual concept notes](docs/world/visual-concept-art.md). These images are AI-generated pre-production concepts, not final game assets.
+
 ## A life at the edge of the familiar
 
 Raise a timber cottage beside a meadow. Tend a flock through changing weather. Earn the trust of a wild creature. Explore a marsh where distant lights move against the wind. Wildbound imagines a believable wilderness touched by quiet, ancient magic: a world that feels real until you look a little closer.
@@ -16,6 +26,7 @@ Animals shape everyday life through wildlife observation, patient taming, respon
 | :-- | :-- |
 | [Game vision](docs/vision.md) | Identity, pillars, and proposed daily life |
 | [World & biomes](docs/world/biomes.md) | Cottagecore Greenveil and the spooky Drowned March |
+| [Visual concept art](docs/world/visual-concept-art.md) | Biome and creature visual exploration |
 | [Animal life](docs/systems/animals.md) | Wildlife, taming, breeding, genetics, livestock, and care |
 | [Building homesteads](docs/systems/building.md) | Voxel construction and farm layouts |
 | [Cooperative worlds](docs/systems/multiplayer.md) | Dedicated servers, shared ownership, and persistence |
