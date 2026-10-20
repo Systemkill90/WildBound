@@ -20,6 +20,12 @@ class WILDBOUND_API AWildboundPrototypePlayerController : public APlayerControll
 public:
     AWildboundPrototypePlayerController();
     virtual void SetupInputComponent() override;
+
+    UFUNCTION(BlueprintPure, Category="Wildbound|Prototype")
+    int32 GetFeedServings() const { return FeedServings; }
+
+    UFUNCTION(BlueprintPure, Category="Wildbound|Prototype")
+    int32 GetWaterServings() const { return WaterServings; }
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
