@@ -10,14 +10,14 @@ Updated: October 20, 2026.
 - Prototype animal actor, third-person character, player controller, placeholder build block, ground, game mode, and debug HUD.
 - Input mappings for walking, looking, feeding, watering, reassuring, placing and removing temporary blocks.
 - Game mode selects a code-assembled starter area when a level is opened in Play; no `.umap` is committed.
-- Portable native C++ tests and a dependency-free static project-wiring checker in GitHub Actions.
+- Portable native C++ tests for animal needs/trust, a strict **versioned snapshot format** (not connected to engine saves), and **bounded grid-placement rules**, plus a dependency-free static project-wiring checker in GitHub Actions.
 - Core game vision, systems, biome documents, [engineering playtest guide](../developers/PROTOTYPE-PLAYTEST.md), and milestone roadmap.
 
 ## Actually verified
 
 - GitHub accepted and served the source commits.
-- [GitHub Actions run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) completed successfully for **native C++ simulation compile/tests** and **static source-layout checks**.
-- The portable animal model was compiled independently of Unreal. These checks are not tests of Unreal actors, RPCs, replication, rendering or persistence.
+- [GitHub Actions run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) completed successfully for native C++ simulation and static wiring checks. Later CI runs exercise the prototype snapshot and placement modules.
+- Portable simulation, snapshot, and placement checks are compiled independently of Unreal; consult the latest GitHub Actions run for each job result. The initial animal model These checks are not tests of Unreal actors, RPCs, replication, rendering or persistence.
 
 ## Not verified or implemented
 
