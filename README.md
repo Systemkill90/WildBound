@@ -2,7 +2,7 @@
 <p align="center"><strong>Build a home. Earn the wild's trust. Grow a life together.</strong><br>An original cooperative survival, construction and homesteading game for Unreal Engine 5.</p>
 <p align="center"><a href="docs/vision.md">Vision</a> · <a href="docs/world/biomes.md">World</a> · <a href="docs/systems/animals.md">Animals</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="docs/project/CURRENT-STATE.md">Status</a> · <a href="docs/developers/PROTOTYPE-PLAYTEST.md">Prototype guide</a></p>
 
-> **Early engineering prototype — no playable build.** The repository now contains a C++ test character, placeholder animal, replicated condition component, server-side interaction/placement handlers and temporary build blocks. The portable C++17 animal rules and dependency-free source-wiring checks passed in [GitHub Actions](https://github.com/Systemkill90/WildBound/actions/runs/39516040708). **Unreal Engine compilation, the test map, multiplayer behavior, and persistence have not been validated.**
+> **Early engineering prototype — no playable build.** The repository now contains a C++ test character, placeholder animal, replicated condition component, server-side interaction/placement handlers and temporary build blocks. Portable animal logic, versioned snapshot validation, block-placement rules, and source checks are verified by GitHub Actions (see the latest run linked in the project status). **Unreal Engine compilation, the test map, multiplayer behavior, and persistence have not been validated.**
 
 ## A life at the edge of the familiar
 
@@ -29,6 +29,8 @@ Its defining pillars are **expressive voxel building**, **wildlife, taming, bree
 | Authored source | Purpose | Verification |
 | :-- | :-- | :-- |
 | `WildboundAnimalSimulation.h` | Portable needs, stress, trust and care rules | Native C++ tests passed |
+| `WildboundPrototypePlacement.h` | Portable bounded grid-placement policy | Native C++ tests added |
+| `WildboundPrototypePersistence.h` | Portable versioned snapshot and validation (not engine save/load) | Native C++ tests passed |
 | `UWildboundAnimalNeedsComponent` | Server-only updates and replicated animal condition | Unreal compilation pending |
 | `AWildboundPrototypeAnimal` | Replicated engine-sphere placeholder animal | Unreal compilation pending |
 | `AWildboundPrototypeCharacter` | Basic third-person movement and camera | Unreal compilation pending |
@@ -53,6 +55,7 @@ g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
   -I Source/Wildbound/Public \
   Tests/Native/AnimalSimulationTests.cpp -o /tmp/wildbound-animal-tests
 /tmp/wildbound-animal-tests
+# GitHub Actions also compiles and runs the snapshot/placement tests.
 python3 Tests/Static/verify_scaffold.py
 ```
 
