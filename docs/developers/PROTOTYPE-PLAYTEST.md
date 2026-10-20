@@ -10,7 +10,7 @@ This is a deliberately bare testing harness built from C++ and Unreal Engine's s
 - A third-person character with camera and legacy keyboard/mouse bindings.
 - Replicated hunger, thirst, condition, stress and trust values.
 - Care requests routed through the *owning player's controller*; the server verifies actor reach, obstruction, action type, short cooldown and finite starter feed/water portions.
-- Shared 1 m snapped cube placement/removal, with server-side range, duplicate-cell and 128-block limits.
+- Shared 1 m snapped cube placement/removal, with portable server-side range, 30 m test-arena bounds, duplicate-cell and 128-block limits.
 - A debug HUD showing controls, starter supplies and the aimed animal's values.
 
 The starter supplies, blocks and animal state are currently **in memory only**. Restarting the server discards them.
@@ -65,7 +65,7 @@ Alternative Unreal build tools are fine as long as the exact command and result 
 
 ## Automated checks already executed
 
-GitHub Actions [CI run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) compiled and ran the standalone C++ animal simulation tests and passed a static Unreal source wiring check. Neither job has Unreal Engine installed. These checks cannot detect UHT problems, UE API incompatibility, replication failures or in-game rendering bugs.
+GitHub Actions runs compile and test portable animal simulation, grid-placement and versioned snapshot rules, alongside static Unreal source wiring checks. The initial [CI run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) passed animal and static checks. Check the [latest runs](https://github.com/Systemkill90/WildBound/actions) for new job results. Neither job has Unreal Engine installed. These checks cannot detect UHT problems, UE API incompatibility, replication failures or in-game rendering bugs.
 
 ## Known limitations and security follow-ups
 
@@ -73,7 +73,7 @@ GitHub Actions [CI run 39516040708](https://github.com/Systemkill90/WildBound/ac
 - No actual feeds/water items, resource harvesting, multiplayer inventory replication or persistence system exists; starter portions are temporary test counters.
 - Animal care cooldown and reach/visibility checks are preliminary. Use adversarial two-client tests for RPC spoofing, invalid enum values, concurrent requests and rejoining.
 - No building ownership permissions, area zoning, terrain editing, structural support or collision/navmesh updates for animals.
-- Spawned prototype blocks and creature state do not survive a restart.
+- Spawned prototype blocks and creature state do not survive a restart. The new portable snapshot format is **not** integrated with an Unreal save/load operation.
 - Offline animal welfare policy is undecided. There must be no unbounded real-time starvation while server/players are absent.
 - Placeholder map, controls, rendering, and Unreal minor version remain unvalidated.
 
