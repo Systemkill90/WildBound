@@ -3,6 +3,7 @@
 #include "WildboundPrototypeAnimal.h"
 #include "WildboundPrototypeCharacter.h"
 #include "WildboundPrototypeGround.h"
+#include "WildboundPrototypeHUD.h"
 #include "WildboundPrototypePlayerController.h"
 #include "Engine/World.h"
 
@@ -10,6 +11,7 @@ AWildboundPrototypeGameMode::AWildboundPrototypeGameMode()
 {
     DefaultPawnClass = AWildboundPrototypeCharacter::StaticClass();
     PlayerControllerClass = AWildboundPrototypePlayerController::StaticClass();
+    HUDClass = AWildboundPrototypeHUD::StaticClass();
 }
 
 void AWildboundPrototypeGameMode::BeginPlay()
