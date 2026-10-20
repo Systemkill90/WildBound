@@ -16,6 +16,10 @@ Milestones show evidence, **not percent-finished guesses**. No playable Unreal b
 | 7 — Drowned March | Planned | Small original wetland biome with wildlife, fog, hazards, ruins and mystery |
 | 8 — Broader content and platforms | Future evaluation | Evidence-based expansion, optimization, accessibility and Xbox feasibility |
 
+## Tracked milestone tasks
+
+[M0 editor build](https://github.com/Systemkill90/WildBound/issues/2) · [M1 multiplayer tests](https://github.com/Systemkill90/WildBound/issues/3) · [M2 voxel/nav](https://github.com/Systemkill90/WildBound/issues/4) · [M3 persistence](https://github.com/Systemkill90/WildBound/issues/5)
+
 ## Near-term sequence
 
 **Now:** compile in Unreal, validate the placeholder character/animal/building interactions, and fix failures.
