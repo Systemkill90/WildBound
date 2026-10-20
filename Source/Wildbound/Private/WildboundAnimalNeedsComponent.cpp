@@ -1,7 +1,31 @@
 #include "WildboundAnimalNeedsComponent.h"
 
+#include "WildboundAnimalSimulation.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h"
+
+namespace
+{
+WildboundSim::FAnimalVitals ToModel(const FWildboundAnimalVitals& V)
+{
+    WildboundSim::FAnimalVitals Out;
+    Out.Hunger = V.Hunger;
+    Out.Thirst = V.Thirst;
+    Out.Condition = V.Condition;
+    Out.Stress = V.Stress;
+    Out.Trust = V.Trust;
+    return Out;
+}
+
+void FromModel(const WildboundSim::FAnimalVitals& Source, FWildboundAnimalVitals& Target)
+{
+    Target.Hunger = Source.Hunger;
+    Target.Thirst = Source.Thirst;
+    Target.Condition = Source.Condition;
+    Target.Stress = Source.Stress;
+    Target.Trust = Source.Trust;
+}
+}
 
 UWildboundAnimalNeedsComponent::UWildboundAnimalNeedsComponent()
 {
@@ -9,75 +33,79 @@ UWildboundAnimalNeedsComponent::UWildboundAnimalNeedsComponent()
     SetIsReplicatedByDefault(true);
 }
 
-void UWildboundAnimalNeedsComponent::BeginPlay()
-{
-    Super::BeginPlay();
-}
-
 void UWildboundAnimalNeedsComponent::TickComponent(
     float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-    if (GetOwner() && GetOwner()->HasAuthority())
-    {
-        SimulateNeeds(DeltaTime);
-    }
-}
-
-void UWildboundAnimalNeedsComponent::SimulateNeeds(float DeltaSeconds)
-{
-    if (DeltaSeconds <= 0.0f)
+    if (!GetOwner() || !GetOwner()->HasAuthority() || DeltaTime <= 0.0f)
     {
         return;
     }
 
-    const float Minutes = DeltaSeconds / 60.0f;
-    Hunger = FMath::Clamp(Hunger - HungerLossPerMinute * Minutes, 0.0f, 100.0f);
-    Thirst = FMath::Clamp(Thirst - ThirstLossPerMinute * Minutes, 0.0f, 100.0f);
-
-    if (Hunger <= 0.0f || Thirst <= 0.0f)
+    // Update at most once a second, avoiding a Blueprint event every render frame.
+    // Excessive frame hitches are bounded; there is no unattended/offline progress.
+    AccumulatedSeconds += FMath::Min(DeltaTime, 5.0f);
+    if (AccumulatedSeconds < 1.0f)
     {
-        Condition = FMath::Clamp(
-            Condition - ConditionLossPerMinuteWhenDeprived * Minutes, 0.0f, 100.0f);
-    }
-    OnNeedsChanged();
-}
-
-bool UWildboundAnimalNeedsComponent::ApplyFood(float Amount)
-{
-    if (!GetOwner() || !GetOwner()->HasAuthority() || !FMath::IsFinite(Amount) || Amount <= 0.0f)
-    {
-        return false;
+        return;
     }
 
-    Hunger = FMath::Clamp(Hunger + Amount, 0.0f, 100.0f);
-    OnNeedsChanged();
-    return true;
+    WildboundSim::FAnimalVitals Model = ToModel(Vitals);
+    WildboundSim::FNeedsRates Rates;
+    Rates.HungerLossPerMinute = HungerLossPerMinute;
+    Rates.ThirstLossPerMinute = ThirstLossPerMinute;
+    Rates.ConditionLossPerMinute = ConditionLossPerMinute;
+    Rates.RecoveryPerMinute = RecoveryPerMinute;
+
+    WildboundSim::Advance(Model, Rates, AccumulatedSeconds, bSheltered);
+    AccumulatedSeconds = 0.0f;
+    FromModel(Model, Vitals);
+    OnVitalsChanged();
 }
 
-bool UWildboundAnimalNeedsComponent::ApplyWater(float Amount)
+bool UWildboundAnimalNeedsComponent::TryCare(EWildboundCareAction Action)
 {
-    if (!GetOwner() || !GetOwner()->HasAuthority() || !FMath::IsFinite(Amount) || Amount <= 0.0f)
+    if (!GetOwner() || !GetOwner()->HasAuthority())
     {
         return false;
     }
 
-    Thirst = FMath::Clamp(Thirst + Amount, 0.0f, 100.0f);
-    OnNeedsChanged();
+    WildboundSim::ECareAction ModelAction;
+    switch (Action)
+    {
+    case EWildboundCareAction::Feed: ModelAction = WildboundSim::ECareAction::Feed; break;
+    case EWildboundCareAction::Water: ModelAction = WildboundSim::ECareAction::Water; break;
+    case EWildboundCareAction::Reassure: ModelAction = WildboundSim::ECareAction::Reassure; break;
+    default: return false;
+    }
+
+    WildboundSim::FAnimalVitals Model = ToModel(Vitals);
+    if (!WildboundSim::ApplyCare(Model, ModelAction))
+    {
+        return false;
+    }
+    FromModel(Model, Vitals);
+    OnVitalsChanged();
     return true;
 }
 
-void UWildboundAnimalNeedsComponent::OnRep_Needs()
+void UWildboundAnimalNeedsComponent::SetSheltered(bool bNewSheltered)
 {
-    OnNeedsChanged();
+    if (GetOwner() && GetOwner()->HasAuthority())
+    {
+        bSheltered = bNewSheltered;
+    }
+}
+
+void UWildboundAnimalNeedsComponent::OnRep_Vitals()
+{
+    OnVitalsChanged();
 }
 
 void UWildboundAnimalNeedsComponent::GetLifetimeReplicatedProps(
     TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-    DOREPLIFETIME(UWildboundAnimalNeedsComponent, Hunger);
-    DOREPLIFETIME(UWildboundAnimalNeedsComponent, Thirst);
-    DOREPLIFETIME(UWildboundAnimalNeedsComponent, Condition);
+    DOREPLIFETIME(UWildboundAnimalNeedsComponent, Vitals);
 }
