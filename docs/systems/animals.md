@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Biomes](../world/biomes.md) · [Roadmap](../../ROADMAP.md)
 
-**Status: design only.** No animal AI, assets, taming, breeding, or genetics are implemented.
+**Status: uncompiled Unreal prototype plus tested portable care logic.** Animal needs, stress and trust math has native C++ test coverage. A placeholder replicated animal actor and care RPC code have been authored, but no Unreal compilation or gameplay testing has occurred. There is still no animal movement AI, assets, completed taming, breeding or genetics.
 
 ## Wildlife first
 
