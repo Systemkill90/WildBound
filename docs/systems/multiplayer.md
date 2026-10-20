@@ -2,9 +2,9 @@
 
 [Vision](../vision.md) · [Developer setup](../developers/README.md)
 
-**Status: planned architecture.** A server build target is scaffold only. No executable, hosting, replication, or persistence has been validated.
+**Status: unverified multiplayer C++ prototype source.** Replicated actor/component declarations and server-authoritative care/block request handlers now exist, but no Unreal compilation, dedicated server, network session or persistent saving has been validated. A portable versioned world snapshot codec has passed independent C++ tests, but is not wired into Unreal or disk.
 
-A dedicated server would own world state, construction, animal needs, breeding outcomes, inventories, permissions, and saves. Clients request actions; the server validates them. Cooperative groups share homesteads with explicit building, storage, care, and administration permissions.
+A dedicated server is intended to own world state, construction, animal needs, breeding outcomes, inventories, permissions, and saves. Clients request actions; the server validates them. Cooperative groups share homesteads with explicit building, storage, care, and administration permissions.
 
 The first network milestone targets two clients on a small test map. Player capacity, crossplay, matchmaking, mods, and hosting providers remain undecided.
 
