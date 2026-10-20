@@ -24,9 +24,9 @@ int main()
     Check(Good.Allowed(), "valid in-range cell accepted");
     Check(Good.Cell.X == 2 && Good.Cell.Y == 0, "snaps to 1m cell");
 
-    Good = EvaluatePrototypePlacement(-500, 0, -649, 0, Empty);
+    Good = EvaluatePrototypePlacement(-500, 0, -749, 0, Empty);
     Check(Good.Allowed(), "negative coordinate accepted");
-    Check(Good.Cell.X == -6, "negative coordinate rounds correctly");
+    Check(Good.Cell.X == -7, "negative coordinate rounds correctly");
 
     Check(EvaluatePrototypePlacement(0, 0, 20, 0, Empty).Rejection ==
         EPlacementReject::TooClose, "can't place inside own character");
