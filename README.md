@@ -2,7 +2,7 @@
 <p align="center"><strong>Build a home. Earn the wild's trust. Grow a life together.</strong><br>An original cooperative survival, construction and homesteading game for Unreal Engine 5.</p>
 <p align="center"><a href="docs/vision.md">Vision</a> · <a href="docs/world/biomes.md">World</a> · <a href="docs/systems/animals.md">Animals</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="docs/project/CURRENT-STATE.md">Status</a> · <a href="docs/developers/PROTOTYPE-PLAYTEST.md">Prototype guide</a></p>
 
-> **Early engineering prototype — no playable build.** The repository now contains a C++ test character, placeholder animal, replicated condition component, server-side interaction/placement handlers and temporary build blocks. Portable animal logic, versioned snapshot validation, block-placement rules, and source checks are verified by GitHub Actions (see the latest run linked in the project status). **Unreal Engine compilation, the test map, multiplayer behavior, and persistence have not been validated.**
+> **Early engineering prototype — no playable build.** The repository now contains a C++ test character, placeholder animal, replicated condition component, server-side interaction/placement handlers and temporary build blocks. Portable animal logic, versioned snapshot validation, block-placement rules, and source checks **all passed** in [GitHub Actions](https://github.com/Systemkill90/WildBound/actions/runs/39516848594). **Unreal Engine compilation, the test map, multiplayer behavior, and persistence have not been validated.**
 
 ## A life at the edge of the familiar
 
@@ -45,6 +45,13 @@ The block demo **is not voxel construction**. There are no downloadable maps, au
 A small Greenveil meadow; one animal whose needs and trust are understandable; feeding and watering that cost resources; a simple enclosure; editable construction around animal movement; and two-player server validation with recoverable saved state.
 
 Build toward this incrementally, rather than creating a huge world before testing the fundamentals.
+
+## Next engineering milestones
+
+- [M0: Compile and open the Greenveil playground](https://github.com/Systemkill90/WildBound/issues/2)
+- [M1: Two-client server-authority validation](https://github.com/Systemkill90/WildBound/issues/3)
+- [M2: Voxel construction and animal navigation proof](https://github.com/Systemkill90/WildBound/issues/4)
+- [M3: Versioned world saves and backup recovery](https://github.com/Systemkill90/WildBound/issues/5)
 
 ## Working with this repository
 
