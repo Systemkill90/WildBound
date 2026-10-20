@@ -1,0 +1,27 @@
+name: Animal simulation (native C++)
+
+on:
+  push:
+    paths:
+      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
+      - 'Tests/Native/**'
+      - '.github/workflows/animal-native-tests.yml'
+  pull_request:
+    paths:
+      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
+      - 'Tests/Native/**'
+      - '.github/workflows/animal-native-tests.yml'
+
+jobs:
+  core-simulation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile C++17 simulation tests
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
+            -I Source/Wildbound/Public \
+            Tests/Native/AnimalSimulationTests.cpp -o /tmp/wildbound-animal-tests
+      - name: Test deterministic animal needs and care
+        run: /tmp/wildbound-animal-tests
