@@ -53,6 +53,12 @@ Build toward this incrementally, rather than creating a huge world before testin
 - [M2: Voxel construction and animal navigation proof](https://github.com/Systemkill90/WildBound/issues/4)
 - [M3: Versioned world saves and backup recovery](https://github.com/Systemkill90/WildBound/issues/5)
 
+## Build and launch on a Windows development PC
+
+A one-click **build-and-launch helper** is now included at [`Tools/Start-Wildbound.cmd`](Tools/Start-Wildbound.cmd). From a checked-out repository on a PC with Unreal Engine 5 and a compatible Visual Studio C++ toolchain, running it attempts to build `WildboundEditor` and open the temporary Greenveil game using Unreal's built-in Entry map. It writes logs under `Saved/WildboundBootstrap`, stops on failed compilation and never downloads an engine or purchases anything.
+
+The helper's Windows PowerShell parsing and engine-discovery checks passed [CI](https://github.com/Systemkill90/WildBound/actions/runs/39517592126), **but it has not been run on the owner's PC**, and no Unreal build or game launch has been verified. See [prototype playtest instructions](docs/developers/PROTOTYPE-PLAYTEST.md).
+
 ## Working with this repository
 
 The C++17 simulation logic can be tested independently:
