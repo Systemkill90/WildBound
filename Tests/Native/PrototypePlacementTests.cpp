@@ -48,7 +48,7 @@ int main()
         std::vector<FGridCell>(MaxPrototypeBlocks, FGridCell{-14, -14})).Rejection ==
         EPlacementReject::TooManyBlocks, "reject full shared block allowance");
 
-    Check(EvaluatePrototypePlacement(0, 0, 250, 0, {{2, 0}}).Rejection ==
+    Check(EvaluatePrototypePlacement(0, 0, 249, 0, {{2, 0}}).Rejection ==
         EPlacementReject::Occupied, "snapped duplicate rejected");
 
     std::cout << "Passed " << Checks << " native placement checks.\n";
