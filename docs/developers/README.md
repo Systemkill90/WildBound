@@ -4,6 +4,8 @@
 
 For the latest prototype interaction test, see [Greenveil prototype playtest](PROTOTYPE-PLAYTEST.md). Portable animal, placement and snapshot rules are tested in GitHub Actions; UE-specific code has not been compiled.
 
+For a Windows PC preflight/build/launch attempt, use [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd). This wrapper was syntax-tested on GitHub's Windows runner but has **not** launched Unreal on the project owner's PC.
+
 ## First launch
 
 1. Select and record a UE5 minor version. This scaffold deliberately has no EngineAssociation pin.
