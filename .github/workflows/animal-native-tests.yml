@@ -35,3 +35,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check Unreal source layout without compiling UE
         run: python3 Tests/Static/verify_scaffold.py
+
+  native-snapshot-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile C++17 versioned snapshot tests
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
+            -I Source/Wildbound/Public \
+            Tests/Native/PrototypePersistenceTests.cpp -o /tmp/wildbound-snapshot-tests
+      - name: Test serialization and corrupt snapshot rejection
+        run: /tmp/wildbound-snapshot-tests
