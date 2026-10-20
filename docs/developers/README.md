@@ -2,6 +2,8 @@
 
 [Home](../../README.md) · [Current state](../project/CURRENT-STATE.md)
 
+For the latest prototype interaction test, see [Greenveil prototype playtest](PROTOTYPE-PLAYTEST.md). Portable animal, placement and snapshot rules are tested in GitHub Actions; UE-specific code has not been compiled.
+
 ## First launch
 
 1. Select and record a UE5 minor version. This scaffold deliberately has no EngineAssociation pin.
