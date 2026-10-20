@@ -16,8 +16,8 @@ Updated: October 20, 2026.
 ## Actually verified
 
 - GitHub accepted and served the source commits.
-- [GitHub Actions run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) completed successfully for native C++ simulation and static wiring checks. Later CI runs exercise the prototype snapshot and placement modules.
-- Portable simulation, snapshot, and placement tests run independently of Unreal; inspect the latest GitHub Actions run for exact results. These checks do not test Unreal actors, RPCs, replication, rendering, in-engine saving, or recovery.
+- [GitHub Actions run 39516848594](https://github.com/Systemkill90/WildBound/actions/runs/39516848594) completed successfully with **four passing jobs**: animal rules, versioned snapshot validation, bounded block placement, and source wiring.
+- Portable simulation, snapshot, and placement tests run independently of Unreal. These checks do not test Unreal actors, RPCs, replication, rendering, in-engine saving, or recovery.
 
 ## Not verified or implemented
 
@@ -26,6 +26,13 @@ Updated: October 20, 2026.
 The runtime classes are authored **prototype source, not verified working features**. Test-floor and snapped mesh blocks are placeholders, **not** a voxel construction or terraforming system. AI navigation, grazing/water seeking, actual shelters, genetics, breeding, husbandry interfaces, world persistence, purchased assets and animations are absent.
 
 No Unreal minor version, voxel plugin, paid dependency or Xbox platform approval has been selected.
+
+## Tracked next tasks
+
+- [M0 editor compile and Greenveil](https://github.com/Systemkill90/WildBound/issues/2)
+- [M1 two-client replication](https://github.com/Systemkill90/WildBound/issues/3)
+- [M2 voxel + animal navigation](https://github.com/Systemkill90/WildBound/issues/4)
+- [M3 recoverable persistence](https://github.com/Systemkill90/WildBound/issues/5)
 
 ## Next concrete action
 
