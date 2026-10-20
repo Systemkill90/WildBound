@@ -1,21 +1,31 @@
-# Session handoff
+# Wildbound session handoff
 
 Updated: October 20, 2026.
 
-Start with [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md), and [Roadmap](../../ROADMAP.md).
+Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md) before new work.
 
-## Latest change
+## Delivered this session
 
-Added a C++ `UWildboundAnimalNeedsComponent` with bounded hunger, thirst and condition, server-authority simulation and replicated properties. It has not been compiled in Unreal, connected to an actor, or gameplay tested. Never call it a functioning animal-care system.
+- Created a platform-independent deterministic animal needs/trust model with tests.
+- Refactored `UWildboundAnimalNeedsComponent` to call that model, replicate a condition snapshot and update roughly once per second instead of firing Blueprint events every frame.
+- Authored a Greenveil engineering prototype: character and camera, placeholder replicated animal, player-controller care interactions with server-side distance/LOS/resource/cooldown checks, temporary 100 cm grid blocks, temporary ground, game mode bootstrap and debug HUD.
+- Added legacy input bindings for temporary testing, plus GitHub Actions native C++ and static project-wiring checks.
+- Native and static checks **passed** on [CI run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708).
 
-The [first playable validation plan](../developers/FIRST-PLAYABLE.md) now defines explicit engine, animal, enclosure, multiplayer, and save/recovery gates. It is planning documentation, not proof of progress.
+## Exact status
 
-## Next concrete action
+No Unreal Engine build, editor launch, map asset, two-player test, dedicated server, AI, actual voxel terrain, persistent saves or complete taming gameplay exists. Newly authored actors/RPCs are uncompiled. Network checks in code are preliminary and require adversarial testing.
 
-Pin a UE5 minor version and supported C++ compiler. Compile the UE5 scaffold and new component. Then create a small Greenveil placeholder map and replicated animal actor; test two clients observing authoritative needs, including feeding via a validated server-side gameplay interaction. Record compiler output and screenshots/logs where available. Do not enable unvalidated client-triggered care functions, save formats, or paid voxel dependencies.
+## Next operator action
 
-## Remaining blockers
+1. Determine and record the UE minor version and Windows C++ toolchain installed on the development PC.
+2. Follow [prototype playtest guide](../developers/PROTOTYPE-PLAYTEST.md) to generate project files, compile the Editor target, create an empty level and inspect the runtime harness.
+3. Capture every compile error and resolve it in code. Check the first launch, spawn behavior, input, animal condition and block placement before any new major features.
+4. Run a two-client test and verify RPC authority, replication, denial of invalid actions, late joining, and block population limit.
+5. Only after that, evaluate voxel implementation and prototype animal navigation around player-built walls.
 
-No Unreal engine/toolchain confirmation in this environment; therefore editor/game/server builds, gameplay and replication remain unverified. Voxel plugin/approach and animal save identity remain open.
+## Remaining engineering risks
 
-Keep Wildbound separate from ShroudForge. Exclude credentials, server saves, unlicensed assets, engine binaries and platform SDKs. Conversations are not automatically synced to GitHub.
+UE version compatibility is unknown. Empty-level spawn behavior and placeholder mesh visibility are untested. Construction and care lack persistence, true resource inventory integration, role permissions and sophisticated anti-exploit checks. Initial code has no backup recovery, offline care model, genetics or population scaling. Platform budget and animal navigation around changing voxel geometry remain unresolved.
+
+Keep binary engine/platform dependencies, real save files, private information, and unlicensed assets out of the repository. Do not mark untested scaffolds complete.
