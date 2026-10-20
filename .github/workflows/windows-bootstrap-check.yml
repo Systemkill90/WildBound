@@ -1,0 +1,36 @@
+name: Windows launcher preflight (no Unreal)
+
+on:
+  push:
+    paths:
+      - 'Tools/Start-Wildbound.ps1'
+      - 'Tools/Start-Wildbound.cmd'
+      - '.github/workflows/windows-bootstrap-check.yml'
+  pull_request:
+    paths:
+      - 'Tools/Start-Wildbound.ps1'
+      - 'Tools/Start-Wildbound.cmd'
+      - '.github/workflows/windows-bootstrap-check.yml'
+
+jobs:
+  parse-powershell:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse launcher using Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          $tokens = $null
+          $parseErrors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path '.\Tools\Start-Wildbound.ps1').Path,
+            [ref]$tokens, [ref]$parseErrors) | Out-Null
+          if ($parseErrors.Count -gt 0) {
+            $parseErrors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
+          Write-Host 'PowerShell 5.1 syntax parsed successfully.'
+      - name: Engine detection without installing or launching UE
+        shell: cmd
+        run: powershell.exe -NoProfile -ExecutionPolicy Bypass -File Tools\Start-Wildbound.ps1 -ShowEngines
