@@ -1,6 +1,7 @@
 #include "WildboundPrototypeGround.h"
 
 #include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
 #include "UObject/ConstructorHelpers.h"
 
 AWildboundPrototypeGround::AWildboundPrototypeGround()
