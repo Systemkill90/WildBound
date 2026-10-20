@@ -23,6 +23,8 @@ private:
     void MoveRight(float Value);
     void Turn(float Value);
     void LookUp(float Value);
+    void StartJump();
+    void EndJump();
 
     UPROPERTY(VisibleAnywhere, Category="Wildbound|Prototype")
     TObjectPtr<USpringArmComponent> CameraBoom;
