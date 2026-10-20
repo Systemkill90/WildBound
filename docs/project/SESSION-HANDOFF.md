@@ -11,11 +11,13 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Authored a Greenveil engineering prototype: character and camera, placeholder replicated animal, player-controller care interactions with server-side distance/LOS/resource/cooldown checks, temporary 100 cm grid blocks, temporary ground, game mode bootstrap and debug HUD.
 - Added legacy input bindings for temporary testing, plus GitHub Actions native C++ and static project-wiring checks.
 - Added a portable versioned snapshot format with malformed-input tests, and a bounded snap-grid policy with native tests. The grid policy is called from the prototype player-controller placement path. Snapshot serialization is not yet connected to Unreal or disk.
-- Native and static checks **passed** on [CI run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708).
+- **All four** independent checks passed on [CI run 39516848594](https://github.com/Systemkill90/WildBound/actions/runs/39516848594).
 
 ## Exact status
 
 No Unreal Engine build, editor launch, map asset, two-player test, dedicated server, AI, actual voxel terrain, **runtime persistent saves** or complete taming gameplay exists. Newly authored actors/RPCs are uncompiled. Network checks in code are preliminary and require adversarial testing.
+
+Engineering tasks are tracked in [M0 editor compilation](https://github.com/Systemkill90/WildBound/issues/2), [M1 multiplayer](https://github.com/Systemkill90/WildBound/issues/3), [M2 voxel and enclosure](https://github.com/Systemkill90/WildBound/issues/4), and [M3 persistent saves](https://github.com/Systemkill90/WildBound/issues/5).
 
 ## Next operator action
 
