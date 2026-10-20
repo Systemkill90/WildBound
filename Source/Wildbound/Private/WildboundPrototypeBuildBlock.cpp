@@ -1,6 +1,7 @@
 #include "WildboundPrototypeBuildBlock.h"
 
 #include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
 #include "UObject/ConstructorHelpers.h"
 
 AWildboundPrototypeBuildBlock::AWildboundPrototypeBuildBlock()
