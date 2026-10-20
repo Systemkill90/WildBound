@@ -1,61 +1,63 @@
 <h1 align="center">Wildbound</h1>
-<p align="center"><strong>Build a home. Earn the wild’s trust. Grow a life together.</strong><br>A cooperative survival and homesteading game concept for Unreal Engine 5.</p>
-<p align="center"><a href="docs/vision.md">Game vision</a> · <a href="docs/world/biomes.md">Explore the world</a> · <a href="docs/systems/animals.md">Animals & husbandry</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="docs/project/CURRENT-STATE.md">Current status</a></p>
+<p align="center"><strong>Build a home. Earn the wild's trust. Grow a life together.</strong><br>An original cooperative survival, construction and homesteading game for Unreal Engine 5.</p>
+<p align="center"><a href="docs/vision.md">Vision</a> · <a href="docs/world/biomes.md">World</a> · <a href="docs/systems/animals.md">Animals</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="docs/project/CURRENT-STATE.md">Status</a> · <a href="docs/developers/PROTOTYPE-PLAYTEST.md">Prototype guide</a></p>
 
-> **Pre-production.** This repository contains design documents and an initial UE5 C++ scaffold. An initial animal-needs C++ component has been authored but **not compiled or gameplay tested**. There is no playable build, working animal simulation, validated dedicated server, or release date. The scaffold has not been compiled in Unreal Engine.
-
-## World concept art
-
-<p align="center"><img src="docs/art/wildbound-key-art-v1.jpg" alt="A wilderness explorer overlooking a forested river valley and distant mountains" width="100%"></p>
-
-Early visual exploration for a grounded wilderness where real wildlife shares habitats with prehistoric dinosaurs and original fantasy fauna. Species and locations are candidates, not a locked production roster.
-
-![Four biome studies: forest with a bear and feathered dinosaur; alpine goats and a drake; prairie bison and ceratopsians; wetland moose, eagle, hadrosaurs, and a lake creature](docs/art/wildbound-biomes-and-creatures-v1.jpg)
-
-[Read the visual concept notes](docs/world/visual-concept-art.md). These images are AI-generated pre-production concepts, not final game assets.
+> **Early engineering prototype — no playable build.** The repository now contains a C++ test character, placeholder animal, replicated condition component, server-side interaction/placement handlers and temporary build blocks. The portable C++17 animal rules and dependency-free source-wiring checks passed in [GitHub Actions](https://github.com/Systemkill90/WildBound/actions/runs/39516040708). **Unreal Engine compilation, the test map, multiplayer behavior, and persistence have not been validated.**
 
 ## A life at the edge of the familiar
 
-Raise a timber cottage beside a meadow. Tend a flock through changing weather. Earn the trust of a wild creature. Explore a marsh where distant lights move against the wind. Wildbound imagines a believable wilderness touched by quiet, ancient magic: a world that feels real until you look a little closer.
+Raise a timber cottage beside a meadow. Tend animals through changing weather. Earn the trust of a wild creature. Explore a marsh where distant lights move against the wind. Wildbound is a believable wilderness touched by quiet ancient magic: a world that feels real until you look closer.
 
-Animals shape everyday life through wildlife observation, patient taming, responsible breeding, genetics, and ongoing husbandry. Voxel construction would let cooperative communities build homes, farms, barns, and villages on persistent dedicated worlds.
+Its defining pillars are **expressive voxel building**, **wildlife, taming, breeding and everyday husbandry**, **shared persistent co-op worlds**, and **exploration through atmospheric biomes**. Every system should reinforce the feeling of building a lasting life together.
 
 ## Find your way
 
-| Start here | What you’ll find |
+| Area | Read |
 | :-- | :-- |
-| [Game vision](docs/vision.md) | Identity, pillars, and proposed daily life |
-| [World & biomes](docs/world/biomes.md) | Cottagecore Greenveil and the spooky Drowned March |
-| [Visual concept art](docs/world/visual-concept-art.md) | Biome and creature visual exploration |
-| [Animal life](docs/systems/animals.md) | Wildlife, taming, breeding, genetics, livestock, and care |
-| [Building homesteads](docs/systems/building.md) | Voxel construction and farm layouts |
-| [Cooperative worlds](docs/systems/multiplayer.md) | Dedicated servers, shared ownership, and persistence |
-| [Roadmap](ROADMAP.md) | Planned milestones and completion evidence |
-| [Developer setup](docs/developers/README.md) | Unreal layout and initial validation steps |
-| [First playable plan](docs/developers/FIRST-PLAYABLE.md) | Concrete Greenveil test steps and pass/fail gates |
-| [Project record](docs/project/CURRENT-STATE.md) | Current state, decisions, and session handoff |
+| Identity and experience | [Game vision](docs/vision.md) |
+| Cottagecore Greenveil and eerie Drowned March | [Biomes](docs/world/biomes.md) |
+| Wildlife, trust, genetics, livestock and care | [Animal systems](docs/systems/animals.md) |
+| Construction and farm design | [Building systems](docs/systems/building.md) |
+| Server authority and persistence | [Cooperative worlds](docs/systems/multiplayer.md) |
+| Unreal toolchain and source layout | [Developer setup](docs/developers/README.md) |
+| Prototype controls and validation | [Engineering playtest guide](docs/developers/PROTOTYPE-PLAYTEST.md) |
+| Planned milestones and evidence | [Roadmap](ROADMAP.md) |
+| Actual development record | [Current state](docs/project/CURRENT-STATE.md) and [session handoff](docs/project/SESSION-HANDOFF.md) |
 
-## Planned experience
+## What's in the code today
 
-- **Make a home:** shape a cottage, plant food, and build shelters suited to your animals.
-- **Know the wildlife:** learn habitats, tracks, and behavior before approaching or capturing an animal.
-- **Raise generations:** nurture healthy, distinctive lineages with inherited traits and meaningful care.
-- **Live together:** share exploration, building, farming, and animal care on cooperative dedicated servers.
-- **Follow the strange:** discover drowned ruins, unusual ecological relationships, luminous fungi, and unresolved folklore.
+| Authored source | Purpose | Verification |
+| :-- | :-- | :-- |
+| `WildboundAnimalSimulation.h` | Portable needs, stress, trust and care rules | Native C++ tests passed |
+| `UWildboundAnimalNeedsComponent` | Server-only updates and replicated animal condition | Unreal compilation pending |
+| `AWildboundPrototypeAnimal` | Replicated engine-sphere placeholder animal | Unreal compilation pending |
+| `AWildboundPrototypeCharacter` | Basic third-person movement and camera | Unreal compilation pending |
+| `AWildboundPrototypePlayerController` | Proximity-checked care and block placement RPCs | Unreal compilation pending |
+| `AWildboundPrototypeBuildBlock` | Simple 100 cm snapped shared blocks | Unreal compilation pending |
+| `AWildboundPrototypeGameMode` / HUD / ground | Temporary spawnable playground, visual debug | Unreal compilation pending |
 
-## Project layout
+The block demo **is not voxel construction**. There are no downloadable maps, authored creature assets, movement AI, taming gameplay, genetics, breeding, saved worlds or tested dedicated servers. The test harness is intended to prove mechanics in Unreal before expanding.
 
-```text
-Wildbound.uproject  UE5 project descriptor
-Source/            Runtime module and game/editor/server targets
-Config/            Initial project settings
-Content/Wildbound/ Reserved asset folders; no assets yet
-Plugins/           Future project plugins; none selected
-Build/             Reserved platform resources
-docs/              Vision, world, systems, and project record
-.github/           Contribution templates
+## Planned first playable
+
+A small Greenveil meadow; one animal whose needs and trust are understandable; feeding and watering that cost resources; a simple enclosure; editable construction around animal movement; and two-player server validation with recoverable saved state.
+
+Build toward this incrementally, rather than creating a huge world before testing the fundamentals.
+
+## Working with this repository
+
+The C++17 simulation logic can be tested independently:
+
+```sh
+g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
+  -I Source/Wildbound/Public \
+  Tests/Native/AnimalSimulationTests.cpp -o /tmp/wildbound-animal-tests
+/tmp/wildbound-animal-tests
+python3 Tests/Static/verify_scaffold.py
 ```
 
-PC is the proposed first development target. Xbox is a future evaluation goal; there is no platform approval, store listing, certification, or release commitment.
+These checks **do not replace** compiling `WildboundEditor` and checking dedicated-server replication in Unreal. See the [prototype playtest instructions](docs/developers/PROTOTYPE-PLAYTEST.md).
 
-Wildbound is independent from ShroudForge, which inspired the documentation navigation only. No engine binaries or third-party paid assets are included. No open-source license has been selected; public visibility alone does not grant reuse rights.
+PC is the proposed first development target. Xbox is a later feasibility assessment, not an approved or announced platform release.
+
+Wildbound is an independent original project. No Unreal binaries or unlicensed content are stored here. **No public redistribution/open-source license has been selected**; repository visibility is not reuse permission.
