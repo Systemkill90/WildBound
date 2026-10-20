@@ -1,0 +1,125 @@
+# Wildbound local Unreal Editor build-and-launch helper.
+# This script runs ONLY on the development PC; a GitHub commit does not run it.
+# No purchases, installs, credentials, or global configuration changes occur.
+[CmdletBinding()]
+param(
+    [string]$EngineRoot = "",
+    [switch]$BuildOnly,
+    [switch]$ShowEngines
+)
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$Project = Join-Path $RepoRoot "Wildbound.uproject"
+$LogDir = Join-Path $RepoRoot "Saved\WildboundBootstrap"
+New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
+$Stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+$BuildLog = Join-Path $LogDir ("editor-build-" + $Stamp + ".log")
+$SummaryFile = Join-Path $LogDir ("bootstrap-" + $Stamp + ".txt")
+
+function Write-Note([string]$Message) {
+    Write-Host ("[Wildbound] " + $Message)
+    Add-Content -Path $SummaryFile -Value $Message
+}
+
+function Test-Engine([string]$Root) {
+    if ([string]::IsNullOrWhiteSpace($Root)) { return $false }
+    return (Test-Path (Join-Path $Root "Engine\Build\BatchFiles\Build.bat") -PathType Leaf) -and
+           (Test-Path (Join-Path $Root "Engine\Binaries\Win64\UnrealEditor.exe") -PathType Leaf)
+}
+
+function Get-Engines {
+    $Candidates = New-Object 'System.Collections.Generic.List[string]'
+    if ($EngineRoot) { $Candidates.Add($EngineRoot) }
+    if ($env:UE_ENGINE_ROOT) { $Candidates.Add($env:UE_ENGINE_ROOT) }
+
+    $EpicFolder = Join-Path $env:ProgramFiles "Epic Games"
+    if (Test-Path $EpicFolder) {
+        Get-ChildItem -Path $EpicFolder -Directory -Filter "UE_5.*" -ErrorAction SilentlyContinue |
+            Sort-Object Name -Descending |
+            ForEach-Object { $Candidates.Add($_.FullName) }
+    }
+
+    $Seen = @{}
+    foreach ($Candidate in $Candidates) {
+        $Resolved = [System.IO.Path]::GetFullPath($Candidate.Trim('"'))
+        if (-not $Seen.ContainsKey($Resolved)) {
+            $Seen[$Resolved] = $true
+            if (Test-Engine $Resolved) { Write-Output $Resolved }
+        }
+    }
+}
+
+if (-not (Test-Path $Project -PathType Leaf)) {
+    throw "Missing Wildbound.uproject in $RepoRoot. Clone the WildBound repository first."
+}
+if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+    throw "This helper requires Windows. On Linux/macOS use the documented Unreal build process."
+}
+$Candidates = @(Get-Engines)
+if ($ShowEngines) {
+    if ($Candidates.Count -eq 0) { Write-Note "No supported Unreal Editor installation found." }
+    else { $Candidates | ForEach-Object { Write-Note ("Found UE installation: " + $_) } }
+    exit 0
+}
+if ($EngineRoot -and -not (Test-Engine $EngineRoot)) {
+    throw "-EngineRoot is not a valid installed Unreal Engine root: $EngineRoot"
+}
+if ($Candidates.Count -eq 0) {
+    Write-Note "BLOCKED: No Unreal Editor installation found."
+    Write-Note "Install UE5 through Epic Games Launcher and a supported Visual Studio C++ toolchain."
+    Write-Note "Or rerun with -EngineRoot 'C:\Path\To\UE_5.x'."
+    exit 2
+}
+$SelectedEngine = $Candidates[0]
+$Batch = Join-Path $SelectedEngine "Engine\Build\BatchFiles\Build.bat"
+$Editor = Join-Path $SelectedEngine "Engine\Binaries\Win64\UnrealEditor.exe"
+Write-Note ("Project: " + $Project)
+Write-Note ("Engine candidate: " + $SelectedEngine)
+Write-Note "The project has not yet pinned an approved minor UE version. This is an initial compile attempt."
+Write-Note ("Build log: " + $BuildLog)
+
+# Don't swallow UBT's exit code. A successfully spawned process is not a verified game launch.
+$PreviousPreference = $ErrorActionPreference
+try {
+    $ErrorActionPreference = "Continue"
+    & $Batch "WildboundEditor" "Win64" "Development" "-Project=$Project" "-WaitMutex" "-NoHotReload" *>&1 |
+        Out-File -FilePath $BuildLog -Encoding utf8
+    $BuildExitCode = $LASTEXITCODE
+}
+finally {
+    $ErrorActionPreference = $PreviousPreference
+}
+if ($BuildExitCode -ne 0) {
+    Write-Note ("FAILED: UnrealBuildTool exited " + $BuildExitCode)
+    Write-Note ("Open full log: " + $BuildLog)
+    Write-Host "Last 45 build log lines:" -ForegroundColor Yellow
+    Get-Content -Path $BuildLog -Tail 45 | Write-Host
+    exit $BuildExitCode
+}
+Write-Note "Editor target build command returned exit code 0."
+if ($BuildOnly) {
+    Write-Note "BuildOnly requested; editor not started."
+    exit 0
+}
+
+# Entry is a built-in Unreal map. Game mode spawns placeholder floor/animal at runtime.
+# Launching the process is NOT evidence that the gameplay or replication is correct.
+$Args = ('"' + $Project + '" /Engine/Maps/Entry -game -log -windowed -ResX=1280 -ResY=720')
+try {
+    $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru
+    Start-Sleep -Seconds 3
+    if ($Process.HasExited) {
+        Write-Note ("FAILED: UnrealEditor exited shortly after launch with code " + $Process.ExitCode)
+        exit 3
+    }
+    Write-Note ("LAUNCHED PROCESS: UnrealEditor PID " + $Process.Id)
+    Write-Note "CHECK ON PC: Confirm the Greenveil placeholders appear and accept inputs."
+    Write-Note "A running process alone does not mean the game passed its playtest."
+    exit 0
+}
+catch {
+    Write-Note ("FAILED: Unable to start UnrealEditor: " + $_.Exception.Message)
+    exit 4
+}
