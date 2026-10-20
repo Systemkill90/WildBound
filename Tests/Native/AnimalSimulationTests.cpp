@@ -2,6 +2,7 @@
 // -I Source/Wildbound/Public Tests/Native/AnimalSimulationTests.cpp -o /tmp/wildbound-animal-tests
 #include "WildboundAnimalSimulation.h"
 #include <cassert>
+#include <cstdlib>
 #include <cmath>
 #include <iostream>
 #include <limits>
