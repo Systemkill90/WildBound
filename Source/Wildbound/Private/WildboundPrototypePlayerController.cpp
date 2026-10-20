@@ -2,6 +2,7 @@
 
 #include "WildboundPrototypeAnimal.h"
 #include "WildboundPrototypeBuildBlock.h"
+#include "WildboundPrototypePlacement.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -11,9 +12,7 @@
 namespace
 {
 constexpr float CareRange = 325.0f;
-constexpr float BuildRange = 450.0f;
-constexpr float PlacementGrid = 100.0f;
-constexpr int32 MaxWorldBlocks = 128;
+constexpr float BuildRange = WildboundSim::PrototypePlaceRangeCm;
 }
 
 AWildboundPrototypePlayerController::AWildboundPrototypePlayerController()
@@ -167,29 +166,27 @@ void AWildboundPrototypePlayerController::ServerPlaceBlock_Implementation(
     }
 
     const FVector PlayerLocation = PlayerPawn->GetActorLocation();
-    if (FVector::DistSquared2D(PlayerLocation, ProposedLocation) >
-        FMath::Square(BuildRange))
+    std::vector<WildboundSim::FGridCell> Occupied;
+    for (TActorIterator<AWildboundPrototypeBuildBlock> It(World); It; ++It)
+    {
+        const FVector Position = It->GetActorLocation();
+        Occupied.push_back({
+            FMath::RoundToInt(Position.X / WildboundSim::PrototypeGridCentimeters),
+            FMath::RoundToInt(Position.Y / WildboundSim::PrototypeGridCentimeters)});
+    }
+
+    const WildboundSim::FPlacementResult Placement =
+        WildboundSim::EvaluatePrototypePlacement(
+            PlayerLocation.X, PlayerLocation.Y,
+            ProposedLocation.X, ProposedLocation.Y, Occupied);
+    if (!Placement.Allowed())
     {
         return;
     }
 
     const FVector Snapped(
-        FMath::GridSnap(ProposedLocation.X, PlacementGrid),
-        FMath::GridSnap(ProposedLocation.Y, PlacementGrid), 0.0f);
-
-    if (FVector::DistSquared2D(PlayerLocation, Snapped) <
-        FMath::Square(120.0f))
-    {
-        return;
-    }
-
-    int32 BlockCount = 0;
-    for (TActorIterator<AWildboundPrototypeBuildBlock> It(World); It; ++It)
-    {
-        if (++BlockCount >= MaxWorldBlocks) return;
-        if (FVector::DistSquared(It->GetActorLocation(), Snapped) <
-            FMath::Square(5.0f)) return;
-    }
+        Placement.Cell.X * WildboundSim::PrototypeGridCentimeters,
+        Placement.Cell.Y * WildboundSim::PrototypeGridCentimeters, 0.0f);
 
     FActorSpawnParameters Params;
     Params.SpawnCollisionHandlingOverride =
