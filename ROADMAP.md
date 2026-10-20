@@ -1,25 +1,31 @@
-# Wildbound roadmap
+# Wildbound development roadmap
 
-[Home](README.md) · [Current state](docs/project/CURRENT-STATE.md)
+[Home](README.md) · [Current state](docs/project/CURRENT-STATE.md) · [Prototype test guide](docs/developers/PROTOTYPE-PLAYTEST.md)
 
-Milestones describe intended order, not dates or release promises. The only delivered foundation is documentation, the uncompiled UE5 scaffold, and an **uncompiled initial animal-needs C++ component**.
+Milestones show evidence, **not percent-finished guesses**. No playable Unreal build or release date has been established.
 
-| Milestone | Status | Completion evidence |
+| Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
-| 0 — Engine foundation | Scaffold authored; unverified | Pin UE5 version, compile editor/game/server, load a saved test map |
-| 1 — Small Greenveil prototype | Planned | Walk a small region with placeholder resources, interactions, and day/night presentation |
-| 2 — Voxel building proof | Planned | Place/remove volumes; verify collision, save/load, and performance |
-| 3 — Animal care and trust | Initial needs code authored; unverified | One herbivore with needs, stress, shelter, trust and one farm-animal care loop |
-| 4 — Cooperative persistence | Planned | Two clients; validated actions; replicated animals/building; restart and backup recovery |
-| 5 — Breeding and genetics | Planned | Parentage, bounded inheritance, offspring care, diversity rules, persistent identities |
-| 6 — Greenveil vertical slice | Planned | Complete gather/build/farm/care/explore loop with cottagecore art, sound, and playtest findings |
-| 7 — Drowned March exploration | Planned | Small wetland area with hazards, wildlife, ruins, atmosphere, and environmental magic |
-| 8 — Expansion/platform evaluation | Future evaluation | Evidence-based species/biome scope, performance, accessibility, controller and platform feasibility |
+| 0 — Unreal foundation | **C++ scaffold and gameplay harness authored; UE uncompiled** | Select toolchain; build game/editor/server; launch and save a test level |
+| 1 — Small Greenveil test | **Starter ground, character, animal and HUD code authored; untested** | Movement, readable debug feedback and stable map playback |
+| 2 — Construction proof | **Grid-block placement/removal code authored; not voxel** | Test voxel volumes, chunk collision and animal enclosure navigation in UE |
+| 3 — Animal needs and trust | **Portable logic tested; UE component and care RPCs untested** | Observe care, deprivation, stress, trust and credible animal behavior in play |
+| 4 — Dedicated co-op and persistence | **RPC/replication source authored, no server tests or saves** | Two clients, server validation, restart, versioned save and backup recovery |
+| 5 — Breeding and genetics | Planned | Stable animal ID, parentage, bounded inheritance and safe offspring lifecycle |
+| 6 — Greenveil vertical slice | Planned | Polished gather/build/farm/care/explore loop, art and playtesting |
+| 7 — Drowned March | Planned | Small original wetland biome with wildlife, fog, hazards, ruins and mystery |
+| 8 — Broader content and platforms | Future evaluation | Evidence-based expansion, optimization, accessibility and Xbox feasibility |
 
-## First priorities
+## Near-term sequence
 
-Validate the toolchain and compile; prototype editable construction and animal navigation together; prove server authority and persistence before scaling the world.
+**Now:** compile in Unreal, validate the placeholder character/animal/building interactions, and fix failures.
 
-## Release and Xbox expectations
+**Next:** one navigable herbivore that can graze, drink and respond to a changing enclosure; a small construction test with server authority and collision; then reliable save identities and recoverability.
 
-There is no release date, downloadable game, Xbox approval, store submission, certification result, or announced console support. PC is the proposed initial development environment.
+**Later:** selective breeding, farm stock, wild ecology, villages, weather, more biomes, trading and optional platform targets.
+
+Native C++ tests are useful independent evidence, but must never be presented as successful UE builds.
+
+## Development constraints
+
+The prototype uses original source code and Unreal's built-in primitive meshes only. No new paid dependencies, external art licenses or third-party voxel plug-ins are committed. PC is the initial proposed development target; console work remains an evaluation.
