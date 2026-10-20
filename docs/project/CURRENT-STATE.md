@@ -2,18 +2,23 @@
 
 Updated: October 20, 2026.
 
-## Available
+## Authored in repository
 
-- Linked vision, biome concepts, system proposals, and milestone roadmap.
-- Minimal UE5 C++ module with game, editor, and dedicated-server targets.
-- Initial configuration, asset folder conventions, Unreal ignore rules, and contribution templates.
+- Game vision, biome concepts, system proposals, and milestone roadmap.
+- Initial Unreal Engine 5 C++ game/editor/server target scaffold and project configuration.
+- **First gameplay code slice:** `UWildboundAnimalNeedsComponent` in `Source/Wildbound/Public` and `Private`. It defines hunger, thirst, and condition, server-only ticking and care entry points, and replicated condition variables.
 
-## Not implemented or verified
+## Verification status
 
-No playable map, assets, survival loop, voxel system, animal AI, taming, breeding, genetics, husbandry, farming, networking, saves, compiled server, or packaged build. The scaffold has not been compiled or launched. No engine minor version or voxel plugin is selected.
+The new component was authored and pushed to GitHub. **No Unreal compilation, editor launch, dedicated server startup, replication test, save/load test, or playable world has been completed.** The component is not attached to an animal actor or Blueprint and does not yet support feeding through a player interaction, AI behavior, animation, offline care, or persistence. The owner actor must replicate for component replication to work.
+
+No engine minor version or voxel plugin is selected. No assets are implemented.
 
 ## Next action
 
-Follow [developer setup](../developers/README.md), pin an engine version, and compile the scaffold. Then create a tiny Greenveil test map and one animal/building interaction.
+1. Select/install a compatible Unreal Engine 5 version and C++ toolchain, recording exact versions.
+2. Generate project files and compile `WildboundEditor`; resolve any compilation errors.
+3. Create a tiny Greenveil test level and a replicated placeholder animal actor with the needs component.
+4. Test authoritative needs ticking and client replication with two clients, then validate server build and persistence separately.
 
 [Roadmap](../../ROADMAP.md) · [Handoff](SESSION-HANDOFF.md) · [Decisions](DECISIONS.md)
