@@ -3,6 +3,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
@@ -45,8 +46,8 @@ void AWildboundPrototypeCharacter::SetupPlayerInputComponent(UInputComponent* In
     Input->BindAxis(TEXT("MoveRight"), this, &AWildboundPrototypeCharacter::MoveRight);
     Input->BindAxis(TEXT("Turn"), this, &AWildboundPrototypeCharacter::Turn);
     Input->BindAxis(TEXT("LookUp"), this, &AWildboundPrototypeCharacter::LookUp);
-    Input->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
-    Input->BindAction(TEXT("Jump"), IE_Released, this, &ACharacter::StopJumping);
+    Input->BindAction(TEXT("Jump"), IE_Pressed, this, &AWildboundPrototypeCharacter::StartJump);
+    Input->BindAction(TEXT("Jump"), IE_Released, this, &AWildboundPrototypeCharacter::EndJump);
 }
 
 void AWildboundPrototypeCharacter::MoveForward(float Value)
@@ -75,4 +76,14 @@ void AWildboundPrototypeCharacter::Turn(float Value)
 void AWildboundPrototypeCharacter::LookUp(float Value)
 {
     AddControllerPitchInput(Value);
+}
+
+void AWildboundPrototypeCharacter::StartJump()
+{
+    Jump();
+}
+
+void AWildboundPrototypeCharacter::EndJump()
+{
+    StopJumping();
 }
