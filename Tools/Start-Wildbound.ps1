@@ -54,7 +54,7 @@ function Get-Engines {
 if (-not (Test-Path $Project -PathType Leaf)) {
     throw "Missing Wildbound.uproject in $RepoRoot. Clone the WildBound repository first."
 }
-if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+if ($PSVersionTable.PSVersion.Major -ge 6 -and -not $IsWindows) {
     throw "This helper requires Windows. On Linux/macOS use the documented Unreal build process."
 }
 $Candidates = @(Get-Engines)
