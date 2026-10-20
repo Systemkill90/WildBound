@@ -13,6 +13,10 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Added a portable versioned snapshot format with malformed-input tests, and a bounded snap-grid policy with native tests. The grid policy is called from the prototype player-controller placement path. Snapshot serialization is not yet connected to Unreal or disk.
 - **All four** independent checks passed on [CI run 39516848594](https://github.com/Systemkill90/WildBound/actions/runs/39516848594).
 
+## Build launch tooling
+
+Added `Tools/Start-Wildbound.cmd` and `Tools/Start-Wildbound.ps1`, which attempt to locate a preinstalled UE5, compile `WildboundEditor` and start a provisional `/Engine/Maps/Entry -game` session. The script logs compiler output under ignored `Saved/WildboundBootstrap`. [Windows CI](https://github.com/Systemkill90/WildBound/actions/runs/39517592126) passed syntax and engine-detection checks. **It has not been run on the development PC**; this chat has no connection to the desktop or Unreal installation.
+
 ## Exact status
 
 No Unreal Engine build, editor launch, map asset, two-player test, dedicated server, AI, actual voxel terrain, **runtime persistent saves** or complete taming gameplay exists. Newly authored actors/RPCs are uncompiled. Network checks in code are preliminary and require adversarial testing.
@@ -21,11 +25,12 @@ Engineering tasks are tracked in [M0 editor compilation](https://github.com/Syst
 
 ## Next operator action
 
-1. Determine and record the UE minor version and Windows C++ toolchain installed on the development PC.
-2. Follow [prototype playtest guide](../developers/PROTOTYPE-PLAYTEST.md) to generate project files, compile the Editor target, create an empty level and inspect the runtime harness.
-3. Capture every compile error and resolve it in code. Check the first launch, spawn behavior, input, animal condition and block placement before any new major features.
-4. Run a two-client test and verify RPC authority, replication, denial of invalid actions, late joining, and block population limit.
-5. Only after that, evaluate voxel implementation and prototype animal navigation around player-built walls.
+1. Obtain an actual desktop-capable computer session. This chat cannot run local desktop commands; a GitHub commit cannot launch software on the PC.
+2. Determine and record the UE minor version and Windows C++ toolchain installed on the development PC.
+3. Follow [prototype playtest guide](../developers/PROTOTYPE-PLAYTEST.md) to generate project files, compile the Editor target, create an empty level and inspect the runtime harness.
+4. Capture every compile error and resolve it in code. Check the first launch, spawn behavior, input, animal condition and block placement before any new major features.
+5. Run a two-client test and verify RPC authority, replication, denial of invalid actions, late joining, and block population limit.
+6. Only after that, evaluate voxel implementation and prototype animal navigation around player-built walls.
 
 ## Remaining engineering risks
 
