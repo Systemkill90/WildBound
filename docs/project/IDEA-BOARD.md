@@ -37,6 +37,10 @@ Only an explicit owner decision should promote `Proposed` to `Approved`. The mai
 
 These are design anchors, **not** claims that those systems exist.
 
+## Unordered brainstorming rule
+
+Ideas can be suggested in **any order**, regardless of current development status, roadmap milestone, or technical readiness. Capture ideas when they arrive without reorganizing them into milestone order, rejecting them for being early, or implying a commitment to build them next. Record dependencies, feasibility, and possible scope only as optional context. Keep the original suggestion recognizable. This is a creative idea backlog, **not** the development schedule.
+
 ## New idea inbox
 
 | ID | Idea | Stage | Suggested next action |
