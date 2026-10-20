@@ -4,6 +4,7 @@
 // This does not write disk files or attach to Unreal's SaveGame system yet.
 #include "WildboundAnimalSimulation.h"
 #include <algorithm>
+#include <charconv>
 #include <cstdint>
 #include <iomanip>
 #include <ios>
@@ -13,6 +14,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <system_error>
 #include <utility>
 #include <vector>
 
@@ -116,13 +118,12 @@ inline bool ReadPrototypeSnapshot(std::istream& Input, FPrototypeSnapshot& Out)
         return false;
     }
 
-    try
-    {
-        std::size_t Consumed = 0;
-        Parsed.AnimalId = std::stoull(IdString, &Consumed);
-        if (Consumed != IdString.size()) return false;
-    }
-    catch (...)
+    // Unreal targets often disable C++ exceptions. from_chars rejects malformed
+    // or overflowing identifiers without throwing, including on dedicated servers.
+    const auto ParsedId = std::from_chars(IdString.data(),
+        IdString.data() + IdString.size(), Parsed.AnimalId, 10);
+    if (ParsedId.ec != std::errc() ||
+        ParsedId.ptr != IdString.data() + IdString.size())
     {
         return false;
     }
