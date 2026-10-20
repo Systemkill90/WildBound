@@ -15,6 +15,19 @@ This is a deliberately bare testing harness built from C++ and Unreal Engine's s
 
 The starter supplies, blocks and animal state are currently **in memory only**. Restarting the server discards them.
 
+## Assisted Windows build and launch
+
+The repo includes [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd) and [`Tools/Start-Wildbound.ps1`](../../Tools/Start-Wildbound.ps1). These files **only work when executed on a Windows PC** with a usable Unreal Engine 5 Editor and its compatible Visual Studio C++ toolchain; pushing them to GitHub **does not execute them on that PC**.
+
+- Run `Tools/Start-Wildbound.cmd` from the local repository to attempt the editor build and start Unreal's built-in Entry map in `-game` mode.
+- To build only, use `Tools/Start-Wildbound.cmd -BuildOnly`.
+- To specify an existing engine installation, use `Tools/Start-Wildbound.cmd -EngineRoot "D:\\Epic Games\\UE_5.x"`.
+- The script automatically checks common Epic install directories and the `UE_ENGINE_ROOT` environment variable, and never installs an engine or changes global script policy.
+- Build reports are stored locally in `Saved/WildboundBootstrap`, excluded from Git. A compile error stops the launch attempt; a running editor PID is *not* proof that the prototype works.
+- [Windows launcher CI](https://github.com/Systemkill90/WildBound/actions/runs/39517592126) only parsed the script and exercised installation detection on a hosted Windows runner. It did not compile Unreal or reach a private computer.
+
+The C++ game mode supplies a temporary ground and animal, but pawn spawning without a placed PlayerStart on the built-in Entry map remains unverified. If quick launch fails, open the project in the Editor and follow the empty-level procedure below.
+
 ## Before attempting an Unreal build
 
 1. Select an Unreal Engine 5 minor version and compatible Windows Visual Studio C++ toolchain. Record exact versions before resolving compatibility errors. The `.uproject` intentionally has no `EngineAssociation` pin yet.
