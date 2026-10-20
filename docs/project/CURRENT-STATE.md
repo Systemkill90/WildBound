@@ -17,7 +17,7 @@ Updated: October 20, 2026.
 
 - GitHub accepted and served the source commits.
 - [GitHub Actions run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708) completed successfully for native C++ simulation and static wiring checks. Later CI runs exercise the prototype snapshot and placement modules.
-- Portable simulation, snapshot, and placement checks are compiled independently of Unreal; consult the latest GitHub Actions run for each job result. The initial animal model These checks are not tests of Unreal actors, RPCs, replication, rendering or persistence.
+- Portable simulation, snapshot, and placement tests run independently of Unreal; inspect the latest GitHub Actions run for exact results. These checks do not test Unreal actors, RPCs, replication, rendering, in-engine saving, or recovery.
 
 ## Not verified or implemented
 
