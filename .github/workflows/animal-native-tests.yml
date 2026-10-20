@@ -48,3 +48,16 @@ jobs:
             Tests/Native/PrototypePersistenceTests.cpp -o /tmp/wildbound-snapshot-tests
       - name: Test serialization and corrupt snapshot rejection
         run: /tmp/wildbound-snapshot-tests
+
+  native-placement-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile C++17 grid placement policy
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
+            -I Source/Wildbound/Public \
+            Tests/Native/PrototypePlacementTests.cpp -o /tmp/wildbound-placement-tests
+      - name: Reject invalid and overlapping construction requests
+        run: /tmp/wildbound-placement-tests
