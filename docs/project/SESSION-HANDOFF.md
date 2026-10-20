@@ -10,11 +10,12 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Refactored `UWildboundAnimalNeedsComponent` to call that model, replicate a condition snapshot and update roughly once per second instead of firing Blueprint events every frame.
 - Authored a Greenveil engineering prototype: character and camera, placeholder replicated animal, player-controller care interactions with server-side distance/LOS/resource/cooldown checks, temporary 100 cm grid blocks, temporary ground, game mode bootstrap and debug HUD.
 - Added legacy input bindings for temporary testing, plus GitHub Actions native C++ and static project-wiring checks.
+- Added a portable versioned snapshot format with malformed-input tests, and a bounded snap-grid policy with native tests. The grid policy is called from the prototype player-controller placement path. Snapshot serialization is not yet connected to Unreal or disk.
 - Native and static checks **passed** on [CI run 39516040708](https://github.com/Systemkill90/WildBound/actions/runs/39516040708).
 
 ## Exact status
 
-No Unreal Engine build, editor launch, map asset, two-player test, dedicated server, AI, actual voxel terrain, persistent saves or complete taming gameplay exists. Newly authored actors/RPCs are uncompiled. Network checks in code are preliminary and require adversarial testing.
+No Unreal Engine build, editor launch, map asset, two-player test, dedicated server, AI, actual voxel terrain, **runtime persistent saves** or complete taming gameplay exists. Newly authored actors/RPCs are uncompiled. Network checks in code are preliminary and require adversarial testing.
 
 ## Next operator action
 
