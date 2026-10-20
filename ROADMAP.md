@@ -8,9 +8,9 @@ Milestones show evidence, **not percent-finished guesses**. No playable Unreal b
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **C++ scaffold and gameplay harness authored; UE uncompiled** | Select toolchain; build game/editor/server; launch and save a test level |
 | 1 — Small Greenveil test | **Starter ground, character, animal and HUD code authored; untested** | Movement, readable debug feedback and stable map playback |
-| 2 — Construction proof | **Grid-block placement/removal code authored; not voxel** | Test voxel volumes, chunk collision and animal enclosure navigation in UE |
+| 2 — Construction proof | **Grid-block placement/removal authored; portable placement rules unit-tested; not voxel** | Test voxel volumes, chunk collision and animal enclosure navigation in UE |
 | 3 — Animal needs and trust | **Portable logic tested; UE component and care RPCs untested** | Observe care, deprivation, stress, trust and credible animal behavior in play |
-| 4 — Dedicated co-op and persistence | **RPC/replication source authored, no server tests or saves** | Two clients, server validation, restart, versioned save and backup recovery |
+| 4 — Dedicated co-op and persistence | **RPC/replication source authored; portable versioned snapshot tests; no integrated runtime saves or server tests** | Two clients, server validation, restart, versioned save and backup recovery |
 | 5 — Breeding and genetics | Planned | Stable animal ID, parentage, bounded inheritance and safe offspring lifecycle |
 | 6 — Greenveil vertical slice | Planned | Polished gather/build/farm/care/explore loop, art and playtesting |
 | 7 — Drowned March | Planned | Small original wetland biome with wildlife, fog, hazards, ruins and mystery |
