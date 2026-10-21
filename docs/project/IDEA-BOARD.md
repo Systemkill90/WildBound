@@ -48,7 +48,7 @@ Ideas can be suggested in **any order**, regardless of current development statu
 | IB-001 | Mythical creature silhouettes, modified animals/dinosaurs, giant fungi, witchy forest/swamp pockets, rare speaking trees | Exploring | Develop creature and enchanted-biome studies independently of milestones |
 | IB-002 | **Distinct fantasy villages**, including elven, werewolf, dwarven, mixed-species communities and original folk (Veshari, Nimrui, Kethri) | Exploring — [draft staged](../world/fantasy-peoples-and-villages.md) | Compare settlement identity, daily life and possible NPC interactions; names and mechanics are not approved canon |
 | IB-003 | Water-surface and underwater villages populated by fish-folk, sirens, merfolk and mixed communities | Exploring | Develop culturally distinct settlements, ecology, water travel and animal husbandry; not a milestone commitment |
-| IB-004 | Aquatic NPCs sing slow, ethereal, eerie and enchanting shanties, work songs and ceremonial songs | Exploring — [songbook staged](../world/aquatic-voices-and-shanties.md) | Review three complete lyric drafts, sonic identities, accessibility and eventual real vocal recordings; no in-game audio implemented |
+| IB-004 | Aquatic NPCs sing slow, ethereal, eerie and enchanting shanties, work songs and ceremonial songs | Exploring — [songbook staged](../world/aquatic-voices-and-shanties.md) | Owner-selected Luresinger direction: unusually deep **feminine** harmonies; **male** voices angelic and frightening. Review composition, performances and accessibility; no in-game audio implemented |
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
 
