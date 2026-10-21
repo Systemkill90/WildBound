@@ -1,22 +1,22 @@
 # Wildbound — Enemy faction concepts and creature taxonomy
 
-**Date:** October 21, 2026. **Stage:** Exploring / draft; none of the names, ranks, characters, combat mechanics, assets or dialogue are approved canon or implemented.
+**Date:** October 21, 2026. **Stage:** The faction name **The Veyrath** is owner-approved; ranks, characters, combat mechanics, assets and dialogue remain exploratory and unimplemented.
 
 [Ellowyn and the Sylweave](ellowyn-and-the-sylweave.md) · [Quests](quest-framework.md) · [Fantasy villages](fantasy-peoples-and-villages.md) · [Biomes](biomes.md) · [Idea board](../project/IDEA-BOARD.md)
 
 ## Fixed lore constraints from the owner
 
-Ellowyn is the oldest sentient willow; her roots carry the **Sylweave**, a force that creates and connects **every living thing, including evil beings**. A faction seeking youth, power and immortality uses old extraction machinery and a **specific poisonous chemical**, which blights Ellowyn. The chemical contaminates harvested Sylweave, so the faction repeatedly drills deeper seeking a pure batch; the repetition poisons Ellowyn more. The faction itself becomes sick and some of its members transform into monsters. Ellowyn spends what strength she has left to gift the players with Sylweave potential; they must survive, care for animals, learn the world, train and grow able to save her. Bonded animals can help fight the faction, with species-appropriate limits. The **faction has not yet been named**.
+Ellowyn is the oldest sentient willow; her roots carry the **Sylweave**, a force that creates and connects **every living thing, including evil beings**. A faction seeking youth, power and immortality uses old extraction machinery and a **specific poisonous chemical**, which blights Ellowyn. The chemical contaminates harvested Sylweave, so the faction repeatedly drills deeper seeking a pure batch; the repetition poisons Ellowyn more. The faction itself becomes sick and some of its members transform into monsters. Ellowyn spends what strength she has left to gift the players with Sylweave potential; they must survive, care for animals, learn the world, train and grow able to save her. Bonded animals can help fight the faction, with species-appropriate limits. The faction is named **The Veyrath** by the owner.
 
-## Three naming directions — unapproved
+## Selected faction name and discarded alternatives
 
 | Candidate | Character |
 | :-- | :-- |
-| **Veyrath Concord** | A once-respected scholarly alliance and longevity movement concealing its excesses; recommended exploratory candidate |
+| **The Veyrath** | **Selected name**: a once-respected scholarly organization concealing its excesses |
 | **Gilded Veil** | A clandestine network of wealthy patrons and alchemists with a ceremonial aesthetic |
 | **Ashen Covenant** | A doctrinal brotherhood treating mortality as an illness to eliminate |
 
-Historical notes mention **Hollow Crown**, also a *previous unapproved candidate*. Do not call any of these the official faction without the owner's explicit choice.
+Historical notes mention **Hollow Crown**, also a previous unapproved candidate. **The Veyrath** is the official faction name; Gilded Veil, Ashen Covenant and Hollow Crown remain rejected or superseded name suggestions.
 
 ## Origin and downfall — proposed
 
