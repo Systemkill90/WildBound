@@ -46,3 +46,7 @@ Do not start a large world, major new systems, or expensive asset generation bef
 ## Documentation-only review — October 21, 2026
 
 Developer setup, first-playable gates, system-status summaries, asset-rights wording and documentation navigation were updated against the recorded UE 5.8.4 prototype evidence. [Audit findings](DOCUMENTATION-AUDIT-2026-10-21.md) describe corrected drift and open security/configuration and reproducibility follow-ups. **No desktop check, new Unreal compile, game interaction test, server session or game feature implementation was performed in the documentation audit.** The next real work remains the hands-on Greenveil interaction acceptance in [Issue #2](https://github.com/Systemkill90/WildBound/issues/2).
+
+## Repository presentation refresh — October 21, 2026
+
+The public `README.md` now opens with existing Wildbound concept art, a concise game introduction, simpler thematic navigation, an evidence-based prototype summary, and an expandable developer section. Added dedicated landing pages for art, the world, gameplay systems, and project records; reorganized the documentation hub and visually clarified the roadmap. This was **presentation/documentation work only**: no Unreal source changes, no new gameplay verification, and no changes to approved game lore. Draft speculative concepts remain in their review PRs. Next technical step remains [hands-on Greenveil care/build validation](https://github.com/Systemkill90/WildBound/issues/2).
