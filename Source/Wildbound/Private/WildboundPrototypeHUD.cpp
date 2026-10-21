@@ -12,6 +12,8 @@ void AWildboundPrototypeHUD::DrawHUD()
     Super::DrawHUD();
     if (!Canvas) return;
 
+    DrawRect(FLinearColor(0.015f, 0.025f, 0.024f, 0.78f), 14.0f, 14.0f, 670.0f, 174.0f);
+
     const FLinearColor Light(0.92f, 0.91f, 0.78f);
     const FLinearColor Accent(0.51f, 0.87f, 0.66f);
     DrawText(TEXT("WILDBOUND  |  GREENVEIL MEADOW"),
@@ -22,9 +24,6 @@ void AWildboundPrototypeHUD::DrawHUD()
         Light, 24.0f, 73.0f);
     DrawText(TEXT("G place snapped block | X remove aimed block"),
         Light, 24.0f, 95.0f);
-    DrawText(TEXT("Prototype field test  |  G place block | X remove block"),
-        Light, 24.0f, 117.0f);
-
     AWildboundPrototypePlayerController* PC =
         Cast<AWildboundPrototypePlayerController>(GetOwningPlayerController());
     if (!PC) return;

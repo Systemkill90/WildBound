@@ -4,7 +4,65 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"
+
+namespace
+{
+constexpr float AnimalGroundProbeAbove = 350.0f;
+constexpr float AnimalGroundProbeBelow = 500.0f;
+constexpr float AnimalMaxGroundStep = 130.0f;
+constexpr float AnimalMinGroundNormalZ = 0.65f;
+
+bool FindGroundedLocation(UWorld* World, const AActor* IgnoreActor,
+    const FVector& DesiredLocation, float CapsuleHalfHeight,
+    float MaxGroundDelta, FVector& OutLocation)
+{
+    if (!World)
+    {
+        return false;
+    }
+
+    const FVector Start = DesiredLocation + FVector(0.0f, 0.0f, AnimalGroundProbeAbove);
+    const FVector End = DesiredLocation - FVector(0.0f, 0.0f, AnimalGroundProbeBelow);
+    FCollisionQueryParams QueryParams(SCENE_QUERY_STAT(WildboundAnimalGroundProbe), false);
+    QueryParams.AddIgnoredActor(IgnoreActor);
+
+    TArray<FHitResult> Hits;
+    const FCollisionObjectQueryParams ObjectTypes(ECC_WorldStatic);
+    if (!World->LineTraceMultiByObjectType(Hits, Start, End, ObjectTypes, QueryParams))
+    {
+        return false;
+    }
+
+    const float ExpectedGroundZ = DesiredLocation.Z - CapsuleHalfHeight;
+    float BestDelta = MaxGroundDelta;
+    const FHitResult* BestHit = nullptr;
+    for (const FHitResult& Hit : Hits)
+    {
+        if (Hit.bStartPenetrating || Hit.ImpactNormal.Z < AnimalMinGroundNormalZ)
+        {
+            continue;
+        }
+
+        const float GroundDelta = FMath::Abs(Hit.ImpactPoint.Z - ExpectedGroundZ);
+        if (GroundDelta < BestDelta)
+        {
+            BestDelta = GroundDelta;
+            BestHit = &Hit;
+        }
+    }
+
+    if (!BestHit)
+    {
+        return false;
+    }
+
+    OutLocation = FVector(DesiredLocation.X, DesiredLocation.Y,
+        BestHit->ImpactPoint.Z + CapsuleHalfHeight);
+    return true;
+}
+}
 
 AWildboundPrototypeAnimal::AWildboundPrototypeAnimal()
 {
@@ -37,6 +95,16 @@ AWildboundPrototypeAnimal::AWildboundPrototypeAnimal()
 void AWildboundPrototypeAnimal::BeginPlay()
 {
     Super::BeginPlay();
+    if (HasAuthority() && BodyCollision)
+    {
+        FVector GroundedLocation;
+        if (FindGroundedLocation(GetWorld(), this, GetActorLocation(),
+                BodyCollision->GetScaledCapsuleHalfHeight(), 1000.0f, GroundedLocation))
+        {
+            SetActorLocation(GroundedLocation, false, nullptr, ETeleportType::TeleportPhysics);
+        }
+    }
+
     HomeLocation = GetActorLocation();
     WanderTarget = HomeLocation;
     if (HasAuthority())
@@ -85,6 +153,21 @@ void AWildboundPrototypeAnimal::Tick(float DeltaSeconds)
     const FRotator Facing = Direction.Rotation();
     SetActorRotation(FMath::RInterpConstantTo(GetActorRotation(), Facing, StepSeconds, 180.0f));
     const FVector Offset = Direction.GetSafeNormal() * Speed * StepSeconds;
+    const FVector DesiredLocation = Current + Offset;
+    FVector GroundedLocation;
+    if (!BodyCollision || !FindGroundedLocation(GetWorld(), this, DesiredLocation,
+            BodyCollision->GetScaledCapsuleHalfHeight(), AnimalMaxGroundStep,
+            GroundedLocation))
+    {
+        WanderTarget = Current;
+        NextWanderChoice = Now + FMath::FRandRange(1.0f, 2.0f);
+        return;
+    }
+
     FHitResult Hit;
-    SetActorLocation(Current + Offset, true, &Hit);
+    if (!SetActorLocation(GroundedLocation, true, &Hit))
+    {
+        WanderTarget = Current;
+        NextWanderChoice = Now + FMath::FRandRange(1.0f, 2.0f);
+    }
 }

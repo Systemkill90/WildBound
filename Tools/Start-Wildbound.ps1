@@ -4,6 +4,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = "",
+    [string]$Map = "/Game/Maps/GreenveilField",
     [switch]$BuildOnly,
     [switch]$ShowEngines
 )
@@ -112,11 +113,20 @@ if ($BuildOnly) {
     exit 0
 }
 
-# Start the authored Greenveil field, with runtime bootstrap as a fallback if the
-# map asset has not been generated yet.
-$GreenveilMap = "/Game/Maps/GreenveilField"
-$MapAsset = Join-Path $RepoRoot "Content\Maps\GreenveilField.umap"
-$MapArgument = if (Test-Path $MapAsset -PathType Leaf) { $GreenveilMap } else { "/Engine/Maps/Entry" }
+# Start the requested map. This lets us playtest a free sample environment while
+# retaining the authored Greenveil field as the normal default.
+if ($Map -notmatch '^/(Game|Engine)/') {
+    throw "-Map must be an Unreal package path under /Game or /Engine, such as /Game/Maps/GreenveilField."
+}
+$MapAsset = $null
+if ($Map.StartsWith("/Game/")) {
+    $MapRelativePath = ($Map.Substring(6).Replace('/', '\') + ".umap")
+    $MapAsset = Join-Path (Join-Path $RepoRoot "Content") $MapRelativePath
+    if (-not (Test-Path $MapAsset -PathType Leaf)) {
+        throw "The requested /Game map is not present in Content: $MapAsset"
+    }
+}
+$MapArgument = $Map
 $Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1600 -ResY=900')
 try {
     $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru

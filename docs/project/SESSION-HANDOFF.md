@@ -14,17 +14,19 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Static verification passed 58 checks; native simulation, snapshot and placement suites passed 34, 22 and 13 checks respectively.
 - Packaged listen server accepted two simulated client connections. No gameplay RPC or replication assertions were run.
 - Reproduced and fixed the white-screen defect through movable generated foliage and controlled exposure/lighter fog. Rebuilt the package and visually confirmed the standalone window renders; startup log confirms GreenveilField loaded.
-- Owner feedback: the scene remains visually poor and is not a polished playtest world. Use a free Unreal sample environment as the visual starting point; Electric Dreams is the leading forest candidate. Keep experimental PCG/Substrate features out of required runtime paths.
+- Owner feedback: use an official free Unreal environment as the visual starting point. Electric Dreams now serves as the bounded local preview; experimental PCG/Substrate features remain outside required Wildbound runtime systems.
+- The 1920×1080 output held 60 FPS in the starting view with saved Medium scalability settings and 60% TSR (1152×648 internal); this is upscaled, not a native-1080p or traversal benchmark.
+- Ground-probed deer placement and short-range wandering compiled in both the sample plugin and main Wildbound target. Live preview showed the deer moving along the creek bank with its feet grounded; the model still has no walk cycle.
 - Updated README, roadmap and developer/project state documents to distinguish compile/package evidence from playtest evidence.
 
 ## Owner playtest now
 
-The corrected packaged Wildbound window has been left open. The white screen is fixed, but the owner considers the environment too rough for a polished playtest. Prioritize rebuilding the small test scene from an official free Unreal forest sample, then resume the full control/care/build playtest. Do not mark interactions passed until observed in play.
+The Electric Dreams close-range preview has been left open with the Wildbound HUD and 1080p/60 output settings. The white screen is fixed, but the scene and pawn remain prototype quality. Resume the control/care/build playtest; do not mark interactions passed until observed in play.
 
 ## Known visual and gameplay limits
 
 - The main pawn remains an engine primitive and is not a realistic character.
-- Deer is a static-pose model moved by root translation; it currently has no walk cycle. Its height offset is set from imported model bounds, but ground contact should be inspected in the running window.
+- Deer is a static-pose model with ground-probed, short-range root movement. Creek-bank grounding was observed; test uneven ground/obstacles and replace the static pose with a rigged walk cycle.
 - Bowl and pail are environment props; no inventory or actual bowl-target interaction exists.
 - Starter supplies and world state are in memory. Blocks are temporary cubes; no voxel terrain.
 - White-screen issue is fixed. The current world renders, but still needs a better environmental foundation and visual review.
@@ -32,11 +34,11 @@ The corrected packaged Wildbound window has been left open. The white screen is 
 
 ## Next implementation sequence
 
-1. Inspect the free Electric Dreams sample and migrate only a bounded small-forest environment/asset set into Greenveil; retain Wildbound C++ gameplay and avoid required dependencies on experimental features.
-2. Package and inspect the improved clearing for readability and performance.
-3. Capture owner playtest observations and reproduce control, floor-collision, care or building defects.
-4. Source/import a free rigged animal and player asset with documented licenses and a grounded locomotion path.
-5. Add two-client functional assertions for authoritative care and block replication.
-6. Test animal movement around a small enclosure, then evaluate persistence and dedicated-server packaging.
+1. Playtest movement, camera, care, needs and block placement in the current Electric Dreams preview; record defects before expanding the scene.
+2. Source/import free rigged player and deer assets with documented licenses; add deer locomotion while preserving ground following.
+3. Migrate the bounded forest slice into the Wildbound project and inspect packaged readability/performance.
+4. Add two-client functional assertions for authoritative care and block replication.
+5. Test animal movement around a small enclosure, then evaluate persistence and dedicated-server packaging.
+
 
 Do not start a large world, major new systems, or expensive asset generation before this foundation behaves correctly.
