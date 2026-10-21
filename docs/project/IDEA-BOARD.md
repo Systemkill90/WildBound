@@ -50,6 +50,10 @@ Ideas can be suggested in **any order**, regardless of current development statu
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
 
+## Expanded concept follow-up (separate draft)
+
+[Planning checkpoint PR #6](https://github.com/Systemkill90/WildBound/pull/6) stages original SVG art, a creature candidate roster, witchy forest/marsh and sentient-tree design, extended original-people studies, an independent technical audit and the next-stage runbook. These remain proposals and can be reviewed without importing them into near-term milestones.
+
 ## Development staging queue
 
 This is a **proposed work sequence**, not a list of completed tasks or new approvals.
@@ -62,7 +66,7 @@ This is a **proposed work sequence**, not a list of completed tasks or new appro
 | Two-player authoritative care and persistence | Planned | Replication, restart, backup/restore test |
 | Breeding/genetics | Later | Only after reliable animals and persistence |
 
-See [current state](CURRENT-STATE.md) and [first playable validation](../developers/FIRST-PLAYABLE.md) for evidence requirements. As of October 20, 2026, the existing UE5 scaffold and animal-needs component are **uncompiled and unverified**. There is no playable build, tested dedicated server, or selected voxel plugin.
+See [current state](CURRENT-STATE.md) and [first playable validation](../developers/FIRST-PLAYABLE.md) for evidence requirements. Since the original idea-board capture, **main has advanced**: the repository now records a successful UE 5.8.4 editor/game build, a packaged and locally launched Greenveil test environment, and two simulated clients joining a listen server. **Actual care/build gameplay replication, dedicated-server packaging and world persistence are not yet verified.** The planning queue above is a historical idea-stage outline; follow [current state](CURRENT-STATE.md) for live evidence.
 
 ## Rules for staging from chat
 
@@ -70,7 +74,7 @@ See [current state](CURRENT-STATE.md) and [first playable validation](../develop
 2. When the owner approves a durable design choice, update [DECISIONS.md](DECISIONS.md), and the relevant design document.
 3. Stage changes on an isolated branch and link commits/PRs here or in the handoff. Do not call branch presence completion.
 4. Update [CURRENT-STATE.md](CURRENT-STATE.md) only with concrete implementation and verification facts; update [SESSION-HANDOFF.md](SESSION-HANDOFF.md) for actionable next work.
-5. Keep Wildbound separate from ShroudForge. Do not commit private keys, saves, engine binaries, platform SDKs, or unlicensed assets. Ask before paid dependencies.
+5. Do not commit private keys, saves, engine binaries, platform SDKs, or unlicensed assets. Ask before paid dependencies.
 
 ## Session starter
 
