@@ -141,6 +141,34 @@ These are original, newly authored lyric drafts. Titles, melodies, vocal designs
 
 **Performance direction:** Unnerving, not constant threat or obvious coercion. The singer may be protecting the listener, grieving, or merely echoing something ancient. The same lyric can change meaning with encounter context.
 
+## Luresinger voice casting — owner-selected direction (October 21)
+
+**Explicit owner preference:** Feminine voices should have **unusually deep harmonies while still sounding unmistakably feminine**. Male Luresingers may sound **angelic and incredibly creepy at the same time**. This contrast is an approved *aesthetic target for exploration*, not an approved final recording, casting list, or implementation.
+
+### Female vocal design: deep and otherworldly
+
+- A rich, breath-close contralto or low mezzo lead with a natural, intimate feminine character and soft vowel transitions; never reduced to a theatrical monster growl.
+- A second, lower choral layer (contralto, resonant ensemble, or carefully crafted subharmonic effect) moves beneath her, suggesting a depth no single throat should contain. Blend subtly enough that intelligible lyrics and singer identity remain clear.
+- Thin, airy upper harmonics appear only at emotional peaks, making the same voice seem both abyssal and beautiful.
+- Favor live layered performances first; use cautious processing, slight formant variation, and spatial reverberation only as support. Do not simply pitch-shift a soprano down until it sounds masculine.
+
+### Male vocal design: angelic but frightening
+
+- Clear, high tenor or countertenor singing: tender, almost devotional, without a stereotypical threatening baritone.
+- Slowly arriving, closely spaced harmonies create a near-perfect celestial chord that goes subtly sour; held notes outlast normal breath in an intentional, rare supernatural moment.
+- An extremely soft bass undertone or distant unison may deepen the scene, but the **primary male lead stays strikingly pure and light**.
+- The unsettling sensation comes from flawless calm, uncanny timing, breath placement, and unresolved intervals — not distortion or roaring.
+
+### “The Third Bell” — proposed male/female arrangement
+
+1. **Opening:** Female contralto alone, very close and intimate: “One bell for the boats that sleep.” A deeper feminine-sounding harmony slowly emerges beneath the last word.
+2. **Second couplet:** Male countertenor joins from across the water in a nearly angelic high register: “Two for the roads beneath the deep.” His voice is warm, pure, and unnervingly steady.
+3. **Refrain:** Female lead sings “Come no closer, turn no more” while the male carries a suspended upper harmony, slightly offset. The low female chorus remains almost below conscious notice.
+4. **Bridge:** Female and male alternate rather than harmonize, as though the singers are answering from different shores.
+5. **Final two lines:** All accompaniment vanishes. Male voice sings “I never called you by your name” with almost sacred sweetness. Female voice answers “But still you turned. And still you came” in a rich, unsettling low register. Silence after “came”; no musical resolution.
+
+**Mixing / staging note:** Favor distance-aware, discrete sung layers with natural differences between voices. Use acoustic space, frequency balance and subtle harmonic tension instead of exaggerated horror effects. Ensure dialogue remains intelligible, captions are provided, and critical gameplay cues are not hidden in music.
+
 ## Soundscape and in-world behavior
 
 | Situation | Proposed audio response |
