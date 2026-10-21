@@ -72,7 +72,7 @@ The last documented Windows development session **compiled and packaged** the ga
 | [Cooperative world design](docs/systems/multiplayer.md) | [First playable tests](docs/developers/PROTOTYPE-PLAYTEST.md) |
 | [Concept art gallery](docs/art/README.md) | [Project decisions](docs/project/DECISIONS.md) |
 
-**[Open the full documentation library →](docs/README.md)**
+**[Open the full documentation library →](docs/README.md)** · [Systems guide](docs/systems/README.md) · [Development desk](docs/project/README.md)
 
 ### Creative workshop
 
