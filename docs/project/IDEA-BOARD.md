@@ -45,7 +45,8 @@ Ideas can be suggested in **any order**, regardless of current development statu
 
 | ID | Idea | Stage | Suggested next action |
 | :-- | :-- | :-- | :-- |
-| — | No additional ideas captured yet | Inbox | Capture the next chat proposal here before assigning scope |
+| IB-001 | Mythical creature silhouettes, modified animals/dinosaurs, giant fungi, witchy forest/swamp pockets, rare speaking trees | Exploring | Develop creature and enchanted-biome studies independently of milestones |
+| IB-002 | **Distinct fantasy villages**, including elven, werewolf, dwarven, mixed-species communities and original folk (Veshari, Nimrui, Kethri) | Exploring — [draft staged](../world/fantasy-peoples-and-villages.md) | Compare settlement identity, daily life and possible NPC interactions; names and mechanics are not approved canon |
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
 
