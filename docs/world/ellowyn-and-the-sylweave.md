@@ -11,6 +11,7 @@
 3. A faction of creatures seeks to **mine the Sylweave for its own use**, especially youth and immortality, and players must stop them and save Ellowyn.
 4. The extraction machines use a **specific chemical**. This artificial reagent contaminates Ellowyn while the machines siphon the Sylweave, **plaguing** her roots and spreading harm.
 5. Over time **the same chemical poisons the creatures conducting the siphoning**. What was intended to make them young and immortal instead increasingly **transforms them into monsters**. The group is causing its own undoing.
+6. **With what strength she has left, Ellowyn deliberately shares her power with the player characters** so they can become heroes capable of rescuing her. This is the reason they are empowered, but not an instant grant of mastery: they must live off the land, understand living systems and the peoples of the realm, and grow stronger before they can stop the extraction and heal her.
 
 The paragraphs below expand these clear owner decisions into *candidate* names, mechanics, visuals, encounters and plot beats; those details are not owner-approved canon yet.
 
@@ -21,6 +22,38 @@ The Sylweave is a living, world-spanning weave of creative energy traveling from
 This produces a strong thematic contradiction: the faction siphoning Ellowyn **owes its own existence to the force it is destroying**. They cannot claim a right to the Sylweave on the grounds that they are more worthy of life.
 
 The Sylweave is *not* equivalent to the blight: one connects and sustains life, the other is an artificial chemical contaminant. Ellowyn's weakness results from a combination of deliberate extraction and poisoning; this difference should remain consistent in dialogue, visual effects and gameplay design.
+
+## Ellowyn's last gift — why the player becomes a hero
+
+**Owner-confirmed central premise:** Ellowyn has been steadily drained and poisoned. She can no longer sever the far-flung extraction lines herself. In a conscious act of desperation and trust, she spends whatever strength she can still spare and bestows a **personal thread of her Sylweave** upon the player characters. This is a **special intentional gift**, not a claim that players alone possess the Sylweave: **every creature, including the enemy, is naturally connected to it already**. Ellowyn does not withhold life itself from those she considers wicked.
+
+**Narrative consequence:** The gift leaves her even weaker and makes the rescue deeply personal. What she shares is a **seed of possibility, not a completed heroic skill set**. A newly arrived settler has the potential to grow into the hero she needs, but not yet the understanding, strength, courage or training.
+
+**Thematic rule:** There is no automatic chosen bloodline or requirement to be born uniquely worthy. Ellowyn actively chooses to place hope in people who can move where her roots cannot and may learn to listen to the world. In cooperative play, **each player can share equally in the story's calling**, with no designated 'real hero' who owns the progression.
+
+**A possible first meeting (original draft, not finalized dialogue):**
+
+> “Little wanderer, there is so little of me left to give. Take it. Carry it where my roots can no longer reach. But do not mistake a gift for understanding. Learn the land. Know its creatures. Live among those I have sheltered. Then perhaps... you may teach my heart to beat freely again.”
+
+### Learn the land, grow the gift
+
+As players settle and survive, Ellowyn's gift develops through **earned experience of the living world**, rather than exclusively by killing enemies or accumulating generic experience points.
+
+| Player experience | The lesson | Illustrative gift progression — not an implemented mechanic |
+| :-- | :-- | :-- |
+| Construct shelter; maintain clean water, gardens and soil | Life needs a home and room to change | Detect a faint Sylweave pulse near a creek or damaged grove |
+| Observe, tame through trust, care for and responsibly breed animals | A living being cannot be treated as a disposable resource | Sense distress in nearby creatures or recognize a disrupted habitat |
+| Explore regions, track migrations, weather and signs of blight | Each ecosystem expresses the Sylweave differently | Follow distant root currents, identify unseen extraction damage |
+| Befriend and assist elven, wolfkin, dwarven, aquatic and original peoples | Cultures hold pieces of the world's history and practical knowledge | Recognize the symbols and stories used to hide Weir connections |
+| Learn survival, craft equipment, face threats, cleanse small contaminated sites | Courage and technical ability must complement compassion | Resist dangerous siphon environments and help sever an extraction line |
+
+**Power must complement, not replace, the core homesteading game.** It should never grant effortless taming, instant crop growth, or magical immunity to animal needs. Care, building, collaboration and earned trust remain meaningful even after story victory. The ability to fight and survive should grow, but the central goal is to **heal**, not simply to become powerful enough to destroy things.
+
+**Story progression candidate:** the players first discover a single harmed root, are entrusted with the gift, learn to restore one tiny patch of land, then gradually build the competence and alliances needed to confront the Great Siphon. The pacing should permit an open-ended life on persistent servers rather than impose a punishing real-time doomsday clock.
+
+### The moral paradox
+
+The antagonists' lives also come from Ellowyn. She cannot casually remove them from the Sylweave without denying what she is. Her gift to the players is a request for help against their *actions*, not a decree that enemies are not worth living. This leaves room for infected enemies who might still be saved, and allows a dark but humane story.
 
 ## The chemical — working concept: Nhalis
 
@@ -64,23 +97,23 @@ The proposed **Gilded Warden** believes that by controlling the Sylweave and per
 
 ## How this changes the main story
 
-### Chapter I — Something Beneath the Meadow
-A homesteader discovers a dying root near a creek, strange livestock or wildlife behavior, and traces of pale industrial sediment. A damaged animal may be helped, highlighting the player's caring role. The first act ends with a discovery: this is not a mystical curse spreading spontaneously; it traces back to a machine and someone operating it.
+### Chapter I — Ellowyn's Last Gift
+A homesteader discovers a dying root near a creek, strange livestock or wildlife behavior, and traces of pale industrial sediment. Ellowyn, nearly spent, reaches the player characters and invests what strength she can spare in them. This moment **makes them potential heroes but not yet competent saviors**. A damaged animal may be helped, highlighting the player's caring role. The act ends with a discovery: this is not a spontaneous curse; it traces back to a machine and someone operating it.
 
 ### Chapter II — The Price of Years
-Investigating different settlements uncovers claims of miraculous rejuvenation, villages dependent on Heartglass, hidden waste from refinement, and the first visibly altered siphoners. Dwarven experts may recognize ancient Weir architecture, fungal keepers can detect disrupted growth, and werewolf trackers may find new routes taken by frightened animals. Players learn why some factions cooperate and others resist.
+**Players must first live on the land and grow stronger.** Building and maintaining a homestead, learning wildlife needs, earning animal trust, survival, crafting and exploring varied habitats develop the understanding necessary to use Ellowyn's gift. Investigating different settlements uncovers claims of miraculous rejuvenation, villages dependent on Heartglass, hidden waste from refinement, and the first visibly altered siphoners. Dwarven experts may recognize ancient Weir architecture, fungal keepers can detect disrupted growth, and werewolf trackers may find new routes taken by frightened animals. Players learn why some factions cooperate and others resist.
 
 ### Chapter III — Drowned Evidence
 The Drowned March holds records of the older Weir catastrophe and song-preserved routes to buried infrastructure. Players discover that the faction's leaders have concealed the illness among their own members. Some Hollowed retain enough awareness to reveal locations or ask for mercy. Sirens may sing warnings about waters no longer answering Ellowyn.
 
 ### Chapter IV — The Great Siphon
-The climax takes place in a chamber of enormous willow roots, old stone mechanisms and the faction's chemical distribution network. The principal antagonist may be the most altered of all, demonstrating the failure of their immortality project. Merely killing a mutated leader does **not** cure Ellowyn: players must stop the siphon, prevent or contain more chemical release, and stabilize essential protections for villages still dependent on old Weirs.
+After living in and learning the world, the players are finally strong enough to carry Ellowyn's entrusted gift into the buried heart of the extraction system. The climax takes place in a chamber of enormous willow roots, old stone mechanisms and the faction's chemical distribution network. The principal antagonist may be the most altered of all, demonstrating the failure of their immortality project. Merely killing a mutated leader does **not** cure Ellowyn: players must stop the siphon, prevent or contain more chemical release, and stabilize essential protections for villages still dependent on old Weirs. The use of Ellowyn's gift in the finale should **depend on lessons learned from animals, habitats, villages and survival**, not on raw magic levels alone.
 
 **Ellowyn must remain an active participant in the ending**: once the extraction is interrupted and the contamination contained, she chooses how her strength returns to the world's life network. She does not purge her enemies from the Sylweave; they are living beings too.
 
 ## What counts as beating Wildbound?
 
-**Story victory:** Shut down the Sylweave siphoning enterprise, end the deliberate contamination, defeat or stop the leadership, protect dependent communities from sudden collapse, and give Ellowyn a credible path to recover.
+**Story victory:** Grow into Ellowyn's final gift through lived experience, shut down the Sylweave siphoning enterprise, end the deliberate contamination, defeat or stop the leadership, protect dependent communities from sudden collapse, and give Ellowyn a credible path to recover.
 
 The finale is emotionally and visually conclusive (boss/confrontation shape still open), followed by story credits and a visible improvement in Ellowyn and the land. Existing player homes, animals, villages and cooperative saves persist afterward; the story's victory is not the end of life in the world.
 
@@ -95,8 +128,8 @@ Recovery should be **hopeful rather than instant or perfectly clean**. Residual 
 - **The Gilded Warden** — a principal faction leader; his species, motivations, personality and finale remain unresolved.
 - **The Weirs** — ancient regulating machinery now repurposed to extract Sylweave.
 
-**These names are optional creative directions; only Sylweave is explicitly selected as the life-force name.**
+**These names are optional creative directions.** Sylweave is explicitly selected as the life-force name; Ellowyn's act of gifting her remaining power to players, and their need to learn the land before they can save her, are also owner-confirmed story premises.
 
 ## Technical / ownership boundaries
 
-Everything in this file is a lore proposal apart from the owner-confirmed creative premises at top. The Unreal prototype does not contain a living Ellowyn character, Sylweave simulation, mining machines, chemical poisoning, mutated characters, faction AI, narrative missions or an endgame. The documented Greenveil build and listen-server connection checks are separate evidence; none of these features has been compiled, implemented or playtested.
+Everything in this file is a lore proposal apart from the owner-confirmed creative premises at top. The Unreal prototype does not contain a living Ellowyn character, player Sylweave gift or progression system, mining machines, chemical poisoning, mutated characters, faction AI, narrative missions or an endgame. The documented Greenveil build and listen-server connection checks are separate evidence; none of these features has been compiled, implemented or playtested.
