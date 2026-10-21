@@ -30,3 +30,15 @@ The wide valley image explores a realistic outdoor-survival mood: an enormous la
 - Treat every species above as a candidate until gameplay, ecological fit, and production scope are tested.
 
 Generated imagery is concept reference only. Production characters, environments, and game assets will need their own art direction, licensing review, and implementation.
+
+
+## October 21 checkpoint: original SVG mood and silhouette studies
+
+Four additional exploratory vector plates are staged for review in the [concept-art gallery](../art/concepts/README.md):
+
+- [Greenveil Witchwood](../art/concepts/greenveil-witchwood.svg): cottage, giant fungi, rare observant tree and warm path lighting.
+- [Drowned March / Lanthfen](../art/concepts/drowned-march-lanthfen.svg): fog, raised dwellings, causeway, pale reeds and a proposed original wetland resident.
+- [Fantasy creature silhouettes](../art/concepts/fantasy-creature-silhouettes.svg): Mosshorn, Reedstrider, Rootback and Lanternhare; visually speculative, not rigs.
+- [Fantasy village architecture](../art/concepts/fantasy-village-silhouettes.svg): Thistledown, Hollowmoon, Stonewake and Morrowcross.
+
+These are original, assistant-authored vector *direction studies*, not imported game assets, real screenshots or approvals of the future roster. Further background and independent-scope review are in [Idea Board expansion](idea-board-expansion.md) and [Truck Stop checkpoint](../project/TRUCK-STOP-2026-10-21.md).
