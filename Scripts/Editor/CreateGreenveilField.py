@@ -153,6 +153,28 @@ for index, (x, y) in enumerate([(-2100, -650), (-1800, 1550),
     spawn_mesh(stump_mesh, "Greenveil Stump %02d" % (index + 1),
                (x, y, 0.0), 0.66 + (index % 2) * 0.08, index * 41, True)
 
+# Wind-authored shrubs add a second foliage silhouette along the forest edge.
+shrub_pack = "/Game/GV_FreeShrubsPack/Meshes/Shrubs/Wind"
+pack_shrub_paths = [
+    shrub_pack + "/Shrub_A/GV_Vol7_Shrub_A_full_type1.GV_Vol7_Shrub_A_full_type1",
+    shrub_pack + "/Shrub_B/GV_Vol7_Shrub_B_full_type1.GV_Vol7_Shrub_B_full_type1",
+    shrub_pack + "/Shrub_C/GV_Vol7_Shrub_C_full_type1.GV_Vol7_Shrub_C_full_type1",
+]
+for path in pack_shrub_paths:
+    if not unreal.load_asset(path):
+        unreal.log_warning("Optional local Fab shrub unavailable: " + path)
+        pack_shrub_paths = []
+        break
+shrub_positions = [(-2350, -1250), (-1750, -2250), (-650, -2350),
+                   (650, -2350), (1850, -2050), (2350, -800),
+                   (2350, 850), (1800, 2200), (550, 2350),
+                   (-800, 2300), (-2050, 1650), (-2400, 350)]
+if pack_shrub_paths:
+    for index, (x, y) in enumerate(shrub_positions):
+        spawn_mesh(pack_shrub_paths[index % len(pack_shrub_paths)],
+                   "Greenveil Wind Shrub %02d" % (index + 1),
+                   (x, y, 0.0), 0.88 + (index % 3) * 0.11, (index * 79) % 360)
+
 # Small care props give the first interaction target a believable context.
 spawn_mesh(mesh("wooden_bowl_01", "wooden_bowl_01_1k"),
            "Greenveil Feed Bowl", (720.0, -100.0, 6.0), 0.8)

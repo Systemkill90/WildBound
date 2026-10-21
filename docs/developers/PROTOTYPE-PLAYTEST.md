@@ -2,11 +2,11 @@
 
 **Status: UE 5.8.4 editor/game compile and Win64 package pass; package launched. Controls and gameplay interactions in this checkout still need a hands-on playtest.**
 
-This is a first small playable foundation, not a finished demo. Greenveil is a saved forest clearing with CC0 environment assets and a deer static mesh. Construction is temporary snapped blocks, not a voxel engine. The player pawn remains a primitive, and the deer has no skeletal animation.
+This is a first small playable foundation, not a finished demo. Greenveil is a saved forest clearing with CC0 environment assets and a deer actor that can use a locally imported rigged doe and idle/walk/run sequences. Construction is temporary snapped blocks, not a voxel engine. The player pawn remains a primitive. The Fab assets are local-only and are not included in Git.
 
 ## Current local build
 
-The **last reported** packaged build was at `<local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe`; it was launched in the October 20 desktop session. This documentation review has not verified the file is still present or the process is still running. The package is generated locally and is intentionally not committed. For a source checkout, run [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd) to compile and launch the editor-built Greenveil game. Use `-BuildOnly` to compile without launching, or `-EngineRoot "<local-project-root>\Engine\UE_5.8"` to specify an engine.
+The October 21 package was cooked and launched from `<local-project-root>\Builds\WildBoundPreAlpha2\Windows\Wildbound.exe`; it is generated locally and is intentionally not committed. Its first launch selected the display's 2560×1440 mode. Relaunch with `-windowed -ResX=1920 -ResY=1080 -fps=60` for the requested native 1080p test. For a source checkout, run [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd), which builds and opens the editor game at 1920×1080 with a 60 FPS cap. Use `-BuildOnly` to compile without launching, or `-EngineRoot "<local-project-root>\Engine\UE_5.8"` to specify an engine. A Windows Security firewall prompt currently covers the running preview; click **Cancel** to keep the offline prototype network-blocked and reveal it.
 
 The verified toolchain is Unreal Engine 5.8.4, Visual Studio 2022, MSVC toolchain, and Windows SDK 10. Build/cook logs are kept in ignored `Saved/WildboundBootstrap`.
 
@@ -22,16 +22,16 @@ The verified toolchain is Unreal Engine 5.8.4, Visual Studio 2022, MSVC toolchai
 | G | Place a temporary snapped block ahead |
 | X while aiming at block | Remove a temporary block |
 
-Compare the HUD's animal values and supply counters before/after care attempts. Check refusal when too far, blocked, or out of supplies. Confirm the deer visually touches the ground and inspect its movement; it currently moves with a static pose, so the absent walk cycle is expected. The bowl and pail are scenery and are not interactive targets.
+Compare the HUD's animal values and supply counters before/after care attempts. Check refusal when too far, blocked, or out of supplies. Confirm the doe visually touches the ground and that idle/walk/run sequences change with movement. The bowl and pail are scenery and are not interactive targets.
 
 ## Evidence already collected
 
 | Check | Result |
 | :-- | :-- |
 | Editor/game compile | Passed |
-| Saved Greenveil map generation and cook | Passed, 543 packages in the package registry |
-| Win64 Development package | Passed, about 145 MiB cooked content |
-| Packaged game startup | Launched locally; Greenveil map loaded |
+| Saved Greenveil map generation and cook | Passed; latest cook completed 620 runtime packages |
+| Win64 Development package | Passed; latest local package archived under `<local-project-root>\Builds\WildBoundPreAlpha2` |
+| Packaged game startup | Launched locally; Greenveil map loaded. Windows Security prompt currently obscures the game |
 | Native animal rules / snapshot validation / placement rules | Passed 34 / 22 / 13 checks |
 | Static source wiring | Passed 58 checks |
 | Listen host / two simulated clients | Both clients joined; only connection acceptance checked |
@@ -41,7 +41,7 @@ Compare the HUD's animal values and supply counters before/after care attempts. 
 ## Known limits
 
 - The character uses a primitive mesh; use this test for controls and collision, not final visual judgment.
-- Deer is a static model whose root moves; no skeletal idle/walk cycle or animal navigation system exists.
+- The local packaged build includes the rigged doe and imported wind shrubs. In-game animation, close inspection of the updated scene, and sustained 1080p performance still need visual checks; full animal navigation does not exist.
 - Feeding and watering use prototype counters. There is no real inventory or bowl interaction.
 - Placed blocks and animal state are in memory only. No voxel terrain, construction persistence or world saves exist.
 - The portable snapshot test validates data format only; it is not integrated with Unreal save/load.

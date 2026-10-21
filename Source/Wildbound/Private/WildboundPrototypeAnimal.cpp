@@ -2,7 +2,10 @@
 
 #include "WildboundAnimalNeedsComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Animation/AnimSequence.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"
@@ -76,18 +79,47 @@ AWildboundPrototypeAnimal::AWildboundPrototypeAnimal()
     BodyCollision->InitCapsuleSize(38.0f, 82.0f);
     BodyCollision->SetCollisionProfileName(TEXT("BlockAll"));
 
-    Visual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DeerVisual"));
+    Visual = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("DeerVisual"));
     Visual->SetupAttachment(BodyCollision);
     Visual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-    Visual->SetRelativeLocation(FVector(0.0f, 0.0f, -87.0f));
+    Visual->SetRelativeLocation(FVector(0.0f, 0.0f, -82.0f));
 
-    static ConstructorHelpers::FObjectFinder<UStaticMesh> DeerBody(
+    FallbackVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FallbackDeerVisual"));
+    FallbackVisual->SetupAttachment(BodyCollision);
+    FallbackVisual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    FallbackVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -87.0f));
+    FallbackVisual->SetVisibility(false);
+
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> FallbackDeer(
         TEXT("/Game/Wildbound/Art/Animals/deer-standing/StaticMeshes/Continuous_anatomical_skin.Continuous_anatomical_skin"));
+    if (FallbackDeer.Succeeded())
+    {
+        FallbackVisual->SetStaticMesh(FallbackDeer.Object);
+        FallbackVisual->SetRelativeScale3D(FVector(0.92f));
+    }
+
+    static ConstructorHelpers::FObjectFinder<USkeletalMesh> DeerBody(
+        TEXT("/Game/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerDoe.SK_DeerDoe"));
     if (DeerBody.Succeeded())
     {
-        Visual->SetStaticMesh(DeerBody.Object);
-        Visual->SetRelativeScale3D(FVector(0.92f));
+        Visual->SetSkeletalMesh(DeerBody.Object);
+        Visual->SetRelativeScale3D(FVector(1.0f));
     }
+    else
+    {
+        Visual->SetVisibility(false);
+        FallbackVisual->SetVisibility(true);
+    }
+
+    static ConstructorHelpers::FObjectFinder<UAnimSequence> Idle(
+        TEXT("/Game/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleBreathe.ANIM_DeerDoe_IdleBreathe"));
+    static ConstructorHelpers::FObjectFinder<UAnimSequence> Walk(
+        TEXT("/Game/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Walk.ANIM_DeerDoe_Walk"));
+    static ConstructorHelpers::FObjectFinder<UAnimSequence> Run(
+        TEXT("/Game/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Run.ANIM_DeerDoe_Run"));
+    if (Idle.Succeeded()) IdleAnimation = Idle.Object;
+    if (Walk.Succeeded()) WalkAnimation = Walk.Object;
+    if (Run.Succeeded()) RunAnimation = Run.Object;
 
     Needs = CreateDefaultSubobject<UWildboundAnimalNeedsComponent>(TEXT("Needs"));
 }
@@ -107,6 +139,10 @@ void AWildboundPrototypeAnimal::BeginPlay()
 
     HomeLocation = GetActorLocation();
     WanderTarget = HomeLocation;
+    if (Visual && IdleAnimation)
+    {
+        Visual->PlayAnimation(IdleAnimation, true);
+    }
     if (HasAuthority())
     {
         NextWanderChoice = GetWorld()->GetTimeSeconds() + 1.5f;
@@ -116,10 +152,31 @@ void AWildboundPrototypeAnimal::BeginPlay()
 void AWildboundPrototypeAnimal::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
-    if (!HasAuthority() || DeltaSeconds <= 0.0f)
+    if (DeltaSeconds <= 0.0f)
     {
         return;
     }
+
+    if (Visual)
+    {
+        const FVector CurrentLocation = GetActorLocation();
+        const bool bMoving = !PreviousVisualLocation.IsNearlyZero()
+            && FVector::DistSquared2D(CurrentLocation, PreviousVisualLocation) > FMath::Square(1.0f);
+        PreviousVisualLocation = CurrentLocation;
+        if (bMoving != bPlayingMovementAnimation)
+        {
+            bPlayingMovementAnimation = bMoving;
+            UAnimSequence* Animation = bMoving
+                ? (Needs && Needs->GetStress() > 65.0f && RunAnimation ? RunAnimation : WalkAnimation)
+                : IdleAnimation;
+            if (Animation)
+            {
+                Visual->PlayAnimation(Animation, true);
+            }
+        }
+    }
+
+    if (!HasAuthority()) return;
 
     MovementAccumulator += DeltaSeconds;
     if (MovementAccumulator < 0.25f)

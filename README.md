@@ -81,18 +81,18 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The last documented Windows development session **compiled and packaged** the game and **launched** a small Greenveil test environment. A listen-server smoke test accepted two simulated client connections.
+The October 21 Windows session **compiled and packaged** the game and **launched** Greenveil. The latest local package uses a rigged doe with idle/walk/run sequences and 12 wind shrubs; those Fab source files remain local and are not published in Git. The game opened behind a Windows Security firewall prompt, so its updated visuals and 1080p performance still need inspection.
 
 | Area | Actual status |
 | :-- | :-- |
 | **Unreal foundation** | Editor and game compiled; Windows test package launched. |
-| **First Greenveil scene** | Saved forest clearing with imported environment art, a placeholder player and deer. |
+| **First Greenveil scene** | Saved clearing with imported environment art, a placeholder player and a rigged doe in the local package. Current map quality and animation remain unverified in the window. |
 | **Animal needs** | Core C++ rules tested; care interactions still need in-game validation. |
 | **Construction** | Temporary snapped blocks compiled; **not** voxel terrain and not yet playtested. |
 | **Multiplayer** | Two clients joined a listen server; gameplay state synchronization **not yet verified**. |
 | **Persistence, breeding & villages** | Not implemented. |
 
-**The next milestone:** verify movement, caring for the deer and placing/removing blocks *in the game itself* before expanding the world.
+**The next milestone:** reveal the game window, inspect the doe and shrubs at native 1920×1080, then verify movement, deer care and block placement before expanding the world.
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 

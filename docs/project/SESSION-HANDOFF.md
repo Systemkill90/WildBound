@@ -1,6 +1,6 @@
 # Wildbound session handoff
 
-Updated: October 20, 2026.
+Updated: October 21, 2026.
 
 Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md) before new work.
 
@@ -19,14 +19,22 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Ground-probed deer placement and short-range wandering compiled in both the sample plugin and main Wildbound target. Live preview showed the deer moving along the creek bank with its feet grounded; the model still has no walk cycle.
 - Updated README, roadmap and developer/project state documents to distinguish compile/package evidence from playtest evidence.
 
+## October 21 asset-integration continuation
+
+- Rebased local work onto current `origin/main` at `c193dc1` after discovering GitHub had advanced 105 commits beyond the original checkout. The older local build commit is preserved on `backup/asset-based-greenveil-2026-10-21`; do not force-push it.
+- Integrated the local Fab Animal Variety Pack doe mesh with idle-breath, walk and run sequences; retained the CC0 standing deer as a fallback when that optional local pack is absent. Added 12 Free Shrubs Pack instances around the forest edge in the local generated map.
+- Fab packs remain excluded from Git because their source files cannot be redistributed standalone. Asset references, attribution, optional shrub generation and fallback behavior are in the tracked source/docs; the locally generated map that contains Fab references remains uncommitted.
+- Rebuilt `WildboundEditor` and the Win64 Development game, reran native suites (34/22/13), static source checks (58) and documentation links (169), then cooked 620 packages and launched `<local-project-root>\Builds\WildBoundPreAlpha2\Windows\Wildbound.exe`.
+- The new game launched in the monitor's 2560×1440 mode, with a Windows Security firewall prompt over the display. No firewall permission was granted. Click Cancel to continue offline. The source launch helper now defaults to a windowed 1920×1080 output with a 60 FPS cap; current build performance and animations remain visually unverified.
+
 ## Owner playtest now
 
-At the October 20 desktop session's conclusion, the Electric Dreams close-range preview was reported open with the Wildbound HUD and 1080p/60 output settings. Its current running state has **not** been verified by this documentation review. The recorded white-screen defect was fixed in that build, but the scene and pawn remained prototype quality. Resume the control/care/build playtest; do not mark interactions passed until observed in play.
+The October 21 PreAlpha2 standalone package is running behind the Windows Security firewall prompt. Click **Cancel** (network access is unnecessary) to reveal the game. Relaunch it at windowed 1920×1080 with a 60 FPS cap, then inspect the imported doe's animation/grounding and the perimeter shrubs before continuing movement, care and building checks. No game interactions or new-package performance have yet been verified hands-on.
 
 ## Known visual and gameplay limits
 
 - The main pawn remains an engine primitive and is not a realistic character.
-- Deer is a static-pose model with ground-probed, short-range root movement. Creek-bank grounding was observed; test uneven ground/obstacles and replace the static pose with a rigged walk cycle.
+- The doe has a local skeletal mesh and idle/walk/run assets wired into the actor, but animation switching is not visually confirmed. Ground-probed movement remains short-range; test uneven ground and obstacles.
 - Bowl and pail are environment props; no inventory or actual bowl-target interaction exists.
 - Starter supplies and world state are in memory. Blocks are temporary cubes; no voxel terrain.
 - White-screen issue is fixed. The current world renders, but still needs a better environmental foundation and visual review.
@@ -34,9 +42,9 @@ At the October 20 desktop session's conclusion, the Electric Dreams close-range 
 
 ## Next implementation sequence
 
-1. Playtest movement, camera, care, needs and block placement in the current Electric Dreams preview; record defects before expanding the scene.
-2. Source/import free rigged player and deer assets with documented licenses; add deer locomotion while preserving ground following.
-3. Migrate the bounded forest slice into the Wildbound project and inspect packaged readability/performance.
+1. Dismiss the firewall prompt, relaunch at native 1080p and visually inspect the doe, shrubs, ground contact and frame rate.
+2. Playtest movement, camera, care, needs and block placement; record defects before expanding the scene.
+3. Source/import a free rigged player model and improve the small forest slice only after its packaged readability/performance is assessed.
 4. Add two-client functional assertions for authoritative care and block replication.
 5. Test animal movement around a small enclosure, then evaluate persistence and dedicated-server packaging.
 

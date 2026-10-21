@@ -127,7 +127,7 @@ if ($Map.StartsWith("/Game/")) {
     }
 }
 $MapArgument = $Map
-$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1600 -ResY=900')
+$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60')
 try {
     $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru
     Start-Sleep -Seconds 3

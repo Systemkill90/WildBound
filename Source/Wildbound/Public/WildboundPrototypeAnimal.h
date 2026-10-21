@@ -4,14 +4,15 @@
 #include "GameFramework/Actor.h"
 #include "WildboundPrototypeAnimal.generated.h"
 
+class USkeletalMeshComponent;
 class UStaticMeshComponent;
+class UAnimSequence;
 class UCapsuleComponent;
 class UWildboundAnimalNeedsComponent;
 
 /**
  * Replicated Greenveil deer with server-authoritative, short-range wandering.
- * Movement is procedural; a skeletal walk cycle and enclosure navigation remain
- * future work.
+ * Movement is procedural; locomotion visuals follow replicated actor movement.
  */
 UCLASS()
 class WILDBOUND_API AWildboundPrototypeAnimal : public AActor
@@ -33,7 +34,10 @@ protected:
     TObjectPtr<UCapsuleComponent> BodyCollision;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Wildbound|Prototype")
-    TObjectPtr<UStaticMeshComponent> Visual;
+    TObjectPtr<USkeletalMeshComponent> Visual;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Wildbound|Prototype")
+    TObjectPtr<UStaticMeshComponent> FallbackVisual;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Wildbound|Prototype")
     TObjectPtr<UWildboundAnimalNeedsComponent> Needs;
@@ -43,4 +47,12 @@ private:
     FVector WanderTarget = FVector::ZeroVector;
     float NextWanderChoice = 0.0f;
     float MovementAccumulator = 0.0f;
+    FVector PreviousVisualLocation = FVector::ZeroVector;
+    UPROPERTY(Transient)
+    TObjectPtr<UAnimSequence> IdleAnimation;
+    UPROPERTY(Transient)
+    TObjectPtr<UAnimSequence> WalkAnimation;
+    UPROPERTY(Transient)
+    TObjectPtr<UAnimSequence> RunAnimation;
+    bool bPlayingMovementAnimation = false;
 };

@@ -19,7 +19,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 | Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **Editor/game compile and Win64 package succeed on UE 5.8.4; packaged app launches. Dedicated-server target not tested.** | Reproducible toolchain setup; clean game/editor/server builds; launch and recover a test world |
-| 1 — Small Greenveil test | **Electric Dreams close-range forest preview now runs with the Wildbound gameplay overlay; deer spawn and short-range wander are ground-probed. The scene still uses a placeholder pawn and static-pose deer, and the care loop needs hands-on checks.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
+| 1 — Small Greenveil test | **A Win64 package now cooks and launches with an imported rigged doe, idle/walk/run sequences, and 12 imported wind shrubs in the local map. The package opens at the display's 2560×1440 mode and is waiting behind a Windows Security firewall prompt; 1920×1080 performance, animation, scene readability, and care still need visual/play testing. The pawn remains a placeholder.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
 | 2 — Construction proof | **Portable placement rules pass; temporary snapped block code compiles. In-game placement/removal is not verified; not voxel.** | Server-validated construction interaction, collision, animal enclosure navigation and tested persistence boundary |
 | 3 — Animal needs and trust | **34 portable simulation tests pass; replicated component and care RPCs compile. Runtime needs/care/trust behavior is not yet playtested in this checkout.** | Observe needs, care costs, refusal cases, stress/trust response and credible movement in play |
 | 4 — Co-op and persistence | **Listen server accepted two simulated client connections. Gameplay replication and dedicated server untested; no integrated world saves.** | Two-client state/RPC tests, server validation, restart, versioned save and backup recovery |
@@ -36,9 +36,9 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 **Now:** use a small forest environment from Epic's free Electric Dreams sample to replace the rough patchwork scene; retain Wildbound gameplay code and keep experimental PCG/Substrate features out of required runtime systems. Then playtest controls, animal care, needs and building, and make the deer grounded and animated before expanding the area.
 
-The current local Electric Dreams preview outputs at 1920×1080 and held the 60 FPS cap in the starting view with the Medium scalability preset and 60% TSR (1152×648 internal render). This is an upscaled performance baseline, not native 1080p rendering or a sustained traversal benchmark.
+The earlier Electric Dreams preview held the 60 FPS cap with 60% TSR (1152×648 internal render), which is not evidence of native 1080p performance. The current package must be relaunched windowed at 1920×1080 and measured before a frame-rate claim is made.
 
-**Next:** replace the placeholder player with a properly scaled rigged character; replace static-pose deer movement with a rigged model and locomotion; then playtest the care/build loop and validate RPC side effects with two clients. Follow with animal navigation around a small enclosure and persistent-world recovery tests.
+**Next:** inspect the locally imported doe locomotion and shrub dressing in the 1080p window, then playtest care/build interactions and validate RPC side effects with two clients. Replace the placeholder player with a properly scaled rigged character afterward. Follow with animal navigation around a small enclosure and persistent-world recovery tests.
 
 **Later:** selective breeding, farm stock, wild ecology, villages, weather, more biomes, trading and optional platform targets.
 
