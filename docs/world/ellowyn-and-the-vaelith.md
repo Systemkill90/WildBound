@@ -1,3 +1,5 @@
+> **Archived name-exploration draft:** The user has now selected **the Sylweave** as the official term for the life force flowing through Ellowyn. The latest combined lore, including the extraction chemical and mutation consequence, is [Ellowyn and the Sylweave](ellowyn-and-the-sylweave.md). This older draft is preserved for the history of the brainstorming process; “Vaelith” and the candidate list below are no longer active naming choices.
+
 # Wildbound — Ellowyn and the Vaelith (working lore)
 
 **Status: EXPLORATORY REVISED MAIN-STORY PITCH — not final canon or implemented gameplay.**  
