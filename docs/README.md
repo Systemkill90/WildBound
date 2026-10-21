@@ -11,6 +11,7 @@ Everything has a place: the world's atmosphere, the animal and building systems,
 | Destination | What's inside |
 | :-- | :-- |
 | **[The world atlas →](world/README.md)** | Greenveil, Drowned March, biome moods and future region concepts |
+| **[Gameplay systems →](systems/README.md)** | Animals, construction and cooperative life, all in one place |
 | **[Animals & husbandry →](systems/animals.md)** | Wildlife, trust, taming, livestock, breeding and care plans |
 | **[Building & homesteads →](systems/building.md)** | Voxel ambitions, construction needs and enclosure proof |
 | **[Life together →](systems/multiplayer.md)** | Cooperative servers, permissions and world continuity |
@@ -21,6 +22,7 @@ Everything has a place: the world's atmosphere, the animal and building systems,
 
 | Destination | What's inside |
 | :-- | :-- |
+| **[Development desk →](project/README.md)** | Project status, handoff, decisions, audit and milestone tracking |
 | **[Project status →](project/CURRENT-STATE.md)** | What was compiled, launched, tested or not yet implemented |
 | **[Roadmap →](../ROADMAP.md)** | Milestones and completion evidence |
 | **[Next session →](project/SESSION-HANDOFF.md)** | Last handoff and the next practical action |
