@@ -34,6 +34,14 @@ function Get-Engines {
     if ($EngineRoot) { $Candidates.Add($EngineRoot) }
     if ($env:UE_ENGINE_ROOT) { $Candidates.Add($env:UE_ENGINE_ROOT) }
 
+    # The WildBound workshop keeps its engine beside the Source checkout on D:.
+    $WorkshopEngineFolder = Join-Path (Split-Path $RepoRoot -Parent) "Engine"
+    if (Test-Path $WorkshopEngineFolder) {
+        Get-ChildItem -Path $WorkshopEngineFolder -Directory -Filter "UE_5.*" -ErrorAction SilentlyContinue |
+            Sort-Object Name -Descending |
+            ForEach-Object { $Candidates.Add($_.FullName) }
+    }
+
     $EpicFolder = Join-Path $env:ProgramFiles "Epic Games"
     if (Test-Path $EpicFolder) {
         Get-ChildItem -Path $EpicFolder -Directory -Filter "UE_5.*" -ErrorAction SilentlyContinue |
@@ -104,9 +112,12 @@ if ($BuildOnly) {
     exit 0
 }
 
-# Entry is a built-in Unreal map. Game mode spawns placeholder floor/animal at runtime.
-# Launching the process is NOT evidence that the gameplay or replication is correct.
-$Args = ('"' + $Project + '" /Engine/Maps/Entry -game -log -windowed -ResX=1280 -ResY=720')
+# Start the authored Greenveil field, with runtime bootstrap as a fallback if the
+# map asset has not been generated yet.
+$GreenveilMap = "/Game/Maps/GreenveilField"
+$MapAsset = Join-Path $RepoRoot "Content\Maps\GreenveilField.umap"
+$MapArgument = if (Test-Path $MapAsset -PathType Leaf) { $GreenveilMap } else { "/Engine/Maps/Entry" }
+$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1600 -ResY=900')
 try {
     $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru
     Start-Sleep -Seconds 3
@@ -115,7 +126,7 @@ try {
         exit 3
     }
     Write-Note ("LAUNCHED PROCESS: UnrealEditor PID " + $Process.Id)
-    Write-Note "CHECK ON PC: Confirm the Greenveil placeholders appear and accept inputs."
+    Write-Note ("CHECK ON PC: Confirm the Greenveil field loads and accepts inputs. Map: " + $MapArgument)
     Write-Note "A running process alone does not mean the game passed its playtest."
     exit 0
 }

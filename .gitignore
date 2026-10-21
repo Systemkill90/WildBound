@@ -30,4 +30,5 @@ Plugins/**/Intermediate/
 Thumbs.db
 PackagedBuilds/
 Releases/
+Build/Windows/
 # Keep source assets, Config, Build resources, and descriptors tracked.

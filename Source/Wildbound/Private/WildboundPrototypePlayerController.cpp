@@ -171,8 +171,10 @@ void AWildboundPrototypePlayerController::ServerPlaceBlock_Implementation(
     {
         const FVector Position = It->GetActorLocation();
         Occupied.push_back({
-            FMath::RoundToInt(Position.X / WildboundSim::PrototypeGridCentimeters),
-            FMath::RoundToInt(Position.Y / WildboundSim::PrototypeGridCentimeters)});
+            static_cast<int32>(FMath::RoundToInt(
+                Position.X / WildboundSim::PrototypeGridCentimeters)),
+            static_cast<int32>(FMath::RoundToInt(
+                Position.Y / WildboundSim::PrototypeGridCentimeters))});
     }
 
     const WildboundSim::FPlacementResult Placement =
@@ -186,7 +188,7 @@ void AWildboundPrototypePlayerController::ServerPlaceBlock_Implementation(
 
     const FVector Snapped(
         Placement.Cell.X * WildboundSim::PrototypeGridCentimeters,
-        Placement.Cell.Y * WildboundSim::PrototypeGridCentimeters, 0.0f);
+        Placement.Cell.Y * WildboundSim::PrototypeGridCentimeters, 50.0f);
 
     FActorSpawnParameters Params;
     Params.SpawnCollisionHandlingOverride =
