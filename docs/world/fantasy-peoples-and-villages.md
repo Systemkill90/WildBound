@@ -17,7 +17,7 @@ The tone remains rustic and ecological even where fantasy is overt: animal husba
 
 **Owner-confirmed lifespan:** Fae are extraordinarily long-lived but **not immortal**. They can die from illness and old age. The **oldest known fae reached 20,000 years**; this is an exceptional recorded lifespan, not necessarily an average or guaranteed maximum. Normal age ranges and aging stages remain undecided.
 
-**Owner-selected Sylweave connection:** Fae can directly connect with Ellowyn's living Sylweave roots, with the intimacy of an embodied, sensory communion rather than abstract spellcasting. The exact bodily mechanism, memory-sharing limits, rites, and player powers remain open and should be original to Wildbound rather than copied from any film.
+**Owner-selected Sylweave connection — Syltouch:** **Syltouch** is the official name for the fae's direct communion with Ellowyn's living Sylweave roots, with the intimacy of an embodied, sensory connection rather than abstract spellcasting. The exact bodily mechanism, memory-sharing limits, rites, and player powers remain open and should be original to Wildbound rather than copied from any film.
 
 **Exploratory design, not fixed canon:** Long-lived fae individuals, fine-featured or strikingly unusual appearances, subtle pointed ears, expressive eyes, glamour-like perception, ancient rivalries, intricate bargains, passionate loyalties, court politics, possible romance and complex obligations. Fae need not all be aristocratic, alluring or morally alike. Everyday communities still need food, shelter, craftsmen, animal relationships and ecological limits.
 
