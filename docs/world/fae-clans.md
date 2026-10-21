@@ -29,6 +29,8 @@ The six clan names and broad specializations are **owner-approved lore**; precis
 
 The refuge should be **lived-in**: homes, gardens, craft workshops, animal care, disputes, elders, new generations and grief. Its residents are not only quest dispensers. Whether ancient rivalries threaten their survival is open.
 
+**Owner-approved quest structure:** The detailed history of how each clan fell is primarily optional side-quest content, not mandatory main-story exposition. See [The Six Lost Legacies](quest-framework.md#the-six-lost-legacies--optional-fae-history-questlines) for suggested quest arcs; individual quest titles and rewards remain proposals.
+
 ## Abandoned villages as environmental storytelling
 
 Design distinct and recognizable ruins across the world, each with clues to how a community fell: a timely evacuation, a locked quarantine hall, a flooded river court, an abandoned beast sanctuary still inhabited by descendants of its protected animals, a deserted watchtower full of records, or an apparently pristine sealed village. Not every empty site means every resident died. Some may have fled, and a few survivors may remain.
