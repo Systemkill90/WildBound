@@ -1,6 +1,18 @@
-# Wildbound development roadmap
+# The Road Ahead
 
-[Home](README.md) · [Current state](docs/project/CURRENT-STATE.md) · [Prototype test guide](docs/developers/PROTOTYPE-PLAYTEST.md)
+*One meadow, one creature, one shared world — then the wilderness grows.*
+
+[← Wildbound home](README.md) · [Development desk](docs/project/README.md) · [Current state](docs/project/CURRENT-STATE.md) · [First playable](docs/developers/FIRST-PLAYABLE.md)
+
+## The journey in brief
+
+**Foundation established:** Unreal Engine 5.8.4 editor/game compilation, a saved Greenveil test map and a locally launched Windows package were recorded on October 20, 2026.
+
+**Our next step:** verify real in-game movement, deer care and construction inputs. The code compiling is not the same as those interactions working.
+
+**After that:** a rigged animal, enclosures that affect navigation, two-client authoritative gameplay, and eventually reliable persistent dedicated worlds. Breeding, villages and new biomes build on those foundations.
+
+## Detailed milestones
 
 Milestones show evidence, **not percent-finished guesses**. The first packaged Unreal prototype now launches locally. Gameplay quality and interaction checks remain open until verified in play.
 
