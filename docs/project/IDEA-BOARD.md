@@ -63,6 +63,8 @@ Ideas can be suggested in **any order**, regardless of current development statu
 
 **Fae lifespan and root communion:** Owner-established: fae connect directly with the Sylweave's roots, are exceptionally long-lived but can die of illness or old age; the oldest known lived **20,000 years**. Normal lifespans and precise communion mechanics are open. [Fae peoples](../world/fantasy-peoples-and-villages.md).
 
+**Fae clans approved (Oct 21):** Sylvaren, Vaelora, Aethrynn, Veltharyn, Thornwyld and Elarith, with their broad cultural identities and many abandoned villages. The lone major surviving remote settlement is multi-clan. [Clan overview](../world/fae-clans.md). Individual NPCs, refuge governance, quest rewards and locations remain open. Do not reuse the rejected naming root.
+
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
 
 ## Expanded concept follow-up (separate draft)
