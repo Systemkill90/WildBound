@@ -7,6 +7,7 @@
 #include "WildboundPrototypePlayerController.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "GameFramework/PlayerStart.h"
 
 AWildboundPrototypeGameMode::AWildboundPrototypeGameMode()
 {
@@ -22,9 +23,27 @@ void AWildboundPrototypeGameMode::BeginPlay()
     UWorld* World = GetWorld();
     if (!World || !HasAuthority()) return;
 
+    // The Electric Dreams sample carries a drone-only control card. Hide that
+    // sample instruction actor when the Wildbound game mode is active.
+    for (TActorIterator<AActor> It(World); It; ++It)
+    {
+        if (It->GetClass()->GetName().Contains(TEXT("DroneInstructions")))
+        {
+            It->SetActorHiddenInGame(true);
+            It->SetActorEnableCollision(false);
+        }
+    }
+
     FActorSpawnParameters Params;
     Params.SpawnCollisionHandlingOverride =
         ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+    APlayerStart* AuthoredPlayerStart = nullptr;
+    for (TActorIterator<APlayerStart> It(World); It; ++It)
+    {
+        AuthoredPlayerStart = *It;
+        break;
+    }
 
     bool bHasGround = false;
     for (TActorIterator<AWildboundPrototypeGround> It(World); It; ++It)
@@ -32,7 +51,9 @@ void AWildboundPrototypeGameMode::BeginPlay()
         bHasGround = true;
         break;
     }
-    if (!bHasGround)
+    // Authored test maps provide their own terrain. Only create the bootstrap
+    // platform for a bare fallback map that also lacks a PlayerStart.
+    if (!bHasGround && !AuthoredPlayerStart)
     {
         World->SpawnActor<AWildboundPrototypeGround>(
             FVector(0, 0, -25), FRotator::ZeroRotator, Params);
@@ -46,7 +67,11 @@ void AWildboundPrototypeGameMode::BeginPlay()
     }
     if (!bHasAnimal)
     {
+        const FVector AnimalLocation = AuthoredPlayerStart
+            ? AuthoredPlayerStart->GetActorLocation()
+                + AuthoredPlayerStart->GetActorForwardVector() * 250.0f
+            : FVector(450, 0, 82);
         World->SpawnActor<AWildboundPrototypeAnimal>(
-            FVector(450, 0, 82), FRotator::ZeroRotator, Params);
+            AnimalLocation, FRotator::ZeroRotator, Params);
     }
 }

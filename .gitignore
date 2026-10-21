@@ -31,4 +31,8 @@ Thumbs.db
 PackagedBuilds/
 Releases/
 Build/Windows/
-# Keep source assets, Config, Build resources, and descriptors tracked.
+# New Unreal content must be reviewed before staging so Fab/source assets cannot
+# be pushed by accident. Existing curated and already-tracked assets are kept;
+# explicitly force-add only source assets that have been rights-reviewed.
+/Content/**
+# Keep Config, Build resources, and descriptors tracked.
