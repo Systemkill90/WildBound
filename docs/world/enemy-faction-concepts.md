@@ -6,7 +6,7 @@
 
 ## Fixed lore constraints from the owner
 
-Ellowyn is the oldest sentient willow; her roots carry the **Sylweave**, a force that creates and connects **every living thing, including evil beings**. A faction seeking youth, power and immortality uses old extraction machinery and a **specific poisonous chemical**, which blights Ellowyn. The chemical contaminates harvested Sylweave, so the faction repeatedly drills deeper seeking a pure batch; the repetition poisons Ellowyn more. The faction itself becomes sick and some of its members transform into monsters. Ellowyn spends what strength she has left to gift the players with Sylweave potential; they must survive, care for animals, learn the world, train and grow able to save her. Bonded animals can help fight the faction, with species-appropriate limits. The faction is named **The Veyrath** by the owner.
+Ellowyn is the oldest sentient willow; her roots carry the **Sylweave**, a force that creates and connects **every living thing, including evil beings**. A faction seeking youth, power and immortality uses old extraction machinery and a **specific poisonous chemical**, which blights Ellowyn. The chemical contaminates harvested Sylweave, so the faction repeatedly drills deeper seeking a pure batch; the repetition poisons Ellowyn more. The faction itself becomes sick and some of its members transform into monsters. Ellowyn spends what strength she has left to gift the players with Sylweave potential; they must survive, care for animals, learn the world, train and grow able to save her. Bonded animals can help fight the faction, with species-appropriate limits. The faction is named **The Veyrath** by the owner. **The Threnvahl** is the owner-selected collective name for beings transformed by the extraction chemical, across different original species.
 
 ## Selected faction name and discarded alternatives
 
@@ -42,7 +42,7 @@ Proposed emblem: a symmetrical crown of five rootlike prongs around a sealed gla
 | **Wardens** | Paid security and trained guards | Patrol fights, protecting convoys, camp defense |
 | **Artificers** | Reagent mixers and Weir engineers | Stop injector lines, disable pumps, rescue workers |
 | **Vessels** | Volunteers/patrons receiving repeated longevity treatments | Enhanced adversaries with escalating side effects |
-| **Hollowed** | People profoundly altered by exposure | Dangerous but sometimes frightened, aware or recoverable individuals |
+| **Threnvahl** | Beings of various species profoundly altered by the Veyrath's chemical exposure | Dangerous but sometimes frightened, aware or recoverable individuals |
 | **Inner Concord** | Secretive senior patrons and research directors | Moral choices, named antagonists, major encounters |
 
 These are *encounter concepts*, not a promise of specific combat mechanics. Distinguish employees who must be stopped from noncombatants and those needing rescue; avoid portraying illness or disfigurement as an automatic moral failure.
@@ -56,6 +56,8 @@ Sample original dialogue (not final):
 > “Death is not sacred. It is merely the oldest disease, and I will not bow before it.”
 
 This offers emotional motives, but does not excuse continued exploitation. His exact species, fate and role as final opponent remain undecided. A 'Keeper Below' from an earlier story draft could survive as a separate old infrastructure custodian, not a second redundant villain.
+
+**Naming decision:** Threnvahl replaces earlier draft collective terms such as “the Hollowed.” It is an infected classification, not a naturally occurring species or a judgment that its members are inherently evil. Specific variants are yet to be designed.
 
 ## Body-change progression — proposed stages, not a deterministic illness analogy
 
