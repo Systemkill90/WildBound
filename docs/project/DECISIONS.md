@@ -22,4 +22,6 @@
 | 2026-10-21 | Ellowyn spends what strength remains to give Sylweave power to the players, who must live on the land, understand its creatures and become strong enough to save her | Explicit owner hero-origin and progression direction; exact powers, mechanics and cinematic script remain open proposals |
 | 2026-10-21 | **The Veyrath** is the name of the hostile Sylweave-extraction faction (without “Concord”) | Explicit owner selection; organization history, individual leaders, ranks and enemy creature designs remain proposals |
 
+| 2026-10-21 | **The Threnvahl** is the collective name for beings transformed by the Veyrath extraction chemical | Explicit owner name selection; individual infected creature entries and stages remain to be designed |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
