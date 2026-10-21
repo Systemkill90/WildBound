@@ -23,5 +23,6 @@
 | 2026-10-21 | **The Veyrath** is the name of the hostile Sylweave-extraction faction (without “Concord”) | Explicit owner selection; organization history, individual leaders, ranks and enemy creature designs remain proposals |
 
 | 2026-10-21 | **The Threnvahl** is the collective name for beings transformed by the Veyrath extraction chemical | Explicit owner name selection; individual infected creature entries and stages remain to be designed |
+| 2026-10-21 | The Weirs and the Veyrath have **human origins**; human fear of mortality and desire for longevity, immortality and power motivated Sylweave extraction | Explicit owner story revision; no implication that all humans are evil, and details of Weir history remain in development |
 
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
