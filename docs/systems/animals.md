@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Biomes](../world/biomes.md) · [Roadmap](../../ROADMAP.md)
 
-**Status: uncompiled Unreal prototype plus tested portable care logic.** Animal needs, stress and trust math has native C++ test coverage. A placeholder replicated animal actor and care RPC code have been authored, but no Unreal compilation or gameplay testing has occurred. There is still no animal movement AI, assets, completed taming, breeding or genetics.
+**Status (last recorded October 20, 2026): compiled Unreal prototype; care gameplay not yet verified.** Hunger, thirst, stress and trust rules passed standalone C++ tests, and the UE actor/needs component and care requests compiled in Unreal Engine 5.8.4. A CC0 deer static mesh and short-range ground-probed wandering were observed in the development preview; this is **not** full animal navigation or an animated creature. Feeding, watering, trust changes, multiplayer behavior and care feedback still need an actual in-game playtest. Breeding, genetics and taming loops do not yet exist.
 
 ## Wildlife first
 
