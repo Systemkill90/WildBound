@@ -27,4 +27,6 @@
 | 2026-10-21 | Fae can directly commune with Sylweave roots; they are extraordinarily long-lived yet mortal, vulnerable to illness and old age, with the oldest known fae living 20,000 years | Explicit owner fantasy-people direction; exact biological connection, ordinary lifespan, rites and abilities still need design |
 | 2026-10-21 | **Syltouch** is the fae name for their direct communion with the Sylweave through Ellowyn's roots | Explicit owner selection; exact ritual, visual language, gameplay mechanics and limitations remain open |
 
+| 2026-10-21 | Fae regenerate injuries quickly but are vulnerable to fae-specific diseases and old age; a Sylweave-connected plague makes encounters with fae rare, and one major fae village has relocated far from Ellowyn to avoid the plague and seek a way to save her | Explicit owner lore direction; village name/location, pathogen mechanics, population and cure remain to be designed |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
