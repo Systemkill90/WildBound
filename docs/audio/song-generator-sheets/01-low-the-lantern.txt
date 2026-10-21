@@ -1,0 +1,46 @@
+WILDBOUND — LOW THE LANTERN
+ORIGINAL CONCEPT SONG · GENERATION SHEET · DRAFT
+
+STYLE PROMPT (paste into music generator's style/description field)
+Slow, haunting but warm marsh-folk work shanty, 52 BPM rolling 6/8, D Dorian. Weathered Brinefolk female or male lead, answered by an intimate communal chorus of 2–4 singers loosely harmonizing; no mechanically perfect choir. Sparse wood taps in time with oars, rope creaks, gentle blackwater lapping, distant fog bells. A believable village singing during dusk net-mending. Deeply wistful and slightly eerie, but full of belonging. Clear ENGLISH SUNG lyrics, actual melodic vocal performance, no spoken narration. No pirate tavern music, pop drums, epic orchestra or modern synth beat.
+
+LYRICS (paste into custom lyrics field)
+[Verse 1]
+Pull the rope and mend the seam,
+Wake the oars from willow dream.
+Count the poles along the shore,
+One for those who row no more.
+
+[Chorus]
+Low the lantern, slow the oar,
+Let the dark go first ashore.
+Keep the hearth where reed roots grow,
+And the water knows, the water knows.
+
+[Verse 2]
+Silt on hands and salt on skin,
+Bring the night's small harvest in.
+If the fog takes half the land,
+Follow bells, not beckoning hands.
+
+[Chorus]
+Low the lantern, slow the oar,
+Let the dark go first ashore.
+Keep the hearth where reed roots grow,
+And the water knows, the water knows.
+
+[Bridge]
+When the black tide climbs the stair,
+Leave an empty place and chair.
+Sing no names against the foam;
+The missing know the way back home.
+
+[Final refrain]
+Low the lantern, slow the oar...
+The water knows. The water knows.
+
+NOTES
+- Lyrics copied from the Wildbound Aquatic Voices songbook. Title, score and interpretation are working concepts, not final lore.
+- May need multiple generation attempts to achieve the intended voices and lyric fidelity; generated vocals are not guaranteed to follow labels.
+- Before using any generated recording in a commercial game, check the generator's license/plan terms and document provenance.
+- Source: docs/world/aquatic-voices-and-shanties.md (staging/idea-board)

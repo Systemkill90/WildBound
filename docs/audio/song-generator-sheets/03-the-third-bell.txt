@@ -1,0 +1,46 @@
+WILDBOUND — THE THIRD BELL
+ORIGINAL CONCEPT SONG · GENERATION SHEET · DRAFT
+
+STYLE PROMPT (paste into music generator's style/description field)
+Extremely slow, ethereal, enchanting and deeply unsettling dark maritime siren lament, ~38 BPM, free-time phrases and F-sharp Phrygian dissonance. WOMAN sings with a rich unmistakably feminine deep contralto and haunting unusually low feminine harmonies/subharmonics (never a masculine growl). MAN answers in a clear high angelic countertenor that sounds pure, sacred and impossibly calm yet creepy. Two voices answer from opposite foggy shores, forming exquisite unresolved harmonies. Distant fog bells, blackwater lapping and faint sustained drones, almost no instruments. Clear ENGLISH SUNG lyrics, no narration. At the ending accompaniment vanishes; angelic male softly sings the first ending line and woman answers low and intimate, then silence. No pirate music, EDM, pop beats or horror shouting.
+
+LYRICS (paste into custom lyrics field)
+[Verse 1]
+One bell for the boats that sleep,
+Two for the roads beneath the deep.
+Three for the name you never said,
+Hanging where the stars have fled.
+
+[Refrain]
+Come no closer, turn no more,
+You have heard this voice before.
+Is it yours or is it mine?
+Leave your lantern on the line.
+
+[Verse 2]
+I have kept a borrowed tune
+From a mother and a moon.
+If you hear it from the shore,
+Ask whose mouth it wandered for.
+
+[Refrain]
+Come no closer, turn no more,
+You have heard this voice before.
+Is it yours or is it mine?
+Leave your lantern on the line.
+
+[Bridge]
+I won't promise home or harm.
+I have neither net nor arm.
+Only water, only air,
+Only what you carried there.
+
+[Outro: accompaniment stops; male countertenor sings line 1, deep feminine contralto sings line 2; end in silence]
+I never called you by your name.
+But still you turned. And still you came.
+
+NOTES
+- Lyrics copied from the Wildbound Aquatic Voices songbook. Title, score and interpretation are working concepts, not final lore.
+- May need multiple generation attempts to achieve the intended voices and lyric fidelity; generated vocals are not guaranteed to follow labels.
+- Before using any generated recording in a commercial game, check the generator's license/plan terms and document provenance.
+- Source: docs/world/aquatic-voices-and-shanties.md (staging/idea-board)
