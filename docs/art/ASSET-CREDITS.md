@@ -1,7 +1,6 @@
 # Prototype asset sources
 
-Wildbound keeps art provenance alongside the content. Imported Unreal assets
-are checked in with Git LFS; the original license applies to the source asset.
+Wildbound keeps art provenance alongside the content. Approved imported Unreal assets are tracked with Git LFS. **LFS is a storage method, not a license**: only source art with valid redistribution rights belongs in the public repository. The presence of a prior credit entry is not a new legal verification.
 
 | Asset set | Source | License | Use in Wildbound |
 | :-- | :-- | :-- | :-- |
@@ -15,5 +14,4 @@ CC0 asset. These assets are prototype art and do not imply Wildbound's final
 art direction or animal animation quality.
 
 Electric Dreams was selected after review of the rough first test map. Its Fab
-source assets must not be redistributed through the public repository. New
-New Unreal content is Git-ignored until reviewed; the local sample import is kept outside GitHub.
+source assets must not be redistributed through the public repository. New Unreal content is Git-ignored until reviewed; local sample imports are kept outside GitHub. The Electric Dreams sample's Fab terms do **not** grant permission to republish its source assets as a standalone content library. Validate the exact license terms and provenance before any new asset is published.
