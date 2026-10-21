@@ -43,6 +43,40 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 ---
 
+## The Wildbound Concept Atlas
+
+*Twenty imagined creatures, six regional studies, everyday homestead equipment, and our first male and female character directions.* All images are **exploratory artwork**, not 3D models, playable content, or a finalized roster.
+
+### The creatures · 20 original candidates
+
+| **I · Meadow & Woodland** | **II · Marsh & Wetland** |
+| :--: | :--: |
+| [![Five Wildbound meadow and woodland creature studies including Mosshorn, Lanternhare, Brindlefowl, Velvet Grazer and Bramble Runner](docs/art/concept-atlas/creatures-i-meadows.webp)](docs/art/concept-atlas/README.md) | [![Five Wildbound wetland creature studies including Reedstrider, Bog Nibbler, Fen Warden, Siltfox and Mireback Grazer](docs/art/concept-atlas/creatures-ii-marsh.webp)](docs/art/concept-atlas/README.md) |
+
+| **III · Highlands & Open Range** | **IV · Rare & Mythic** |
+| :--: | :--: |
+| [![Five Wildbound highland creatures including Thistlemaw, Crownmaw, Flint Ram, Duskmane Elk and Tangletail Grazer](docs/art/concept-atlas/creatures-iii-highlands.webp)](docs/art/concept-atlas/README.md) | [![Five fantasy creatures including Rootback, Whisperbough, Hollowhorn Boar, Gloamwing Roclet and Moonshade Lizard](docs/art/concept-atlas/creatures-iv-mythic.webp)](docs/art/concept-atlas/README.md) |
+
+### The biomes · Six visual directions
+
+[![Six Wildbound biome studies: Greenveil Basin, Drowned March, Emberstep Highlands, Gloamwood, Stonewake Heights and Sunfield Prairie](docs/art/concept-atlas/biomes-atlas.webp)](docs/art/concept-atlas/README.md)
+
+*Greenveil, the Drowned March and Emberstep have existing world notes; Gloamwood, Stonewake Heights and Sunfield Prairie are **additional art-study names**, not approved production regions.*
+
+### Tools for building a life
+
+[![Wildbound starter equipment concept sheet: axes, hammer, hoe, shovel, pickaxe, sickle, knife, spear, rope, bucket, lantern, waterskin and seed satchel](docs/art/concept-atlas/tools-and-supplies.webp)](docs/art/concept-atlas/README.md)
+
+### The homesteaders · Male & Female
+
+| **Male homesteader** | **Female homesteader** |
+| :--: | :--: |
+| [![Male homesteader character concept and front, side, back views with clothing and equipment details](docs/art/concept-atlas/character-male-homesteader.webp)](docs/art/concept-atlas/README.md) | [![Female homesteader character concept and turnaround with clothing and equipment details](docs/art/concept-atlas/character-female-homesteader.webp)](docs/art/concept-atlas/README.md) |
+
+**[Open the complete concept-art gallery →](docs/art/concept-atlas/README.md)** · [What is currently playable?](docs/project/CURRENT-STATE.md)
+
+---
+
 ## Where the project stands
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
