@@ -1,0 +1,22 @@
+name: Concept art staging checks
+
+on:
+  push:
+    paths:
+      - 'docs/art/concepts/**'
+      - 'Tests/Static/verify_concept_art.py'
+      - '.github/workflows/concept-art-check.yml'
+  pull_request:
+    paths:
+      - 'docs/art/concepts/**'
+      - 'Tests/Static/verify_concept_art.py'
+      - '.github/workflows/concept-art-check.yml'
+
+jobs:
+  validate-concept-vectors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse original SVG studies and cross-check gallery
+        run: python3 Tests/Static/verify_concept_art.py
