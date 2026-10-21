@@ -37,6 +37,9 @@ def spawn_mesh(mesh_path, label, location, scale=1.0, yaw=0.0, collision=False):
     )
     component = actor.get_editor_property("static_mesh_component")
     component.set_static_mesh(mesh)
+    # The prototype is packaged without a lightmass bake. Use movable mesh
+    # components so the saved map renders correctly with runtime lighting.
+    component.set_mobility(unreal.ComponentMobility.MOVABLE)
     component.set_collision_enabled(
         unreal.CollisionEnabled.QUERY_AND_PHYSICS
         if collision
@@ -166,8 +169,9 @@ spawn_actor(unreal.PlayerStart, "Greenveil Player Start", (-700.0, 0.0, 100.0))
 
 sun = spawn_actor(unreal.DirectionalLight, "Greenveil Sun", (0.0, 0.0, 0.0),
                   (-42.0, -32.0, 0.0))
-sun.get_component_by_class(unreal.DirectionalLightComponent).set_editor_property(
-    "intensity", 32000.0)
+sun_component = sun.get_component_by_class(unreal.DirectionalLightComponent)
+sun_component.set_mobility(unreal.ComponentMobility.MOVABLE)
+sun_component.set_editor_property("intensity", 32000.0)
 
 sky = spawn_actor(unreal.SkyLight, "Greenveil Sky Light", (0.0, 0.0, 0.0))
 sky_component = sky.get_component_by_class(unreal.SkyLightComponent)
@@ -179,8 +183,22 @@ spawn_actor(unreal.SkyAtmosphere, "Greenveil Sky Atmosphere", (0.0, 0.0, 0.0))
 fog = spawn_actor(unreal.ExponentialHeightFog, "Greenveil Distance Fog",
                   (0.0, 0.0, 0.0))
 fog_component = fog.get_component_by_class(unreal.ExponentialHeightFogComponent)
-fog_component.set_editor_property("fog_density", 0.0007)
-fog_component.set_editor_property("fog_height_falloff", 0.25)
+# This is a 60 m test area: dense world-scale fog becomes opaque across it.
+fog_component.set_editor_property("fog_density", 0.000025)
+fog_component.set_editor_property("fog_height_falloff", 0.12)
+
+# Lock exposure to a conservative manual value. The full sun illuminance can
+# otherwise clip the small test area and its uncalibrated prototype camera.
+exposure = spawn_actor(unreal.PostProcessVolume, "Greenveil Exposure", (0.0, 0.0, 0.0))
+exposure.set_editor_property("unbound", True)
+post_process = exposure.get_editor_property("settings")
+post_process.set_editor_property("override_auto_exposure_method", True)
+post_process.set_editor_property(
+    "auto_exposure_method", unreal.AutoExposureMethod.AEM_MANUAL
+)
+post_process.set_editor_property("override_auto_exposure_bias", True)
+post_process.set_editor_property("auto_exposure_bias", -3.0)
+exposure.set_editor_property("settings", post_process)
 
 if not LEVEL_EDITOR.save_current_level():
     raise RuntimeError("Could not save the Greenveil test map")

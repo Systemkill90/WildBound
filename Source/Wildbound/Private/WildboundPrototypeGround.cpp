@@ -12,6 +12,7 @@ AWildboundPrototypeGround::AWildboundPrototypeGround()
 
     Visual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TemporaryGround"));
     SetRootComponent(Visual);
+    Visual->SetMobility(EComponentMobility::Movable);
     Visual->SetCollisionProfileName(TEXT("BlockAll"));
     Visual->SetRelativeScale3D(FVector(60.0f, 60.0f, 0.5f));
 
