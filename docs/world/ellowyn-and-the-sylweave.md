@@ -8,7 +8,7 @@
 
 1. **Ellowyn** is the oldest sentient living tree, a colossal willow whose roots nourish the world.
 2. **The Sylweave** is the ancient life force flowing through Ellowyn and woven through the entire realm. It **creates and connects every living creature**, including those that are cruel, predatory, malicious, or otherwise considered “bad.” The Sylweave is **not morally good or evil** and is not a corruption, alignment system, or reward for virtue. No class of living creatures is excluded from it.
-3. A faction of creatures seeks to **mine the Sylweave for its own use**, especially youth and immortality, and players must stop them and save Ellowyn.
+3. The **Veyrath were human**. Human fear of mortality and desire for longevity, immortality and power drove them to **mine the Sylweave for personal use**. The original Weirs were also human works; players must stop the extraction and save Ellowyn. Not all humans participate in or endorse the Veyrath's actions.
 4. The extraction machines use a **specific chemical**. This artificial reagent contaminates Ellowyn while the machines siphon the Sylweave, **plaguing** her roots and spreading harm.
 5. Over time **the same chemical poisons the creatures conducting the siphoning**. What was intended to make them young and immortal instead increasingly **transforms them into monsters**. The group is causing its own undoing.
 6. **Because the plague contaminates their harvested batches**, the siphoners continue taking more Sylweave in hopes of finding a batch that has escaped the sickness. **Each additional attempt makes Ellowyn sicker and brings her closer to death.** The search for uncontaminated life force is itself perpetuating the contamination.
@@ -109,7 +109,7 @@ One possible dramatic reading is that certain leaders know each deeper siphon wo
 
 ## Villains and stakes (working names)
 
-**The Hollow Crown** (proposed name) is a coalition of patrons, engineers, miners, and creatures pursuing Sylweave-derived longevity and power. Distinguish leaders who knowingly keep the scheme running from coerced workers, infected members and outsiders. The Hollow Crown need not be a single species.
+**The Veyrath** (owner-selected name) is a human-origin organization of patrons, engineers and miners pursuing Sylweave-derived longevity and power. Human fear of death and the wish for immortality motivate its founders. Distinguish leaders who knowingly keep the scheme running from coerced workers, infected members and outsiders; the Sylweave still connects all species, and humans outside the faction are not its enemies. The earlier “Hollow Crown” was only a discarded naming suggestion.
 
 The proposed **Gilded Warden** believes that by controlling the Sylweave and perfecting Nhalis, he can save his followers from death. As his own transformation develops, he may become physically monstrous without admitting the experiment has failed.
 
@@ -146,7 +146,7 @@ Recovery should be **hopeful rather than instant or perfectly clean**. Residual 
 - **The Threnvahl** — **owner-selected name** for chemically transformed beings; individual variants and abilities are undecided.
 - **The Hollow Crown** — the exploiting faction.
 - **The Gilded Warden** — a principal faction leader; his species, motivations, personality and finale remain unresolved.
-- **The Weirs** — ancient regulating machinery now repurposed to extract Sylweave.
+- **The Weirs** — ancient **human-built** regulating machinery now repurposed by the human-origin Veyrath to extract Sylweave.
 
 **These names are optional creative directions.** Sylweave is explicitly selected as the life-force name; Ellowyn's act of gifting her remaining power to players, and their need to learn the land before they can save her, are also owner-confirmed story premises.
 
