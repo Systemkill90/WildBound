@@ -25,5 +25,6 @@
 | 2026-10-21 | **The Threnvahl** is the collective name for beings transformed by the Veyrath extraction chemical | Explicit owner name selection; individual infected creature entries and stages remain to be designed |
 | 2026-10-21 | The Weirs and the Veyrath have **human origins**; human fear of mortality and desire for longevity, immortality and power motivated Sylweave extraction | Explicit owner story revision; no implication that all humans are evil, and details of Weir history remain in development |
 | 2026-10-21 | Fae can directly commune with Sylweave roots; they are extraordinarily long-lived yet mortal, vulnerable to illness and old age, with the oldest known fae living 20,000 years | Explicit owner fantasy-people direction; exact biological connection, ordinary lifespan, rites and abilities still need design |
+| 2026-10-21 | **Syltouch** is the fae name for their direct communion with the Sylweave through Ellowyn's roots | Explicit owner selection; exact ritual, visual language, gameplay mechanics and limitations remain open |
 
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
