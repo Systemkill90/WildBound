@@ -11,6 +11,7 @@
 3. A faction of creatures seeks to **mine the Sylweave for its own use**, especially youth and immortality, and players must stop them and save Ellowyn.
 4. The extraction machines use a **specific chemical**. This artificial reagent contaminates Ellowyn while the machines siphon the Sylweave, **plaguing** her roots and spreading harm.
 5. Over time **the same chemical poisons the creatures conducting the siphoning**. What was intended to make them young and immortal instead increasingly **transforms them into monsters**. The group is causing its own undoing.
+6. **Because the plague contaminates their harvested batches**, the siphoners continue taking more Sylweave in hopes of finding a batch that has escaped the sickness. **Each additional attempt makes Ellowyn sicker and brings her closer to death.** The search for uncontaminated life force is itself perpetuating the contamination.
 6. **With what strength she has left, Ellowyn deliberately shares her power with the player characters** so they can become heroes capable of rescuing her. This is the reason they are empowered, but not an instant grant of mastery: they must live off the land, understand living systems and the peoples of the realm, and grow stronger before they can stop the extraction and heal her.
 
 The paragraphs below expand these clear owner decisions into *candidate* names, mechanics, visuals, encounters and plot beats; those details are not owner-approved canon yet.
@@ -63,6 +64,25 @@ The faction originally believed Nhalis made Sylweave safe to store and ingest. E
 
 But Nhalis accumulates, reacts unpredictably with living tissues, and becomes increasingly harmful as the dose builds. It does **not** represent ordinary Sylweave biology and cannot be countered merely by “more pure energy.” The chemical is fictional; no real-world formulation, ingredients, synthesis or extraction procedure are proposed.
 
+### The untainted batch that never comes — owner-established central plot mechanism
+
+The siphoners keep searching for *pure*, unaffected Sylweave. But their machinery introduces **Nhalis** (working chemical name) during extraction, and repeated operation contaminates Ellowyn at the point of contact. She is not a bottomless collection of isolated reservoirs: the Sylweave **weaves through living roots and every creature in the realm**.
+
+The story's central feedback loop is:
+
+1. They draw Sylweave with machines that introduce the chemical.
+2. The harvested batch tests **plagued/impure**, and some of the extractors or consumers begin to sicken.
+3. Instead of stopping, they insist that a still-pure reservoir must exist farther away, deeper beneath the earth, or beyond a poisoned stretch of root.
+4. They drill farther, run the siphons longer, and expose still more living root to the chemical.
+5. Ellowyn weakens; even the new sites begin yielding contaminated Sylweave. The faction demands **another batch**.
+6. This spiral threatens to kill Ellowyn, destroying the source of all Sylweave, and therefore the lives of the very people stealing it.
+
+**Core irony:** Their attempts to harvest uncontaminated Sylweave are the reason they cannot obtain it. They interpret the chemical damage as a defect in the source rather than a consequence of their own method. A later discovery may prove this through a comparison between samples taken near an active siphon and naturally living, undisturbed Sylweave.
+
+**Keep the distinction clear:** The plague is the unnatural chemical's injury and contamination, **not a moral taint within Sylweave**, and there is no class of creature inherently excluded from its living weave. Animals, peaceful villages, predatory creatures, and the harmful faction all depend on Ellowyn. This gives the protagonists a strong reason to stop the chemical exposure and the siphoning, rather than purging a supposedly evil branch of life.
+
+**Open dramatic choice:** Whether the senior leaders truly believe a clean batch lies deeper, know their method is the cause and conceal it, or disagree internally is not yet decided. The owner's specified relentless hunt for a pure batch and Ellowyn's consequent decline remain fixed.
+
 ### Ellowyn's sickness
 
 - Near the extraction sites, her roots grow brittle and develop pale crystalline lesions under a layer of dark, wet-looking blight.
@@ -85,7 +105,7 @@ But Nhalis accumulates, reacts unpredictably with living tissues, and becomes in
 
 The first laboratory looks prosperous: portraits of newly youthful patrons, a beautifully bound research book, polished vials said to promise eternal life. Beyond its sealed wards lie the failed subjects: the creators themselves, still breathing and barely recognizable, some whispering that the machines must not be restarted.
 
-The faction leaders knew that every round of refinement worsened the sickness. Some hide the evidence; some double down because they fear aging or death; others want to stop but cannot escape their own employers. The chemical blights **both victim and perpetrator**, but Ellowyn never chose to be used.
+One possible dramatic reading is that certain leaders know each deeper siphon worsens the sickness and hide the evidence, while others still cling to the hope of a clean batch. Alternatively, the leadership might be sincerely mistaken until the protagonists expose the extraction feedback loop. The faction continues pursuing uncontaminated Sylweave, and Ellowyn pays for every failed attempt. The chemical blights **both victim and perpetrator**, but Ellowyn never chose to be used.
 
 ## Villains and stakes (working names)
 
@@ -104,10 +124,10 @@ A homesteader discovers a dying root near a creek, strange livestock or wildlife
 **Players must first live on the land and grow stronger.** Building and maintaining a homestead, learning wildlife needs, earning animal trust, survival, crafting and exploring varied habitats develop the understanding necessary to use Ellowyn's gift. Investigating different settlements uncovers claims of miraculous rejuvenation, villages dependent on Heartglass, hidden waste from refinement, and the first visibly altered siphoners. Dwarven experts may recognize ancient Weir architecture, fungal keepers can detect disrupted growth, and werewolf trackers may find new routes taken by frightened animals. Players learn why some factions cooperate and others resist.
 
 ### Chapter III — Drowned Evidence
-The Drowned March holds records of the older Weir catastrophe and song-preserved routes to buried infrastructure. Players discover that the faction's leaders have concealed the illness among their own members. Some Hollowed retain enough awareness to reveal locations or ask for mercy. Sirens may sing warnings about waters no longer answering Ellowyn.
+The Drowned March holds records of the older Weir catastrophe and song-preserved routes to buried infrastructure. Players compare records of contaminated batches with the ever-deeper drilling pattern, revealing that the supposed search for a clean source is itself poisoning Ellowyn. The faction's handling of illness among its own members—denial, concealment, or genuine confusion—can become a separate moral discovery. Some Hollowed retain enough awareness to reveal locations or ask for mercy. Sirens may sing warnings about waters no longer answering Ellowyn.
 
 ### Chapter IV — The Great Siphon
-After living in and learning the world, the players are finally strong enough to carry Ellowyn's entrusted gift into the buried heart of the extraction system. The climax takes place in a chamber of enormous willow roots, old stone mechanisms and the faction's chemical distribution network. The principal antagonist may be the most altered of all, demonstrating the failure of their immortality project. Merely killing a mutated leader does **not** cure Ellowyn: players must stop the siphon, prevent or contain more chemical release, and stabilize essential protections for villages still dependent on old Weirs. The use of Ellowyn's gift in the finale should **depend on lessons learned from animals, habitats, villages and survival**, not on raw magic levels alone.
+After living in and learning the world, the players are finally strong enough to carry Ellowyn's entrusted gift into the buried heart of the extraction system. The climax takes place in a chamber of enormous willow roots, old stone mechanisms and the faction's chemical distribution network. The principal antagonist may be the most altered of all, demonstrating the failure of their immortality project. Merely killing a mutated leader does **not** cure Ellowyn, and one supposedly pure batch is not the solution: players must stop the repeated extraction, interrupt the chemical feed, prevent or contain more contamination, and stabilize essential protections for villages still dependent on old Weirs. The use of Ellowyn's gift in the finale should **depend on lessons learned from animals, habitats, villages and survival**, not on raw magic levels alone.
 
 **Ellowyn must remain an active participant in the ending**: once the extraction is interrupted and the contamination contained, she chooses how her strength returns to the world's life network. She does not purge her enemies from the Sylweave; they are living beings too.
 
