@@ -20,5 +20,6 @@
 | 2026-10-21 | The extractors repeatedly siphon contaminated Sylweave hoping to obtain an unaffected batch, and each attempt makes the chemical plague worse and further kills Ellowyn | Explicit owner story direction; the self-defeating hunt for pure Sylweave is the core causal loop. Exact chemical name, why it is required, leaders' knowledge and cure are not yet approved |
 
 | 2026-10-21 | Ellowyn spends what strength remains to give Sylweave power to the players, who must live on the land, understand its creatures and become strong enough to save her | Explicit owner hero-origin and progression direction; exact powers, mechanics and cinematic script remain open proposals |
+| 2026-10-21 | **The Veyrath** is the name of the hostile Sylweave-extraction faction (without “Concord”) | Explicit owner selection; organization history, individual leaders, ranks and enemy creature designs remain proposals |
 
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
