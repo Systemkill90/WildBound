@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Developer setup](../developers/README.md)
 
-**Status: unverified multiplayer C++ prototype source.** Replicated actor/component declarations and server-authoritative care/block request handlers now exist, but no Unreal compilation, dedicated server, network session or persistent saving has been validated. A portable versioned world snapshot codec has passed independent C++ tests, but is not wired into Unreal or disk.
+**Status (last recorded October 20, 2026): C++ multiplayer code compiled; connection-only listen-server smoke test passed.** The Unreal game and editor built with replicated actor/component declarations and server-side care/block handlers. A **listen server accepted two simulated client connections**, but no care/build state, security or replication assertions passed yet. There is no tested headless dedicated server or persistent in-game saving. The portable versioned snapshot codec passed independent tests but has not been wired to Unreal disk storage.
 
 A dedicated server is intended to own world state, construction, animal needs, breeding outcomes, inventories, permissions, and saves. Clients request actions; the server validates them. Cooperative groups share homesteads with explicit building, storage, care, and administration permissions.
 
@@ -20,4 +20,4 @@ Plan versioned saves, stable animal identities, construction chunks, ownership r
 4. Save, restart, reconnect, and verify consistent world state.
 5. Test permissions, invalid requests, population limits, backup restoration, and performance.
 
-No launch commands or network ports are advertised as working until an engine build and deployment configuration exist.
+The recorded listen-server connection result does not establish a usable dedicated-server deployment, secure public hosting or verified network port configuration. Do not advertise these as working without a real headless-server test.
