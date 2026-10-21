@@ -28,5 +28,7 @@
 | 2026-10-21 | **Syltouch** is the fae name for their direct communion with the Sylweave through Ellowyn's roots | Explicit owner selection; exact ritual, visual language, gameplay mechanics and limitations remain open |
 
 | 2026-10-21 | Fae regenerate injuries quickly but are vulnerable to fae-specific diseases and old age; a Sylweave-connected plague makes encounters with fae rare, and one major fae village has relocated far from Ellowyn to avoid the plague and seek a way to save her | Explicit owner lore direction; village name/location, pathogen mechanics, population and cure remain to be designed |
+| 2026-10-21 | Six fae clans approved: Sylvaren (Rootkeepers), Vaelora (Riverbound), Aethrynn (Starwardens), Veltharyn (Veilkeepers), Thornwyld (Beastbound), Elarith (Dawnhealers); many abandoned fae villages and one remote multi-clan refuge | Explicit owner approval of clan concept; refuge governance, name, exact sites, NPCs, quests and rewards remain undecided |
+| 2026-10-21 | Do not use the previously rejected shadow-forest naming word in new Wildbound names | Explicit owner naming preference; older artwork/file references may need careful link-safe renaming |
 
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
