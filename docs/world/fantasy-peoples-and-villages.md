@@ -15,11 +15,15 @@ The tone remains rustic and ecological even where fantasy is overt: animal husba
 
 **Owner direction, October 21, 2026:** Wildbound should include **fae with the allure and atmosphere commonly found in romantasy fiction**: beautiful, old-world, enigmatic, charismatic and at times dangerous. They are **distinct from elves**, not a renamed version of woodland elves. Use this as a genre mood direction, not permission to reproduce any particular book's courts, character designs, lore or plot.
 
+**Owner-confirmed lifespan:** Fae are extraordinarily long-lived but **not immortal**. They can die from illness and old age. The **oldest known fae reached 20,000 years**; this is an exceptional recorded lifespan, not necessarily an average or guaranteed maximum. Normal age ranges and aging stages remain undecided.
+
+**Owner-selected Sylweave connection:** Fae can directly connect with Ellowyn's living Sylweave roots, with the intimacy of an embodied, sensory communion rather than abstract spellcasting. The exact bodily mechanism, memory-sharing limits, rites, and player powers remain open and should be original to Wildbound rather than copied from any film.
+
 **Exploratory design, not fixed canon:** Long-lived fae individuals, fine-featured or strikingly unusual appearances, subtle pointed ears, expressive eyes, glamour-like perception, ancient rivalries, intricate bargains, passionate loyalties, court politics, possible romance and complex obligations. Fae need not all be aristocratic, alluring or morally alike. Everyday communities still need food, shelter, craftsmen, animal relationships and ecological limits.
 
 **Connection to the Sylweave:** Every fae, human, animal and hostile creature owes life to the same Sylweave. Fae might traditionally sense more of its patterns, but they do **not** own the Sylweave or deserve life more than humans. Human-built Weirs and the human-origin Veyrath were driven by a quest for longevity, immortality and power; fae longevity could create an interesting contrast and tension, **without** making all humans envious villains or all fae benevolent.
 
-**Possible locations:** A hidden river-court in an old Greenveil wood, a twilight court in Gloamwood, and individual fae integrated into mixed villages; actual court names, exact lifespans, powers, politics and romance mechanics are unresolved.
+**Possible locations:** A hidden river-court in an old Greenveil wood, a twilight court in Gloamwood, and individual fae integrated into mixed villages; actual court names, typical lifespans, powers, politics and romance mechanics are unresolved.
 
 **Scope caution:** Elaborate courts, faction reputation, romance routes, unique NPC rigs, dialogue branching and magic systems are major additional implementation work. Keep the direction in lore first, then validate a small single fae character encounter before committing to full court simulation.
 
