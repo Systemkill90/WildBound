@@ -31,4 +31,6 @@
 | 2026-10-21 | Six fae clans approved: Sylvaren (Rootkeepers), Vaelora (Riverbound), Aethrynn (Starwardens), Veltharyn (Veilkeepers), Thornwyld (Beastbound), Elarith (Dawnhealers); many abandoned fae villages and one remote multi-clan refuge | Explicit owner approval of clan concept; refuge governance, name, exact sites, NPCs, quests and rewards remain undecided |
 | 2026-10-21 | Do not use the previously rejected shadow-forest naming word in new Wildbound names | Explicit owner naming preference; older artwork/file references may need careful link-safe renaming |
 
+| 2026-10-21 | **Elarwyn**, a remote multi-clan fae refuge governed by a **Council of Six**, with key NPC concepts Maerith Sylvaren, Caelen Elarith, Thessa Thornwyld, Vaelor Veltharyn and Ilyra Aethrynn, plus the *Silence Between Roots* mystery and six-tree restoration memorial | Explicit owner approval of proposed sanctuary, characters and major narrative beats; no gameplay implementation or finalized quest mechanics |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
