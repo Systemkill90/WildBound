@@ -57,3 +57,18 @@ Reward useful homestead patterns, plants, decorations, costumes, harnesses, craf
 **First future prototype:** one Greenveil villager, three related interactions, an animal-care objective, one journal entry and one tangible craft reward. Playtest and verify replication/save behavior before building a full quest catalog. All of this remains a proposal, not tested gameplay.
 
 See [Ellowyn lore](ellowyn-and-the-sylweave.md), [villages](fantasy-peoples-and-villages.md), [idea board](../project/IDEA-BOARD.md), [current state](../project/CURRENT-STATE.md).
+
+## The Six Lost Legacies — optional fae history questlines
+
+**Owner-approved structure (October 21, 2026):** The history of the fall of the six fae clans is delivered primarily through **optional side quests**, exploration and environmental storytelling in abandoned settlements, not compulsory main-campaign exposition. The main quest may establish that the fae civilization collapsed and introduce Elarwyn, but completion must **not require** finishing these historical quests. The six titles and specific mysteries below are creative proposals, **not separately confirmed titles**.
+
+| Clan | Proposed quest title | Central mystery | Possible lasting restoration |
+| :-- | :-- | :-- | :-- |
+| Sylvaren | The Last Rootsong | Why did the local root network fall silent? | Renew a root-memory shrine |
+| Vaelora | Beneath the Stillwater | Why did a riverside settlement empty so quickly? | Restore a bridge or safe landing |
+| Aethrynn | The Stars Remember | What did scholars learn about the first human Weirs? | Salvage and reopen an archive |
+| Veltharyn | The Sealed Court | Why was an ancestral court sealed from within? | Preserve or reopen a memorial chamber |
+| Thornwyld | The Beasts That Wait | Why do animals still guard an empty settlement? | Rehabilitate an animal sanctuary |
+| Elarith | The Healer's Folly | What went wrong with early plague remedies? | Restore a medicinal garden |
+
+Design rules: each arc should convey a different human-scale story of evacuation, loss, resistance or survival; not all abandoned villages are mass graves. Include discoverable clues, NPC recollections, animal behavior and physical changes to the world. Offer optional homesteading, animal-care, building or historical rewards rather than required power upgrades. Key information needed to save Ellowyn must also be obtainable via the main campaign, without forcing completion of all six side quests.
