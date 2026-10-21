@@ -1,6 +1,6 @@
 # Wildbound — The Six Great Fae Clans
 
-**Status:** October 21, 2026 creative proposal. Clan names, settlements, histories and rewards below are **not yet owner-approved**, although the broader fae lore, plague, remote refuge, Syltouch and mortality are owner-defined. **Owner direction: eliminate the disfavored “Gloam” naming root entirely from active Wildbound naming.** Use original alternatives instead.
+**Status:** Six clans and their broad identities, history and ruins **approved by owner October 21, 2026**. Individual quest rewards, exact settlement locations, individual characters and implementation are still proposals. Do not reuse the previously rejected dark-forest naming root in Wildbound.
 
 [Fantasy peoples](fantasy-peoples-and-villages.md) · [Ellowyn and Sylweave](ellowyn-and-the-sylweave.md) · [Quest framework](quest-framework.md) · [Idea board](../project/IDEA-BOARD.md)
 
@@ -21,7 +21,7 @@ Encounters with individual fae are now rare. One major remote surviving village 
 | **Thornwyld — Beastbound** | Wildlife guardians, riders, animal kinship and husbandry | Mobile timber lodges, stable-groves, forest animal sanctuaries | Empty camps and animals still guarding old grounds | Species-specific animal care, harnesses, training |
 | **Elarith — Dawnhealers** | Botanists, caretakers, fae-specific disease scholars | Herb terraces, garden clinics, glasshouses and airy timber dwellings | Dispersed clinics and records of the plague | Healing gardens, restorative recipes, evidence |
 
-Names, numbers of historic clans, specializations and ecological sites are **candidates for owner review**; retain diversity within each clan rather than assigning a single personality to an entire people. Fae may intermarry, migrate, form mixed communities, disagree with leaders, or be members of no clan.
+The six clan names and broad specializations are **owner-approved lore**; precise ecological sites remain open. retain diversity within each clan rather than assigning a single personality to an entire people. Fae may intermarry, migrate, form mixed communities, disagree with leaders, or be members of no clan.
 
 ## The surviving refuge
 
