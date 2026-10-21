@@ -1,7 +1,8 @@
 """Build the small, saved Greenveil first-playable test map.
 
-Run with UnrealEditor-Cmd.exe and -ExecutePythonScript. Every landscape prop
-comes from the checked-in Poly Haven CC0 asset set.
+Run with UnrealEditor-Cmd.exe and -ExecutePythonScript. Poly Haven CC0 assets
+provide the ground and set dressing; the mature hornbeam meshes are migrated
+from the local Electric Dreams sample; optional wind shrubs come from Fab.
 """
 
 import math
@@ -28,7 +29,8 @@ def spawn_actor(actor_class, label, location, rotation=(0.0, 0.0, 0.0)):
     return actor
 
 
-def spawn_mesh(mesh_path, label, location, scale=1.0, yaw=0.0, collision=False):
+def spawn_mesh(mesh_path, label, location, scale=1.0, yaw=0.0,
+               collision=False, cast_shadow=True):
     mesh = unreal.load_asset(mesh_path)
     if not mesh:
         raise RuntimeError("Missing Greenveil mesh: " + mesh_path)
@@ -45,6 +47,7 @@ def spawn_mesh(mesh_path, label, location, scale=1.0, yaw=0.0, collision=False):
         if collision
         else unreal.CollisionEnabled.NO_COLLISION
     )
+    component.set_cast_shadow(cast_shadow)
     actor.set_actor_scale3d(unreal.Vector(scale, scale, scale))
     return actor
 
@@ -101,18 +104,33 @@ for index, (first, second) in enumerate(zip(trail_points, trail_points[1:])):
         max(0.8, math.sqrt(dx * dx + dy * dy) / 100.0), 2.0, 1.0
     ))
 
-# Mature edge trees frame the clearing and leave a 25 m playable interior.
-tree_mesh = mesh("TreeSmall02", "tree_small_02_4k")
-tree_positions = [
-    (-2500, -2200), (-1200, -2650), (300, -2700), (1750, -2400),
-    (2650, -1350), (2750, 250), (2550, 1750), (1600, 2650),
-    (150, 2750), (-1400, 2500), (-2650, 1700), (-2800, 250),
-    (-2500, -900), (900, -2300), (2250, 1100), (-1950, 1950),
+# An irregular, three-row hornbeam edge gives Greenveil a real canopy and
+# layered depth while keeping its animal-care meadow clear. Mature meshes,
+# bark, leaf materials and wind textures are locally migrated from the free
+# Electric Dreams sample; every third tree uses a distinct crown silhouette.
+tree_assets = [
+    "/Game/Megascans/3D_Plants/EuropeanHornbeam/Geometry/SimpleWind/SM_EuropeanHornbeam_Forest_05",
+    "/Game/Megascans/3D_Plants/EuropeanHornbeam/Geometry/SimpleWind/SM_EuropeanHornbeam_Forest_07",
 ]
-for index, (x, y) in enumerate(tree_positions):
-    spawn_mesh(tree_mesh, "Greenveil Tree %02d" % (index + 1),
-               (x, y, 0.0), 0.78 + (index % 3) * 0.07,
-               (index * 47) % 360, True)
+if not all(unreal.load_asset(path) for path in tree_assets):
+    raise RuntimeError("Migrate the European hornbeam meshes from Electric Dreams before regenerating Greenveil")
+tree_rings = ((1770.0, 18), (2420.0, 24), (3090.0, 30))
+tree_index = 0
+for ring_index, (radius, count) in enumerate(tree_rings):
+    for index in range(count):
+        angle = 2.0 * math.pi * (index + ring_index * 0.39) / count
+        radial_jitter = ((index * 97 + ring_index * 53) % 321) - 160
+        tangent_jitter = ((index * 61 + ring_index * 37) % 221) - 110
+        varied_radius = radius + radial_jitter
+        x = math.cos(angle) * varied_radius - math.sin(angle) * tangent_jitter
+        y = math.sin(angle) * varied_radius + math.cos(angle) * tangent_jitter
+        asset_path = tree_assets[(tree_index * 5 + ring_index) % len(tree_assets)]
+        tree_scale = 0.88 + ((tree_index * 17) % 39) / 100.0
+        spawn_mesh(asset_path, "Greenveil Hornbeam %02d" % (tree_index + 1),
+                   (round(x), round(y), 0.0), tree_scale,
+                   (tree_index * 47) % 360, ring_index < 2,
+                   ring_index == 0)
+        tree_index += 1
 
 fern_folder = "fern_02"
 shrub_folder = "shrub_02"
@@ -165,10 +183,12 @@ for path in pack_shrub_paths:
         unreal.log_warning("Optional local Fab shrub unavailable: " + path)
         pack_shrub_paths = []
         break
-shrub_positions = [(-2350, -1250), (-1750, -2250), (-650, -2350),
-                   (650, -2350), (1850, -2050), (2350, -800),
-                   (2350, 850), (1800, 2200), (550, 2350),
-                   (-800, 2300), (-2050, 1650), (-2400, 350)]
+shrub_positions = []
+for index in range(24):
+    angle = 2.0 * math.pi * (index + 0.37) / 24.0
+    radius = 2320.0 + ((index * 83) % 181) - 90
+    shrub_positions.append((round(math.cos(angle) * radius),
+                            round(math.sin(angle) * radius)))
 if pack_shrub_paths:
     for index, (x, y) in enumerate(shrub_positions):
         spawn_mesh(pack_shrub_paths[index % len(pack_shrub_paths)],
@@ -225,4 +245,4 @@ exposure.set_editor_property("settings", post_process)
 if not LEVEL_EDITOR.save_current_level():
     raise RuntimeError("Could not save the Greenveil test map")
 
-unreal.log("Saved Greenveil map with CC0 trees, shrubs, ferns, rocks, care props, deer, and PlayerStart")
+unreal.log("Saved Greenveil map with hornbeam forest, shrubs, ferns, rocks, care props, deer, and PlayerStart")
