@@ -25,6 +25,7 @@ Its defining pillars are **expressive voxel building**, **wildlife, taming, bree
 | Prototype controls and validation | [Engineering playtest guide](docs/developers/PROTOTYPE-PLAYTEST.md) |
 | Planned milestones and evidence | [Roadmap](ROADMAP.md) |
 | Actual development record | [Current state](docs/project/CURRENT-STATE.md) and [session handoff](docs/project/SESSION-HANDOFF.md) |
+| Documentation and consistency audit | [Documentation hub](docs/README.md) and [October 21 audit](docs/project/DOCUMENTATION-AUDIT-2026-10-21.md) |
 | Third-party art sources and licenses | [Asset credits](docs/art/ASSET-CREDITS.md) |
 
 ## What's in the prototype
