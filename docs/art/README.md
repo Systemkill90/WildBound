@@ -25,6 +25,16 @@
 
 [Read the world and biome notes →](../world/biomes.md) · [Read the animal design notes →](../systems/animals.md)
 
+## New illustrated concept atlas
+
+[![Six speculative Wildbound biome and settlement visual directions](concept-atlas/biomes-atlas.webp)](concept-atlas/README.md)
+
+The [**new illustrated atlas**](concept-atlas/README.md) collects **20 speculative creature studies**, six biome mood panels, a set of rustic starter tools, and male/female homesteader turnaround sheets. These are planning illustrations, **not implemented Unreal assets or a promised final roster**.
+
+[![Woodland creature design studies](concept-atlas/creatures-i-meadows.webp)](concept-atlas/README.md)
+
+[Explore all eight concept plates →](concept-atlas/README.md)
+
 ## Inside the creative workshop
 
 The following are **draft concepts**, deliberately staged separately from the game's working prototype and accepted lore.

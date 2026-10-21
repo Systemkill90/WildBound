@@ -37,6 +37,10 @@ Do not infer that gameplay works solely from source or compilation. The compiled
 
 At the **October 20 desktop handoff**, a preview was reported open from `D:\WildBound\Assets\Samples\ElectricDreamsEnv.uproject` on `/Game/Levels/PCG/ElectricDreams_PCGCloseRange`; it used 1920×1080 output, a 60 FPS cap and local Medium scalability settings. **Its present running state has not been checked in this documentation audit.** The separately packaged Wildbound build was reported at `D:\WildBound\Builds\WildBoundGreenveil\Windows\Wildbound.exe`; availability on the machine has not been rechecked. Source checkout launch helper: [Tools/Start-Wildbound.cmd](../../Tools/Start-Wildbound.cmd). See the playtest guide in docs/developers/PROTOTYPE-PLAYTEST.md.
 
+## New pre-production concept references (October 21, 2026)
+
+The GitHub [illustrated concept atlas](../art/concept-atlas/README.md) contains eight art studies depicting twenty proposed creatures, candidate biomes, starter tools and both male/female homesteader costume directions. These are **visual proposals**, not playable content or an approved asset list. No UE compilation, gameplay or multiplayer tests were performed for this art update.
+
 ## Next tasks
 
 1. Migrate a bounded Electric Dreams forest slice into the Wildbound project and verify the packaged result; keep experimental sample systems optional.

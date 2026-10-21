@@ -1,5 +1,11 @@
 # Prototype asset sources
 
+## Original pre-production artwork (October 21, 2026)
+
+The eight images in [the illustrated concept atlas](concept-atlas/README.md) were generated for Wildbound during a ChatGPT design session and exported as optimized WebP art plates for this repository. They are not third-party Unreal store assets, engine models, or evidence of finished gameplay. Their creature names, biome titles, tools and costume details are creative proposals pending review. The AI-rendered captions may contain inaccuracies.
+
+The imported runtime assets below have separate sources and licensing rules.
+
 Wildbound keeps art provenance alongside the content. Approved imported Unreal assets are tracked with Git LFS. **LFS is a storage method, not a license**: only source art with valid redistribution rights belongs in the public repository. The presence of a prior credit entry is not a new legal verification.
 
 | Asset set | Source | License | Use in Wildbound |
