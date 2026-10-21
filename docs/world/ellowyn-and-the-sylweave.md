@@ -97,9 +97,9 @@ The story's central feedback loop is:
 | :-- | :-- | :-- | :-- |
 | **I — False Renewal** | An apparent cure for age and frailty | Nhalis begins to accumulate, even as concentrated Sylweave produces short-lived restorative effects | Youthful faces, reflective eyes, faint dark or pale veins, missing sleep |
 | **II — The Blight** | Uncomfortable “adjustment” that more treatments will solve | Chemical injury drives asymmetrical bodily change and mounting dependency | Unnatural bone and crystalline protrusions, painful sensory changes, distorted voices, altered behavior |
-| **III — The Hollowed** | Leadership calls cases rare failures or suppresses reports | Profound mutation produces powerful, dangerous and sometimes confused monsters among the most heavily exposed | Former workers and leaders recognizable by clothes, keepsakes, tools, scraps of speech; some may retain memory or agency |
+| **III — The Threnvahl** | Leadership calls cases rare failures or suppresses reports | Profound mutation produces powerful, dangerous and sometimes confused monsters among the most heavily exposed | Former workers and leaders recognizable by clothes, keepsakes, tools, scraps of speech; some may retain memory or agency |
 
-**The Hollowed** is a proposed collective epithet, not a finalized species name. Mutation does not automatically erase a character's personhood or excuse faction crimes. Not everyone exposed must become aggressive, and a possible treatment or rescue route should remain a narrative choice. The source of the monstrosity is the faction's chemical exposure, not a pre-existing fantasy species, disability, or a “bad” alignment in the Sylweave.
+**The Threnvahl** is the owner-selected collective name for chemically transformed creatures across species, not a naturally occurring species. Mutation does not automatically erase a character's personhood or excuse faction crimes. Not everyone exposed must become aggressive, and a possible treatment or rescue route should remain a narrative choice. The source of the monstrosity is the faction's chemical exposure, not a pre-existing fantasy species, disability, or a “bad” alignment in the Sylweave.
 
 ### An unsettling revelation
 
@@ -124,7 +124,7 @@ A homesteader discovers a dying root near a creek, strange livestock or wildlife
 **Players must first live on the land and grow stronger.** Building and maintaining a homestead, learning wildlife needs, earning animal trust, survival, crafting and exploring varied habitats develop the understanding necessary to use Ellowyn's gift. Investigating different settlements uncovers claims of miraculous rejuvenation, villages dependent on Heartglass, hidden waste from refinement, and the first visibly altered siphoners. Dwarven experts may recognize ancient Weir architecture, fungal keepers can detect disrupted growth, and werewolf trackers may find new routes taken by frightened animals. Players learn why some factions cooperate and others resist.
 
 ### Chapter III — Drowned Evidence
-The Drowned March holds records of the older Weir catastrophe and song-preserved routes to buried infrastructure. Players compare records of contaminated batches with the ever-deeper drilling pattern, revealing that the supposed search for a clean source is itself poisoning Ellowyn. The faction's handling of illness among its own members—denial, concealment, or genuine confusion—can become a separate moral discovery. Some Hollowed retain enough awareness to reveal locations or ask for mercy. Sirens may sing warnings about waters no longer answering Ellowyn.
+The Drowned March holds records of the older Weir catastrophe and song-preserved routes to buried infrastructure. Players compare records of contaminated batches with the ever-deeper drilling pattern, revealing that the supposed search for a clean source is itself poisoning Ellowyn. The faction's handling of illness among its own members—denial, concealment, or genuine confusion—can become a separate moral discovery. Some Threnvahl retain enough awareness to reveal locations or ask for mercy. Sirens may sing warnings about waters no longer answering Ellowyn.
 
 ### Chapter IV — The Great Siphon
 After living in and learning the world, the players are finally strong enough to carry Ellowyn's entrusted gift into the buried heart of the extraction system. The climax takes place in a chamber of enormous willow roots, old stone mechanisms and the faction's chemical distribution network. The principal antagonist may be the most altered of all, demonstrating the failure of their immortality project. Merely killing a mutated leader does **not** cure Ellowyn, and one supposedly pure batch is not the solution: players must stop the repeated extraction, interrupt the chemical feed, prevent or contain more contamination, and stabilize essential protections for villages still dependent on old Weirs. The use of Ellowyn's gift in the finale should **depend on lessons learned from animals, habitats, villages and survival**, not on raw magic levels alone.
@@ -137,13 +137,13 @@ After living in and learning the world, the players are finally strong enough to
 
 The finale is emotionally and visually conclusive (boss/confrontation shape still open), followed by story credits and a visible improvement in Ellowyn and the land. Existing player homes, animals, villages and cooperative saves persist afterward; the story's victory is not the end of life in the world.
 
-Recovery should be **hopeful rather than instant or perfectly clean**. Residual illness, contested research, repentant surviving Hollowed and the care of recovering habitats can support post-story content. No forced purge, world wipe, or morally selective Sylweave is implied.
+Recovery should be **hopeful rather than instant or perfectly clean**. Residual illness, contested research, repentant surviving Threnvahl and the care of recovering habitats can support post-story content. No forced purge, world wipe, or morally selective Sylweave is implied.
 
 ## Candidate terms — undecided, not canon
 
 - **Nhalis** — the harmful manufactured chemical used in extraction and refinement.
 - **Heartglass** — concentrate refined from stolen Sylweave.
-- **The Hollowed** — transformed members and victims of the chemical.
+- **The Threnvahl** — **owner-selected name** for chemically transformed beings; individual variants and abilities are undecided.
 - **The Hollow Crown** — the exploiting faction.
 - **The Gilded Warden** — a principal faction leader; his species, motivations, personality and finale remain unresolved.
 - **The Weirs** — ancient regulating machinery now repurposed to extract Sylweave.
