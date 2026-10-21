@@ -18,6 +18,10 @@ These are original, newly authored lyric drafts. Titles, melodies, vocal designs
 - **Distinctiveness**: Brinefolk songs are communal and tactile; merfolk songs are intimate and reverent; siren songs are impossible to place and may seem familiar for no clear reason.
 - **Language**: begin with understandable English lyrics; optionally later design in-world dialect syllables with cultural consistency and accessibility captions. Avoid randomized nonsensical chant presented as a complete language.
 
+## Copy-ready song sheets
+
+All three complete songs, with their original lyrics preserved and generator-ready production prompts, are individually saved in the [Aquatic song-generator sheets](../audio/song-generator-sheets/README.md). Use these sheets for future sung audio experiments without changing the source lyric drafts.
+
 ## Song 01 — BRINEFOLK: “Low the Lantern”
 
 **Use:** Evening net-mending, slow boats coming home, village chorus that first leads the player to a stilt settlement.  
