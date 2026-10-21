@@ -33,4 +33,6 @@
 
 | 2026-10-21 | **Elarwyn**, a remote multi-clan fae refuge governed by a **Council of Six**, with key NPC concepts Maerith Sylvaren, Caelen Elarith, Thessa Thornwyld, Vaelor Veltharyn and Ilyra Aethrynn, plus the *Silence Between Roots* mystery and six-tree restoration memorial | Explicit owner approval of proposed sanctuary, characters and major narrative beats; no gameplay implementation or finalized quest mechanics |
 
+| 2026-10-21 | The fall of the six fae clans is primarily explored through **optional side quests** in abandoned villages rather than required main-story history missions | Explicit owner narrative-structure decision; individual quest titles, puzzles and rewards are design proposals, not implemented content |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
