@@ -16,6 +16,10 @@
 
 The paragraphs below expand these clear owner decisions into *candidate* names, mechanics, visuals, encounters and plot beats; those details are not owner-approved canon yet.
 
+## The distant fae refuge — owner-established direction
+
+Fae recover from injuries rapidly, but can succumb to diseases specific to their kind and to old age. Ellowyn's poisoning threatens their distinctive Sylweave-linked resilience and is tied to a fae-specific plague. That vulnerability helps explain why it is rare to meet a fae. **One major fae village fled far from Ellowyn**, both to avoid the plague and to search for a way to heal her. The refugees can become crucial allies through Syltouch—direct communion with living Sylweave roots—while remaining vulnerable and unable to solve everything alone. Their village name, exact location, scientific or magical theory of the illness, treatment and story missions are not yet confirmed.
+
 ## The Sylweave — nature without moral judgment
 
 The Sylweave is a living, world-spanning weave of creative energy traveling from Ellowyn's roots into land, waters, and living bodies. It connects wild animals, farms, fantasy creatures, townsfolk, monsters and the faction exploiting it. It nourishes life and renewal but **does not decide who deserves to live**. Predation, dangerous creatures and morally wicked people are still part of the realm's living tapestry.
