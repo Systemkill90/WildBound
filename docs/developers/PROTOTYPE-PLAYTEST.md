@@ -6,7 +6,7 @@ This is a first small playable foundation, not a finished demo. Greenveil is a s
 
 ## Current local build
 
-The packaged build is at `<local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe`; it was left open after launch. The package is generated locally and is intentionally not committed. For a source checkout, run [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd) to compile and launch the editor-built Greenveil game. Use `-BuildOnly` to compile without launching, or `-EngineRoot "<local-project-root>\Engine\UE_5.8"` to specify an engine.
+The **last reported** packaged build was at `<local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe`; it was launched in the October 20 desktop session. This documentation review has not verified the file is still present or the process is still running. The package is generated locally and is intentionally not committed. For a source checkout, run [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd) to compile and launch the editor-built Greenveil game. Use `-BuildOnly` to compile without launching, or `-EngineRoot "<local-project-root>\Engine\UE_5.8"` to specify an engine.
 
 The verified toolchain is Unreal Engine 5.8.4, Visual Studio 2022, MSVC toolchain, and Windows SDK 10. Build/cook logs are kept in ignored `Saved/WildboundBootstrap`.
 
