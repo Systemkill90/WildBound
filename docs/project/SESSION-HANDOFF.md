@@ -21,7 +21,7 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 
 ## Owner playtest now
 
-The Electric Dreams close-range preview has been left open with the Wildbound HUD and 1080p/60 output settings. The white screen is fixed, but the scene and pawn remain prototype quality. Resume the control/care/build playtest; do not mark interactions passed until observed in play.
+At the October 20 desktop session's conclusion, the Electric Dreams close-range preview was reported open with the Wildbound HUD and 1080p/60 output settings. Its current running state has **not** been verified by this documentation review. The recorded white-screen defect was fixed in that build, but the scene and pawn remained prototype quality. Resume the control/care/build playtest; do not mark interactions passed until observed in play.
 
 ## Known visual and gameplay limits
 
