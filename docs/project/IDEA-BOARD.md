@@ -1,6 +1,6 @@
 # Wildbound — Idea board and staging queue
 
-Updated: October 20, 2026  
+Updated: October 21, 2026  
 Status: **Planning workspace** — not proof of implemented gameplay.
 
 [Repository](../../README.md) · [Vision](../vision.md) · [Current state](CURRENT-STATE.md) · [Decisions](DECISIONS.md) · [Roadmap](../../ROADMAP.md)
@@ -49,6 +49,7 @@ Ideas can be suggested in **any order**, regardless of current development statu
 | IB-002 | **Distinct fantasy villages**, including elven, werewolf, dwarven, mixed-species communities and original folk (Veshari, Nimrui, Kethri) | Exploring — [draft staged](../world/fantasy-peoples-and-villages.md) | Compare settlement identity, daily life and possible NPC interactions; names and mechanics are not approved canon |
 | IB-003 | Water-surface and underwater villages populated by fish-folk, sirens, merfolk and mixed communities | Exploring | Develop culturally distinct settlements, ecology, water travel and animal husbandry; not a milestone commitment |
 | IB-004 | Aquatic NPCs sing slow, ethereal, eerie and enchanting shanties, work songs and ceremonial songs | Exploring — [songbook staged](../world/aquatic-voices-and-shanties.md) | Owner-selected Luresinger direction: unusually deep **feminine** harmonies; **male** voices angelic and frightening. Review composition, performances and accessibility; no in-game audio implemented |
+| IB-005 | **Wildbound main lore and beat-the-game objective:** ancient Binding slows nature's cycles; players uncover the cause, forge cross-cultural cooperation and restore renewal while keeping their persistent world | Exploring — [The Last Turning draft staged](../world/main-story-the-last-turning.md) | Choose tone, antagonist, climax and ending structure; this is not approved canon or scheduled implementation |
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
 
