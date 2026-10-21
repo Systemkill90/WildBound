@@ -2,46 +2,45 @@
 
 Updated: October 20, 2026.
 
-## Source and project assets authored
+## Verified project and machine setup
 
-- Unreal Engine 5 project descriptor, module and game/editor/server target definitions; no engine version pin.
-- Initial C++ animal simulation model with hunger, thirst, physical condition, stress and trust.
-- UE-side replicated animal needs component with server-only simulation and care entry points.
-- Prototype animal actor, third-person character, player controller, placeholder build block, ground, game mode, and debug HUD.
-- Input mappings for walking, looking, feeding, watering, reassuring, placing and removing temporary blocks.
-- Game mode selects a code-assembled starter area when a level is opened in Play; no `.umap` is committed.
-- Portable native C++ tests for animal needs/trust, a strict **versioned snapshot format** (not connected to engine saves), and **bounded grid-placement rules**, plus a dependency-free static project-wiring checker in GitHub Actions.
-- A local Windows [build/launch script](../../Tools/Start-Wildbound.ps1) and .cmd convenience launcher with engine discovery, compiler exit handling, on-disk diagnostics and a provisional built-in-map game launch command.
-- Core game vision, systems, biome documents, [engineering playtest guide](../developers/PROTOTYPE-PLAYTEST.md), and milestone roadmap.
+- Public repository: [Systemkill90/WildBound](https://github.com/Systemkill90/WildBound), checked out at `D:\WildBound\Source`.
+- Unreal Engine 5.8.4; Visual Studio Community 2022 17.14.42; MSVC 14.44.35207; Windows SDK 10.0.26100.0.
+- `WildboundEditor` and the game target compile successfully. The Windows Development package built and cooked successfully with 543 runtime packages / about 145 MiB of cooked content.
+- Packaged game launched locally in a window, and Greenveil loaded. Current local package: `D:\WildBound\Builds\WildBoundGreenveil\Windows\Wildbound.exe` (generated output is not committed).
+- A listen-server smoke test accepted two simulated clients. This verifies connection acceptance only, not gameplay replication.
+- Static scaffold verification passed 58 checks. Native tests passed: 34 animal simulation, 22 snapshot validation, and 13 placement checks.
+- Greenveil is a saved 60 m clearing with imported CC0 ground, foliage and props, lighting, trail, a player start, HUD and deer mesh. The map generator saved 65 actors.
 
-## Actually verified
+## Authored and compiled
 
-- GitHub accepted and served the source commits.
-- [GitHub Actions run 39516848594](https://github.com/Systemkill90/WildBound/actions/runs/39516848594) completed successfully with **four passing jobs**: animal rules, versioned snapshot validation, bounded block placement, and source wiring.
-- [Windows bootstrap CI](https://github.com/Systemkill90/WildBound/actions/runs/39517592126) successfully parsed the PowerShell script and ran its engine discovery mode on a hosted Windows runner. This **does not** indicate that the build helper ran on the developer's desktop.
-- Portable simulation, snapshot, and placement tests run independently of Unreal. These checks do not test Unreal actors, RPCs, replication, rendering, in-engine saving, or recovery.
+- Server-updated animal needs, stress/trust rules and owner-controller care requests with preliminary range, line-of-sight and supply checks.
+- Third-person pawn, camera, debug HUD, temporary 1 m snapped construction blocks, collision ground and game-mode bootstrap.
+- Deer static mesh with capsule collision and server-driven local wandering. It slides in a static pose; there is no skeletal walk animation.
+- Forest floor/foliage and starter props from Poly Haven CC0 assets; deer model from an Innerscene CC0 download. See [asset credits](../art/ASSET-CREDITS.md).
+- PC-first project. Xbox is only a future feasibility evaluation.
 
-## Not verified or implemented
+## Still requires hands-on playtest or implementation
 
-**No Unreal editor/game/server build has been compiled or launched. The developer's desktop is not available to this chat session.** No map has been opened, no player or animal spawned during gameplay, no multiplayer simulation or network authorization tested, and no saved-game recovery tested.
+- Keyboard movement, jump and camera in this exact packaged checkout.
+- Feeding, watering, reassurance, supply decrement, needs changes, stress and trust outcomes in live play.
+- Block placement/removal, collision, and visible floor alignment in live play.
+- Actual replication of animal values, care side effects and placed blocks. The two-client test joined clients but did not issue gameplay actions.
+- Dedicated server build, world persistence/recovery, real inventory, animal navigation, grazing, breeding and enclosure behaviors.
+- Replace the primitive player pawn with a proper rigged character. Add a rigged, grounded deer with walk/idle cycles; user feedback specifically noted the earlier demo's floating, motionless deer and underspecified environment.
 
-The runtime classes are authored **prototype source, not verified working features**. Test-floor and snapped mesh blocks are placeholders, **not** a voxel construction or terraforming system. AI navigation, grazing/water seeking, actual shelters, genetics, breeding, husbandry interfaces, world persistence, purchased assets and animations are absent.
+Do not infer that gameplay works solely from source or compilation. The compiled/packaged result is a real first prototype, but the acceptance cases above are unverified until actually played.
 
-No Unreal minor version, voxel plugin, paid dependency or Xbox platform approval has been selected.
+## Local launch
 
-## Tracked next tasks
+The packaged build is at `D:\WildBound\Builds\WildBoundGreenveil\Windows\Wildbound.exe` and has been left open for the owner to inspect. Source checkout launch helper: [`Tools/Start-Wildbound.cmd`](../../Tools/Start-Wildbound.cmd). See [playtest guide](../developers/PROTOTYPE-PLAYTEST.md).
 
-- [M0 editor compile and Greenveil](https://github.com/Systemkill90/WildBound/issues/2)
-- [M1 two-client replication](https://github.com/Systemkill90/WildBound/issues/3)
-- [M2 voxel + animal navigation](https://github.com/Systemkill90/WildBound/issues/4)
-- [M3 recoverable persistence](https://github.com/Systemkill90/WildBound/issues/5)
+## Next tasks
 
-## Next concrete action
+1. Play the current package and record any control or interaction failures.
+2. Fix only reproduced issues; verify grounded collision and care/build side effects.
+3. Upgrade deer and player to appropriate rigged assets/animation before enlarging the map.
+4. Validate server-authoritative interactions and state replication across two clients.
+5. Build the dedicated server and implement save/restart recovery after core state is confirmed.
 
-1. Install and record an Unreal Engine 5 version and compatible Windows C++ toolchain.
-2. Compile `WildboundEditor`, fix UHT/C++ errors and open an empty test level.
-3. Run the [engineering playtest](../developers/PROTOTYPE-PLAYTEST.md), confirm pawn controls, on-screen condition values, care resource checks and grid blocks.
-4. Run a two-client PIE test, then a real headless-server test with a matching source-engine build when available.
-5. After validation, tackle a minimal animal navigation/enclosure proof and a versioned persistent-world save design.
-
-[Session handoff](SESSION-HANDOFF.md) · [Roadmap](../../ROADMAP.md) · [Decision record](DECISIONS.md)
+[Session handoff](SESSION-HANDOFF.md) · [Roadmap](../../ROADMAP.md) · [Decisions](DECISIONS.md)

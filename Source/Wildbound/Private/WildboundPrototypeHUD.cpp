@@ -14,15 +14,15 @@ void AWildboundPrototypeHUD::DrawHUD()
 
     const FLinearColor Light(0.92f, 0.91f, 0.78f);
     const FLinearColor Accent(0.51f, 0.87f, 0.66f);
-    DrawText(TEXT("WILDBOUND / GREENVEIL ENGINEERING PLAYGROUND"),
+    DrawText(TEXT("WILDBOUND  |  GREENVEIL MEADOW"),
         Accent, 24.0f, 22.0f);
     DrawText(TEXT("WASD move | Mouse look | Space jump"),
         Light, 24.0f, 51.0f);
-    DrawText(TEXT("Look at sphere: E feed | R water | F reassure"),
+    DrawText(TEXT("Look at deer: E feed | R water | F reassure"),
         Light, 24.0f, 73.0f);
     DrawText(TEXT("G place snapped block | X remove aimed block"),
         Light, 24.0f, 95.0f);
-    DrawText(TEXT("Debug only - no saved world, voxel terrain, or animal AI"),
+    DrawText(TEXT("Prototype field test  |  G place block | X remove block"),
         Light, 24.0f, 117.0f);
 
     AWildboundPrototypePlayerController* PC =
@@ -58,7 +58,7 @@ void AWildboundPrototypeHUD::DrawHUD()
         const UWildboundAnimalNeedsComponent* Needs = Animal->GetNeeds();
         if (!Needs) return;
         const FWildboundAnimalVitals V = Needs->GetVitals();
-        DrawText(TEXT("WILD HERBIVORE / PROTOTYPE"),
+        DrawText(TEXT("GREENVEIL DEER  |  Wild herbivore"),
             Accent, 24.0f, 191.0f);
         DrawText(FString::Printf(
             TEXT("Hunger %.0f | Thirst %.0f | Condition %.0f | Stress %.0f | Trust %.0f"),

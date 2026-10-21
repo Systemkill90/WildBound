@@ -5,8 +5,8 @@
 #include "WildboundPrototypeGameMode.generated.h"
 
 /**
- * Greenveil engineering playground. Spawns temporary cubes/spheres at runtime
- * so there is no required third-party asset or downloadable content pack.
+ * Greenveil test map. Supplies ground and animal actors only when a level does
+ * not already contain them, so the saved map and engine Entry map both work.
  */
 UCLASS()
 class WILDBOUND_API AWildboundPrototypeGameMode : public AGameModeBase

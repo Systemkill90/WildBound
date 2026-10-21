@@ -4,36 +4,36 @@ Updated: October 20, 2026.
 
 Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md) before new work.
 
-## Delivered this session
+## Delivered and verified
 
-- Created a platform-independent deterministic animal needs/trust model with tests.
-- Refactored `UWildboundAnimalNeedsComponent` to call that model, replicate a condition snapshot and update roughly once per second instead of firing Blueprint events every frame.
-- Authored a Greenveil engineering prototype: character and camera, placeholder replicated animal, player-controller care interactions with server-side distance/LOS/resource/cooldown checks, temporary 100 cm grid blocks, temporary ground, game mode bootstrap and debug HUD.
-- Added legacy input bindings for temporary testing, plus GitHub Actions native C++ and static project-wiring checks.
-- Added a portable versioned snapshot format with malformed-input tests, and a bounded snap-grid policy with native tests. The grid policy is called from the prototype player-controller placement path. Snapshot serialization is not yet connected to Unreal or disk.
-- **All four** independent checks passed on [CI run 39516848594](https://github.com/Systemkill90/WildBound/actions/runs/39516848594).
+- Installed toolchain identified on the owner's D: workshop: Unreal Engine 5.8.4, Visual Studio Community 2022 17.14.42, MSVC 14.44.35207 and Windows SDK 10.0.26100.0.
+- Fixed UE 5.8 target settings and C++ compile diagnostics. `WildboundEditor` and game build pass.
+- Generated and saved `/Game/Maps/GreenveilField`: small forest clearing with real imported forest assets, floor, trail, set dressing, player start, deer and default game mode.
+- Imported a CC0 deer static model and Poly Haven CC0 environment assets; credits/license record is in `docs/art/ASSET-CREDITS.md`.
+- Packaged/cooked Win64 Development build successfully and launched it in a window. Local output: `D:\WildBound\Builds\WildBoundGreenveil\Windows\Wildbound.exe`.
+- Static verification passed 58 checks; native simulation, snapshot and placement suites passed 34, 22 and 13 checks respectively.
+- Packaged listen server accepted two simulated client connections. No gameplay RPC or replication assertions were run.
+- Updated README, roadmap and developer/project state documents to distinguish compile/package evidence from playtest evidence.
 
-## Build launch tooling
+## Owner playtest now
 
-Added `Tools/Start-Wildbound.cmd` and `Tools/Start-Wildbound.ps1`, which attempt to locate a preinstalled UE5, compile `WildboundEditor` and start a provisional `/Engine/Maps/Entry -game` session. The script logs compiler output under ignored `Saved/WildboundBootstrap`. [Windows CI](https://github.com/Systemkill90/WildBound/actions/runs/39517592126) passed syntax and engine-detection checks. **It has not been run on the development PC**; this chat has no connection to the desktop or Unreal installation.
+The packaged Wildbound window has been left open. Check WASD/mouse, Space, E feed, R water, F reassure, G place block, X remove block. The map contains a real static deer body in the clearing. Confirm whether the camera/pawn controls work; approach and aim at the deer to try care; compare HUD values/supplies; place/remove a block. This package is not to be treated as passed on those interactions until verified.
 
-## Exact status
+## Known visual and gameplay limits
 
-No Unreal Engine build, editor launch, map asset, two-player test, dedicated server, AI, actual voxel terrain, **runtime persistent saves** or complete taming gameplay exists. Newly authored actors/RPCs are uncompiled. Network checks in code are preliminary and require adversarial testing.
+- The main pawn remains an engine primitive and is not a realistic character.
+- Deer is a static-pose model moved by root translation; it currently has no walk cycle. Its height offset is set from imported model bounds, but ground contact should be inspected in the running window.
+- Bowl and pail are environment props; no inventory or actual bowl-target interaction exists.
+- Starter supplies and world state are in memory. Blocks are temporary cubes; no voxel terrain.
+- Client connections were tested only. No action was sent to verify replication, denial logic, animal vitals or building state.
 
-Engineering tasks are tracked in [M0 editor compilation](https://github.com/Systemkill90/WildBound/issues/2), [M1 multiplayer](https://github.com/Systemkill90/WildBound/issues/3), [M2 voxel and enclosure](https://github.com/Systemkill90/WildBound/issues/4), and [M3 persistent saves](https://github.com/Systemkill90/WildBound/issues/5).
+## Next implementation sequence
 
-## Next operator action
+1. Capture owner playtest observations from this exact package and reproduce issues.
+2. Fix any demonstrated movement, floor collision, care interaction or block placement defect.
+3. Source/import a suitable free rigged animal and player asset, recording licenses; add a simple grounded idle/walk animation path.
+4. Add two-client functional assertions for authoritative feeding/watering and block replication.
+5. Test animal movement around a small enclosure; then evaluate persistence and dedicated server packaging.
+6. Expand Greenveil only after these core checks.
 
-1. Obtain an actual desktop-capable computer session. This chat cannot run local desktop commands; a GitHub commit cannot launch software on the PC.
-2. Determine and record the UE minor version and Windows C++ toolchain installed on the development PC.
-3. Follow [prototype playtest guide](../developers/PROTOTYPE-PLAYTEST.md) to generate project files, compile the Editor target, create an empty level and inspect the runtime harness.
-4. Capture every compile error and resolve it in code. Check the first launch, spawn behavior, input, animal condition and block placement before any new major features.
-5. Run a two-client test and verify RPC authority, replication, denial of invalid actions, late joining, and block population limit.
-6. Only after that, evaluate voxel implementation and prototype animal navigation around player-built walls.
-
-## Remaining engineering risks
-
-UE version compatibility is unknown. Empty-level spawn behavior and placeholder mesh visibility are untested. Construction and care lack persistence, true resource inventory integration, role permissions and sophisticated anti-exploit checks. Initial code has no backup recovery, offline care model, genetics or population scaling. Platform budget and animal navigation around changing voxel geometry remain unresolved.
-
-Keep binary engine/platform dependencies, real save files, private information, and unlicensed assets out of the repository. Do not mark untested scaffolds complete.
+Do not start a large world, major new systems, or expensive asset generation before this foundation behaves correctly.

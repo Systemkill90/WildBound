@@ -31,11 +31,11 @@ AWildboundPrototypeCharacter::AWildboundPrototypeCharacter()
     PlaceholderBody->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     PlaceholderBody->SetRelativeScale3D(FVector(0.42f, 0.42f, 0.85f));
 
-    static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh(
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> BodyMeshAsset(
         TEXT("/Engine/BasicShapes/Sphere.Sphere"));
-    if (Mesh.Succeeded())
+    if (BodyMeshAsset.Succeeded())
     {
-        PlaceholderBody->SetStaticMesh(Mesh.Object);
+        PlaceholderBody->SetStaticMesh(BodyMeshAsset.Object);
     }
 }
 
