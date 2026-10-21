@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Cooperative worlds](multiplayer.md)
 
-**Status: temporary construction prototype source authored, not Unreal-tested.** A 1 m grid-block actor, server placement/removal handler, and tested portable grid policy exist. This is not a voxel engine, terrain editing or persistent construction. No voxel technology or paid plugin has been selected.
+**Status (last recorded October 20, 2026): prototype code compiled, interactions still unverified.** A 1 m snap-grid block actor and server-side placement/removal request handlers compile in UE 5.8.4; grid policy passed independent C++ tests. The G/X controls, ground alignment, multiplayer effects and actual collisions **have not been playtested** in the current package. This is not a voxel engine, terrain editing or persistent construction. No paid voxel plugin has been selected.
 
 The goal is expressive construction using volumetric building units: shape walls and foundations, combine rustic materials, and build cottages, barns, fences, bridges, and villages. Terrain excavation is a separate scope decision; voxel construction does not yet promise a fully destructible world.
 
