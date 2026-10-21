@@ -12,7 +12,7 @@
 4. The extraction machines use a **specific chemical**. This artificial reagent contaminates Ellowyn while the machines siphon the Sylweave, **plaguing** her roots and spreading harm.
 5. Over time **the same chemical poisons the creatures conducting the siphoning**. What was intended to make them young and immortal instead increasingly **transforms them into monsters**. The group is causing its own undoing.
 6. **Because the plague contaminates their harvested batches**, the siphoners continue taking more Sylweave in hopes of finding a batch that has escaped the sickness. **Each additional attempt makes Ellowyn sicker and brings her closer to death.** The search for uncontaminated life force is itself perpetuating the contamination.
-6. **With what strength she has left, Ellowyn deliberately shares her power with the player characters** so they can become heroes capable of rescuing her. This is the reason they are empowered, but not an instant grant of mastery: they must live off the land, understand living systems and the peoples of the realm, and grow stronger before they can stop the extraction and heal her.
+7. **With what strength she has left, Ellowyn deliberately shares her power with the player characters** so they can become heroes capable of rescuing her. This is the reason they are empowered, but not an instant grant of mastery: they must live off the land, understand living systems and the peoples of the realm, and grow stronger before they can stop the extraction and heal her.
 
 The paragraphs below expand these clear owner decisions into *candidate* names, mechanics, visuals, encounters and plot beats; those details are not owner-approved canon yet.
 
