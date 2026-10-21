@@ -35,7 +35,7 @@ Do not infer that gameplay works solely from source or compilation. The compiled
 
 ## Local launch
 
-The current preview is running from <local-project-root>\Assets\Samples\ElectricDreamsEnv.uproject on /Game/Levels/PCG/ElectricDreams_PCGCloseRange; it uses 1920×1080 output, a 60 FPS cap and local Medium scalability settings. The separately packaged Wildbound build remains at <local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe. Source checkout launch helper: Tools/Start-Wildbound.cmd. See the playtest guide in docs/developers/PROTOTYPE-PLAYTEST.md.
+At the **October 20 desktop handoff**, a preview was reported open from `<local-project-root>\Assets\Samples\ElectricDreamsEnv.uproject` on `/Game/Levels/PCG/ElectricDreams_PCGCloseRange`; it used 1920×1080 output, a 60 FPS cap and local Medium scalability settings. **Its present running state has not been checked in this documentation audit.** The separately packaged Wildbound build was reported at `<local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe`; availability on the machine has not been rechecked. Source checkout launch helper: [Tools/Start-Wildbound.cmd](../../Tools/Start-Wildbound.cmd). See the playtest guide in docs/developers/PROTOTYPE-PLAYTEST.md.
 
 ## Next tasks
 
