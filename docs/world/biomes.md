@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Animal life](../systems/animals.md)
 
-All biomes are planned. Species are candidates, not a committed roster. The first prototype should use a small Greenveil test area.
+**Status (last recorded October 20, 2026):** a small Greenveil forest-clearing *prototype map* has been built, cooked and launched. The full Greenveil region, Drowned March, Emberstep Highlands and other production biomes remain design concepts. The habitat/species examples below are candidates, not an approved production roster; no complete biome has been implemented.
 
 ## Greenveil Basin — a home worth tending
 
