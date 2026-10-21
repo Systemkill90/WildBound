@@ -24,4 +24,4 @@ Muddy boots, timber joints, mossy stone, candlelight, animal breath, creaking ba
 
 ## Scope discipline
 
-First prove a small homestead, one animal care loop, voxel building, and two-player persistence. Species, biomes, genetics depth, and platforms expand only after measured results. Combat, economy, seasons, map size, player capacity, and explicit magical abilities remain unresolved. All gameplay in this vision is planned.
+First prove a small homestead, one animal care loop, voxel building, and two-player persistence. Species, biomes, genetics depth, and platforms expand only after measured results. Combat, economy, seasons, map size, player capacity, and explicit magical abilities remain unresolved. A small UE5 Greenveil prototype has been compiled, packaged and launched, but most systems in this vision — including full voxel construction, animal care loops, breeding, villages and persistent dedicated co-op — remain proposed or unverified. See [current state](project/CURRENT-STATE.md) for the latest evidence.
