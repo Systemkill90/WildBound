@@ -53,6 +53,8 @@ Ideas can be suggested in **any order**, regardless of current development statu
 
 **Infected bestiary name:** **The Threnvahl** is the owner-selected collective name for chemically altered beings; individual variants are still proposals. [Faction and bestiary concepts](../world/enemy-faction-concepts.md).
 
+**Human-origin revision:** The Weirs originated with humans and the Veyrath were human. Their desire for longevity, immortality and power is motivated by human mortality; other species and all ordinary humans are not automatically part of the faction. [Current faction draft](../world/enemy-faction-concepts.md).
+
 **Faction name decision:** **The Veyrath** is the selected faction name; remove “Concord.” Its hierarchy, leader, enemies and abilities remain in creative review. [Faction concept](../world/enemy-faction-concepts.md).
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
