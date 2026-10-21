@@ -25,7 +25,7 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Integrated the local Fab Animal Variety Pack doe mesh with idle-breath, walk and run sequences; retained the CC0 standing deer as a fallback when that optional local pack is absent. Added 12 Free Shrubs Pack instances around the forest edge in the local generated map.
 - Fab packs remain excluded from Git because their source files cannot be redistributed standalone. Asset references, attribution, optional shrub generation and fallback behavior are in the tracked source/docs; the locally generated map that contains Fab references remains uncommitted.
 - Rebuilt `WildboundEditor` and the Win64 Development game, reran native suites (34/22/13), static source checks (58) and documentation links (169), then cooked 620 packages and launched `<local-project-root>\Builds\WildBoundPreAlpha2\Windows\Wildbound.exe`.
-- PreAlpha5 is the latest package. It cooks 685 packages and is launched windowed at 1920×1080 output with a 60 FPS cap; the cap is not evidence of a measured frame rate. A Windows Security firewall prompt still overlays the game; click Cancel to continue offline.
+- PreAlpha5 is the latest package. It cooks 685 packages and is running windowed at 1920×1080, `r.ScreenPercentage=100`, dynamic resolution disabled and a 60 FPS cap; the cap is not evidence of a measured frame rate. A Windows Security firewall prompt still overlays the game; click Cancel to continue offline.
 
 ## Owner playtest now
 
@@ -67,6 +67,6 @@ The public `README.md` now opens with existing Wildbound concept art, a concise 
 
 - Replaced the sparse tree line with 72 instances of two mature European hornbeam forest meshes from the local Electric Dreams sample, arranged in three irregular rows around the open animal-care meadow. The assets use the sample’s textured trunk, seasonal foliage, wind-capable materials and Nanite geometry. Meshes and dependencies are local-only; the public Git repository does not contain them.
 - Removed the unsuccessful Grab3D willow experiment from the generated level. Its stylized drooping leaves did not fit Wildbound’s realism target.
-- Regenerated and map-checked `/Game/Maps/GreenveilField` with zero Unreal map errors/warnings. Cooked 685 packages, archived `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`, and launched it windowed at 1920×1080 output with a 60 FPS cap.
+- Regenerated and map-checked `/Game/Maps/GreenveilField` with zero Unreal map errors/warnings. Cooked 685 packages, archived `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`, and launched it windowed at 1920×1080 with 100% screen percentage, dynamic resolution disabled, and a 60 FPS cap.
 - The Windows Security firewall prompt overlays the game. Click **Cancel** to reveal the offline demo. Do not treat the cap as a frame-rate measurement; gameplay interactions, doe animation and traversal performance remain untested in PreAlpha5.
 - The generated map remains local because it includes local Fab asset references. The repeatable tree dependency migration helper is `Scripts/Editor/ImportElectricDreamsTrees.py` and expects the locally installed sample at `<local-project-root>\Assets\Samples\ElectricDreamsEnv.uproject`.

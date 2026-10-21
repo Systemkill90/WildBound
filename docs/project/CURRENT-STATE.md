@@ -6,7 +6,7 @@ Updated: October 21, 2026.
 
 - Public repository: [Systemkill90/WildBound](https://github.com/Systemkill90/WildBound). Build checkout: `<local-project-root>\Project`; clean synced clone: `<local-project-root>\Source`.
 - Unreal Engine 5.8.4; Visual Studio 2022; MSVC toolchain; Windows SDK 10.
-- `WildboundEditor` and game targets compile. The latest Win64 Development package cooked 685 packages, archived to `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`, and launched at 1920×1080 output with a 60 FPS cap (generated output is not committed).
+- `WildboundEditor` and game targets compile. The latest Win64 Development package cooked 685 packages, archived to `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`, and launched windowed at 1920×1080 with 100% screen percentage, dynamic resolution disabled, and a 60 FPS cap (generated output is not committed).
 - Startup log confirms `/Game/Maps/GreenveilField` loaded in the new package. Windows Security continues to show its firewall prompt over the game; the game’s offline preview needs no network permission. No 1080p frame-time benchmark has been taken.
 - A listen-server smoke test accepted two simulated clients. This verifies connection acceptance only, not gameplay replication.
 - Static scaffold verification passed 58 checks. Native tests passed: 34 animal simulation, 22 snapshot validation, and 13 placement checks.
@@ -36,7 +36,7 @@ Do not infer that gameplay works solely from source or compilation. The compiled
 
 ## Local launch
 
-The current standalone build is running from `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe` in a 1920×1080 window with a 60 FPS cap. A Windows Security firewall prompt covers the game; click **Cancel** to reveal the offline preview. Movement, animal care, needs, deer animation, construction and measured performance remain unverified in this package. See [the playtest guide](../developers/PROTOTYPE-PLAYTEST.md).
+The current standalone build is running from `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe` in a 1920×1080 window, forced to 100% screen percentage with dynamic resolution disabled and a 60 FPS cap. A Windows Security firewall prompt covers the game; click **Cancel** to reveal the offline preview. Movement, animal care, needs, deer animation, construction and measured performance remain unverified in this package. See [the playtest guide](../developers/PROTOTYPE-PLAYTEST.md).
 
 ## New pre-production concept references (October 21, 2026)
 

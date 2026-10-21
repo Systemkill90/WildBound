@@ -19,7 +19,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 | Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **Editor/game compile and Win64 package succeed on UE 5.8.4; packaged app launches. Dedicated-server target not tested.** | Reproducible toolchain setup; clean game/editor/server builds; launch and recover a test world |
-| 1 — Small Greenveil test | **PreAlpha5 compiles, cooks 685 packages and is running at 1920×1080 output with a 60 FPS cap. Greenveil now has a layered three-row forest edge of 72 locally imported, Nanite-enabled Electric Dreams hornbeams and wind-capable foliage materials. The firewall prompt covers the game; movement, animal care, animation and measured frame rate still need hands-on checks. The pawn remains a primitive placeholder.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
+| 1 — Small Greenveil test | **PreAlpha5 compiles, cooks 685 packages and is running at 1920×1080 with 100% screen percentage, dynamic resolution disabled and a 60 FPS cap. Greenveil now has a layered three-row forest edge of 72 locally imported, Nanite-enabled Electric Dreams hornbeams and wind-capable foliage materials. The firewall prompt covers the game; movement, animal care, animation and measured frame rate still need hands-on checks. The pawn remains a primitive placeholder.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
 | 2 — Construction proof | **Portable placement rules pass; temporary snapped block code compiles. In-game placement/removal is not verified; not voxel.** | Server-validated construction interaction, collision, animal enclosure navigation and tested persistence boundary |
 | 3 — Animal needs and trust | **34 portable simulation tests pass; replicated component and care RPCs compile. Runtime needs/care/trust behavior is not yet playtested in this checkout.** | Observe needs, care costs, refusal cases, stress/trust response and credible movement in play |
 | 4 — Co-op and persistence | **Listen server accepted two simulated client connections. Gameplay replication and dedicated server untested; no integrated world saves.** | Two-client state/RPC tests, server validation, restart, versioned save and backup recovery |
@@ -36,7 +36,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 **Now:** playtest the running PreAlpha5 package after dismissing the firewall prompt. Check movement, the new hornbeam canopy, deer animation and grounding, feeding/watering/needs, block placement and 1080p traversal frame time. Fix reproduced issues before starting major systems or expanding the small forest slice.
 
-The earlier Electric Dreams preview held the 60 FPS cap with 60% TSR (1152×648 internal render), which is not evidence of native 1080p performance. PreAlpha5 now outputs at 1920×1080, but its frame rate still needs measurement during traversal.
+The earlier Electric Dreams preview held the 60 FPS cap with 60% TSR (1152×648 internal render), which is not evidence of native 1080p performance. PreAlpha5 now runs at 1920×1080 with screen percentage forced to 100% and dynamic resolution disabled; its frame rate still needs measurement during traversal.
 
 **Next:** validate care/build RPC side effects with two clients. Replace the placeholder player with a properly scaled rigged character afterward. Follow with animal navigation around a small enclosure and persistent-world recovery tests.
 
