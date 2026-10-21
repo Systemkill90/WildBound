@@ -59,6 +59,8 @@ Ideas can be suggested in **any order**, regardless of current development statu
 
 **Syltouch** is the name of the fae's direct root communion with the Sylweave (owner-selected); its exact workings remain to be designed.
 
+**Remote fae refuge:** Owner-confirmed: fae regenerate rapidly but can die from fae-specific sickness or age; plague makes fae encounters rare. One major fae village relocated far from Ellowyn to escape the disease while researching how to save her. Village name and location are not chosen. [Fae lore](../world/fantasy-peoples-and-villages.md).
+
 **Fae lifespan and root communion:** Owner-established: fae connect directly with the Sylweave's roots, are exceptionally long-lived but can die of illness or old age; the oldest known lived **20,000 years**. Normal lifespans and precise communion mechanics are open. [Fae peoples](../world/fantasy-peoples-and-villages.md).
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
