@@ -1,0 +1,28 @@
+name: Documentation links
+
+on:
+  push:
+    paths:
+      - 'README.md'
+      - 'ROADMAP.md'
+      - 'CONTRIBUTING.md'
+      - 'docs/**'
+      - 'Tests/Static/verify_docs.py'
+      - '.github/workflows/documentation-check.yml'
+  pull_request:
+    paths:
+      - 'README.md'
+      - 'ROADMAP.md'
+      - 'CONTRIBUTING.md'
+      - 'docs/**'
+      - 'Tests/Static/verify_docs.py'
+      - '.github/workflows/documentation-check.yml'
+
+jobs:
+  internal-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate relative documentation links
+        run: python3 Tests/Static/verify_docs.py
