@@ -1,0 +1,46 @@
+WILDBOUND — STONE BELOW THE WATER
+ORIGINAL CONCEPT SONG · GENERATION SHEET · DRAFT
+
+STYLE PROMPT (paste into music generator's style/description field)
+Slow ethereal merfolk ancestral hymn, 46 BPM spacious 3/4, E minor with suspended harmonies. A tender low voice joined by overlapping higher and lower female and male voices with gentle layered underwater resonance; sung as a shared memorial and lullaby in a flooded ancient stone hall. Delicate shell chimes, very soft natural drones, glimmers of water movement, almost no percussion. Intimate and ancient, beautiful and faintly uncanny, emotional warmth and reverence. Clear ENGLISH SUNG lyrics, not narration. Avoid glossy fantasy pop, large orchestra or electronic drums.
+
+LYRICS (paste into custom lyrics field)
+[Verse 1]
+Below the reed, below the rain,
+We keep the hall, we keep the flame.
+The river takes the stars apart;
+We gather each with both our hearts.
+
+[Refrain]
+Sleep, little current, turn your wheel,
+Carry the names the stones conceal.
+Though every tower bends and falls,
+The tide remembers all our halls.
+
+[Verse 1I]
+The young ones learn the lantern's glow,
+The older ones the depths below.
+We lay our hands against the stone,
+So none who wanders sings alone.
+
+[Refrain]
+Sleep, little current, turn your wheel,
+Carry the names the stones conceal.
+Though every tower bends and falls,
+The tide remembers all our halls.
+
+[Bridge]
+If winter seals the upper stream,
+We'll light the roots beneath the green.
+When springs unbind the river's door,
+We'll send our songs to shore once more.
+
+[Outro]
+Carry the names. Carry them home.
+Here in the deep, no one sings alone.
+
+NOTES
+- Lyrics copied from the Wildbound Aquatic Voices songbook. Title, score and interpretation are working concepts, not final lore.
+- May need multiple generation attempts to achieve the intended voices and lyric fidelity; generated vocals are not guaranteed to follow labels.
+- Before using any generated recording in a commercial game, check the generator's license/plan terms and document provenance.
+- Source: docs/world/aquatic-voices-and-shanties.md (staging/idea-board)
