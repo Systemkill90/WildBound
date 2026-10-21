@@ -57,6 +57,8 @@ Ideas can be suggested in **any order**, regardless of current development statu
 
 **Faction name decision:** **The Veyrath** is the selected faction name; remove “Concord.” Its hierarchy, leader, enemies and abilities remain in creative review. [Faction concept](../world/enemy-faction-concepts.md).
 
+**Syltouch** is the name of the fae's direct root communion with the Sylweave (owner-selected); its exact workings remain to be designed.
+
 **Fae lifespan and root communion:** Owner-established: fae connect directly with the Sylweave's roots, are exceptionally long-lived but can die of illness or old age; the oldest known lived **20,000 years**. Normal lifespans and precise communion mechanics are open. [Fae peoples](../world/fantasy-peoples-and-villages.md).
 
 For each new idea, record: the player experience, what makes it distinctively Wildbound, relevant systems/biomes, minimal testable version, tradeoffs, and owner decision.
