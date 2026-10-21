@@ -38,6 +38,8 @@ The fae know Ellowyn is suffering but have misunderstood why their regenerative 
 
 Long ago, Syltouch carried memories and signals across vast distances. The sickness has progressively silenced those links. A player bearing Ellowyn's last gift may briefly restore a long-lost connection in Maerith's presence.
 
+**Optional history rule:** Discovering the detailed fall of each fae clan belongs to optional side quests in abandoned villages. The main campaign can use a single necessary piece of evidence from a ruin, but must not require completing the six historical side-quest arcs.
+
 ## Campaign chapter — The Silence Between Roots
 
 Proposed quest sequence, accepted as narrative direction, not scripted or implemented:
