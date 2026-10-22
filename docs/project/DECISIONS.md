@@ -45,4 +45,6 @@
 
 | 2026-10-22 | All peoples are children of Ellowyn; despite historical distrust, they defended her together in the past and will unite against threats to her again | Explicit owner main-story principle; faction tensions remain and personal allegiances vary |
 
+| 2026-10-22 | Player characters are **not fae**: Ellowyn uses her remaining strength to recreate members of an original ancient species believed extinct, with ultimate potential **stronger than fae** | Explicit owner direction; species name, anatomy, exact powers and why the ancient population disappeared remain open. See [forgotten player species](../world/forgotten-player-species.md) |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
