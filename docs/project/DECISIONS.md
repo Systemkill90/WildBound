@@ -35,4 +35,6 @@
 
 | 2026-10-21 | The fall of the six fae clans is primarily explored through **optional side quests** in abandoned villages rather than required main-story history missions | Explicit owner narrative-structure decision; individual quest titles, puzzles and rewards are design proposals, not implemented content |
 
+| 2026-10-22 | Elves have upward-pointing ears; fae have side-projecting pointed ears and wings on their backs, making their silhouettes clearly distinct | Explicit owner character design requirement; wing types, biomechanics and flight gameplay remain undecided |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
