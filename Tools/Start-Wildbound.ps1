@@ -131,7 +131,7 @@ if ($Map.StartsWith("/Game/")) {
 }
 $MapArgument = $Map
 $TestArgument = if ($AutoMovementTest) { " -WildboundAutoMovementTest" } else { "" }
-$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60 -ExecCmds="r.ScreenPercentage 100,r.DynamicRes.OperationMode 0"' + $TestArgument)
+$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60 -ExecCmds="r.ScreenPercentage 100,r.DynamicRes.OperationMode 0,DisableAllScreenMessages"' + $TestArgument)
 try {
     $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru
     Start-Sleep -Seconds 3

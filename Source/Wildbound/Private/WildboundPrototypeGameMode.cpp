@@ -5,6 +5,7 @@
 #include "WildboundPrototypeGround.h"
 #include "WildboundPrototypeHUD.h"
 #include "WildboundPrototypePlayerController.h"
+#include "Engine/PostProcessVolume.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/PlayerStart.h"
@@ -47,6 +48,44 @@ void AWildboundPrototypeGameMode::BeginPlay()
 
     UWorld* World = GetWorld();
     if (!World || !HasAuthority()) return;
+
+    // Give the sample creek a restrained, readable finish without changing its
+    // authored lighting or foliage: recover a little highlight/shadow detail,
+    // trim the sample's punchy saturation, and keep glare off the play view.
+    bool bHasWildboundGrade = false;
+    for (TActorIterator<APostProcessVolume> It(World); It; ++It)
+    {
+        if (It->ActorHasTag(TEXT("Wildbound_FieldGrade")))
+        {
+            bHasWildboundGrade = true;
+            break;
+        }
+    }
+    if (!bHasWildboundGrade)
+    {
+        APostProcessVolume* Grade = World->SpawnActor<APostProcessVolume>(
+            FVector::ZeroVector, FRotator::ZeroRotator);
+        if (Grade)
+        {
+            Grade->Tags.Add(TEXT("Wildbound_FieldGrade"));
+            Grade->bUnbound = true;
+            Grade->Priority = 100.0f;
+            Grade->BlendWeight = 1.0f;
+            Grade->Settings.bOverride_AutoExposureBias = true;
+            Grade->Settings.AutoExposureBias = -0.25f;
+            Grade->Settings.bOverride_LocalExposureMethod = true;
+            Grade->Settings.LocalExposureMethod = ELocalExposureMethod::Bilateral;
+            Grade->Settings.bOverride_LocalExposureHighlightContrastScale = true;
+            Grade->Settings.LocalExposureHighlightContrastScale = 0.82f;
+            Grade->Settings.bOverride_LocalExposureShadowContrastScale = true;
+            Grade->Settings.LocalExposureShadowContrastScale = 0.78f;
+            Grade->Settings.bOverride_ColorSaturation = true;
+            Grade->Settings.ColorSaturation = FVector4(0.94f, 0.96f, 0.92f, 1.0f);
+            Grade->Settings.bOverride_BloomIntensity = true;
+            Grade->Settings.BloomIntensity = 0.28f;
+            UE_LOG(LogTemp, Log, TEXT("Wildbound field color grade enabled"));
+        }
+    }
 
     // The Electric Dreams sample carries a drone-only control card. Hide that
     // sample instruction actor when the Wildbound game mode is active.

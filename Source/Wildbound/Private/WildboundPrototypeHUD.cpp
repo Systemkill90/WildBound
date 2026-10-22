@@ -12,24 +12,25 @@ void AWildboundPrototypeHUD::DrawHUD()
     Super::DrawHUD();
     if (!Canvas) return;
 
-    DrawRect(FLinearColor(0.015f, 0.025f, 0.024f, 0.78f), 14.0f, 14.0f, 670.0f, 174.0f);
+    DrawRect(FLinearColor(0.012f, 0.020f, 0.018f, 0.76f), 16.0f, 16.0f, 520.0f, 136.0f);
+    DrawRect(FLinearColor(0.51f, 0.87f, 0.66f, 0.9f), 16.0f, 16.0f, 2.0f, 136.0f);
 
     const FLinearColor Light(0.92f, 0.91f, 0.78f);
     const FLinearColor Accent(0.51f, 0.87f, 0.66f);
-    DrawText(TEXT("WILDBOUND  |  PRE-ALPHA FOREST BASE"),
-        Accent, 24.0f, 22.0f);
-    DrawText(TEXT("WASD move | Mouse look | Space jump"),
-        Light, 24.0f, 51.0f);
-    DrawText(TEXT("Look at deer: E feed | R water | F reassure"),
-        Light, 24.0f, 73.0f);
-    DrawText(TEXT("G place snapped block | X remove aimed block"),
-        Light, 24.0f, 95.0f);
+    DrawText(TEXT("WILDBOUND   /   GREENVEIL FIELD TEST"),
+        Accent, 30.0f, 26.0f);
+    DrawText(TEXT("MOVE  WASD     LOOK  MOUSE     JUMP  SPACE"),
+        Light, 30.0f, 53.0f);
+    DrawText(TEXT("CARE  E Feed   R Water   F Reassure"),
+        Light, 30.0f, 77.0f);
+    DrawText(TEXT("BUILD  G Place   X Remove"),
+        Light, 30.0f, 101.0f);
     AWildboundPrototypePlayerController* PC =
         Cast<AWildboundPrototypePlayerController>(GetOwningPlayerController());
     if (!PC) return;
 
     DrawText(FString::Printf(TEXT("Feed portions: %d   Water portions: %d"),
-        PC->GetFeedServings(), PC->GetWaterServings()), Accent, 24.0f, 146.0f);
+        PC->GetFeedServings(), PC->GetWaterServings()), Accent, 30.0f, 125.0f);
 
     const float CenterX = Canvas->ClipX * 0.5f;
     const float CenterY = Canvas->ClipY * 0.5f;

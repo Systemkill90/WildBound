@@ -1,6 +1,6 @@
 # Wildbound current state
 
-Updated: October 22, 2026.
+Updated: October 21, 2026.
 
 ## Latest playable character and animal pass — October 22
 
@@ -25,6 +25,7 @@ Updated: October 22, 2026.
 - Startup log confirms `/Game/Maps/GreenveilField` loaded in the new package. Windows Security continues to show its firewall prompt over the game; the game’s offline preview needs no network permission. No 1080p frame-time benchmark has been taken.
 - A listen-server smoke test accepted two simulated clients. This verifies connection acceptance only, not gameplay replication.
 - The opt-in scripted movement/camera test passed in the live game: 547.4 cm planar character movement, 55° PlayerController camera yaw change, and grounded Walking mode. It uses the real Character Movement input path and requires no keyboard/mouse input; launch with `Tools/Start-Wildbound.ps1 -AutoMovementTest` to repeat it. Normal preview is currently running without the test flag.
+- Latest live-scene polish adds a high-priority, unbound field color grade (subtle exposure compensation, local highlight/shadow contrast recovery, restrained saturation and bloom) and a compact Wildbound HUD. The launcher suppresses Unreal on-screen debug messages so the red sample RT-residency warning no longer obscures the view; the diagnostic remains in the log and its underlying 171 MiB / 400 MiB budget condition is not claimed fixed. The screenshot was captured from the actual 1920×1080 game window; no FPS benchmark was taken.
 - Static scaffold verification passed 58 checks. Native tests passed: 34 animal simulation, 22 snapshot validation, and 13 placement checks.
 - Greenveil is a saved 60 m clearing with imported ground, foliage and props, lighting, trail, player start, HUD and deer. The latest local map uses 72 mature European hornbeam meshes (two crown variants) in irregular three-row rings, 12 fern/shrub groupings, eight mossy rocks, four stumps and locally imported wind shrubs. The trees use Nanite-enabled meshes and their seasonal two-sided foliage materials. The added sample binaries remain local and are excluded from Git.
 - The generated Greenveil map still has a flat starting floor and is separate from the current Electric Dreams preview. The player model and deer movement changes above apply to the live sample-backed map. A 60 FPS launch cap is not a performance benchmark.

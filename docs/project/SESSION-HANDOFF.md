@@ -1,10 +1,16 @@
 # Wildbound session handoff
 
-Updated: October 22, 2026.
+Updated: October 21, 2026.
 
 Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md) before new work.
 
-## October 22 character, collision and animal movement pass
+## October 21 field presentation pass
+
+- Applied a runtime, unbound Wildbound field grade over the authored Electric Dreams close-range creek: restrained exposure/saturation/bloom and local contrast recovery for highlights and shaded foliage. It keeps Epic's authored lighting and content intact.
+- Reworked the pre-alpha HUD into a smaller field-test card. The launcher disables Unreal on-screen debug messages; its intrusive ray-tracing residency warning is now kept out of the image, while the underlying warning remains in the log and remains an optimization item (171 MiB / 400 MiB reported).
+- Captured the actual game window at 1920×1080. The loaded world shows the creek, layered roots/rock banks and moving deer beside the player. The Quinn mannequin remains a temporary placeholder; this pass did not measure frame rate or change the authored level.
+
+## October 21 character, collision and animal movement pass
 
 - `WildboundEditor` compiled successfully on UE 5.8.4 and launched the close-range Electric Dreams map at native 1920×1080.
 - The player now uses Unreal’s bundled Quinn rig and Unarmed locomotion Animation Blueprint. Install locally with `Tools/Install-PrototypeCharacterAssets.ps1`; it copies the engine’s 125 MB character pack to ignored `Content/Characters/Mannequins/`. Keep it local; those engine content files are not committed.
