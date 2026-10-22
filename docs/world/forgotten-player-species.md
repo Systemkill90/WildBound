@@ -1,24 +1,22 @@
-# The Forgotten Player Species — Ellowyn's Last Creation
+# The Sylvae — Ellowyn's Last Creation
 
-**Status:** Owner-approved central premise, October 22, 2026; names, physical design, abilities and history are **exploratory proposals** only. Narrative design, not working character models or playable gameplay.
+**Status:** **Sylvae is the owner-approved species name**, October 22, 2026. Their origin and uniquely strong inheritance from Ellowyn are approved; physical design, specific powers and ancient history remain proposals. Narrative design, not working character models or playable gameplay.
 
 [Ellowyn and the Sylweave](ellowyn-and-the-sylweave.md) · [Species relationships](species-relations.md) · [Peoples](fantasy-peoples-and-villages.md) · [Decisions](../project/DECISIONS.md)
 
 ## Established player-character direction
 
-The playable characters are **not fae**. They belong to a **unique original species, ancient and long forgotten, believed to have been wiped out**. With what little energy Ellowyn has remaining, she **creates or restores living members of this vanished species** as a final hope against the Veyrath's assault on her roots. This reinterprets her earlier Last Gift as a **species-rebirth act**, not simply an empowerment bestowed on existing fae or human wanderers.
+The playable characters are **the Sylvae**, named for the **Sylweave**, and are **not fae**. They belong to a **unique original species, ancient and long forgotten, believed to have been wiped out**. With what little energy Ellowyn has remaining, she **creates or restores living members of this vanished species** as a final hope against the Veyrath's assault on her roots. This reinterprets her earlier Last Gift as a **species-rebirth act**, not simply an empowerment bestowed on existing fae or human wanderers.
 
 This player species must be **stronger than fae in its ultimate capabilities**. However, the intended early game remains survival and homesteading: new player characters need to grow, gather knowledge, earn trust, care for animals, build homes and form alliances. Greater ultimate potential is **not** immediate invulnerability or unlimited magic.
 
 Each cooperative player is an equally valid newly created member, not a secondary companion to one chosen hero. Their individual identities, personalities and choices remain their own.
 
-## Original species names — proposals only
+## Name and inherited essence — owner-confirmed
 
-- **Orynth** (OR-inth): concise, ancient, distinctive; suggested favorite.
-- **Aelythar** (AY-li-thar): flowing, sacred, older-than-kingdoms quality.
-- **Thaloryn** (THAL-or-in): monumental, wild and storied.
+**Sylvae** is the approved name, derived from **Sylweave**. They carry **more of Ellowyn's own DNA / living essence than any other creation since the Ancients**. This special lineage explains their exceptional potential without making other species lesser children of Ellowyn. The nature, chronology and identity of **the Ancients** remain unresolved; do not assume they are the Sylvae or invent their fate as canon.
 
-**No name is approved yet.** Check possible usage conflicts before public release.
+Earlier working name candidates are superseded and are not active names. Check naming conflicts before release.
 
 ## Proposed species concept (not owner-confirmed)
 
