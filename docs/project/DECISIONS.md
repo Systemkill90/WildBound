@@ -41,4 +41,6 @@
 
 | 2026-10-22 | Elves and fae are acquainted but mutually suspicious; elves and Wildlings are friendly allies; dwarves are wary of all other peoples | Explicit owner-defined baseline for cultural relationships; exceptions at individual level and underlying history remain open |
 
+| 2026-10-22 | Species relations: elves/Wildlings/Nimrui/Kethri allied; fae/Wolfkin allied, with fae ties to Brinefolk/Merfolk but wary relations with elves; Brinefolk/Merfolk allied and sometimes intermixed, also allied with elves; dwarves distrust everyone and especially hate humans; humans largely isolated and disliked; Veshari isolated; all except fae/Brinefolk fear sirens; Threnvahl broadly hated but allied with humans | Owner-defined political and cultural attitudes; specifics of human–Threnvahl alliance still unresolved; see [species relations](../world/species-relations.md) |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
