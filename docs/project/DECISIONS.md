@@ -39,4 +39,6 @@
 
 | 2026-10-22 | Elves are human-sized and long-lived, with small upright pointed ears close to the head, no tattoos and no magic; all fae, including women, are taller than 6 ft 5 in, muscular and godlike in appearance, with outward-pointing ears, back wings, extensive tribal tattoos and magic | Explicit owner-approved character design contrast; exact elf longevity and fae magic mechanics remain open |
 
+| 2026-10-22 | Elves and fae are acquainted but mutually suspicious; elves and Wildlings are friendly allies; dwarves are wary of all other peoples | Explicit owner-defined baseline for cultural relationships; exceptions at individual level and underlying history remain open |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
