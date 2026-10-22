@@ -23,5 +23,6 @@ if ($Package) {
     if (Test-Path -LiteralPath $ArchiveDirectory) { throw 'Choose a NEW archive directory to protect existing packages.' }
     & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$Project" -noP4 -platform=Win64 -clientconfig=Development -build -cook "-map=$Map" -stage -pak -iostore -compressed -archive "-archivedirectory=$ArchiveDirectory" -nodebuginfo -utf8output *> "$Evidence\Package-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Packaging failed; see Saved/GreenveilBuild.' }
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Launch-PackagedGreenveil.cmd') -Destination (Join-Path $ArchiveDirectory 'Launch-Greenveil.cmd')
     Write-Output "Package: $ArchiveDirectory\Windows\Wildbound.exe"
 }
