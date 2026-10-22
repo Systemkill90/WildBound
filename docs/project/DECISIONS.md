@@ -2,6 +2,9 @@
 
 | Date | Decision | Reason |
 | :-- | :-- | :-- |
+| 2026-10-22 | Prioritize populated Greenveil exploration; pause animal gameplay and PR #9 | Explicit owner correction supersedes the earlier care/enclosure implementation sequence |
+| 2026-10-22 | Author a new 180 × 160 m map with selected local assets, HISM vegetation and original structure placeholders | Bound memory/performance, preserve the old map and packages, and avoid loading the full sample world |
+| 2026-10-22 | Disable hardware ray tracing; use Medium native-1080p as the normal demo launch | Actual packaged tests measured 52.20 FPS Medium / 41.72 FPS High on the local [GPU model redacted]; neither proves locked 60 |
 | 2026-10-20 | Independent public Wildbound repository | Dedicated record for this original game |
 | 2026-10-20 | Unreal Engine 5.8.4 for current Windows prototype | Installed engine and MSVC toolchain compile/package the editor and game; keep version evidence explicit |
 | 2026-10-20 | UE targets use BuildSettingsVersion V7 and Unreal 5.8 include order | Avoid shared-target environment conflicts in installed UE 5.8.4 |

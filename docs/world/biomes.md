@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Animal life](../systems/animals.md)
 
-**Status (last recorded October 20, 2026):** a small Greenveil forest-clearing *prototype map* has been built, cooked and launched. The full Greenveil region, Drowned March, Emberstep Highlands and other production biomes remain design concepts. The habitat/species examples below are candidates, not an approved production roster; no complete biome has been implemented.
+**Status (October 22, 2026):** a populated 180 × 160 m Greenveil exploration zone has been compiled, packaged and traversed: forest, creek, bridges, cottage placeholders and connected trails. [Test evidence](../project/GREENVEIL-EXPLORATION-2026-10-22.md). No animal gameplay is active in this map. The full region and other production biomes remain design concepts; habitat/species examples below are candidates, not a locked roster.
 
 ## Greenveil Basin — a home worth tending
 

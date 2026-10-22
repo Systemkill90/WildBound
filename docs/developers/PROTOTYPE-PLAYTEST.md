@@ -1,5 +1,7 @@
 # Greenveil engineering prototype — operator playtest guide
 
+**Historical/deferred guide:** October 22 owner priority is exploration before animal gameplay. Use the [current exploration handoff](../project/SESSION-HANDOFF.md) and [packaged test report](../project/GREENVEIL-EXPLORATION-2026-10-22.md). The older actor/control descriptions below do not describe the current exploration map.
+
 **Status: UE 5.8.4 editor/game compile and Win64 package pass; package launched. Controls and gameplay interactions in this checkout still need a hands-on playtest.**
 
 This is a first small playable foundation, not a finished demo. Greenveil is a saved forest clearing with CC0 environment assets and a deer actor that can use a locally imported rigged doe and idle/walk/run sequences. Construction is temporary snapped blocks, not a voxel engine. The player pawn remains a primitive. The Fab assets are local-only and are not included in Git.

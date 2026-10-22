@@ -4,7 +4,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = "",
-    [string]$Map = "/Game/Levels/PCG/ElectricDreams_PCGCloseRange?game=/Script/Wildbound.WildboundPrototypeGameMode",
+    [string]$Map = "/Game/Maps/GreenveilExploration",
     [switch]$BuildOnly,
     [switch]$ShowEngines,
     [switch]$AutoMovementTest

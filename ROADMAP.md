@@ -1,16 +1,16 @@
 # The Road Ahead
 
-*One meadow, one creature, one shared world — then the wilderness grows.*
+*One full, walkable place first — then the wilderness grows.*
 
 [← Wildbound home](README.md) · [Development desk](docs/project/README.md) · [Current state](docs/project/CURRENT-STATE.md) · [First playable](docs/developers/FIRST-PLAYABLE.md)
 
 ## The journey in brief
 
-**Foundation established:** Unreal Engine 5.8.4 editor/game compilation, a locally launched Wildbound prototype and an authored Electric Dreams environment as the visual base were recorded on October 21, 2026.
+**Verified October 22:** UE 5.8.4 editor/game compilation and a Windows package of the original 180 × 160 m Greenveil exploration zone. Two packaged runs completed 15/15 route points, about 326 m, cottage entry/exit, both bridges and all 14 navigation queries, with zero animal actors. [Evidence](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
-**Our next step:** verify real in-game movement, deer care and construction inputs. The code compiling is not the same as those interactions working.
+**Our next step:** manual exploration, off-trail collision/camera/jump QA, visual refinement and profiling within this populated zone. Native-1080p measurements were 52.2 FPS Medium / 41.7 FPS High on the local [GPU model redacted]; neither is locked 60.
 
-**After that:** a rigged animal, enclosures that affect navigation, two-client authoritative gameplay, and eventually reliable persistent dedicated worlds. Breeding, villages and new biomes build on those foundations.
+**Owner priority:** no animal gameplay work yet. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains paused, draft and unmerged. The older care/enclosure sequence below is deferred, not the current implementation order.
 
 ## Detailed milestones
 
@@ -19,7 +19,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 | Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **Editor/game compile and Win64 package succeed on UE 5.8.4; packaged app launches. Dedicated-server target not tested.** | Reproducible toolchain setup; clean game/editor/server builds; launch and recover a test world |
-| 1 — Small Greenveil test | **The launch map is Epic's close-range Electric Dreams PCG forest, now with a Wildbound field grade, compact field HUD, Quinn rig and moving deer. An opt-in no-input movement/camera test passed. The sample's ray-tracing residency warning is hidden from the play view but remains a logged optimization issue; care/build controls, full collision traversal and frame time remain unverified. The larger 15,244-actor world remains outside the prototype launch.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
+| 1 — Greenveil exploration | **Packaged traversal/navigation passed in a populated original zone. 507 canopy trees, 9,036 grass/clover instances, layered understory, creek, bridges and three cottage placeholders.** | Bounded playable zone, controllable pawn, connected route, measured performance and manual visual/collision QA; remaining polish is open |
 | 2 — Construction proof | **Portable placement rules pass; temporary snapped block code compiles. In-game placement/removal is not verified; not voxel.** | Server-validated construction interaction, collision, animal enclosure navigation and tested persistence boundary |
 | 3 — Animal needs and trust | **34 portable simulation tests pass; replicated component and care RPCs compile. Runtime needs/care/trust behavior is not yet playtested in this checkout.** | Observe needs, care costs, refusal cases, stress/trust response and credible movement in play |
 | 4 — Co-op and persistence | **Listen server accepted two simulated client connections. Gameplay replication and dedicated server untested; no integrated world saves.** | Two-client state/RPC tests, server validation, restart, versioned save and backup recovery |
@@ -34,13 +34,13 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 ## Near-term sequence
 
-**Now:** playtest the Electric Dreams-based window. Check movement, deer animation and grounding, feeding/watering/needs, block placement and native-1080p traversal frame time. Reduce the sample to a smaller Greenveil slice after confirming its art direction and performance.
+**Now:** explore the packaged Greenveil zone manually. Check side routes, jump/camera and off-trail collisions; refine cottage interiors, materials, grass placement and zone boundaries.
 
-The current preview runs at native 1920×1080, with screen percentage forced to 100%, dynamic resolution disabled and a 60 FPS cap; the cap is not evidence of measured frame rate during traversal.
+The local Windows demo uses native 1920×1080 and Medium settings by default. Uncapped tests measured 19.157 ms mean / 22.041 ms p95 frame time on Medium. A normal launch caps at 60; optimization for sustained native-1080p 60 remains open.
 
-**Next:** playtest the new capsule collision and deer ground movement around rocks, logs and foliage. Validate care/build RPC side effects with two clients. Replace the temporary engine mannequin with Wildbound homesteader art afterward, then test animal navigation around a small enclosure and persistent-world recovery.
+**Next:** improve this slice from actual exploration feedback and profiling. Keep source-restricted art local, protect the tested package, and expand content only within a measured memory/frame budget.
 
-**Later:** selective breeding, farm stock, wild ecology, villages, weather, more biomes, trading and optional platform targets.
+**Deferred:** animal care/intent, construction systems, co-op, persistence, farming and settlement simulation. Broader biomes and platforms require a later owner priority. Current cottages are visual placeholders, not village simulation; concept illustrations are not 3D models.
 
 Native C++ tests and a successful package are useful but independent evidence. Neither alone proves that the in-game interaction loop works.
 

@@ -1,4 +1,5 @@
 #include "WildboundPrototypeGameMode.h"
+#include "GreenveilTraversalProbe.h"
 
 #include "WildboundPrototypeAnimal.h"
 #include "WildboundPrototypeCharacter.h"
@@ -129,7 +130,7 @@ void AWildboundPrototypeGameMode::BeginPlay()
         bHasAnimal = true;
         break;
     }
-    if (!bHasAnimal)
+    if (!bHasAnimal && !World->GetMapName().Contains(TEXT("GreenveilExploration")))
     {
         const FVector AnimalLocation = AuthoredPlayerStart
             ? AuthoredPlayerStart->GetActorLocation()
@@ -140,6 +141,11 @@ void AWildboundPrototypeGameMode::BeginPlay()
     }
 
 #if !UE_BUILD_SHIPPING
+    if (World->GetMapName().Contains(TEXT("GreenveilExploration"))
+        && FParse::Param(FCommandLine::Get(), TEXT("GreenveilTraversalTest")))
+    {
+        World->SpawnActor<AGreenveilTraversalProbe>();
+    }
     if (FParse::Param(FCommandLine::Get(), TEXT("WildboundAutoMovementTest")))
     {
         TWeakObjectPtr<AWildboundPrototypeGameMode> WeakThis(this);

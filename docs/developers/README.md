@@ -2,7 +2,7 @@
 
 [Home](../../README.md) · [Current verified state](../project/CURRENT-STATE.md) · [Handoff](../project/SESSION-HANDOFF.md) · [Prototype playtest](PROTOTYPE-PLAYTEST.md)
 
-**Status as last recorded October 20, 2026:** Unreal Editor and game targets compiled on Windows, `/Game/Maps/GreenveilField` was saved and cooked, and a Win64 Development package launched. These were reported by the desktop work session, **not rerun by this documentation audit**. In-game care/build controls, actual state replication, dedicated-server packaging and saved-world recovery are **not verified**.
+**Verified October 22, 2026:** UE 5.8.4 editor/game targets compiled and `/Game/Maps/GreenveilExploration` packaged successfully. Both actual packaged route tests passed, with measured native-1080p performance. [Report and limits](../project/GREENVEIL-EXPLORATION-2026-10-22.md). No animal gameplay work is active; older care/build/network plans are deferred.
 
 ## Known Windows setup
 
@@ -13,7 +13,7 @@
 | MSVC | **[toolchain version redacted]** |
 | Windows SDK | **[SDK version redacted]** |
 | Source checkout (example, not a requirement) | `<local-project-root>\Source` |
-| Last recorded Windows package (local only) | `<local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe` |
+| Latest Windows package (local only) | `<local-project-root>\Builds\GreenveilExploration-2026-10-22-R2\Windows\Wildbound.exe` |
 
 Do not assume the previous package exists on a new machine or that the editor is still open. No packaged executable is committed. Record your actual engine/toolchain versions when repeating the build.
 
@@ -23,9 +23,9 @@ Do not assume the previous package exists on a new machine or that the editor is
 2. Verify a compatible Unreal Engine 5 install and supported Windows C++ workload. The project targets UE 5.8 settings but `Wildbound.uproject` does not contain a machine-specific `EngineAssociation`.
 3. Use `Tools/Start-Wildbound.cmd -ShowEngines` to inspect recognized local editor installs, or pass `-EngineRoot` to the helper.
 4. Run `Tools/Start-Wildbound.cmd -BuildOnly` to try compiling `WildboundEditor` with the selected installation. Look in ignored `Saved/WildboundBootstrap` for build logs and the exact result.
-5. To launch, run `Tools/Start-Wildbound.cmd`. It defaults to `/Game/Maps/GreenveilField`; this is an **attempt**, not a promise of successful gameplay. If it fails, record the command and log rather than claiming a launch.
-6. Follow [Greenveil prototype playtest](PROTOTYPE-PLAYTEST.md) to check WASD/mouse/jump, animal needs, care actions and temporary block placement. Record PASS, FAIL or BLOCKED.
-7. Verify multiplayer actions and state, separately from simple client connection. A real dedicated server target may require a suitable Unreal source engine build. Neither headless server behavior nor persistence has been proven.
+5. Verify the local sample mounts and mannequin using the existing install/link helpers. `Tools/Start-Wildbound.cmd` now defaults to `/Game/Maps/GreenveilExploration`. For explicit measured settings, use `Tools/Launch-GreenveilExploration.ps1`; see the [handoff](../project/SESSION-HANDOFF.md).
+6. Use `Tools/Build-GreenveilExploration.ps1 -GenerateMap -Package -ArchiveDirectory <new directory>` to rebuild and package. Never target an existing working archive. Run the packaged traversal probe and manually inspect WASD/mouse/jump, side paths and collisions. Record PASS, FAIL or BLOCKED.
+7. The [older prototype playtest](PROTOTYPE-PLAYTEST.md) covers deferred care/build work. Multiplayer, dedicated server operation and persistence remain outside the active exploration task.
 
 ## Source layout
 

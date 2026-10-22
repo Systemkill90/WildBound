@@ -81,18 +81,17 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 Windows session compiled Wildbound and launched it in Epic's authored Electric Dreams forest environment with Wildbound's GameMode and HUD. The sample is installed locally and stays outside Git because its content is not redistributed by this project. The view uses native 1920×1080 and a 60 FPS cap, but traversal frame time has not been benchmarked. A bundled Quinn mannequin replaces the sphere as temporary rigged player art; its local asset setup is documented in [Current State](docs/project/CURRENT-STATE.md).
+The October 22 desktop build delivers a new **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The packaged Windows demo passed a **326 m / 15-waypoint** traversal, including cottage entry and both bridges; all 14 navigation checks passed, with **zero animal actors**. Native-1080p measurements on the local [GPU model redacted] were **52.2 FPS Medium / 41.7 FPS High**. [Read the actual test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
-| **Unreal foundation** | Editor and game compiled; Windows test package launched. |
-| **First Greenveil scene** | Epic's detailed authored Electric Dreams forest and river valley are the local visual base. The player uses a temporary rigged mannequin; the deer now wanders with a collision capsule. Check obstacle traversal and performance before carving out a small Greenveil slice. |
-| **Animal needs** | Core C++ rules tested; care interactions still need in-game validation. |
-| **Construction** | Temporary snapped blocks compiled; **not** voxel terrain and not yet playtested. |
-| **Multiplayer** | Two clients joined a listen server; gameplay state synchronization **not yet verified**. |
-| **Persistence, breeding & villages** | Not implemented. |
+| **Unreal foundation** | UE 5.8.4 editor/game compilation and local Windows packaging passed. |
+| **Greenveil exploration** | Original bounded map with locally licensed vegetation, real collision/navigation and Quinn movement; packaged route verified. |
+| **Buildings, water and tools** | Original visual placeholders; sparse interiors, no settlement or fluid simulation. |
+| **Animal gameplay** | Paused by owner priority; [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains separate and unmerged. |
+| **Construction, multiplayer & persistence** | Deferred; no new gameplay verification in this exploration pass. |
 
-**The next milestone:** playtest the new player/deer collision around roots and logs, verify care and block placement, then create a small authored Greenveil slice before expanding the world.
+**The next milestone:** manually explore the populated zone, refine architecture/materials and side paths, and optimize further. No animal gameplay work yet. Epic/Fab source stays local; concept art remains illustration, not 3D content. The normal launcher's 60 FPS ceiling is not a locked-60 result.
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 

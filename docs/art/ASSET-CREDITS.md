@@ -1,5 +1,7 @@
 # Prototype asset sources
 
+**October 22 exploration audit:** see the [local asset inventory](GREENVEIL-ASSET-INVENTORY.md) for selected canopy/grass/clover, CC0 understory/props, original structure placeholders, mannequin and source-redistribution boundaries. The public Fab listings do not independently prove account-specific acquisition terms; the older generic license descriptions below should be read with that limitation. Concept images remain illustrations.
+
 ## Original pre-production artwork (October 21, 2026)
 
 The eight images in [the illustrated concept atlas](concept-atlas/README.md) were generated for Wildbound during a ChatGPT design session and exported as optimized WebP art plates for this repository. They are not third-party Unreal store assets, engine models, or evidence of finished gameplay. Their creature names, biome titles, tools and costume details are creative proposals pending review. The AI-rendered captions may contain inaccuracies.
