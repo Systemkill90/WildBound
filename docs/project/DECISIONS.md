@@ -47,4 +47,6 @@
 
 | 2026-10-22 | Player characters are **not fae**: Ellowyn uses her remaining strength to recreate members of an original ancient species believed extinct, with ultimate potential **stronger than fae** | Explicit owner direction; species name, anatomy, exact powers and why the ancient population disappeared remain open. See [forgotten player species](../world/forgotten-player-species.md) |
 
+| 2026-10-22 | **Sylvae** is the approved name for Ellowyn's recreated, once-thought-extinct playable species, named after the Sylweave; they carry more of Ellowyn's DNA / living essence than any creation **since the Ancients** | Explicit owner selection; identity of the Ancients, Sylvae anatomy and specific power mechanics remain open |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
