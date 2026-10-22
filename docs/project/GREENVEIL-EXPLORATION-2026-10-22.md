@@ -51,3 +51,13 @@ Static wiring passed 61 checks and both Python files parsed. Documentation valid
 This is a local pre-alpha exploration demo. Architecture, tools, creek water and Quinn remain placeholders; interiors are sparse. There is no new fluid/swimming, dynamic weather/day-night, gathering, farming, NPC, animal, multiplayer or persistence system. Daylight and fog provide atmosphere. Terrain is a static heightfield mesh. One automated loop does not exhaustively test physical keyboard/mouse bindings, jumping, every off-trail obstacle, camera obstruction or long-run stability. Those remain manual QA work.
 
 [Current state](CURRENT-STATE.md) · [Handoff](SESSION-HANDOFF.md) · [Roadmap](../../ROADMAP.md)
+
+## Relocated-NVMe package verification
+
+After the storage relocation, the editor and Win64 package were rebuilt from `<local-project-root>\Project` using UE 5.8.4 in local storage. The new package is `<local-project-root>\Builds\GreenveilExploration-2026-10-22-NVMe-Verified`; the packaged game was launched afterward and left open on the desktop.
+
+The uncapped, native-1920×1080 Medium automated cold-start traversal passed **15/15 grounded waypoints**, travelled **326.0 m**, and recorded **zero navigation failures and zero animal actors**. Across 2,700 frames it averaged **49.03 FPS** (20.398 ms), with **23.046 ms p95 / 24.917 ms p99**. End-of-run physical memory was **1,679.1 MiB**, peak was **3,991.0 MiB**. The log recorded many shader/PSO cache misses during startup, so this is a cold-start measurement, not a settled-play estimate or a 60 FPS claim. See [the latest packaged capture](../art/greenveil-exploration-verified-2026-10-22.png) and `GreenveilTraversal-summary.txt` in the packaged game's Saved directory.
+
+The project now resides on `<local-project-root>\Project`, with UE 5.8.4 and the local asset library on the F: NVMe. Legacy D: paths resolve through junctions; the package and its launcher remain on D:. The Unreal Derived Data Cache, VS Code extensions/profile and current local project are on E:. The 2 TB G: USB holds Ollama model files. Buffalo NAS was not mounted during this checkpoint.
+
+Visual review of the new route capture confirms the authored vegetation/creek environment renders in the packaged build. It also shows an over-bright clearing and the current mannequin/cottage placeholders; those remain visible polish work. The automated route verifies movement and grounding, not hand-operated feeding, watering, construction, multiplayer, or animal behavior.

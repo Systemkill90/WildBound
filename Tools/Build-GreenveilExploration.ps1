@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = '<local-project-root>\Engine\UE_5.8',
+    [string]$Map = '/Game/Maps/GreenveilExplorationPolish',
     [string]$ArchiveDirectory = '',
     [switch]$GenerateMap,
     [switch]$Package
@@ -20,7 +21,7 @@ if ($GenerateMap) {
 if ($Package) {
     if (-not $ArchiveDirectory) { $ArchiveDirectory = "<local-project-root>\Builds\GreenveilExploration-$Stamp" }
     if (Test-Path -LiteralPath $ArchiveDirectory) { throw 'Choose a NEW archive directory to protect existing packages.' }
-    & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$Project" -noP4 -platform=Win64 -clientconfig=Development -build -cook -map=/Game/Maps/GreenveilExploration -stage -pak -iostore -compressed -archive "-archivedirectory=$ArchiveDirectory" -nodebuginfo -utf8output *> "$Evidence\Package-$Stamp.log"
+    & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$Project" -noP4 -platform=Win64 -clientconfig=Development -build -cook "-map=$Map" -stage -pak -iostore -compressed -archive "-archivedirectory=$ArchiveDirectory" -nodebuginfo -utf8output *> "$Evidence\Package-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Packaging failed; see Saved/GreenveilBuild.' }
     Write-Output "Package: $ArchiveDirectory\Windows\Wildbound.exe"
 }

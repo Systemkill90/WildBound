@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = '<local-project-root>\Engine\UE_5.8',
+    [string]$Map = '/Game/Maps/GreenveilExplorationPolish',
     [string]$Executable = '',
     [ValidateRange(0,3)][int]$Quality = 1,
     [switch]$TraversalTest,
@@ -16,7 +17,7 @@ if (-not $Executable) {
     $ArgsList += ('"' + (Join-Path $RepoRoot 'Wildbound.uproject') + '"')
     $ArgsList += '-game'
 }
-$ArgsList += '/Game/Maps/GreenveilExploration'
+$ArgsList += $Map
 $ArgsList += '-windowed','-ResX=1920','-ResY=1080','-NoSound'
 $ArgsList += ('-abslog="' + "$Evidence\Runtime-$Stamp.log" + '"')
 $Cap = if ($TraversalTest) { '0' } else { '60' }

@@ -20,7 +20,7 @@ Inspected October 22, 2026 in the owner's `<local-project-root>` workshop. This 
 
 `Scripts/Editor/CreateGreenveilExploration.py` creates original terrain, creek ribbon and trail geometry, plain materials, timber cottage/bridge/fence/shelter modules and tool silhouettes. Engine cube references supply simple geometry; no sample building source is copied. The terrain is a collision-enabled static heightfield mesh, not voxel terrain or an editable Unreal Landscape.
 
-Only the new original map, nine original generated assets, and four already-tracked CC0 material fixes are deliberately staged as Unreal binaries, through Git LFS. The map contains references to local source-restricted content; another checkout still needs the licensed local installations.
+The original Greenveil exploration map and its first generated asset set remain preserved. The newer `GreenveilExplorationPolish` map and 11 original generated assets are also staged as Unreal binaries through Git LFS, alongside four reviewed CC0 material fixes. The maps reference local source-restricted content; another checkout still needs the licensed local installations. The local `GreenveilField.umap` user edit is intentionally excluded.
 
 ## License evidence and distribution
 

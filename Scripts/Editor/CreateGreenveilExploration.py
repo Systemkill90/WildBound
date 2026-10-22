@@ -6,8 +6,8 @@ import unreal, math, random, os, json
 
 SEED = 221026
 rng = random.Random(SEED)
-ROOT = '/Game/Wildbound/Exploration'
-LEVEL = '/Game/Maps/GreenveilExploration'
+ROOT = '/Game/Wildbound/ExplorationPolish'
+LEVEL = '/Game/Maps/GreenveilExplorationPolish'
 E = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
 L = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
 S = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
@@ -45,6 +45,8 @@ roof=material('M_Slate',(.055,.075,.068,1))
 stone=material('M_Stone',(.21,.235,.18,1))
 water=material('M_Creek',(.025,.12,.13,1),.17,.25)
 iron=material('M_Iron',(.08,.09,.085,1),.48,.7)
+glass=material('M_WindowGlass',(.11,.20,.19,1),.22,.05)
+trim=material('M_WeatheredTrim',(.075,.045,.024,1),.88)
 floor=unreal.load_asset('/Game/Wildbound/Art/Environment/PolyHaven/ForestGround01/M_GreenveilForestFloor')
 trail=unreal.load_asset('/Game/Wildbound/Art/Environment/PolyHaven/ForestGround01/M_GreenveilForestPath')
 if not floor or not trail: raise RuntimeError('Install existing Poly Haven floor materials first')
@@ -171,19 +173,40 @@ def cottage(x,y,w=800,d=650):
             box('Door lintel',(x,y-d/2,z+310),(150,30,80),plaster)
     for sx in [-1,1]:
         box('Cottage side',(x+sx*w/2,y,z+175),(25,d,350),plaster)
-        for sy in [-1,1]: box('Oak corner',(x+sx*w/2,y+sy*d/2,z+180),(35,35,360))
+        for sy in [-1,1]: box('Oak corner',(x+sx*w/2,y+sy*d/2,z+180),(42,42,360),trim)
         box('Sloped slate roof',(x+sx*w/4,y,z+400),(w*.58,d+130,28),roof,(-sx*27,0,0))
+        # Strong half-timber framing breaks up the blank limewashed walls.
+        for sy in [-1,1]:
+            box('Gable end frame',(x+sx*(w/2+18),y+sy*d*.28,z+160),(22,22,330),wood)
+            box('Cottage eave beam',(x+sx*w/4,y+sy*(d/2+12),z+335),(w*.52,24,38),trim)
     box('Roof ridge',(x,y,z+510),(30,d+140,30))
     box('Chimney',(x+w*.3,y+d*.25,z+450),(100,110,340),stone)
+    box('Chimney cap',(x+w*.3,y+d*.25,z+625),(135,145,28),trim)
+    # A low front porch, aligned with the walk-in opening.
+    box('Cottage porch deck',(x,y-d/2-135,z+8),(330,270,22),wood)
+    for sx in [-1,1]:
+        box('Porch support',(x+sx*145,y-d/2-230,z+135),(28,28,250),trim)
+    box('Porch lintel',(x,y-d/2-230,z+265),(340,30,34),trim)
+    # Dark glazed windows with solid timber casing, so openings read at game distance.
+    for sx in [-1,1]:
+        wx=x+sx*(w*.31)
+        box('Front window glass',(wx,y-d/2-15,z+220),(145,12,145),glass,collision=False)
+        for dx in [-82,82]: box('Window jamb',(wx+dx,y-d/2-25,z+220),(20,24,170),trim,collision=False)
+        for dz in [-82,82]: box('Window casing',(wx,y-d/2-25,z+220+dz),(184,24,20),trim,collision=False)
+        box('Window crossbar',(wx,y-d/2-30,z+220),(12,25,145),wood,collision=False)
+        box('Window sill',(wx,y-d/2-40,z+135),(205,50,22),wood)
+    # The open doorway remains clear; a simple hinged plank door is left ajar.
+    door=box('Open cottage door',(x+82,y-d/2-22,z+180),(12,150,320),wood,(0,0,-24))
+    box('Door iron latch',(x+22,y-d/2-32,z+180),(10,12,20),iron,collision=False)
     for j in range(3): box('Doorstep',(x,y-d/2-70-j*45,z-10-j*16),(170,75,25),stone)
     for sx in [-1,1]:
         box('Shutter',(x+sx*w*.30,y-d/2-18,z+220),(100,12,105),wood,collision=False)
     # bench, worktable, bucket, bowl and readable tool silhouettes.
-    box('Workbench',(x+w/2+170,y,z+100),(160,260,20))
-    for yy in [-90,90]: box('Table trestle',(x+w/2+170,y+yy,z+50),(120,20,100))
+    box('Workbench',(x+w*.20,y+10,z+100),(160,260,20))
+    for yy in [-90,90]: box('Table trestle',(x+w*.20,y+yy,z+50),(120,20,100))
     for j in range(3):
-        box('Tool handle',(x+w/2+130+j*40,y-40,z+125),(10,140,10),wood,collision=False)
-        box('Tool iron head',(x+w/2+130+j*40,y+22,z+130),(45,18,18),iron,collision=False)
+        box('Tool handle',(x+w*.20-40+j*40,y-40,z+125),(10,140,10),wood,collision=False)
+        box('Tool iron head',(x+w*.20-40+j*40,y+22,z+130),(45,18,18),iron,collision=False)
     return z
 homes=[(-2850,-2300),(-4800,-500),(-3000,2400)]
 for x,y in homes: cottage(x,y)
@@ -193,9 +216,9 @@ def ph(folder,name): return PH+folder+'/'+name
 bucket=ph('wooden_bucket_01','wooden_bucket_01')
 bowl=ph('wooden_bowl_01','wooden_bowl_01_1k')
 for x,y in homes:
-    z=height(x+650,y-350)
-    mesh(bucket,'Household pail',(x+650,y-350,z),(.8,.8,.8))
-    mesh(bowl,'Supply bowl',(x+570,y,z+120),(.8,.8,.8))
+    z=height(x,y)
+    mesh(bucket,'Household pail',(x+260,y+100,z+20),(.8,.8,.8))
+    mesh(bowl,'Supply bowl',(x+220,y+115,z+120),(.8,.8,.8))
     for j in range(5):
         box('Garden bed',(x-250+j*110,y+650,height(x-250+j*110,y+650)+15),(70,450,30),stone,collision=False)
     for j in range(7):
@@ -259,6 +282,14 @@ for i,points in enumerate(plants):
     else:p=ph('shrub_02','shrub_02_'+ 'abcd'[i-4]+'_LOD0')
     instances(p,'Understory '+str(i),points,False,6500)
 for i,points in enumerate(rocks): instances(ph('rock_moss_set_02','rock_moss_set_02_rock'+['07','08','09','10'][i]),'Moss rocks '+str(i),points,True,14000)
+# Creek-edge boulders break the straight water ribbon into a readable stream bank.
+bank_rocks=[]
+for row,y in enumerate(range(-7200,7600,700)):
+    if min(abs(y-bridge_y) for bridge_y in (0,4500)) < 700: continue
+    for side in (-1,1):
+        x=river(y)+side*rng.uniform(650,820)
+        bank_rocks.append((x,y,height(x,y)-25,rng.uniform(.25,.42),rng.uniform(0,360)))
+instances(ph('rock_moss_set_02','rock_moss_set_02_rock08'),'Creek-bank stones',bank_rocks,True,14000)
 points=[]
 for _ in range(35):
     x=rng.uniform(-7000,7000);y=rng.uniform(-6500,6500)
@@ -283,7 +314,7 @@ start=route[0]
 actor(unreal.PlayerStart,'Arrival',(start[0],start[1],height(*start)+110),(0,27,0))
 sun=actor(unreal.DirectionalLight,'Late afternoon sun',(0,0,1000),(-35,-40,0))
 sun.light_component.set_mobility(unreal.ComponentMobility.MOVABLE)
-sun.light_component.set_editor_property('intensity',5.0)
+sun.light_component.set_editor_property('intensity',3.6)
 sky=actor(unreal.SkyLight,'Sky',(0,0,0))
 sky.light_component.set_mobility(unreal.ComponentMobility.MOVABLE)
 sky.light_component.set_editor_property('real_time_capture',True)

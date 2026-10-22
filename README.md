@@ -81,7 +81,7 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 desktop build delivers a new **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The packaged Windows demo passed a **326 m / 15-waypoint** traversal, including cottage entry and both bridges; all 14 navigation checks passed, with **zero animal actors**. Native-1080p measurements on the local [GPU model redacted] were **52.2 FPS Medium / 41.7 FPS High**. [Read the actual test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+The October 22 desktop build delivers a new **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest relocated local storage package passed a **326 m / 15-waypoint** automated traversal at native 1080p Medium, with grounded checkpoints and zero navigation failures or animal actors. Its cold run averaged **49.0 FPS**; shader/PSO warm-up caused noticeable hitches, so 60 FPS is not yet achieved. [Read the actual test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
