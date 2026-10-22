@@ -2,6 +2,10 @@
 
 **Status:** Owner-confirmed broad faction relationships, October 22, 2026. This is **narrative worldbuilding**, not implemented diplomacy, NPC AI, quests, or combat. [Peoples](fantasy-peoples-and-villages.md) · [Fae](fae-clans.md) · [Veyrath and Threnvahl](enemy-faction-concepts.md)
 
+## Children of Ellowyn — the common cause
+
+**Owner-confirmed:** In the great struggle against the enemies threatening Ellowyn, **all peoples ultimately fought together in the past and will fight together again**, setting aside even deep suspicion, historical hatred and isolationism. They are all **children of Ellowyn**, connected through the Sylweave. The alliances and prejudices below shape everyday politics and the difficult road to unity, rather than negating their shared final cause. Do not interpret ordinary human distrust or the Threnvahl–human alliance as an assertion that all human individuals are permanently enemies or incapable of joining the united defense. Whether affected Threnvahl can be freed, rescued or fight alongside the defenders is an unresolved story detail.
+
 ## Broad cultural and political relationships
 
 | Peoples / faction | Established relationships and attitudes |
