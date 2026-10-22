@@ -5,6 +5,16 @@ Date captured: October 20, 2026
 
 [Idea board](../project/IDEA-BOARD.md) · [World biomes](biomes.md) · [Game vision](../vision.md) · [Animal design](../systems/animals.md) · [Building design](../systems/building.md)
 
+## Inter-species relationships — owner-confirmed baseline (October 22, 2026)
+
+| Relationship | Established direction | Individual nuance |
+| :-- | :-- | :-- |
+| **Elves ↔ Fae** | Long acquainted with each other but **mutually suspicious** | Personal friendships, grudges, cooperation and mutual respect can exist; the distrust is cultural, not universal |
+| **Elves ↔ Wildlings** | **Friendly allies**, with trust and cooperation between their communities | Individual disagreements and local tensions remain possible |
+| **Dwarves ↔ other peoples** | Broadly **wary of outsiders** and slow to trust | Dwarves aren't uniformly hostile or xenophobic; some maintain deep friendships and trading partnerships |
+
+**Story implication (suggestion, not owner-confirmed explanation):** Elves and Wildlings may cooperate to protect woodlands and wildlife, fae and elves may disagree about access to sacred Sylweave sites, and dwarven communities may require deeds rather than promises before treating strangers as friends. Do not assign causes for these attitudes or lock factions, trade systems or reputation mechanics without further design.
+
 ## Player fantasy
 
 A wanderer crossing Wildbound encounters settlements that differ in their peoples, architecture, history, ecological relationships, animals, customs, and social dynamics. Classic fantasy peoples (elves, dwarves, werewolves) can coexist with wholly original Wildbound folk. A village is a *community of individuals*, not a shop menu or a single racial stereotype. Villages may be predominantly one species or mixed in population.
