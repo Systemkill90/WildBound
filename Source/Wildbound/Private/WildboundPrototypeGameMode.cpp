@@ -8,6 +8,12 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/PlayerStart.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
+#include "TimerManager.h"
 
 AWildboundPrototypeGameMode::AWildboundPrototypeGameMode()
 {
@@ -93,4 +99,97 @@ void AWildboundPrototypeGameMode::BeginPlay()
         World->SpawnActor<AWildboundPrototypeAnimal>(
             AnimalLocation, FRotator::ZeroRotator, Params);
     }
+
+#if !UE_BUILD_SHIPPING
+    if (FParse::Param(FCommandLine::Get(), TEXT("WildboundAutoMovementTest")))
+    {
+        TWeakObjectPtr<AWildboundPrototypeGameMode> WeakThis(this);
+        FTimerHandle StartHandle;
+        World->GetTimerManager().SetTimer(StartHandle,
+            FTimerDelegate::CreateLambda([WeakThis]()
+            {
+                AWildboundPrototypeGameMode* GameMode = WeakThis.Get();
+                if (!GameMode || !GameMode->GetWorld()) return;
+                UWorld* TestWorld = GameMode->GetWorld();
+                APlayerController* PC = TestWorld->GetFirstPlayerController();
+                ACharacter* Character = PC ? Cast<ACharacter>(PC->GetPawn()) : nullptr;
+                if (!PC || !Character)
+                {
+                    UE_LOG(LogTemp, Error, TEXT("AUTO_MOVE_TEST FAIL: player controller or character not ready"));
+                    return;
+                }
+
+                struct FAutoMoveState
+                {
+                    FVector StartLocation;
+                    FRotator StartRotation;
+                    double StartTime = 0.0;
+                    FTimerHandle TestHandle;
+                };
+                TSharedRef<FAutoMoveState> State = MakeShared<FAutoMoveState>();
+                State->StartLocation = Character->GetActorLocation();
+                State->StartRotation = PC->GetControlRotation();
+                State->StartTime = TestWorld->GetTimeSeconds();
+                UE_LOG(LogTemp, Display,
+                    TEXT("AUTO_MOVE_TEST START: loc=%s control=%s"),
+                    *State->StartLocation.ToCompactString(),
+                    *State->StartRotation.ToCompactString());
+
+                TWeakObjectPtr<ACharacter> WeakCharacter(Character);
+                TWeakObjectPtr<APlayerController> WeakPC(PC);
+                TWeakObjectPtr<UWorld> WeakWorld(TestWorld);
+                FTimerDelegate Step = FTimerDelegate::CreateLambda(
+                    [State, WeakCharacter, WeakPC, WeakWorld]()
+                    {
+                        ACharacter* Pawn = WeakCharacter.Get();
+                        APlayerController* Controller = WeakPC.Get();
+                        UWorld* WorldNow = WeakWorld.Get();
+                        if (!Pawn || !Controller || !WorldNow) return;
+                        const double Elapsed = WorldNow->GetTimeSeconds() - State->StartTime;
+                        FRotator Control = Controller->GetControlRotation();
+                        if (Elapsed < 1.25)
+                        {
+                            Pawn->AddMovementInput(FRotationMatrix(Control).GetUnitAxis(EAxis::X), 1.0f);
+                        }
+                        else if (Elapsed < 2.5)
+                        {
+                            Control.Yaw = State->StartRotation.Yaw + 55.0f;
+                            Controller->SetControlRotation(Control);
+                            Pawn->AddMovementInput(FRotationMatrix(Control).GetUnitAxis(EAxis::X), 1.0f);
+                        }
+                        else if (Elapsed < 3.5)
+                        {
+                            Pawn->AddMovementInput(FRotationMatrix(Control).GetUnitAxis(EAxis::Y), 1.0f);
+                        }
+                        else
+                        {
+                            WorldNow->GetTimerManager().ClearTimer(State->TestHandle);
+                            const FVector EndLocation = Pawn->GetActorLocation();
+                            const FRotator EndRotation = Controller->GetControlRotation();
+                            const float Distance = FVector::Dist2D(State->StartLocation, EndLocation);
+                            const float YawDelta = FMath::Abs(FRotator::NormalizeAxis(EndRotation.Yaw - State->StartRotation.Yaw));
+                            const UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement();
+                            const bool bPassed = Distance > 100.0f && YawDelta > 30.0f;
+                            const TCHAR* Result = bPassed ? TEXT("PASS") : TEXT("FAIL");
+                            const FString Summary = FString::Printf(
+                                TEXT("AUTO_MOVE_TEST %s: start=%s end=%s distance2d=%.1fcm yawStart=%.1f yawEnd=%.1f yawDelta=%.1f grounded=%s mode=%d"),
+                                Result,
+                                *State->StartLocation.ToCompactString(), *EndLocation.ToCompactString(),
+                                Distance, State->StartRotation.Yaw, EndRotation.Yaw, YawDelta,
+                                Movement && Movement->IsMovingOnGround() ? TEXT("yes") : TEXT("no"),
+                                Movement ? static_cast<int32>(Movement->MovementMode) : -1);
+                            if (bPassed)
+                            {
+                                UE_LOG(LogTemp, Display, TEXT("%s"), *Summary);
+                            }
+                            else
+                            {
+                                UE_LOG(LogTemp, Error, TEXT("%s"), *Summary);
+                            }
+                        }
+                    });
+                TestWorld->GetTimerManager().SetTimer(State->TestHandle, Step, 0.025f, true);
+            }), 1.5f, false);
+    }
+#endif
 }

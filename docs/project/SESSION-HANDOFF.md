@@ -10,6 +10,7 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - The player now uses Unreal’s bundled Quinn rig and Unarmed locomotion Animation Blueprint. Install locally with `Tools/Install-PrototypeCharacterAssets.ps1`; it copies the engine’s 125 MB character pack to ignored `Content/Characters/Mannequins/`. Keep it local; those engine content files are not committed.
 - Player and deer use Pawn-profile capsules with Character Movement collision. Deer now auto-possesses `AIController_0`, turns toward its wander input and moves through swept floor-following Character Movement instead of direct transform stepping.
 - Live window screenshots several seconds apart showed the deer move down from the bank, across the creek and change direction. The player mesh and forest rendered. This pass did not run an exhaustive obstacle course or re-test care/build/network actions. The Quinn asset is a temporary developer mannequin, not final Wildbound character art.
+- Added opt-in `-AutoMovementTest` to `Tools/Start-Wildbound.ps1`. It drives the actual Character Movement input for forward, camera-relative turn and strafe phases, rotates the PlayerController camera yaw, then logs distance, yaw change and grounded mode. Verified in the live preview: **PASS**, 547.4 cm planar movement, 55° camera yaw change, grounded in Walking mode; the test emitted one final result after timer cleanup was corrected. The regular preview was relaunched without the test flag.
 
 ## Delivered and verified
 
