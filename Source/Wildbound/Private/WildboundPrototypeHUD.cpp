@@ -16,7 +16,7 @@ void AWildboundPrototypeHUD::DrawHUD()
 
     const FLinearColor Light(0.92f, 0.91f, 0.78f);
     const FLinearColor Accent(0.51f, 0.87f, 0.66f);
-    DrawText(TEXT("WILDBOUND  |  GREENVEIL MEADOW"),
+    DrawText(TEXT("WILDBOUND  |  PRE-ALPHA FOREST BASE"),
         Accent, 24.0f, 22.0f);
     DrawText(TEXT("WASD move | Mouse look | Space jump"),
         Light, 24.0f, 51.0f);

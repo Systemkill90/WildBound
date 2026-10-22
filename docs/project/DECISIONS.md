@@ -14,5 +14,6 @@
 | 2026-10-20 | No voxel plugin or license selected | Evaluate technical fit and rights first; current blocks are only a temporary proof |
 | 2026-10-20 | Static deer movement is temporary | Replace root-sliding placeholder movement with a grounded rig and locomotion before judging animal feel |
 | 2026-10-20 | Use Epic's free Electric Dreams sample as Greenveil's visual starting point | Retain Wildbound gameplay code; migrate a small forest environment and assets instead of building the scene from unrelated props. Avoid requiring experimental PCG/Substrate features for core runtime gameplay. |
+| 2026-10-21 | Use Electric Dreams' authored forest environment as the local pre-alpha visual base | The generated clearing and shrub ring missed the realism goal. Launch the authored landscape with Wildbound's GameMode; keep Epic's sample files local and obtain them through the owner's Epic installation rather than redistributing them through Git. Derive a bounded Greenveil slice after checking readability and native-1080p performance. |
 
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.

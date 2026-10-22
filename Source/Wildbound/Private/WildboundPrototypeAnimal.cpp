@@ -2,6 +2,7 @@
 
 #include "WildboundAnimalNeedsComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Animation/AnimSequence.h"
@@ -10,82 +11,29 @@
 #include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"
 
-namespace
-{
-constexpr float AnimalGroundProbeAbove = 350.0f;
-constexpr float AnimalGroundProbeBelow = 500.0f;
-constexpr float AnimalMaxGroundStep = 130.0f;
-constexpr float AnimalMinGroundNormalZ = 0.65f;
-
-bool FindGroundedLocation(UWorld* World, const AActor* IgnoreActor,
-    const FVector& DesiredLocation, float CapsuleHalfHeight,
-    float MaxGroundDelta, FVector& OutLocation)
-{
-    if (!World)
-    {
-        return false;
-    }
-
-    const FVector Start = DesiredLocation + FVector(0.0f, 0.0f, AnimalGroundProbeAbove);
-    const FVector End = DesiredLocation - FVector(0.0f, 0.0f, AnimalGroundProbeBelow);
-    FCollisionQueryParams QueryParams(SCENE_QUERY_STAT(WildboundAnimalGroundProbe), false);
-    QueryParams.AddIgnoredActor(IgnoreActor);
-
-    TArray<FHitResult> Hits;
-    const FCollisionObjectQueryParams ObjectTypes(ECC_WorldStatic);
-    if (!World->LineTraceMultiByObjectType(Hits, Start, End, ObjectTypes, QueryParams))
-    {
-        return false;
-    }
-
-    const float ExpectedGroundZ = DesiredLocation.Z - CapsuleHalfHeight;
-    float BestDelta = MaxGroundDelta;
-    const FHitResult* BestHit = nullptr;
-    for (const FHitResult& Hit : Hits)
-    {
-        if (Hit.bStartPenetrating || Hit.ImpactNormal.Z < AnimalMinGroundNormalZ)
-        {
-            continue;
-        }
-
-        const float GroundDelta = FMath::Abs(Hit.ImpactPoint.Z - ExpectedGroundZ);
-        if (GroundDelta < BestDelta)
-        {
-            BestDelta = GroundDelta;
-            BestHit = &Hit;
-        }
-    }
-
-    if (!BestHit)
-    {
-        return false;
-    }
-
-    OutLocation = FVector(DesiredLocation.X, DesiredLocation.Y,
-        BestHit->ImpactPoint.Z + CapsuleHalfHeight);
-    return true;
-}
-}
-
 AWildboundPrototypeAnimal::AWildboundPrototypeAnimal()
 {
     bReplicates = true;
     SetReplicateMovement(true);
+    AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
     PrimaryActorTick.bCanEverTick = true;
-    PrimaryActorTick.TickInterval = 0.15f;
+    GetCapsuleComponent()->InitCapsuleSize(38.0f, 82.0f);
+    GetCapsuleComponent()->SetCollisionProfileName(TEXT("Pawn"));
+    GetCharacterMovement()->bOrientRotationToMovement = true;
+    GetCharacterMovement()->RotationRate = FRotator(0.0f, 240.0f, 0.0f);
+    GetCharacterMovement()->MaxWalkSpeed = 105.0f;
+    GetCharacterMovement()->MaxAcceleration = 500.0f;
+    GetCharacterMovement()->BrakingDecelerationWalking = 350.0f;
+    GetCharacterMovement()->GroundFriction = 5.0f;
+    GetCharacterMovement()->MaxStepHeight = 38.0f;
+    GetCharacterMovement()->SetWalkableFloorAngle(42.0f);
 
-    BodyCollision = CreateDefaultSubobject<UCapsuleComponent>(TEXT("BodyCollision"));
-    SetRootComponent(BodyCollision);
-    BodyCollision->InitCapsuleSize(38.0f, 82.0f);
-    BodyCollision->SetCollisionProfileName(TEXT("BlockAll"));
-
-    Visual = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("DeerVisual"));
-    Visual->SetupAttachment(BodyCollision);
+    Visual = GetMesh();
     Visual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     Visual->SetRelativeLocation(FVector(0.0f, 0.0f, -82.0f));
 
     FallbackVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FallbackDeerVisual"));
-    FallbackVisual->SetupAttachment(BodyCollision);
+    FallbackVisual->SetupAttachment(GetCapsuleComponent());
     FallbackVisual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     FallbackVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -87.0f));
     FallbackVisual->SetVisibility(false);
@@ -127,18 +75,18 @@ AWildboundPrototypeAnimal::AWildboundPrototypeAnimal()
 void AWildboundPrototypeAnimal::BeginPlay()
 {
     Super::BeginPlay();
-    if (HasAuthority() && BodyCollision)
+    if (HasAuthority())
     {
-        FVector GroundedLocation;
-        if (FindGroundedLocation(GetWorld(), this, GetActorLocation(),
-                BodyCollision->GetScaledCapsuleHalfHeight(), 1000.0f, GroundedLocation))
-        {
-            SetActorLocation(GroundedLocation, false, nullptr, ETeleportType::TeleportPhysics);
-        }
+        GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+        UE_LOG(LogTemp, Log, TEXT("Wildbound deer ready at %s; AI controller %s"),
+            *GetActorLocation().ToCompactString(),
+            GetController() ? *GetController()->GetName() : TEXT("none"));
     }
 
     HomeLocation = GetActorLocation();
     WanderTarget = HomeLocation;
+    LastProgressTime = GetWorld()->GetTimeSeconds();
+    PreviousAIPosition = GetActorLocation();
     if (Visual && IdleAnimation)
     {
         Visual->PlayAnimation(IdleAnimation, true);
@@ -178,53 +126,41 @@ void AWildboundPrototypeAnimal::Tick(float DeltaSeconds)
 
     if (!HasAuthority()) return;
 
-    MovementAccumulator += DeltaSeconds;
-    if (MovementAccumulator < 0.25f)
-    {
-        return;
-    }
-
-    const float StepSeconds = MovementAccumulator;
-    MovementAccumulator = 0.0f;
     const float Now = GetWorld()->GetTimeSeconds();
     FVector Current = GetActorLocation();
 
-    if (Now >= NextWanderChoice || FVector::DistSquared2D(Current, WanderTarget) < FMath::Square(65.0f))
+    const float DistanceToGoal = FVector::DistSquared2D(Current, WanderTarget);
+    if (Now >= NextWanderChoice || DistanceToGoal < FMath::Square(120.0f))
     {
         const float Angle = FMath::FRandRange(0.0f, 2.0f * PI);
-        const float Radius = FMath::FRandRange(250.0f, 650.0f);
+        const float Radius = FMath::FRandRange(280.0f, 520.0f);
         WanderTarget = HomeLocation + FVector(FMath::Cos(Angle) * Radius, FMath::Sin(Angle) * Radius, 0.0f);
-        WanderTarget.Z = HomeLocation.Z;
-        NextWanderChoice = Now + FMath::FRandRange(4.0f, 8.0f);
+        NextWanderChoice = Now + FMath::FRandRange(4.0f, 7.0f);
     }
 
     FVector Direction = WanderTarget - Current;
     Direction.Z = 0.0f;
-    if (Direction.IsNearlyZero())
+    if (Direction.IsNearlyZero() || !GetCharacterMovement())
     {
         return;
     }
 
     const float Stress = Needs ? Needs->GetStress() : 25.0f;
-    const float Speed = Stress > 65.0f ? 135.0f : 55.0f;
-    const FRotator Facing = Direction.Rotation();
-    SetActorRotation(FMath::RInterpConstantTo(GetActorRotation(), Facing, StepSeconds, 180.0f));
-    const FVector Offset = Direction.GetSafeNormal() * Speed * StepSeconds;
-    const FVector DesiredLocation = Current + Offset;
-    FVector GroundedLocation;
-    if (!BodyCollision || !FindGroundedLocation(GetWorld(), this, DesiredLocation,
-            BodyCollision->GetScaledCapsuleHalfHeight(), AnimalMaxGroundStep,
-            GroundedLocation))
-    {
-        WanderTarget = Current;
-        NextWanderChoice = Now + FMath::FRandRange(1.0f, 2.0f);
-        return;
-    }
+    GetCharacterMovement()->MaxWalkSpeed = Stress > 65.0f ? 220.0f : 105.0f;
 
-    FHitResult Hit;
-    if (!SetActorLocation(GroundedLocation, true, &Hit))
+    AddMovementInput(Direction.GetSafeNormal(), 1.0f);
+
+    const bool bMadeProgress = FVector::DistSquared2D(Current, PreviousAIPosition)
+        > FMath::Square(3.0f);
+    PreviousAIPosition = Current;
+    if (bMadeProgress)
     {
+        LastProgressTime = Now;
+    }
+    else if (Now - LastProgressTime > 2.0f)
+    {
+        // A blocked wander route must not freeze the animal on one bad target.
         WanderTarget = Current;
-        NextWanderChoice = Now + FMath::FRandRange(1.0f, 2.0f);
+        NextWanderChoice = Now;
     }
 }

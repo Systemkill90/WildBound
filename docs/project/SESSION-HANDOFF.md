@@ -1,8 +1,15 @@
 # Wildbound session handoff
 
-Updated: October 21, 2026.
+Updated: October 22, 2026.
 
 Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md) before new work.
+
+## October 22 character, collision and animal movement pass
+
+- `WildboundEditor` compiled successfully on UE 5.8.4 and launched the close-range Electric Dreams map at native 1920×1080.
+- The player now uses Unreal’s bundled Quinn rig and Unarmed locomotion Animation Blueprint. Install locally with `Tools/Install-PrototypeCharacterAssets.ps1`; it copies the engine’s 125 MB character pack to ignored `Content/Characters/Mannequins/`. Keep it local; those engine content files are not committed.
+- Player and deer use Pawn-profile capsules with Character Movement collision. Deer now auto-possesses `AIController_0`, turns toward its wander input and moves through swept floor-following Character Movement instead of direct transform stepping.
+- Live window screenshots several seconds apart showed the deer move down from the bank, across the creek and change direction. The player mesh and forest rendered. This pass did not run an exhaustive obstacle course or re-test care/build/network actions. The Quinn asset is a temporary developer mannequin, not final Wildbound character art.
 
 ## Delivered and verified
 
@@ -27,14 +34,14 @@ Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](
 - Rebuilt `WildboundEditor` and the Win64 Development game, reran native suites (34/22/13), static source checks (58) and documentation links (169), then cooked 620 packages and launched `<local-project-root>\Builds\WildBoundPreAlpha2\Windows\Wildbound.exe`.
 - PreAlpha5 is the latest package. It cooks 685 packages and is running windowed at 1920×1080, `r.ScreenPercentage=100`, dynamic resolution disabled and a 60 FPS cap; the cap is not evidence of a measured frame rate. A Windows Security firewall prompt still overlays the game; click Cancel to continue offline.
 
-## Owner playtest now
+## Current owner playtest
 
-The October 21 PreAlpha5 standalone package is running from `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`. Click **Cancel** on the Windows Security firewall prompt (network access is unnecessary) to reveal the game, then playtest movement, doe animation/grounding, feeding/watering, needs, block placement and short traversal performance. None of those interactions or the frame rate have yet been verified hands-on in PreAlpha5.
+The current launch target is the close-range Electric Dreams forest level, running with Wildbound's GameMode. It uses native 1920×1080, a 60 FPS cap and 100% screen percentage; no traversal frame-time measurement has been made. The window is running with the Quinn mannequin and wandering deer. Check capsule collisions around the roots/logs, player movement, feeding/watering, needs and block placement.
 
 ## Known visual and gameplay limits
 
-- The main pawn remains an engine primitive and is not a realistic character.
-- The doe has a local skeletal mesh and idle/walk/run assets wired into the actor, but animation switching is not visually confirmed. Ground-probed movement remains short-range; test uneven ground and obstacles.
+- The player is now a rigged and animated engine Quinn mannequin, still temporary visual art rather than a finished Wildbound homesteader.
+- The doe has a local skeletal mesh and idle/walk/run assets wired into the actor. The AI controller and character movement now visibly change position/direction in the live preview; test ground contact and obstacle response across the whole slice.
 - Bowl and pail are environment props; no inventory or actual bowl-target interaction exists.
 - Starter supplies and world state are in memory. Blocks are temporary cubes; no voxel terrain.
 - White-screen issue is fixed. The current world renders, but still needs a better environmental foundation and visual review.
@@ -42,9 +49,9 @@ The October 21 PreAlpha5 standalone package is running from `<local-project-root
 
 ## Next implementation sequence
 
-1. Dismiss the firewall prompt, relaunch at native 1080p and visually inspect the doe, shrubs, ground contact and frame rate.
-2. Playtest movement, camera, care, needs and block placement; record defects before expanding the scene.
-3. Source/import a free rigged player model and improve the small forest slice only after its packaged readability/performance is assessed.
+1. Playtest the player/deer capsule collision around sample roots, logs and foliage; verify movement, care, needs and block placement.
+2. Measure native-1080p traversal frame time and assess the sample ray-tracing warning.
+3. Source/import licensed Wildbound homesteader art and improve the small forest slice only after its packaged readability/performance is assessed.
 4. Add two-client functional assertions for authoritative care and block replication.
 5. Test animal movement around a small enclosure, then evaluate persistence and dedicated-server packaging.
 
@@ -70,3 +77,11 @@ The public `README.md` now opens with existing Wildbound concept art, a concise 
 - Regenerated and map-checked `/Game/Maps/GreenveilField` with zero Unreal map errors/warnings. Cooked 685 packages, archived `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`, and launched it windowed at 1920×1080 with 100% screen percentage, dynamic resolution disabled, and a 60 FPS cap.
 - The Windows Security firewall prompt overlays the game. Click **Cancel** to reveal the offline demo. Do not treat the cap as a frame-rate measurement; gameplay interactions, doe animation and traversal performance remain untested in PreAlpha5.
 - The generated map remains local because it includes local Fab asset references. The repeatable tree dependency migration helper is `Scripts/Editor/ImportElectricDreamsTrees.py` and expects the locally installed sample at `<local-project-root>\Assets\Samples\ElectricDreamsEnv.uproject`.
+
+## Electric Dreams full-world foundation — October 21, 2026
+
+- Owner rejected the generated shrub-ring visual and asked for a prebuilt world as the base. Inspection found `/Game/Levels/PCG/ElectricDreams_PCG` has 392 level actors (four landscape proxies) and a designated player start; the full `/Game/Levels/ElectricDreams_Env` has 15,244 actors.
+- `Tools/Link-ElectricDreamsSampleContent.ps1` locally junctions the Epic sample's content folders into `Project/Content`; no Epic sample files are added to Git. A partial earlier migration is retained under `<local-project-root>\Cache\SampleContentLinkBackup-2026-10-21`.
+- `/Game/Levels/ElectricDreams_Env` overrides its default GameMode with `GM_AnimSandbox_C`. `Tools/Start-Wildbound.ps1` now appends Wildbound's GameMode via a map URL option so the Wildbound pawn, deer, needs HUD and construction controls are used.
+- `WildboundEditor` compiled successfully and the full level reached gameplay with the Wildbound HUD. The first image was from the sample's AnimSandbox GameMode and showed a camera under the level; after the override, the view showed the detailed forest/river environment and Wildbound HUD. The Wildbound pawn remains a primitive placeholder.
+- The first override run showed sample ray-tracing and exposure-budget warnings. The sample-matched renderer configuration is now restored for the close-range level; its live HUD still shows a ray-tracing geometry-budget warning. The 15,244-actor main level caused an 829-mesh Nanite rebuild and nearly exhausted virtual-memory commit, so it was stopped. The smaller PCG forest map is the current default to bound the local test.

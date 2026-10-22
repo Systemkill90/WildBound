@@ -81,18 +81,18 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 21 Windows session **compiled and packaged** the game and **launched** Greenveil. The latest local package uses a rigged doe with idle/walk/run sequences and 12 wind shrubs; those Fab source files remain local and are not published in Git. The game opened behind a Windows Security firewall prompt, so its updated visuals and 1080p performance still need inspection.
+The October 22 Windows session compiled Wildbound and launched it in Epic's authored Electric Dreams forest environment with Wildbound's GameMode and HUD. The sample is installed locally and stays outside Git because its content is not redistributed by this project. The view uses native 1920×1080 and a 60 FPS cap, but traversal frame time has not been benchmarked. A bundled Quinn mannequin replaces the sphere as temporary rigged player art; its local asset setup is documented in [Current State](docs/project/CURRENT-STATE.md).
 
 | Area | Actual status |
 | :-- | :-- |
 | **Unreal foundation** | Editor and game compiled; Windows test package launched. |
-| **First Greenveil scene** | Saved clearing with imported environment art, a placeholder player and a rigged doe in the local package. Current map quality and animation remain unverified in the window. |
+| **First Greenveil scene** | Epic's detailed authored Electric Dreams forest and river valley are the local visual base. The player uses a temporary rigged mannequin; the deer now wanders with a collision capsule. Check obstacle traversal and performance before carving out a small Greenveil slice. |
 | **Animal needs** | Core C++ rules tested; care interactions still need in-game validation. |
 | **Construction** | Temporary snapped blocks compiled; **not** voxel terrain and not yet playtested. |
 | **Multiplayer** | Two clients joined a listen server; gameplay state synchronization **not yet verified**. |
 | **Persistence, breeding & villages** | Not implemented. |
 
-**The next milestone:** reveal the game window, inspect the doe and shrubs at native 1920×1080, then verify movement, deer care and block placement before expanding the world.
+**The next milestone:** playtest the new player/deer collision around roots and logs, verify care and block placement, then create a small authored Greenveil slice before expanding the world.
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 

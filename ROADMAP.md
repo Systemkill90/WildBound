@@ -6,7 +6,7 @@
 
 ## The journey in brief
 
-**Foundation established:** Unreal Engine 5.8.4 editor/game compilation, a saved Greenveil test map and a locally launched Windows package were recorded on October 20, 2026.
+**Foundation established:** Unreal Engine 5.8.4 editor/game compilation, a locally launched Wildbound prototype and an authored Electric Dreams environment as the visual base were recorded on October 21, 2026.
 
 **Our next step:** verify real in-game movement, deer care and construction inputs. The code compiling is not the same as those interactions working.
 
@@ -19,7 +19,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 | Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **Editor/game compile and Win64 package succeed on UE 5.8.4; packaged app launches. Dedicated-server target not tested.** | Reproducible toolchain setup; clean game/editor/server builds; launch and recover a test world |
-| 1 — Small Greenveil test | **PreAlpha5 compiles, cooks 685 packages and is running at 1920×1080 with 100% screen percentage, dynamic resolution disabled and a 60 FPS cap. Greenveil now has a layered three-row forest edge of 72 locally imported, Nanite-enabled Electric Dreams hornbeams and wind-capable foliage materials. The firewall prompt covers the game; movement, animal care, animation and measured frame rate still need hands-on checks. The pawn remains a primitive placeholder.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
+| 1 — Small Greenveil test | **The launch map is Epic's close-range Electric Dreams PCG forest. The editor compiles and launches at native 1080p. A bundled rigged Quinn mannequin replaces the sphere, and the deer now uses auto-possessed Character Movement; the live preview showed it changing position/direction. Full collision traversal, care/build controls and frame time remain unverified. The larger 15,244-actor world remains outside the prototype launch.** | Stable, readable world; controllable pawn; grounded animated animal; working care loop |
 | 2 — Construction proof | **Portable placement rules pass; temporary snapped block code compiles. In-game placement/removal is not verified; not voxel.** | Server-validated construction interaction, collision, animal enclosure navigation and tested persistence boundary |
 | 3 — Animal needs and trust | **34 portable simulation tests pass; replicated component and care RPCs compile. Runtime needs/care/trust behavior is not yet playtested in this checkout.** | Observe needs, care costs, refusal cases, stress/trust response and credible movement in play |
 | 4 — Co-op and persistence | **Listen server accepted two simulated client connections. Gameplay replication and dedicated server untested; no integrated world saves.** | Two-client state/RPC tests, server validation, restart, versioned save and backup recovery |
@@ -34,11 +34,11 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 ## Near-term sequence
 
-**Now:** playtest the running PreAlpha5 package after dismissing the firewall prompt. Check movement, the new hornbeam canopy, deer animation and grounding, feeding/watering/needs, block placement and 1080p traversal frame time. Fix reproduced issues before starting major systems or expanding the small forest slice.
+**Now:** playtest the Electric Dreams-based window. Check movement, deer animation and grounding, feeding/watering/needs, block placement and native-1080p traversal frame time. Reduce the sample to a smaller Greenveil slice after confirming its art direction and performance.
 
-The earlier Electric Dreams preview held the 60 FPS cap with 60% TSR (1152×648 internal render), which is not evidence of native 1080p performance. PreAlpha5 now runs at 1920×1080 with screen percentage forced to 100% and dynamic resolution disabled; its frame rate still needs measurement during traversal.
+The current preview runs at native 1920×1080, with screen percentage forced to 100%, dynamic resolution disabled and a 60 FPS cap; the cap is not evidence of measured frame rate during traversal.
 
-**Next:** validate care/build RPC side effects with two clients. Replace the placeholder player with a properly scaled rigged character afterward. Follow with animal navigation around a small enclosure and persistent-world recovery tests.
+**Next:** playtest the new capsule collision and deer ground movement around rocks, logs and foliage. Validate care/build RPC side effects with two clients. Replace the temporary engine mannequin with Wildbound homesteader art afterward, then test animal navigation around a small enclosure and persistent-world recovery.
 
 **Later:** selective breeding, farm stock, wild ecology, villages, weather, more biomes, trading and optional platform targets.
 

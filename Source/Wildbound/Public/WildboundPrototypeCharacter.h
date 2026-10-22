@@ -6,9 +6,9 @@
 
 class UCameraComponent;
 class USpringArmComponent;
-class UStaticMeshComponent;
+class USkeletalMeshComponent;
 
-/** Simple third-person prototype pawn; no packaged art, abilities or inventory. */
+/** Third-person prototype pawn using Unreal's bundled rigged mannequin art when installed. */
 UCLASS()
 class WILDBOUND_API AWildboundPrototypeCharacter : public ACharacter
 {
@@ -33,5 +33,5 @@ private:
     TObjectPtr<UCameraComponent> Camera;
 
     UPROPERTY(VisibleAnywhere, Category="Wildbound|Prototype")
-    TObjectPtr<UStaticMeshComponent> PlaceholderBody;
+    TObjectPtr<USkeletalMeshComponent> CharacterVisual;
 };

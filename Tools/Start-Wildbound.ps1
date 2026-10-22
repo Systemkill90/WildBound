@@ -4,7 +4,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = "",
-    [string]$Map = "/Game/Maps/GreenveilField",
+    [string]$Map = "/Game/Levels/PCG/ElectricDreams_PCGCloseRange?game=/Script/Wildbound.WildboundPrototypeGameMode",
     [switch]$BuildOnly,
     [switch]$ShowEngines
 )
@@ -113,14 +113,16 @@ if ($BuildOnly) {
     exit 0
 }
 
-# Start the requested map. This lets us playtest a free sample environment while
-# retaining the authored Greenveil field as the normal default.
+# Start the requested map. The default is Epic's free Electric Dreams
+# authored PCG forest environment, used as Greenveil's visual foundation. Its local
+# sample Content folders are junctioned into Project/Content and stay out of Git.
 if ($Map -notmatch '^/(Game|Engine)/') {
     throw "-Map must be an Unreal package path under /Game or /Engine, such as /Game/Maps/GreenveilField."
 }
 $MapAsset = $null
 if ($Map.StartsWith("/Game/")) {
-    $MapRelativePath = ($Map.Substring(6).Replace('/', '\') + ".umap")
+    $MapPackage = ($Map -split '\?', 2)[0]
+    $MapRelativePath = ($MapPackage.Substring(6).Replace('/', '\') + ".umap")
     $MapAsset = Join-Path (Join-Path $RepoRoot "Content") $MapRelativePath
     if (-not (Test-Path $MapAsset -PathType Leaf)) {
         throw "The requested /Game map is not present in Content: $MapAsset"
@@ -136,7 +138,7 @@ try {
         exit 3
     }
     Write-Note ("LAUNCHED PROCESS: UnrealEditor PID " + $Process.Id)
-    Write-Note ("CHECK ON PC: Confirm the Greenveil field loads and accepts inputs. Map: " + $MapArgument)
+    Write-Note ("CHECK ON PC: Confirm the Greenveil forest loads and accepts inputs. Map: " + $MapArgument)
     Write-Note "A running process alone does not mean the game passed its playtest."
     exit 0
 }

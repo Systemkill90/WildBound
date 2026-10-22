@@ -1,10 +1,12 @@
 #include "WildboundPrototypeCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
-#include "Components/StaticMeshComponent.h"
-#include "Engine/StaticMesh.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/SkeletalMesh.h"
+#include "Animation/AnimInstance.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -13,8 +15,18 @@ AWildboundPrototypeCharacter::AWildboundPrototypeCharacter()
     bReplicates = true;
     bUseControllerRotationYaw = false;
 
+    // The capsule is the authoritative player collision shape; keep it narrow
+    // enough for the authored trail while retaining a predictable step height.
+    GetCapsuleComponent()->InitCapsuleSize(36.0f, 90.0f);
+    GetCapsuleComponent()->SetCollisionProfileName(TEXT("Pawn"));
+
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
+    GetCharacterMovement()->MaxStepHeight = 48.0f;
+    GetCharacterMovement()->SetWalkableFloorAngle(48.0f);
+    GetCharacterMovement()->MaxAcceleration = 1500.0f;
+    GetCharacterMovement()->BrakingDecelerationWalking = 1400.0f;
+    GetCharacterMovement()->GroundFriction = 7.0f;
 
     CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
     CameraBoom->SetupAttachment(RootComponent);
@@ -26,16 +38,25 @@ AWildboundPrototypeCharacter::AWildboundPrototypeCharacter()
     Camera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
     Camera->bUsePawnControlRotation = false;
 
-    PlaceholderBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlaceholderBody"));
-    PlaceholderBody->SetupAttachment(RootComponent);
-    PlaceholderBody->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-    PlaceholderBody->SetRelativeScale3D(FVector(0.42f, 0.42f, 0.85f));
+    CharacterVisual = GetMesh();
+    CharacterVisual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    CharacterVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
+    CharacterVisual->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 
-    static ConstructorHelpers::FObjectFinder<UStaticMesh> BodyMeshAsset(
-        TEXT("/Engine/BasicShapes/Sphere.Sphere"));
-    if (BodyMeshAsset.Succeeded())
+    static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMeshAsset(
+        TEXT("/Game/Characters/Mannequins/Meshes/SKM_Quinn_Simple.SKM_Quinn_Simple"));
+    if (CharacterMeshAsset.Succeeded())
     {
-        PlaceholderBody->SetStaticMesh(BodyMeshAsset.Object);
+        CharacterVisual->SetSkeletalMesh(CharacterMeshAsset.Object);
+        CharacterVisual->SetVisibility(true);
+    }
+
+    static ConstructorHelpers::FClassFinder<UAnimInstance> CharacterAnimBP(
+        TEXT("/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed"));
+    if (CharacterAnimBP.Succeeded())
+    {
+        CharacterVisual->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+        CharacterVisual->SetAnimInstanceClass(CharacterAnimBP.Class);
     }
 }
 

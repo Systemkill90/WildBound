@@ -16,6 +16,25 @@ AWildboundPrototypeGameMode::AWildboundPrototypeGameMode()
     HUDClass = AWildboundPrototypeHUD::StaticClass();
 }
 
+AActor* AWildboundPrototypeGameMode::ChoosePlayerStart_Implementation(
+    AController* Player)
+{
+    AActor* Start = Super::ChoosePlayerStart_Implementation(Player);
+    const UWorld* World = GetWorld();
+    if (Start && World
+        && World->GetMapName().Contains(TEXT("ElectricDreams_PCGCloseRange")))
+    {
+        // The sample's drone-facing start points straight into a massive root
+        // cluster. Turn the Wildbound third-person preview toward the trail.
+        FRotator SpawnRotation = Start->GetActorRotation();
+        SpawnRotation.Yaw = FRotator::NormalizeAxis(SpawnRotation.Yaw + 180.0f);
+        Start->SetActorRotation(SpawnRotation);
+        UE_LOG(LogTemp, Log, TEXT("Wildbound Electric Dreams start: %s, yaw %.1f"),
+            *Start->GetActorLocation().ToCompactString(), SpawnRotation.Yaw);
+    }
+    return Start;
+}
+
 void AWildboundPrototypeGameMode::BeginPlay()
 {
     Super::BeginPlay();

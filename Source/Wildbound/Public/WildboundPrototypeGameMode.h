@@ -17,5 +17,6 @@ public:
     AWildboundPrototypeGameMode();
 
 protected:
+    virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
     virtual void BeginPlay() override;
 };
