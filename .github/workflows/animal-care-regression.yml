@@ -1,0 +1,27 @@
+name: Animal care regression tests (portable C++)
+
+on:
+  push:
+    paths:
+      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
+      - 'Tests/Native/AnimalCareRegressionTests.cpp'
+      - '.github/workflows/animal-care-regression.yml'
+  pull_request:
+    paths:
+      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
+      - 'Tests/Native/AnimalCareRegressionTests.cpp'
+      - '.github/workflows/animal-care-regression.yml'
+
+jobs:
+  care-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile regression tests
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
+            -I Source/Wildbound/Public \
+            Tests/Native/AnimalCareRegressionTests.cpp -o /tmp/wildbound-care-regression
+      - name: Test care boundaries, panic response and condition clamps
+        run: /tmp/wildbound-care-regression
