@@ -37,4 +37,6 @@
 
 | 2026-10-22 | Elves have upward-pointing ears; fae have side-projecting pointed ears and wings on their backs, making their silhouettes clearly distinct | Explicit owner character design requirement; wing types, biomechanics and flight gameplay remain undecided |
 
+| 2026-10-22 | Elves are human-sized and long-lived, with small upright pointed ears close to the head, no tattoos and no magic; all fae, including women, are taller than 6 ft 5 in, muscular and godlike in appearance, with outward-pointing ears, back wings, extensive tribal tattoos and magic | Explicit owner-approved character design contrast; exact elf longevity and fae magic mechanics remain open |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
