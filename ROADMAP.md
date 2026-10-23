@@ -8,7 +8,7 @@
 
 **Verified October 22:** UE 5.8.4 editor/game compilation and a fresh Windows package of the original 180 × 160 m Greenveil exploration zone. A guarded 1080p traversal with all groups at Medium except Low shadows completed 15/15 waypoints over 327.7 m and averaged 75.89 FPS (p95 15.205 ms), with zero navigation failures or animal actors. The normal Medium default remains unchanged pending visual QA of Low shadows; this single traversal is not sustained-performance certification. [Evidence and daily field notes](docs/project/DAILY-DEVELOPMENT.md).
 
-**Our next step:** visually inspect the Low-shadow candidate, then manually check side trails, off-trail collision, camera clearance and jumping. Continue profiling only when local Ollama is idle; the test helper now yields to loaded/running inference. Sustained 60 remains unverified.
+**Our next step:** move Greenveil into a representative authored biome. The current generated map proves traversal and basic controls, but its box-built cottages, mannequin, uniform terrain material and ad-hoc foliage scatter are still graybox art. Use the locally installed Electric Dreams authored forest/PCG content as the visual starting point, keep the playable area bounded, and retain Wildbound's working player/game-mode foundation. Preserve the current map as a rollback checkpoint. No animal gameplay. Run Unreal builds/renders only when local Ollama is idle; the guarded test helper yields to inference. Sustained native-1080p 60 remains unverified.
 
 **Owner priority:** no animal gameplay work yet. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains paused, draft and unmerged. The older care/enclosure sequence below is deferred, not the current implementation order.
 
@@ -19,7 +19,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 | Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **Editor/game compile and Win64 package succeed on UE 5.8.4; packaged app launches. Dedicated-server target not tested.** | Reproducible toolchain setup; clean game/editor/server builds; launch and recover a test world |
-| 1 — Greenveil exploration | **Packaged traversal/navigation passed in a populated original zone. 507 canopy trees, 9,036 grass/clover instances, layered understory, creek, bridges and three cottage placeholders.** | Bounded playable zone, controllable pawn, connected route, measured performance and manual visual/collision QA; remaining polish is open |
+| 1 — Greenveil exploration | **Gameplay/traversal foundation verified; visual environment remains an art-blockout.** The current generated slice has canopy/ground-cover instances, creek, bridges and cottage placeholders, but is not yet a representative finished biome. | Bounded playable zone based on authored forest content, Wildbound pawn/game mode, readable materials, connected route, measured performance and manual visual/collision QA |
 | 2 — Construction proof | **Portable placement rules pass; temporary snapped block code compiles. In-game placement/removal is not verified; not voxel.** | Server-validated construction interaction, collision, animal enclosure navigation and tested persistence boundary |
 | 3 — Animal needs and trust | **34 portable simulation tests pass; replicated component and care RPCs compile. Runtime needs/care/trust behavior is not yet playtested in this checkout.** | Observe needs, care costs, refusal cases, stress/trust response and credible movement in play |
 | 4 — Co-op and persistence | **Listen server accepted two simulated client connections. Gameplay replication and dedicated server untested; no integrated world saves.** | Two-client state/RPC tests, server validation, restart, versioned save and backup recovery |
@@ -34,11 +34,11 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 ## Near-term sequence
 
-**Now:** explore the packaged Greenveil zone manually. Check side routes, jump/camera and off-trail collisions; refine cottage interiors, materials, grass placement and zone boundaries.
+**Now:** inspect the installed Electric Dreams forest and its PCG breakdown map, then create a separate bounded Greenveil map from the authored environment. First verify that it opens with Wildbound's game mode and controls; keep the current Greenveil map/package untouched as the rollback. Only after the sample base works should we add Wildbound creek/hamlet landmarks, tune materials/lighting, and recheck native-1080p performance.
 
 The local Windows demo uses native 1920×1080 and Medium settings by default. A guarded traversal with Low shadows and all other settings at Medium measured 13.178 ms mean / 15.205 ms p95. Visual impact remains to be checked, and sustained native-1080p 60 remains open.
 
-**Next:** improve this slice from actual exploration feedback and profiling. Keep source-restricted art local, protect the tested package, and expand content only within a measured memory/frame budget.
+**Next:** use actual sample-world assets and materials instead of trying to make graybox geometry look finished. Keep the area small and representative; run profiling after the visual baseline exists and local Ollama is idle. Keep source-restricted art local and preserve the tested package.
 
 **Deferred:** animal care/intent, construction systems, co-op, persistence, farming and settlement simulation. Broader biomes and platforms require a later owner priority. Current cottages are visual placeholders, not village simulation; concept illustrations are not 3D models.
 

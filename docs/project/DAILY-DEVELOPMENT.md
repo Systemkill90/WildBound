@@ -2,6 +2,10 @@
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
 
+## October 23, 2026 · Greenveil art-base correction
+
+The owner called out that the current scene is not close enough to the intended realistic biome. That assessment is accurate: the packaged map proves traversal, but its generated terrain, broad uniform scatter, mannequin and box-built houses still read as graybox. The project had already recorded Electric Dreams' authored forest as the intended visual base; the generated map did not follow through on that decision. The next milestone is now a separate, bounded Greenveil slice from the installed authored forest/PCG environment, retaining Wildbound controls and preserving the current map/package for rollback. No animal gameplay. Local Electric Dreams content remains machine-local; no assets are redistributed through GitHub. Unreal rendering and benchmarks are deferred when they would compete with active local AI inference. No visual/build success is claimed for this planned transition.
+
 ## October 22, 2026 · GPU profile and shadow-quality comparison
 
 Built and packaged the current map with optional screenshot suppression and Unreal Insights tracing. The all-Medium, native-1080p route passed 15/15 grounded waypoints over 327.6 m at **55.26 FPS** (18.096 ms mean, 21.612 ms p95). The trace showed GPU frame time near 17.94 ms and shadow depth averaging 5.45 ms. Keeping all settings Medium except shadows at Low produced a guarded repeat of **75.89 FPS** (13.178 ms mean, 15.205 ms p95), 15/15 waypoints over 327.7 m, zero navigation failures and zero animals. The traversal helper checks Ollama and yields if a local model loads; no model was loaded in its preflight or polling samples. Low shadows are still a candidate pending a human visual check, so the normal Medium default did not change. The raw trace stays local. [Test details](GREENVEIL-EXPLORATION-2026-10-22.md).

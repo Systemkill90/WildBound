@@ -21,6 +21,12 @@ Inspected October 22, 2026 in the local development environment. This is an avai
 
 `Scripts/Editor/CreateGreenveilExploration.py` creates original terrain, creek ribbon and trail geometry, plain materials, timber cottage/bridge/fence/shelter modules and tool silhouettes. Engine cube references supply simple geometry; no sample building source is copied. The terrain is a collision-enabled static heightfield mesh, not voxel terrain or an editable Unreal Landscape.
 
+## Greenveil style anchor
+
+Use the [Greenveil Basin concept sheet](concept-atlas/biomes-atlas.webp) and [biome notes](../world/biomes.md) as the art-direction source: pastoral, fertile and settled; rolling meadow, birch and orchard groves, a clear stream, flower banks, mossy stone, practical timber/stone buildings, warm honey sunlight and restrained ecology-linked magic. This should be a realistic game environment with a quiet fantasy layer, not a uniformly dark forest or generic Megascans showcase. Electric Dreams supplies production-quality foliage, terrain and material craft; its darker sample grade is a reference for asset fidelity, while Greenveil keeps the brighter pastoral palette and lived-in settlement composition. The board is concept art, not a literal asset checklist.
+
+The local sample also contains unselected forest sets that may support this pass: `Megascans/3D_Assets/ForestGround`, `ForestTerrain`, `MossyForestRoots`, `OldFallenTree`, `LargeFallenTree`, `ForestRockFormation`, and `MossyForestRock`; plant sets include `3D_Plants/GroundCover`, `DeadLeaves`, and additional fern variants. They remain local sample references until deliberately added to a verified Greenveil map. The authored Electric Dreams PCG forest breakdown is a candidate bounded base, not a direction to ship its entire sample world.
+
 The original Greenveil exploration map and its first generated asset set remain preserved. The newer `GreenveilExplorationPolish` map and 11 original generated assets are also staged as Unreal binaries through Git LFS, alongside four reviewed CC0 material fixes. The maps reference local source-restricted content; another checkout still needs the licensed local installations. The local `GreenveilField.umap` user edit is intentionally excluded.
 
 ## License evidence and distribution

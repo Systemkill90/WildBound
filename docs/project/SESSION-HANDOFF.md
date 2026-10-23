@@ -1,10 +1,10 @@
 # Wildbound session handoff
 
-Updated October 22, 2026 after a packaged GPU profile and guarded traversal comparison. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 23, 2026 after the owner prioritized representative biome development over further graybox polish. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
-**No animal gameplay work yet.** Refine the full, walkable Greenveil exploration zone using existing licensed local assets and original placeholders. Concept art remains imagery. Keep animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) paused, draft and unmerged; do not base this work on it.
+**No animal gameplay work yet.** The current generated scene is a mechanics/traversal proof, not an acceptable art base. Use a bounded portion of the locally installed Electric Dreams authored forest/PCG environment as the starting map and retain Wildbound's existing player/game-mode foundation. Preserve the current generated map/package as rollback. Keep animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) paused, draft and unmerged; do not base this work on it.
 
 ## Project and recovery points
 
@@ -32,6 +32,6 @@ Portable C++ and static checks, with their scope clearly separated from gameplay
 
 ## Next bounded work
 
-When the owner is available, visually compare the Low-shadow candidate against the normal Medium launch, then manually inspect side trails, jumping/camera and off-trail collisions. Continue from actual captures to refine clearing light, cottage materials and grass distribution; profile before adding more mesh varieties. Preserve the existing packages as recovery points.
+Inspect the local `ElectricDreams_Env` world and `ElectricDreams_PCGForest` breakdown map. Determine which can be used as a bounded Greenveil art base while retaining Wildbound's game mode and movement. Work in a separate map/package and leave the generated Greenveil map and older packages intact. Only after the authored environment loads and reads well should we add Wildbound landmarks and rerun traversal/performance checks. Defer Unreal rendering and benchmarks while a local Ollama model is loaded.
 
 Do not resume animal gameplay, huge sample worlds, networking, persistence or other major systems without a new owner priority. The automated route is useful evidence, not exhaustive manual QA or release certification.

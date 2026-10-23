@@ -91,11 +91,15 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 | **Animal gameplay** | Paused by owner priority; [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains separate and unmerged. |
 | **Construction, multiplayer & persistence** | Deferred; no new gameplay verification in this exploration pass. |
 
-**The next milestone:** manually explore the populated zone, refine architecture/materials and side paths, and optimize further. No animal gameplay work yet. Epic/Fab source stays local; concept art remains illustration, not 3D content. The normal launcher's 60 FPS ceiling is not a locked-60 result.
+**The next milestone:** build a bounded, representative Greenveil slice from the locally installed authored forest environment, guided by the board's pastoral orchard-and-stream concept. The current generated zone verifies traversal but remains an art blockout. Keep Wildbound controls, protect the working map/package, and do no animal gameplay yet. Source-restricted sample art stays local; concept images remain visual references rather than 3D assets.
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 
 ## Development log
+
+### October 23, 2026 · Greenveil art-base correction
+
+The current package proves traversal, but its generated terrain, scattered foliage, mannequin and box-built cottages are not close enough to the intended world. The existing decision to use Electric Dreams as the environment base was not carried through. The next slice will use a bounded authored forest/PCG area for realistic asset and shader quality, then be composed and graded to match Greenveil's warm pastoral board: meadows, orchards, birch groves, a clear creek, mossy stone and lived-in timber/stone architecture. Keep the current map as rollback; no animal gameplay. [Art direction](docs/art/README.md) · [Current state](docs/project/CURRENT-STATE.md).
 
 ### October 22, 2026 · GPU profile and shadow-quality comparison
 

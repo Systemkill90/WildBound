@@ -25,6 +25,8 @@
 
 [Read the world and biome notes →](../world/biomes.md) · [Read the animal design notes →](../systems/animals.md)
 
+Greenveil's concept anchor is the [pastoral basin mood sheet](concept-atlas/biomes-atlas.webp): orchard villages and clear streams framed by birch groves, meadow flowers, mossy stone, warm timber, and honey daylight. Realistic scanned assets should carry surface and foliage detail; the art grade and composition should still read as inviting, fertile Greenveil with only occasional quiet magic. Do not copy a darker sample's mood over the Wildbound board.
+
 ## New illustrated concept atlas
 
 [![Six speculative Wildbound biome and settlement visual directions](concept-atlas/biomes-atlas.webp)](concept-atlas/README.md)

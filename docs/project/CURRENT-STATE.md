@@ -1,10 +1,12 @@
 # Wildbound current state
 
-Updated October 22, 2026 after a packaged GPU profile and guarded shadow-quality comparison.
+Updated October 23, 2026 after the owner reset the immediate priority from polishing generated graybox scenery to testing in a representative authored biome.
 
 ## Active priority: exploration before animals
 
 The owner's correction supersedes the previous care/enclosure sequence: **no animal gameplay work yet**. Refine a visually full, walkable Greenveil zone first. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains a separate, paused, unmerged draft; none of its commits are included here.
+
+The current generated map is a traversal/mechanics test, not the representative art base. It uses a single tiling terrain material, uniform deterministic scatter, a mannequin and box-built cottages. The earlier decision to use the locally installed Electric Dreams authored forest has not yet been carried through. **Next:** inspect its authored forest/PCG breakdown, then create a separate bounded Greenveil adaptation while preserving the current map and package. Keep the Wildbound game mode and movement foundation; do not expand animal gameplay. Defer editor renders and benchmarks while Ollama has a model loaded.
 
 The active Greenveil work is on a staging branch based on the current public `main`. The local checkout, engine installation and licensed source assets are workstation-specific and are intentionally not recorded here. The supported project target is UE **5.8.4**.
 
@@ -47,6 +49,6 @@ The [asset inventory](../art/GREENVEIL-ASSET-INVENTORY.md) distinguishes local E
 
 ## Limits and next work
 
-Buildings, creek water, tools and player appearance are placeholders; interiors are sparse. Mist/daylight supply atmosphere without dynamic weather or a day/night cycle. Terrain is a static heightfield mesh, not voxel terrain or an editable Landscape. There is no new fluid/swimming, gathering, farming, NPC, animal, multiplayer or persistence system.
+Buildings, creek water, tools and player appearance are placeholders; interiors are sparse. Mist/daylight supply atmosphere without dynamic weather or a day/night cycle. Terrain is a static heightfield mesh, not voxel terrain or an editable Landscape. There is no new fluid/swimming, gathering, farming, NPC, animal, multiplayer or persistence system. The next visual milestone is to replace the generated scene as the art base with a bounded slice of the existing authored forest sample, not to keep layering scatter onto the current graybox.
 
-The automated loop is representative, not exhaustive manual QA of keyboard/mouse, jumping, every side path, obstacle or camera angle. The V6 capture shows readable creek water but retains bright clearing patches, Quinn's mannequin and block-built cottages. Next, visually inspect the low-shadow candidate, then continue manual off-trail collision/camera/jump checks and profiling within this zone. Historical animal/native-test and listen-server results in Git history do not validate this exploration build.
+The automated loop is representative, not exhaustive manual QA of keyboard/mouse, jumping, every side path, obstacle or camera angle. The V6 capture shows readable creek water but retains bright clearing patches, Quinn's mannequin and block-built cottages. Next, first establish the authored forest as the visual base in a separate bounded map, then repeat traversal/collision/camera checks and profile its native-1080p performance. Historical animal/native-test and listen-server results in Git history do not validate this exploration build.
