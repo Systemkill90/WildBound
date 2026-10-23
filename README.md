@@ -97,9 +97,13 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 
 ## Development log
 
+### October 23, 2026 · Free village sample acquired
+
+The Medieval Village Megascans Sample is now downloaded as a separate local project. It contains five village World Partition maps plus a debug map; its enabled plugins are present in the installed engine. The first UE 5.8 editor-review launch stopped during texture processing: Zen returned HTTP 507 and a 4 GiB allocation failed with the paging file reported too small. The sample has not been visually inspected, adapted or tested. D-drive DDC and Zen overrides are configured, but the running forest editor still owns the Zen server at its previous location; restart Unreal/Zen with the new paths active before retrying. The WildBound project and playable map were left unchanged. The next step is to clear the local editor resource blocker, review the authored village, then select only a compact slice for Greenveil. [Starter-village brief](docs/world/greenveil-starter-village.md) · [Current state](docs/project/CURRENT-STATE.md) · [Roadmap](ROADMAP.md).
+
 ### Greenveil starter-village direction
 
-Greenveil's next test map is a small, useful village rather than an empty forest clearing or a whole demo world. It will connect the arrival point, home/workshop lane, garden/farm edge, creek bridge and a short woodland return loop. The layout is now documented with movement, collision, camera-clearance and block-placement checks. Quixel's free Medieval Village Megascans Sample is a promising source, but its included content and UE 5.8 behavior still need to be verified before adoption. The current playable build remains the rollback; no new map or gameplay build is claimed. [Slice brief](docs/world/greenveil-starter-village.md) · [Daily development notes](docs/project/DAILY-DEVELOPMENT.md).
+Greenveil's next test map is a small, useful village rather than an empty forest clearing or a whole demo world. It will connect the arrival point, home/workshop lane, garden/farm edge, creek bridge and a short woodland return loop. The layout is documented with movement, collision, camera-clearance and block-placement checks. The free Medieval Village Megascans Sample is now acquired as a separate local project with five village maps. Its first editor-review launch stopped during texture processing before the map appeared, so its visuals and UE 5.8 behavior remain unverified; no sample content has been brought into Wildbound. The current playable build remains the rollback; no new map or gameplay build is claimed. [Slice brief](docs/world/greenveil-starter-village.md) · [Daily development notes](docs/project/DAILY-DEVELOPMENT.md).
 
 ### October 23, 2026 · Greenveil art-base correction
 
