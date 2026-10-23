@@ -81,7 +81,7 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest V5 package passed two **326 m / 15-waypoint** automated traversals at native 1080p Medium, with grounded checkpoints and zero navigation failures or animal actors. It averaged **39.38 FPS cold** and **49.89 FPS on the cache-warmed repeat**; the creek still appears nearly black and 60 FPS is not yet achieved. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest V6 package passed a **326 m / 15-waypoint** automated traversal at native 1080p Medium, with grounded checkpoints and zero navigation failures or animal actors. It averaged **50.03 FPS**; the restored creek material is readable in the packaged capture, while the bright clearing and 60 FPS target remain open. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
@@ -97,9 +97,9 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 
 ## Development log
 
-### October 22, 2026 · Greenveil creek and crossing pass
+### October 22, 2026 · Greenveil creek visibility check
 
-Rebuilt and packaged the saved Greenveil exploration map with a new PBR creek surface and shorter footbridge decks. Two packaged traversals completed **15/15 grounded waypoints over 325.9–326.0 m**, with **14/14 navigation legs**, zero navigation failures and zero animal actors. Native-1080p Medium performance averaged **39.38 FPS cold** and **49.89 FPS on the cache-warmed repeat**; the creek still reads nearly black in the capture, so its appearance remains open. [Read today's field notes and evidence →](docs/project/DAILY-DEVELOPMENT.md)
+V5's new PBR creek surface compiled and packaged, but the actual capture showed near-black water. V6 restores the established creek material and short bridge decks: its packaged 1080p Medium traversal passed **15/15 grounded waypoints over 326.1 m** and **14/14 navigation legs**, with zero navigation failures and zero animal actors. The captured creek is readable again; the clearing remains over-bright. The uncapped run averaged **50.03 FPS** (p95 22.649 ms, p99 24.587 ms), below the 60 FPS target. [Read today's field notes and evidence →](docs/project/DAILY-DEVELOPMENT.md)
 
 ## Find what you're looking for
 

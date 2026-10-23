@@ -1,6 +1,6 @@
 # Wildbound session handoff
 
-Updated October 22, 2026 after V5 map regeneration, packaging and two traversal probes. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 22, 2026 after V6 creek material rollback, map regeneration, packaging and one traversal probe. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
@@ -11,12 +11,12 @@ Updated October 22, 2026 after V5 map regeneration, packaging and two traversal 
 - Keep the Unreal checkout, engine, licensed asset sources, local caches, local AI data and packaged builds in workstation-configured locations. Do not publish local paths, host details or source-restricted assets.
 - Branch: the Greenveil exploration staging branch, based on the project's current `main`.
 - Map/default launch: `/Game/Maps/GreenveilExplorationPolish`.
-- Latest package: the local V5 Windows archive; no game process is currently running. The prior V4 package remains intact. Use its root `Launch-Greenveil.cmd` launcher. WASD move, mouse look, Space jump.
+- Latest package: the local V6 Windows archive; no game process is currently running. V4 and V5 remain intact. Use the V6 root `Launch-Greenveil.cmd` launcher. WASD move, mouse look, Space jump.
 - Preserve older package directories and the pre-existing local GreenveilField map edit; the latter is intentionally excluded from this commit.
 
 ## Verified
 
-Editor/game compilation, map generation, Windows packaging and two packaged traversals passed. Both runs completed 15/15 grounded points and approximately 326 m with zero nav failures/animals. V5's first cold run averaged **39.38 FPS**, p95/p99 **44.751/66.686 ms**, peak **1,592.1 MiB**; the second cache-warmed run averaged **49.89 FPS**, p95/p99 **22.764/24.609 ms**, peak **1,545.8 MiB**. This is not a locked-60 result. The creek still reads nearly black and clearings over-bright in actual captures; see [daily notes](DAILY-DEVELOPMENT.md) and the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
+Editor/game compilation, map generation, Windows packaging and the V6 packaged traversal passed. It completed 15/15 grounded points over 326.1 m with 14/14 valid navigation legs, zero nav failures and zero animals. Native-1080p Medium averaged **50.03 FPS**, p95/p99 **22.649/24.587 ms**, peak **1,614.6 MiB**. This is not a locked-60 result. The restored creek material is readable in the capture; clearings remain over-bright. See [daily notes](DAILY-DEVELOPMENT.md) and the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
 The first cook failed because `SkipCookingEditorContent` excluded textures used by Landmass startup materials. The verified helper omits that flag. Authoring defects involving Python rotation order, zero-size navigation bounds, instanced-material usage, terrain axes and the return trail were corrected and retested. Do not restore earlier generated scenes.
 
@@ -30,6 +30,6 @@ The first cook failed because `SkipCookingEditorContent` excluded textures used 
 
 ## Next bounded work
 
-Diagnose creek visibility and exposure from the packaged captures; then manually inspect side trails, jumping/camera and off-trail collisions when the owner is available. Improve cottage interiors/materials, grass distribution and obvious zone edges. Profile before adding more mesh varieties. Preserve both V4 and V5 packages as recovery points.
+Tune clearing exposure from the V6 packaged captures; then manually inspect side trails, jumping/camera and off-trail collisions when the owner is available. Improve cottage interiors/materials, grass distribution and obvious zone edges. Profile before adding more mesh varieties. Preserve V4, V5 and V6 packages as recovery points.
 
 Do not resume animal gameplay, huge sample worlds, networking, persistence or other major systems without a new owner priority. The automated route is useful evidence, not exhaustive manual QA or release certification.

@@ -43,43 +43,9 @@ wood=material('M_Timber',(.16,.075,.028,1))
 plaster=material('M_Limewash',(.57,.47,.29,1))
 roof=material('M_Slate',(.055,.075,.068,1))
 stone=material('M_Stone',(.21,.235,.18,1))
-# Use the locally installed, licensed Megascans swamp-water surface for the
-# creek. The former flat, metallic constant became nearly black under Lumen.
-def creek_material():
-    name='M_CreekSurfaceV2'
-    path=ROOT+'/'+name
-    existing=unreal.load_asset(path)
-    if existing:
-        mat=existing
-        unreal.MaterialEditingLibrary.delete_all_material_expressions(mat)
-    else:
-        mat=unreal.AssetToolsHelpers.get_asset_tools().create_asset(name,ROOT,unreal.Material,unreal.MaterialFactoryNew())
-    normal=unreal.load_asset('/Game/Megascans/Surfaces/SwampWater/T_SwampWater_01_N')
-    if not normal:raise RuntimeError('Installed Megascans SwampWater normal texture is required for M_CreekSurfaceV2')
-    uv=unreal.MaterialEditingLibrary.create_material_expression(mat,unreal.MaterialExpressionTextureCoordinate)
-    uv.set_editor_property('u_tiling',1.35)
-    uv.set_editor_property('v_tiling',1.35)
-    pan=unreal.MaterialEditingLibrary.create_material_expression(mat,unreal.MaterialExpressionPanner)
-    pan.set_editor_property('speed_x',.012)
-    pan.set_editor_property('speed_y',.006)
-    unreal.MaterialEditingLibrary.connect_material_expressions(uv,'',pan,'Coordinate')
-    base_color=unreal.MaterialEditingLibrary.create_material_expression(mat,unreal.MaterialExpressionConstant3Vector)
-    base_color.set_editor_property('constant',unreal.LinearColor(.07,.24,.20,1))
-    unreal.MaterialEditingLibrary.connect_material_property(base_color,'',unreal.MaterialProperty.MP_BASE_COLOR)
-    normal_sample=unreal.MaterialEditingLibrary.create_material_expression(mat,unreal.MaterialExpressionTextureSample)
-    normal_sample.set_editor_property('texture',normal)
-    normal_sample.set_editor_property('sampler_type',unreal.MaterialSamplerType.SAMPLERTYPE_VIRTUAL_NORMAL)
-    unreal.MaterialEditingLibrary.connect_material_expressions(pan,'',normal_sample,'UVs')
-    unreal.MaterialEditingLibrary.connect_material_property(normal_sample,'',unreal.MaterialProperty.MP_NORMAL)
-    for value,prop in [(.52,unreal.MaterialProperty.MP_ROUGHNESS),(0,unreal.MaterialProperty.MP_METALLIC),(.28,unreal.MaterialProperty.MP_SPECULAR)]:
-        node=unreal.MaterialEditingLibrary.create_material_expression(mat,unreal.MaterialExpressionConstant)
-        node.set_editor_property('r',value)
-        unreal.MaterialEditingLibrary.connect_material_property(node,'',prop)
-    errors=unreal.MaterialEditingLibrary.recompile_material(mat)
-    if errors:raise RuntimeError('Creek material compilation failed: '+str(errors))
-    unreal.EditorAssetLibrary.save_loaded_asset(mat)
-    return mat
-water=creek_material()
+# Keep the previously authored creek material: the V5 normal-map experiment
+# compiled but produced near-black water in the actual packaged captures.
+water=material('M_Creek',(.025,.12,.13,1),.17,.25)
 iron=material('M_Iron',(.08,.09,.085,1),.48,.7)
 glass=material('M_WindowGlass',(.11,.20,.19,1),.22,.05)
 trim=material('M_WeatheredTrim',(.075,.045,.024,1),.88)
