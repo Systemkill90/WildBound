@@ -37,6 +37,10 @@ The [**new illustrated atlas**](concept-atlas/README.md) collects **20 speculati
 
 [Explore all eight concept plates →](concept-atlas/README.md)
 
+## Latest Idea Board studies
+
+The [October 23 character and culture studies](concept-atlas/idea-board-2026-10-23/README.md) add grounded settlers, woodland kin, elves and more overt Fae imagery. They are exploratory art and broaden the conversation; they do not replace the Greenveil biome mood sheet or lock the game's style.
+
 ## Inside the creative workshop
 
 The following are **draft concepts**, deliberately staged separately from the game's working prototype and accepted lore.
