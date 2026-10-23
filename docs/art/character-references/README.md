@@ -33,3 +33,11 @@ The owner supplied seven further images; one (`humans-elves-fae.jpeg`) exactly m
 | `kethri-nimrui.jpeg` | Approved Kethri and Nimrui pair reference |
 
 **Binary import remains pending.** The connected GitHub writer could update this Markdown file but did not receive the binary image bytes. To complete import, extract the revised ZIP in the repository root on `staging/idea-board`, stage only `docs/art/character-references/`, commit, push, and verify 16 image files. No code or game assets should be modified.
+
+## Latest Sirens concept — October 23, 2026
+
+| Filename (binary pending) | Reference |
+|---|---|
+| `sirens-moonlit-shipwrecks.png` | Latest male/female Sirens concept; supplied source filename: `moonlit_sirens_among_shipwrecks.png` |
+
+**Confirmed appearance only:** male and female Sirens; eerie, predatory aquatic folk. No additional visual, biological, or cultural traits are established by this reference note. The supplied image binary was not available at `/mnt/data/moonlit_sirens_among_shipwrecks.png` in the connected workspace when this entry was prepared, so it has not been uploaded. Add and verify the PNG at the filename above when the source bytes are available. See [the Sirens visual note](../../world/sirens-visual-reference.md).
