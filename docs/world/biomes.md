@@ -14,6 +14,20 @@ Candidate wildlife includes deer, rabbits, foxes, meadow birds, and large grazin
 
 **Design role:** learn gathering, building, growing food, animal care, and cooperative settlement. Cozy still leaves room for danger.
 
+## Greenveil Basin — expanded fantasy geography (owner direction, October 23, 2026)
+
+**Confirmed direction:** Greenveil should be a **sprawling rolling countryside**, with extensive forests, lakes and networks of **smaller valleys**, not one single broad mountain-enclosed bowl. Give the pastoral setting a **more overt fantasy atmosphere** while retaining ecology and believable materials. Include **small villages belonging to Kethri, Nimrui and Wolfkin**, reflecting each people's distinct identity and scale. They are allied or friendly in the broader established relationship map, although individual settlements retain their own cultures.
+
+**Proposed visual language (not yet locked):**
+- Meadow hills, flowering hedgerows, picturesque lake shores, sheltered valley hamlets, wooded ridges, old-growth canopies and enormous mossy boulders; sweeping vista transitions into intimate pathways and secluded settlements.
+- Woodland Kethri canopy dwellings with elevated walkways, balconies and bridges; keep the inhabitants small and adult-looking.
+- Nimrui fungal-garden hollows with mushroom-shaped shelter forms and luminous gardens; keep the inhabitants very small, dark-skinned and distinct from Kethri.
+- Wolfkin timber-and-stone communities by forest edges, lake shores and hills: sturdier communal halls, workspaces and wide circulation appropriate to their tall, powerfully built wolf-like anatomy.
+- Ancient standing stones, forgotten paths, Sylweave-fed springs, quietly luminous flora, uncommon plants and soft phenomena at dusk. Use enchantment to enrich the landscape without making everything glow.
+- Maintain meaningful farms, livestock, weather, roads and animal habitat; balance welcoming homestead spaces with wild areas and the distant threat of poisoning.
+
+The settlement categories and architecture above are **proposals for further owner review**, not final names, placement coordinates, built assets or functioning gameplay. The approved player-character and species visual reference sheets remain authoritative for anatomy. Start by prototyping one modest, explorable portion of Greenveil and its vistas before attempting the full region.
+
 ## The Drowned March — the water remembers
 
 **Mood:** spooky, mournful, ancient, and watchful.
