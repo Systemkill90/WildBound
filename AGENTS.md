@@ -56,7 +56,15 @@ If the helper or local dashboard is unavailable, continue the task and disclose 
 
 ## Preserve the project
 
-- Read the relevant project handoff, current-state, decision, and roadmap documents before substantial game work.
+- `/Game/Maps/GreenveilExplorationPolish` is the canonical Greenveil world and is intended to grow into the game map. Add the village and future biome areas cumulatively here; do not create disposable parallel WildBound gameplay maps. Preserve prior Git revisions and packages as recovery points.
+- Before substantial game work, check `git status --short` and the active branch, then read the relevant current-state and handoff sections. Consult only the decision and roadmap entries that affect the task. Reuse facts already verified in the active session instead of rereading entire documents or repeating full repository inventories.
 - Preserve pre-existing user changes. Do not reset or overwrite unrelated work, generated user content, or local assets.
 - Keep fixes small and testable; distinguish authored code from compiled, launched, or playtested behavior.
 - Use licensed/free assets where suitable and record provenance. Ask before purchases or paid services.
+
+## Efficient development checks
+
+- Prefer existing deterministic scripts for repository health and focused validation. Run independent, inexpensive checks together; keep command output targeted and bounded.
+- Do not compile Unreal for documentation-only changes. Before builds, use `Tools/WildboundBuildResources.ps1`; keep UnrealBuildTool parallelism within the helper's resource plan and do not delete caches to reclaim space without evidence that they are stale.
+- Treat Unreal asset import, map generation, cooking, and packaging as separate cost centers. Reuse validated assets and generated maps where inputs are unchanged; record when a step actually ran instead of implying that a source check verified gameplay.
+- Filesystem commands, tests, and builds are ordinary local work, not local-AI inference or Codex-credit savings. Report model offload only from the local dashboard's measured request/token data.

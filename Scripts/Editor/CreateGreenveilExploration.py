@@ -1,4 +1,6 @@
-"""Rebuild a bounded local-only exploration level. Never edits sample content.
+"""Regenerate the canonical Greenveil starting world and in-world QA route.
+Keep village and biome expansion in this map; it is not a disposable test scene.
+Never edits sample content.
 Run UnrealEditor-Cmd Wildbound.uproject -ExecutePythonScript=<this file>.
 Original terrain/building geometry; existing locally installed art only.
 """

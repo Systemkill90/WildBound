@@ -22,7 +22,7 @@ Do not assume the previous package exists on a new machine or that the editor is
 2. Verify a compatible Unreal Engine 5 install and supported Windows C++ workload. The project targets UE 5.8 settings but `Wildbound.uproject` does not contain a machine-specific `EngineAssociation`.
 3. Use `Tools/Start-Wildbound.cmd -ShowEngines` to inspect recognized local editor installs, or pass `-EngineRoot` to the helper.
 4. Run `Tools/Start-Wildbound.cmd -BuildOnly` to try compiling `WildboundEditor` with the selected installation. Look in ignored `Saved/WildboundBootstrap` for build logs and the exact result.
-5. Verify the local sample mounts and mannequin using the existing install/link helpers. `Tools/Start-Wildbound.cmd` now defaults to `/Game/Maps/GreenveilExploration`. For explicit measured settings, use `Tools/Launch-GreenveilExploration.ps1`; see the [handoff](../project/SESSION-HANDOFF.md).
+5. Verify the local sample mounts and mannequin using the existing install/link helpers. `Tools/Start-Wildbound.cmd` defaults to `/Game/Maps/GreenveilExplorationPolish`, the current packaged test map. For explicit measured settings, use `Tools/Launch-GreenveilExploration.ps1`; see the [handoff](../project/SESSION-HANDOFF.md).
 6. Use `Tools/Build-GreenveilExploration.ps1 -EngineRoot <installed UE 5.8 root> -GenerateMap -Package -ArchiveDirectory <new local directory outside the repository>` to rebuild and package. Never target an existing working archive. Run the packaged traversal probe and manually inspect WASD/mouse/jump, side paths and collisions. Record PASS, FAIL or BLOCKED.
 7. The [older prototype playtest](PROTOTYPE-PLAYTEST.md) covers deferred care/build work. Multiplayer, dedicated server operation and persistence remain outside the active exploration task.
 
@@ -32,7 +32,7 @@ Do not assume the previous package exists on a new machine or that the editor is
 | :-- | :-- |
 | `Source/Wildbound` | UE runtime module, actor/component source and portable model code |
 | `Source/Wildbound*.Target.cs` | Game, editor and server target definitions; a target is not evidence of a working server |
-| `Content/Maps/GreenveilField.umap` | Currently tracked starter level |
+| `Content/Maps` | Three Greenveil maps are retained: the original exploration map, the current Polish test map, and the locally edited GreenveilField map. Check the active launch target before editing or generating a map. |
 | `Content/Wildbound/Art` | Reviewed starter environment/deer assets |
 | `Scripts/Editor` | Editor automation; inspect local path assumptions before reuse |
 | `Tests/Native`, `Tests/Static` | Standalone rules/snapshot/placement and structural checks |
@@ -55,11 +55,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File Tests/Static/verify_buil
 ```
 
 The Windows build helpers read free system commit before starting UnrealBuildTool,
-reserve 6 GiB for Windows, and budget 4.5 GiB per build action based on observed
-Wildbound build pressure. They cap parallel build actions at two and reduce that
-cap when commit headroom is low. Editor builds stop below 10.5 GiB free commit;
-map generation and packaging stop below 16 GiB. These are commit limits, distinct
-from physical RAM. Override `-MaxParallelActions` to request a lower cap; resource
+reserve 2 GiB for Windows, and budget 4.5 GiB per build action from measured
+Wildbound compile use. They cap parallel build actions at two and reduce that
+cap as commit headroom shrinks. One action can run at 6.5 GiB free commit; no
+blanket 16 GiB map/package gate remains. These are commit limits, distinct from
+physical RAM. Override `-MaxParallelActions` to request a lower cap; resource
 checks may still reduce it further.
 
 The native C++17 tests can be compiled from a Visual Studio x64 Developer Command Prompt. These commands mirror the three suites in [the source-check workflow](../../.github/workflows/animal-native-tests.yml):

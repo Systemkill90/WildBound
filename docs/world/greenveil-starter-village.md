@@ -1,6 +1,10 @@
-# Greenveil starter village test grounds
+# Greenveil starter village and living world
 
-**Status:** layout direction accepted by the owner on October 22, 2026. This is a compact prototype slice, not a locked production art bible. Preserve the existing playable Greenveil package and map as rollback until the village map passes its own build and traversal checks.
+**Status:** layout direction accepted by the owner on October 22, 2026; cumulative-world direction clarified October 23. This is a compact starting area, not a locked production art bible. The current playable Greenveil map is the real starting world and should grow into the game map. Use the known-good Git revision and preserved package as recovery points; do not create a disposable parallel WildBound test map.
+
+## World continuity
+
+`/Game/Maps/GreenveilExplorationPolish` is the canonical starting world. Keep its arrival, paths, creek crossing, and forest route useful as new village buildings and surrounding terrain are added. Treat traversal and performance checks as routes inside this same world. The village is not a separate prototype that will be discarded.
 
 ## Purpose
 

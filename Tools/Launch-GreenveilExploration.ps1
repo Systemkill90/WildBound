@@ -4,7 +4,8 @@ param(
     [string]$Map = '/Game/Maps/GreenveilExplorationPolish',
     [string]$Executable = '',
     [ValidateRange(0,3)][int]$Quality = 1,
-    [ValidateRange(-1,3)][int]$ShadowQualityOverride = -1,
+[ValidateRange(-1,3)][int]$ShadowQualityOverride = 0,
+    [ValidateRange(-1,3)][int]$FoliageQualityOverride = -1,
     [string]$TraceFile = '',
     [string]$OllamaApiUri = 'http://127.0.0.1:11434/api/ps',
     [switch]$SkipScreenshots,
@@ -42,6 +43,7 @@ $ArgsList += ('-abslog="' + "$Evidence\Runtime-$Stamp.log" + '"')
 $Cap = if ($TraversalTest) { '0' } else { '60' }
 $QualityCommands = @('ViewDistance','Shadow','GlobalIllumination','Reflection','PostProcess','Texture','Effects','Foliage') | ForEach-Object { "sg.$($_)Quality $Quality" }
 if ($ShadowQualityOverride -ge 0) { $QualityCommands += "sg.ShadowQuality $ShadowQualityOverride" }
+if ($FoliageQualityOverride -ge 0) { $QualityCommands += "sg.FoliageQuality $FoliageQualityOverride" }
 $ArgsList += ('-ExecCmds="' + ($QualityCommands -join ',') + ',r.ScreenPercentage 100,r.DynamicRes.OperationMode 0,t.MaxFPS ' + $Cap + ',r.VSync 0"')
 if ($TraversalTest) { $ArgsList += '-GreenveilTraversalTest' }
 if ($ExitAfterTest) { $ArgsList += '-GreenveilProbeExit' }

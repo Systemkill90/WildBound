@@ -5,11 +5,32 @@ param(
     [string]$ArchiveDirectory = '',
     [ValidateRange(1, 32)][int]$MaxParallelActions = 2,
     [switch]$GenerateMap,
-    [switch]$Package
+    [switch]$Package,
+    [switch]$PreflightOnly
 )
 $ErrorActionPreference = 'Stop'
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-if (-not $EngineRoot) { throw 'Set WILDBOUND_UNREAL_ENGINE_ROOT or pass -EngineRoot with the installed UE 5.8 root.' }
+if (-not $EngineRoot) { $EngineRoot = $env:UE_ENGINE_ROOT }
+if (-not $EngineRoot) {
+    $EngineCandidates = @()
+    $WorkshopEngineFolder = Join-Path (Split-Path $RepoRoot -Parent) 'Engine'
+    if (Test-Path -LiteralPath $WorkshopEngineFolder -PathType Container) {
+        $EngineCandidates += Get-ChildItem -LiteralPath $WorkshopEngineFolder -Directory -Filter 'UE_5.*' |
+            Sort-Object Name -Descending | ForEach-Object { $_.FullName }
+    }
+    $EpicEngineFolder = Join-Path $env:ProgramFiles 'Epic Games'
+    if (Test-Path -LiteralPath $EpicEngineFolder -PathType Container) {
+        $EngineCandidates += Get-ChildItem -LiteralPath $EpicEngineFolder -Directory -Filter 'UE_5.*' |
+            Sort-Object Name -Descending | ForEach-Object { $_.FullName }
+    }
+    foreach ($Candidate in $EngineCandidates) {
+        if (Test-Path -LiteralPath (Join-Path $Candidate 'Engine\Build\BatchFiles\Build.bat') -PathType Leaf) {
+            $EngineRoot = $Candidate
+            break
+        }
+    }
+}
+if (-not $EngineRoot) { throw 'Unable to locate Unreal Engine 5. Set WILDBOUND_UNREAL_ENGINE_ROOT or UE_ENGINE_ROOT, or install UE under the workshop Engine or Epic Games folder.' }
 $BuildBatch = Join-Path $EngineRoot 'Engine\Build\BatchFiles\Build.bat'
 $EditorCommandlet = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $RunUAT = Join-Path $EngineRoot 'Engine\Build\BatchFiles\RunUAT.bat'
@@ -26,18 +47,26 @@ New-Item -ItemType Directory $Evidence -Force | Out-Null
 $ResourceHelper = Join-Path $PSScriptRoot 'WildboundBuildResources.ps1'
 . $ResourceHelper
 $Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-$BuildPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions
-Write-Host ("Windows free commit: {0:N1} GiB; UnrealBuildTool parallel actions: {1}" -f $BuildPlan.FreeCommitGiB, $BuildPlan.MaxParallelActions)
+$InitialMinimumFreeCommitGiB = 6.5
+$BuildPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB $InitialMinimumFreeCommitGiB
+Write-Host ("Windows free commit: {0:N1} GiB; pipeline preflight: {1:N1} GiB; UnrealBuildTool parallel actions: {2}" -f $BuildPlan.FreeCommitGiB, $InitialMinimumFreeCommitGiB, $BuildPlan.MaxParallelActions)
+if ($PreflightOnly) {
+    Write-Host 'Preflight-only requested; UnrealBuildTool, map generation, and packaging were not started.'
+    exit 0
+}
 & $BuildBatch WildboundEditor Win64 Development "-Project=$Project" "-MaxParallelActions=$($BuildPlan.MaxParallelActions)" -WaitMutex -NoHotReload *> "$Evidence\Editor-$Stamp.log"
 if ($LASTEXITCODE -ne 0) { throw 'Editor compilation failed; see Saved/GreenveilBuild.' }
 if ($GenerateMap) {
-    $GenerationPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 16.0
+    # Greenveil generation is bounded and authored by our script. Reserve the
+    # same one-action floor as an editor build; large sample-world rebuilds need
+    # their own workload-specific preflight rather than blocking this small map.
+    $GenerationPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 6.5
     Write-Host ("Map generation preflight: {0:N1} GiB free commit" -f $GenerationPlan.FreeCommitGiB)
     & $EditorCommandlet $Project -run=pythonscript "-script=$RepoRoot\Scripts\Editor\CreateGreenveilExploration.py" -unattended -nosplash -NoSound -nullrhi "-abslog=$Evidence\Generate-$Stamp.log" *> "$Evidence\Generate-console-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Map generation failed; previous packages remain intact.' }
 }
 if ($Package) {
-    $PackagePlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 16.0
+    $PackagePlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 6.5
     Write-Host ("Package build preflight: {0:N1} GiB free commit; UBT parallel actions: {1}" -f $PackagePlan.FreeCommitGiB, $PackagePlan.MaxParallelActions)
     & $RunUAT BuildCookRun "-project=$Project" -noP4 -platform=Win64 -clientconfig=Development -build -cook "-map=$Map" -stage -pak -iostore -compressed -archive "-archivedirectory=$ArchiveDirectory" -ubtargs="-MaxParallelActions=$($PackagePlan.MaxParallelActions)" -nodebuginfo -utf8output *> "$Evidence\Package-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Packaging failed; see Saved/GreenveilBuild.' }

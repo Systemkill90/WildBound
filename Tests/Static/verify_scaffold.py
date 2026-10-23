@@ -79,6 +79,8 @@ if launcher.is_file():
            "traversal benchmark must yield to Ollama if a model loads")
     expect("ShadowQualityOverride" in launcher_text,
            "Greenveil launcher must support an isolated shadow-quality test")
+    expect("FoliageQualityOverride" in launcher_text,
+           "Greenveil launcher must support an isolated foliage-quality test")
 
 tests = (ROOT / "Tests" / "Native" / "AnimalSimulationTests.cpp")
 expect(tests.is_file(), "native tests missing")
