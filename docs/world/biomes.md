@@ -14,6 +14,8 @@ Candidate wildlife includes deer, rabbits, foxes, meadow birds, and large grazin
 
 **Design role:** learn gathering, building, growing food, animal care, and cooperative settlement. Cozy still leaves room for danger.
 
+**First test grounds:** Greenveil begins at a compact starter village, not in a large empty clearing. See the [starter village slice brief](greenveil-starter-village.md) for the arrival green, home/workshop lane, farm edge, creek crossing, forest loop, and verification order. The village is the visual and movement test environment; animal gameplay remains deferred.
+
 ## The Drowned March — the water remembers
 
 **Mood:** spooky, mournful, ancient, and watchful.

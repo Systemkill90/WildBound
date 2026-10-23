@@ -1,10 +1,10 @@
 # Wildbound session handoff
 
-Updated October 23, 2026 after the owner prioritized representative biome development over further graybox polish. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 22, 2026 after the owner set a small starter village as Greenveil's test grounds. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
-**No animal gameplay work yet.** The current generated scene is a mechanics/traversal proof, not an acceptable art base. Use a bounded portion of the locally installed Electric Dreams authored forest/PCG environment as the starting map and retain Wildbound's existing player/game-mode foundation. Preserve the current generated map/package as rollback. Keep animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) paused, draft and unmerged; do not base this work on it.
+**No animal gameplay work yet.** The current generated scene is a mechanics/traversal proof, not an acceptable art base. Greenveil's next test grounds should be a compact starter village with enterable homes/work buildings, garden/farm edge, creek/bridge and a short returning forest loop. Use a bounded licensed authored environment as the shell and retain Wildbound's existing player/game-mode foundation. Preserve the current generated map/package as rollback. Quixel's free Medieval Village Megascans Sample is a candidate, not yet acquired or inspected; Electric Dreams remains a local woodland source but is too large to serialize whole. Keep animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) paused, draft and unmerged; see the [starter village brief](../world/greenveil-starter-village.md).
 
 ## Project and recovery points
 

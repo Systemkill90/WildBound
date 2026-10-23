@@ -91,11 +91,15 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 | **Animal gameplay** | Paused by owner priority; [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains separate and unmerged. |
 | **Construction, multiplayer & persistence** | Deferred; no new gameplay verification in this exploration pass. |
 
-**The next milestone:** build a bounded, representative Greenveil slice from the locally installed authored forest environment, guided by the board's pastoral orchard-and-stream concept. The current generated zone verifies traversal but remains an art blockout. Keep Wildbound controls, protect the working map/package, and do no animal gameplay yet. Source-restricted sample art stays local; concept images remain visual references rather than 3D assets.
+**The next milestone:** build a bounded Greenveil starter village as the first real testing ground: a small arrival green, enterable home/work spaces, garden edge, creek crossing and short forest loop. Use an authored, licensed village environment for the visual base, adapt it around Wildbound's working player/game-mode foundation, and preserve the current playable map/package as rollback. Animal gameplay remains deferred. See the [starter-village brief](docs/world/greenveil-starter-village.md).
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 
 ## Development log
+
+### Greenveil starter-village direction
+
+Greenveil's next test map is a small, useful village rather than an empty forest clearing or a whole demo world. It will connect the arrival point, home/workshop lane, garden/farm edge, creek bridge and a short woodland return loop. The layout is now documented with movement, collision, camera-clearance and block-placement checks. Quixel's free Medieval Village Megascans Sample is a promising source, but its included content and UE 5.8 behavior still need to be verified before adoption. The current playable build remains the rollback; no new map or gameplay build is claimed. [Slice brief](docs/world/greenveil-starter-village.md) · [Daily development notes](docs/project/DAILY-DEVELOPMENT.md).
 
 ### October 23, 2026 · Greenveil art-base correction
 

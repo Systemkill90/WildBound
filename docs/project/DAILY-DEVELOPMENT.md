@@ -2,6 +2,12 @@
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
 
+## October 22, 2026 · Greenveil starter-village direction
+
+The owner set a small starter village as Greenveil's test grounds. The next slice is centered on a compact arrival green, home/workshop lane, garden/farm edge, creek crossing, and short returning forest route. That gives movement, collision, building-block placement, camera clearance, and route readability a useful scale without expanding into a large map. Animal gameplay remains paused.
+
+The local Electric Dreams sample has strong woodland content but no suitable buildings, and its full PCG scene cannot be copied safely. Quixel's free [Medieval Village Megascans Sample](https://www.fab.com/listings/2e11a225-a6ea-4781-a3e1-fe975b461894) is a candidate authored village base. Fab describes it as a walkable photogrammetry sample and warns that some showcase images include visualization-only content. Its installed contents and UE 5.8 behavior still need verification. The installed Epic launcher currently reports that it cannot reconnect, so the sample has **not** been downloaded or verified. No map was modified, and no compile, package, or gameplay result is claimed. The current playable map/package remains the rollback. [Starter-village slice brief](../world/greenveil-starter-village.md).
+
 ## October 23, 2026 · Render review and bounded-map checkpoint
 
 Launched the last verified native-1080p Windows build and inspected a fresh live frame plus saved traversal views at the arrival clearing, cottage approach, creek crossing and return route. The canopy and understory are real forest assets and form a useful visual foundation, but every current sightline still exposes development-stage ground treatment, clipped-bright clearings, the mannequin or blockout cottage. No current generated-map location is a suitable art baseline yet.
