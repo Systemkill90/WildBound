@@ -17,15 +17,17 @@ function Assert-Equal($Actual, $Expected, [string]$Description) {
     }
 }
 
-$script:MockFreeCommitGiB = 8.5
+$script:MockFreeCommitGiB = 10.5
 $Plan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions 2
 Assert-Equal $Plan.MaxParallelActions 1 'A single action fits at the minimum safe headroom'
+Assert-Equal $Plan.OperatingReserveGiB 6.0 'The plan retains a 6 GiB operating reserve'
+Assert-Equal $Plan.CommitPerActionGiB 4.5 'The plan budgets measured compile pressure per action'
 
-$script:MockFreeCommitGiB = 13.0
+$script:MockFreeCommitGiB = 15.0
 $Plan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions 2
 Assert-Equal $Plan.MaxParallelActions 2 'Two actions fit when enough commit is available'
 
-$script:MockFreeCommitGiB = 7.4
+$script:MockFreeCommitGiB = 9.4
 $Blocked = $false
 try {
     Get-WildboundBuildResourcePlan | Out-Null
@@ -34,10 +36,10 @@ try {
 }
 Assert-Equal $Blocked $true 'Editor build is blocked below its commit threshold'
 
-$script:MockFreeCommitGiB = 11.9
+$script:MockFreeCommitGiB = 15.9
 $Blocked = $false
 try {
-    Get-WildboundBuildResourcePlan -MinimumFreeCommitGiB 12.0 | Out-Null
+    Get-WildboundBuildResourcePlan -MinimumFreeCommitGiB 16.0 | Out-Null
 } catch {
     $Blocked = $true
 }

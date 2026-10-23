@@ -31,13 +31,13 @@ Write-Host ("Windows free commit: {0:N1} GiB; UnrealBuildTool parallel actions: 
 & $BuildBatch WildboundEditor Win64 Development "-Project=$Project" "-MaxParallelActions=$($BuildPlan.MaxParallelActions)" -WaitMutex -NoHotReload *> "$Evidence\Editor-$Stamp.log"
 if ($LASTEXITCODE -ne 0) { throw 'Editor compilation failed; see Saved/GreenveilBuild.' }
 if ($GenerateMap) {
-    $GenerationPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 12.0
+    $GenerationPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 16.0
     Write-Host ("Map generation preflight: {0:N1} GiB free commit" -f $GenerationPlan.FreeCommitGiB)
     & $EditorCommandlet $Project -run=pythonscript "-script=$RepoRoot\Scripts\Editor\CreateGreenveilExploration.py" -unattended -nosplash -NoSound -nullrhi "-abslog=$Evidence\Generate-$Stamp.log" *> "$Evidence\Generate-console-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Map generation failed; previous packages remain intact.' }
 }
 if ($Package) {
-    $PackagePlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 12.0
+    $PackagePlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 16.0
     Write-Host ("Package build preflight: {0:N1} GiB free commit; UBT parallel actions: {1}" -f $PackagePlan.FreeCommitGiB, $PackagePlan.MaxParallelActions)
     & $RunUAT BuildCookRun "-project=$Project" -noP4 -platform=Win64 -clientconfig=Development -build -cook "-map=$Map" -stage -pak -iostore -compressed -archive "-archivedirectory=$ArchiveDirectory" -ubtargs="-MaxParallelActions=$($PackagePlan.MaxParallelActions)" -nodebuginfo -utf8output *> "$Evidence\Package-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Packaging failed; see Saved/GreenveilBuild.' }

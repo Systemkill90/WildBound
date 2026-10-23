@@ -55,11 +55,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File Tests/Static/verify_buil
 ```
 
 The Windows build helpers read free system commit before starting UnrealBuildTool,
-reserve 4 GiB for Windows, and budget 4.5 GiB per build action based on a measured
-Wildbound editor compile. They cap parallel build actions at two and reduce that
-cap when commit headroom is low. Editor builds stop below 8.5 GiB free commit;
-map generation and packaging stop below 12 GiB. Override `-MaxParallelActions`
-to request a lower cap; resource checks may still reduce it further.
+reserve 6 GiB for Windows, and budget 4.5 GiB per build action based on observed
+Wildbound build pressure. They cap parallel build actions at two and reduce that
+cap when commit headroom is low. Editor builds stop below 10.5 GiB free commit;
+map generation and packaging stop below 16 GiB. These are commit limits, distinct
+from physical RAM. Override `-MaxParallelActions` to request a lower cap; resource
+checks may still reduce it further.
 
 The native C++17 tests can be compiled from a Visual Studio x64 Developer Command Prompt. These commands mirror the three suites in [the source-check workflow](../../.github/workflows/animal-native-tests.yml):
 
