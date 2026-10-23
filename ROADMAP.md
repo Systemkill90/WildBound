@@ -6,9 +6,9 @@
 
 ## The journey in brief
 
-**Verified October 22:** UE 5.8.4 editor/game compilation and a fresh Windows package of the original 180 × 160 m Greenveil exploration zone. The post-sync 1080p Medium traversal completed 15/15 movement waypoints over 326.1 m with zero navigation failures or animal actors. It averaged 49.19 FPS, short of 60. The creek reads clearly; the clearing remains over-bright. [Evidence and daily field notes](docs/project/DAILY-DEVELOPMENT.md).
+**Verified October 22:** UE 5.8.4 editor/game compilation and a fresh Windows package of the original 180 × 160 m Greenveil exploration zone. The latest 1080p Medium traversal completed 15/15 movement waypoints over 326.1 m with zero navigation failures or animal actors. It averaged 50.61 FPS in one uncapped run, short of 60. The creek reads clearly; exposure tuning restored some clearing detail, but it remains bright. [Evidence and daily field notes](docs/project/DAILY-DEVELOPMENT.md).
 
-**Our next step:** tune clearing exposure using packaged captures, then manual side-path, off-trail collision/camera/jump QA and profiling within this populated zone. The latest native-1080p Medium traversal averaged 49.19 FPS (p95 22.786 ms); sustained 60 remains unverified and unmet.
+**Our next step:** manually inspect side trails, off-trail collision, camera clearance and jumping, then profile the populated zone for the remaining gap to 60 FPS. The latest native-1080p Medium traversal averaged 50.61 FPS (p95 22.616 ms); sustained 60 remains unverified and unmet.
 
 **Owner priority:** no animal gameplay work yet. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains paused, draft and unmerged. The older care/enclosure sequence below is deferred, not the current implementation order.
 
@@ -36,7 +36,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 **Now:** explore the packaged Greenveil zone manually. Check side routes, jump/camera and off-trail collisions; refine cottage interiors, materials, grass placement and zone boundaries.
 
-The local Windows demo uses native 1920×1080 and Medium settings by default. The latest V6 scripted traversal measured 19.987 ms mean / 22.649 ms p95. A normal launch caps at 60; optimization for sustained native-1080p 60 remains open.
+The local Windows demo uses native 1920×1080 and Medium settings by default. The latest scripted traversal measured 19.760 ms mean / 22.616 ms p95. A normal launch caps at 60; optimization for sustained native-1080p 60 remains open.
 
 **Next:** improve this slice from actual exploration feedback and profiling. Keep source-restricted art local, protect the tested package, and expand content only within a measured memory/frame budget.
 

@@ -67,6 +67,8 @@ The repository uses **Git LFS** for `.uasset`, `.umap`, `.glb` and other large e
 
 Never commit engine binaries, private project data, platform SDKs, secrets, live saves, or packaged builds. The public repository has **no project-wide open-source license selected**.
 
+Android File Server is disabled for the current Windows prototype, with network access off and its token empty. Keep it that way until Android deployment is an active target; never commit an Android File Server token.
+
 ## Definition of a verified step
 
 - **Code authored** means it exists in Git.

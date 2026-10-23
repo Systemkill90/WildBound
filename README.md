@@ -81,7 +81,7 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. A fresh build from the synchronized source passed a **326.1 m / 15-waypoint** automated traversal at native 1080p Medium, with zero navigation failures or animal actors. It averaged **49.19 FPS**, below the 60 FPS goal. The creek remains readable; the clearing is still over-bright, and Quinn and cottages remain placeholders. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest fresh Windows package passed a **326.1 m / 15-waypoint** automated traversal at native 1080p Medium, with zero navigation failures or animal actors. One uncapped run averaged **50.61 FPS**, below the 60 FPS goal. The exposure pass restored some sunlit ground detail, though the clearing remains bright; Quinn and cottages are placeholders. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
@@ -96,6 +96,10 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 
 ## Development log
+
+### October 22, 2026 · Greenveil exposure and packaged traversal
+
+Lowered the Greenveil field-grade exposure and highlight contrast, then compiled and packaged a fresh Windows build without regenerating the map. The packaged capture shows more detail in the sunlit clearing, though it remains brighter than intended. The native-1080p Medium traversal passed **15/15 waypoints over 326.1 m**, with zero navigation failures or animal actors; one uncapped run averaged **50.61 FPS** (p95 22.616 ms, p99 24.239 ms). That is below the 60 FPS target and is not sustained-performance proof. Also disabled the unused Android File Server in project config and added a static check against committing its token. [Full verification record →](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md)
 
 ### October 22, 2026 · Clean build and traversal after source sync
 

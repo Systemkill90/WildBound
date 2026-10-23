@@ -50,9 +50,9 @@ void AWildboundPrototypeGameMode::BeginPlay()
     UWorld* World = GetWorld();
     if (!World || !HasAuthority()) return;
 
-    // Give the sample creek a restrained, readable finish without changing its
-    // authored lighting or foliage: recover a little highlight/shadow detail,
-    // trim the sample's punchy saturation, and keep glare off the play view.
+    // Give the Greenveil slice a restrained, readable finish without changing
+    // its authored lighting or foliage: lower the exposure to protect sunlit
+    // ground and cottage highlights, balance local contrast, and tame glare.
     bool bHasWildboundGrade = false;
     for (TActorIterator<APostProcessVolume> It(World); It; ++It)
     {
@@ -73,11 +73,11 @@ void AWildboundPrototypeGameMode::BeginPlay()
             Grade->Priority = 100.0f;
             Grade->BlendWeight = 1.0f;
             Grade->Settings.bOverride_AutoExposureBias = true;
-            Grade->Settings.AutoExposureBias = -0.25f;
+            Grade->Settings.AutoExposureBias = -1.5f;
             Grade->Settings.bOverride_LocalExposureMethod = true;
             Grade->Settings.LocalExposureMethod = ELocalExposureMethod::Bilateral;
             Grade->Settings.bOverride_LocalExposureHighlightContrastScale = true;
-            Grade->Settings.LocalExposureHighlightContrastScale = 0.82f;
+            Grade->Settings.LocalExposureHighlightContrastScale = 0.68f;
             Grade->Settings.bOverride_LocalExposureShadowContrastScale = true;
             Grade->Settings.LocalExposureShadowContrastScale = 0.78f;
             Grade->Settings.bOverride_ColorSaturation = true;

@@ -2,6 +2,10 @@
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
 
+## October 22, 2026 · Greenveil exposure pass
+
+The game-mode field grade now reduces exposure and highlight contrast to retain more ground detail in the sunlit clearing. A fresh UE 5.8.4 editor build and Windows package succeeded without regenerating the map. The native-1080p Medium automated route passed **15/15 waypoints over 326.1 m**, with zero navigation failures and zero animal actors. Across 2,790 frames, one uncapped run averaged **50.61 FPS** (p95 22.616 ms, p99 24.239 ms; peak process memory 1,595.5 MiB), still below the 60 FPS goal. The clearing remains too bright; Quinn and cottages are placeholders. The same change disables unused Android File Server access for the current Windows build and adds a regression check against non-empty tokens. [Full verification record](GREENVEIL-EXPLORATION-2026-10-22.md).
+
 ## October 22, 2026 · Clean build and traversal after source sync
 
 The synchronized Greenveil branch compiled and packaged cleanly with Unreal Engine 5.8.4. The map was not regenerated, and prior package checkpoints were left intact. The fresh native-1080p Medium package passed **15/15 movement waypoints over 326.1 m**, with zero navigation failures and zero animal actors. It averaged **49.19 FPS** over 2,713 frames (p95 22.786 ms; peak process memory 1,538.3 MiB), below the 60 FPS goal. The packaged capture confirms the bright clearing, mannequin player and cottage placeholders remain visible work. This automated run does not verify animal, building or care gameplay. [Full build and traversal record](GREENVEIL-EXPLORATION-2026-10-22.md).

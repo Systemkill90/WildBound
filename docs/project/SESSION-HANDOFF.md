@@ -1,6 +1,6 @@
 # Wildbound session handoff
 
-Updated October 22, 2026 after a clean post-sync build, packaging and a traversal probe. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 22, 2026 after an exposure-tuned build, packaging and a traversal probe. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
@@ -11,12 +11,12 @@ Updated October 22, 2026 after a clean post-sync build, packaging and a traversa
 - Keep the Unreal checkout, engine, licensed asset sources, local caches, local AI data and packaged builds in workstation-configured locations. Do not publish local paths, host details or source-restricted assets.
 - Branch: the Greenveil exploration staging branch, based on the project's current `main`.
 - Map/default launch: `/Game/Maps/GreenveilExplorationPolish`.
-- Latest package: a fresh Windows archive built from the synchronized source. Its automated 1080p Medium traversal passed 15/15 waypoints over 326.1 m at 49.19 FPS average; the bright clearing and placeholder character/buildings remain. Earlier package checkpoints were left intact. Use the archive's `Launch-Greenveil.cmd` launcher for a human visual check. WASD move, mouse look, Space jump.
+- Latest package: a fresh exposure-tuned Windows archive. Its automated 1080p Medium traversal passed 15/15 waypoints over 326.1 m at 50.61 FPS average; the clearing remains bright and character/buildings remain placeholders. Earlier package checkpoints were left intact. Use the archive's `Launch-Greenveil.cmd` launcher for a human visual check. WASD move, mouse look, Space jump.
 - Preserve older package directories and the pre-existing local GreenveilField map edit; the latter is intentionally excluded from this commit.
 
 ## Verified
 
-Editor/game compilation, map generation, Windows packaging and the V6 packaged traversal passed. It completed 15/15 grounded points over 326.1 m with 14/14 valid navigation legs, zero nav failures and zero animals. Native-1080p Medium averaged **50.03 FPS**, p95/p99 **22.649/24.587 ms**, peak **1,614.6 MiB**. This is not a locked-60 result. The restored creek material is readable in the capture; clearings remain over-bright. See [daily notes](DAILY-DEVELOPMENT.md) and the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
+Editor/game compilation, map generation, Windows packaging and the V6 packaged traversal passed. It completed 15/15 grounded points over 326.1 m with 14/14 valid navigation legs, zero nav failures and zero animals. Native-1080p Medium averaged **50.03 FPS**, p95/p99 **22.649/24.587 ms**, peak **1,614.6 MiB**. This historical V6 result is not a locked-60 result. The exposure-tuned package now averages **50.61 FPS** in one traversal; 60 FPS remains unmet and unverified. Some additional ground detail is visible, but the clearing remains too bright. See [daily notes](DAILY-DEVELOPMENT.md) and the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
 The first cook failed because `SkipCookingEditorContent` excluded textures used by Landmass startup materials. The verified helper omits that flag. Authoring defects involving Python rotation order, zero-size navigation bounds, instanced-material usage, terrain axes and the return trail were corrected and retested. Do not restore earlier generated scenes.
 
@@ -32,6 +32,6 @@ Portable C++ and static checks, with their scope clearly separated from gameplay
 
 ## Next bounded work
 
-Tune clearing exposure from the V6 packaged captures; then manually inspect side trails, jumping/camera and off-trail collisions when the owner is available. Improve cottage interiors/materials, grass distribution and obvious zone edges. Profile before adding more mesh varieties. Preserve V4, V5 and V6 packages as recovery points.
+When the owner is available, manually inspect side trails, jumping/camera and off-trail collisions. Continue from actual captures to refine clearing light, cottage materials and grass distribution; profile before adding more mesh varieties. Preserve the existing packages as recovery points.
 
 Do not resume animal gameplay, huge sample worlds, networking, persistence or other major systems without a new owner priority. The automated route is useful evidence, not exhaustive manual QA or release certification.
