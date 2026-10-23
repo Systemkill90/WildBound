@@ -1,6 +1,6 @@
 # Wildbound session handoff
 
-Updated October 22, 2026 after V6 creek material rollback, map regeneration, packaging and one traversal probe. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 22, 2026 after a clean post-sync build, packaging and a traversal probe. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
@@ -11,7 +11,7 @@ Updated October 22, 2026 after V6 creek material rollback, map regeneration, pac
 - Keep the Unreal checkout, engine, licensed asset sources, local caches, local AI data and packaged builds in workstation-configured locations. Do not publish local paths, host details or source-restricted assets.
 - Branch: the Greenveil exploration staging branch, based on the project's current `main`.
 - Map/default launch: `/Game/Maps/GreenveilExplorationPolish`.
-- Latest package: the local V6 Windows archive; no game process is currently running. V4 and V5 remain intact. Use the V6 root `Launch-Greenveil.cmd` launcher. WASD move, mouse look, Space jump.
+- Latest package: a fresh Windows archive built from the synchronized source. Its automated 1080p Medium traversal passed 15/15 waypoints over 326.1 m at 49.19 FPS average; the bright clearing and placeholder character/buildings remain. Earlier package checkpoints were left intact. Use the archive's `Launch-Greenveil.cmd` launcher for a human visual check. WASD move, mouse look, Space jump.
 - Preserve older package directories and the pre-existing local GreenveilField map edit; the latter is intentionally excluded from this commit.
 
 ## Verified
@@ -26,7 +26,9 @@ The first cook failed because `SkipCookingEditorContent` excluded textures used 
 2. Run `Tools/Build-GreenveilExploration.ps1 -EngineRoot <installed UE 5.8 root> -GenerateMap` to compile the editor and rebuild the scene from its deterministic script.
 3. To package, add `-Package -ArchiveDirectory <new local directory outside the repository>`. The helper refuses an existing archive directory. Copy `Tools/Launch-PackagedGreenveil.cmd` to the archive root as `Launch-Greenveil.cmd`.
 4. Test using `Tools/Launch-GreenveilExploration.ps1 -Executable <new Windows/Wildbound.exe> -Quality 1 -TraversalTest -ExitAfterTest`. Quality 2 selects High. Test launches are uncapped; read the summary's PASS/FAIL rather than trusting process exit alone.
-5. Runtime logs go to ignored project `Saved/GreenveilBuild`. The package's `Windows/Wildbound/Saved` holds the summary, frame CSV and screenshots. Preserve evidence before rerunning because those filenames are reused. The latest summary is the local V5 archive's `Windows/Wildbound/Saved/GreenveilTraversal-summary.txt` (the second run); the cold-run detail remains in ignored `Saved/GreenveilBuild` runtime logs.
+5. Runtime logs go to ignored project `Saved/GreenveilBuild`. The package's `Windows/Wildbound/Saved` holds the summary, frame CSV and screenshots. Preserve evidence before rerunning because those filenames are reused. The current verification summary and its limits are in the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
+
+Portable C++ and static checks, with their scope clearly separated from gameplay evidence, are documented in the [developer setup](../developers/README.md#repeatable-source-checks).
 
 ## Next bounded work
 

@@ -39,6 +39,28 @@ Do not assume the previous package exists on a new machine or that the editor is
 | `Tools` | Windows build/launch helper |
 | `docs/art/ASSET-CREDITS.md` | Asset provenance and distribution limits |
 
+## Repeatable source checks
+
+From the repository root, run the two dependency-light Python checks:
+
+```powershell
+python Tests/Static/verify_scaffold.py
+python Tests/Static/verify_docs.py
+```
+
+The native C++17 tests can be compiled from a Visual Studio x64 Developer Command Prompt. These commands mirror the three suites in [the source-check workflow](../../.github/workflows/animal-native-tests.yml):
+
+```cmd
+cl /nologo /std:c++17 /O2 /W4 /WX /EHsc /permissive- /ISource/Wildbound/Public Tests/Native/AnimalSimulationTests.cpp /Fe:%TEMP%\WildboundAnimalTests.exe
+%TEMP%\WildboundAnimalTests.exe
+cl /nologo /std:c++17 /O2 /W4 /WX /EHsc /permissive- /ISource/Wildbound/Public Tests/Native/PrototypePersistenceTests.cpp /Fe:%TEMP%\WildboundSnapshotTests.exe
+%TEMP%\WildboundSnapshotTests.exe
+cl /nologo /std:c++17 /O2 /W4 /WX /EHsc /permissive- /ISource/Wildbound/Public Tests/Native/PrototypePlacementTests.cpp /Fe:%TEMP%\WildboundPlacementTests.exe
+%TEMP%\WildboundPlacementTests.exe
+```
+
+These checks cover portable rules, snapshots, placement policy, project wiring and internal documentation links. They do **not** compile Unreal, launch the map, or verify in-game movement, animal care, construction, multiplayer or persistence. For those, use the Unreal build and packaged traversal procedure in the [session handoff](../project/SESSION-HANDOFF.md), then record what actually passed.
+
 ## Asset, safety and version-control boundaries
 
 The repository uses **Git LFS** for `.uasset`, `.umap`, `.glb` and other large editable art formats. Newly added `Content/**` files are intentionally ignored until they have been reviewed and explicitly staged, preventing accidentally publishing proprietary sample assets. Commit only assets whose redistribution rights permit it; the locally used Electric Dreams/Fab sample content must not simply be copied into the public repo.

@@ -1,6 +1,6 @@
 # Wildbound current state
 
-Updated October 22, 2026 after V6 creek material rollback, packaging and a packaged traversal.
+Updated October 22, 2026 after a clean post-sync build, packaging and a packaged traversal.
 
 ## Active priority: exploration before animals
 
@@ -29,9 +29,11 @@ The earlier V4 package passed **15/15 waypoints over approximately 326 m**, incl
 
 The latest V6 package passed **15/15 grounded waypoints over 326.1 m** in one run, with 14/14 valid navigation legs, zero navigation failures and zero animal actors. At native 1920×1080 Medium, it averaged **50.03 FPS** (p95/p99 22.649/24.587 ms; peak 1,614.6 MiB). Screen percentage was 100%, dynamic resolution and VSync off. **This single traversal does not demonstrate a sustained 60 FPS.** Medium is the normal launch default, with a 60 FPS ceiling. The restored creek material is readable in the actual capture; the clearing remains over-bright. Full results are in the [test report](GREENVEIL-EXPLORATION-2026-10-22.md). Test hardware details and local paths are intentionally omitted from this public report.
 
+A fresh post-sync editor build and Windows package also succeeded without regenerating the map. Its native-1080p Medium traversal passed **15/15 movement waypoints over 326.1 m**, with zero navigation failures and zero animal actors. Across 2,713 frames it averaged **49.19 FPS** (20.331 ms mean, 22.786 ms p95, 24.894 ms p99; peak process memory 1,538.3 MiB). This repeat confirms the synchronized source and redacted texture assets cook and run; it remains below the 60 FPS target and is not manual playtesting. The package and captures remain local. See the [fresh verification record](GREENVEIL-EXPLORATION-2026-10-22.md).
+
 The V5 PBR creek experiment compiled and packaged but rendered nearly black in the actual capture; V6 restores the previous, more readable material. Clearings remain over-bright. Neither package is a graphics-complete milestone. See the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
-Static project wiring passed **61 checks**. See the [full report](GREENVEIL-EXPLORATION-2026-10-22.md) and machine-written [High](evidence/greenveil-high-2026-10-22.txt) / [Medium](evidence/greenveil-medium-2026-10-22.txt) results.
+Static project wiring passed **61 checks**, documentation validation checked **216 internal links**, and the three portable C++ suites passed **34 animal simulation, 22 snapshot, and 13 placement checks**. These source checks are not Unreal gameplay tests. See the [full report](GREENVEIL-EXPLORATION-2026-10-22.md) and machine-written [High](evidence/greenveil-high-2026-10-22.txt) / [Medium](evidence/greenveil-medium-2026-10-22.txt) results.
 
 ## Assets and recovery
 

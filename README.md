@@ -81,7 +81,7 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest V6 package passed a **326 m / 15-waypoint** automated traversal at native 1080p Medium, with grounded checkpoints and zero navigation failures or animal actors. It averaged **50.03 FPS**; the restored creek material is readable in the packaged capture, while the bright clearing and 60 FPS target remain open. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. A fresh build from the synchronized source passed a **326.1 m / 15-waypoint** automated traversal at native 1080p Medium, with zero navigation failures or animal actors. It averaged **49.19 FPS**, below the 60 FPS goal. The creek remains readable; the clearing is still over-bright, and Quinn and cottages remain placeholders. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
@@ -96,6 +96,10 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 
 ## Development log
+
+### October 22, 2026 · Clean build and traversal after source sync
+
+The synchronized Greenveil branch compiled and packaged cleanly with Unreal Engine 5.8.4. The map was not regenerated, and the earlier package checkpoints were left intact. The fresh native-1080p Medium package passed **15/15 movement waypoints over 326.1 m**, with zero navigation failures and zero animal actors. It averaged **49.19 FPS** over 2,713 frames (p95 22.786 ms; peak process memory 1,538.3 MiB), still short of 60 FPS. The packaged capture confirms the bright clearing, mannequin player and cottage placeholders remain visible work. This automated run does not verify animal, building, or care gameplay. [Read the complete verification record →](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md)
 
 ### October 22, 2026 · Greenveil creek visibility check
 

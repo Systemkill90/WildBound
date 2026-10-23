@@ -2,6 +2,10 @@
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
 
+## October 22, 2026 · Clean build and traversal after source sync
+
+The synchronized Greenveil branch compiled and packaged cleanly with Unreal Engine 5.8.4. The map was not regenerated, and prior package checkpoints were left intact. The fresh native-1080p Medium package passed **15/15 movement waypoints over 326.1 m**, with zero navigation failures and zero animal actors. It averaged **49.19 FPS** over 2,713 frames (p95 22.786 ms; peak process memory 1,538.3 MiB), below the 60 FPS goal. The packaged capture confirms the bright clearing, mannequin player and cottage placeholders remain visible work. This automated run does not verify animal, building or care gameplay. [Full build and traversal record](GREENVEIL-EXPLORATION-2026-10-22.md).
+
 ## October 22, 2026 · Greenveil creek and crossing pass
 
 The interrupted Greenveil creek/bridge pass is now regenerated, compiled and packaged as a local-only V5 Windows archive. The original V4 checkpoint remains untouched. The creek uses a new physically based material wired to the locally installed Megascans swamp-water normal; the footbridge decks were shortened from 28 m to 14 m.

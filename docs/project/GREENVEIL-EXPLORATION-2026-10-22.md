@@ -98,3 +98,11 @@ The uncapped, native-1920×1080 Medium automated cold-start traversal passed **1
 Project, engine, asset, cache and local-model storage locations are intentionally omitted from this public report.
 
 Visual review of the new route capture confirms the authored vegetation/creek environment renders in the packaged build. It also shows an over-bright clearing and the current mannequin/cottage placeholders; those remain visible polish work. The automated route verifies movement and grounding, not hand-operated feeding, watering, construction, multiplayer, or animal behavior.
+
+## Clean post-sync build and traversal — October 22
+
+The synchronized Greenveil source compiled with UE 5.8.4 and produced a fresh Windows package. The map was not regenerated, and earlier packages were not replaced. Git LFS integrity checks passed before the build; the newly redacted source texture assets cooked and loaded in the packaged game.
+
+One native-1920×1080 Medium traversal used the existing movement-input probe with VSync and dynamic resolution off and no frame cap. It passed **15/15 waypoints over 326.1 m**, recorded **zero navigation failures and zero animal actors**, and sampled **2,713 frames**. Mean performance was **49.19 FPS** (20.331 ms), with **22.786 ms p95 / 24.894 ms p99** and **1,538.3 MiB peak process memory**. The result remains below the 60 FPS target. It is one automated traversal, not sustained performance certification or a manual playtest.
+
+The packaged capture still shows an over-bright clearing, Quinn's mannequin and block-built cottage placeholders. No game logic, map layout or animal gameplay changed in this verification pass; the preserved local `GreenveilField` edit was excluded. The archive, screenshots and raw test data remain local and are not part of the public repository.

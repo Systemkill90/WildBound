@@ -6,9 +6,9 @@
 
 ## The journey in brief
 
-**Verified October 22:** UE 5.8.4 editor/game compilation and fresh V6 Windows package of the original 180 × 160 m Greenveil exploration zone. Its packaged 1080p Medium traversal completed 15/15 grounded route points over 326.1 m with zero navigation failures or animal actors. The restored creek material reads clearly in the capture; the bright clearing remains open. The run averaged 50.03 FPS, short of 60. [Evidence and daily field notes](docs/project/DAILY-DEVELOPMENT.md).
+**Verified October 22:** UE 5.8.4 editor/game compilation and a fresh Windows package of the original 180 × 160 m Greenveil exploration zone. The post-sync 1080p Medium traversal completed 15/15 movement waypoints over 326.1 m with zero navigation failures or animal actors. It averaged 49.19 FPS, short of 60. The creek reads clearly; the clearing remains over-bright. [Evidence and daily field notes](docs/project/DAILY-DEVELOPMENT.md).
 
-**Our next step:** tune clearing exposure using packaged captures, then manual side-path, off-trail collision/camera/jump QA and profiling within this populated zone. Latest V6 native-1080p Medium traversal averaged 50.03 FPS (p95 22.649 ms); locked 60 remains open.
+**Our next step:** tune clearing exposure using packaged captures, then manual side-path, off-trail collision/camera/jump QA and profiling within this populated zone. The latest native-1080p Medium traversal averaged 49.19 FPS (p95 22.786 ms); sustained 60 remains unverified and unmet.
 
 **Owner priority:** no animal gameplay work yet. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains paused, draft and unmerged. The older care/enclosure sequence below is deferred, not the current implementation order.
 
