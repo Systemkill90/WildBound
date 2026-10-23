@@ -2,6 +2,10 @@
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
 
+## October 23, 2026 · Village sample map audit
+
+A read-only package-file audit found that the Medieval Village sample's smaller auxiliary levels are template, audio, atmosphere and cinematics tests, not a smaller village slice. Its actual village is in the large World Partition level with external actors. No sample content was edited, copied or brought into Wildbound, and no visual inspection is claimed. The next step is to inspect the main village after Windows commit headroom is restored, then select a bounded playable route and preserve the current package as rollback. The sample audit did not run Unreal or change the open editor session.
+
 ## October 23, 2026 · Free village sample acquired
 
 Fab downloaded the Medieval Village Megascans Sample as a separate local project. Its main World Partition map loaded in UE 5.8 editor mode, but Unreal began rebuilding its 16K minimap texture (estimated 11.7 GiB of texture-build memory); the editor was stopped before visual inspection. A standalone game-mode launch bypassed the minimap and Zen 507, but rebuilt Nanite/static-mesh data; a warm-cache retry reached 192 of 258 static meshes before system commit pressure forced a stop, before gameplay. A reversible local-only shader-worker cap reduced the editor to two workers, and its DDC is retained for future retries. No sample assets were brought into Wildbound; the playable Greenveil project and map remain untouched. Next, resolve local paging/commit capacity or identify a smaller sample slice that avoids the large rebuilds, then verify the actual visuals before adapting anything. [Current state](CURRENT-STATE.md) · [Starter-village brief](../world/greenveil-starter-village.md) · [Roadmap](../../ROADMAP.md).

@@ -2,6 +2,8 @@
 
 Updated October 23, 2026 after the resource-aware source audit and village-sample inspection attempt.
 
+The latest read-only package-file audit found that the sample's small auxiliary maps are template, audio, atmosphere and cinematics tests; the actual village actors belong to its main World Partition map. No smaller ready-made village level was identified. The main sample still needs visual inspection in UE 5.8 after system commit headroom is available; no sample content has been added to Wildbound.
+
 ## Active priority: exploration before animals
 
 The owner's correction supersedes the previous care/enclosure sequence: **no animal gameplay work yet**. Refine a visually full, walkable Greenveil zone first. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains a separate, paused, unmerged draft; none of its commits are included here.
@@ -12,7 +14,7 @@ The active Greenveil work is on a staging branch based on the current public `ma
 
 ## Latest source and resource checkpoint
 
-The source audit added one-second ticking for animal needs, throttled the inactive animal HUD trace to 10 Hz, moved input/navigation dependencies to the private module list, and made the default launcher target the polished Greenveil map. Windows build helpers now select a conservative UBT worker count from available system commit, refuse low-headroom compiles, and require more headroom before map generation or packaging. The resource-policy test, 70 project-wiring checks, 260 documentation links and 69 portable C++ checks pass. Unreal Header Tool completed during the latest build attempt, but the Unreal C++ target did not finish before the safety reserve was reached. No new compile, package or gameplay result is verified; use the prior packaged build as the playable checkpoint.
+The source audit added one-second ticking for animal needs, throttled the inactive animal HUD trace to 10 Hz, moved input/navigation dependencies to the private module list, and made the default launcher target the polished Greenveil map. Windows build helpers now select a conservative UBT worker count from available system commit, refuse low-headroom compiles, and require more headroom before map generation or packaging. The resource-policy test, 70 project-wiring checks, 262 documentation links and 69 portable C++ checks pass. Unreal Header Tool completed during the latest build attempt, but the Unreal C++ target did not finish before the safety reserve was reached. No new compile, package or gameplay result is verified; use the prior packaged build as the playable checkpoint.
 
 ## What is playable
 

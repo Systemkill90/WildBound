@@ -97,6 +97,10 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 
 ## Development log
 
+### October 23, 2026 · Village sample map audit
+
+A read-only package-file audit confirmed the sample's small auxiliary levels are dedicated to the first-person template, audio, atmosphere and cinematics; they are not a smaller village map. The actual village remains in the resource-heavy World Partition level, whose external actors are separate. No sample content was changed or copied. The next useful check is a visual review of the main village map after Windows commit capacity is available, followed by a bounded extraction plan. The current Greenveil package remains the playable rollback. [Session handoff](docs/project/SESSION-HANDOFF.md) · [Current state](docs/project/CURRENT-STATE.md).
+
 ### October 23, 2026 · Free village sample acquired
 
 Fab downloaded the Medieval Village Megascans Sample as a separate local project. Its main World Partition map loaded in UE 5.8 editor mode, but Unreal began rebuilding its 16K minimap texture (estimated 11.7 GiB of texture-build memory); the editor was stopped before visual inspection. A standalone game-mode launch bypassed the minimap and Zen 507, but rebuilt Nanite/static-mesh data; a warm-cache retry reached 192 of 258 static meshes before system commit pressure forced a stop, before gameplay. A reversible local-only shader-worker cap reduced the editor to two workers, and its DDC is retained for future retries. No sample assets were brought into Wildbound; the playable Greenveil project and map remain untouched. Next, resolve local paging/commit capacity or identify a smaller sample slice that avoids the large rebuilds, then verify the actual visuals before adapting anything. [Starter-village brief](docs/world/greenveil-starter-village.md) · [Current state](docs/project/CURRENT-STATE.md) · [Roadmap](ROADMAP.md).
