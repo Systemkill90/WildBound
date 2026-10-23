@@ -1,6 +1,6 @@
 # Wildbound current state
 
-Updated October 22, 2026 after exposure tuning, a clean package and an automated traversal.
+Updated October 22, 2026 after a packaged GPU profile and guarded shadow-quality comparison.
 
 ## Active priority: exploration before animals
 
@@ -31,7 +31,9 @@ The latest V6 package passed **15/15 grounded waypoints over 326.1 m** in one ru
 
 The post-sync baseline editor build and Windows package also succeeded without regenerating the map. Its native-1080p Medium traversal averaged **49.19 FPS**; it remains useful as a comparison, not the latest result. See the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
-The latest exposure-tuned package passed **15/15 waypoints over 326.1 m**, with zero navigation failures and zero animal actors. Across 2,790 frames it averaged **50.61 FPS** (19.760 ms mean, 22.616 ms p95, 24.239 ms p99; peak process memory 1,595.5 MiB). The capture shows more detail in sunlit ground, but the clearing is still too bright. This is one automated traversal, below 60 FPS and not manual playtesting. The package and captures remain local. Static wiring now passes **65 checks**; the three native suites remain 34 simulation, 22 snapshot and 13 placement checks. These source checks do not prove Unreal gameplay.
+The exposure-tuned package passed **15/15 waypoints over 326.1 m**, with zero navigation failures and zero animal actors. Across 2,790 frames it averaged **50.61 FPS**; the clearing remains too bright and Quinn/cottages are placeholders. This was one automated traversal, not manual playtesting.
+
+The latest native-1080p package traversal measured **55.26 FPS** at all-Medium settings with screenshots disabled. Unreal Insights showed an average GPU frame near 17.94 ms and a 5.45 ms average shadow-depth pass. Keeping all other groups at Medium while setting shadows to Low produced a guarded repeat of **75.89 FPS** over 15/15 waypoints, with 15.205 ms p95 and zero nav failures/animal actors. The helper polls Ollama and yields the benchmark if a local model loads. Low shadows remain an opt-in test; visual quality has not been manually checked, and the normal Medium default remains unchanged. These are single traversal results, not sustained-performance certification. See the [latest test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
 The V5 PBR creek experiment compiled and packaged but rendered nearly black in the actual capture; V6 restores the previous, more readable material. Clearings remain over-bright. Neither package is a graphics-complete milestone. See the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
@@ -47,4 +49,4 @@ The [asset inventory](../art/GREENVEIL-ASSET-INVENTORY.md) distinguishes local E
 
 Buildings, creek water, tools and player appearance are placeholders; interiors are sparse. Mist/daylight supply atmosphere without dynamic weather or a day/night cycle. Terrain is a static heightfield mesh, not voxel terrain or an editable Landscape. There is no new fluid/swimming, gathering, farming, NPC, animal, multiplayer or persistence system.
 
-The automated loop is representative, not exhaustive manual QA of keyboard/mouse, jumping, every side path, obstacle or camera angle. The V6 capture shows readable creek water but retains bright clearing patches, Quinn's mannequin and block-built cottages. Resume with exposure refinement, then manual off-trail collision/camera/jump checks and profiling within this zone. Historical animal/native-test and listen-server results in Git history do not validate this exploration build.
+The automated loop is representative, not exhaustive manual QA of keyboard/mouse, jumping, every side path, obstacle or camera angle. The V6 capture shows readable creek water but retains bright clearing patches, Quinn's mannequin and block-built cottages. Next, visually inspect the low-shadow candidate, then continue manual off-trail collision/camera/jump checks and profiling within this zone. Historical animal/native-test and listen-server results in Git history do not validate this exploration build.

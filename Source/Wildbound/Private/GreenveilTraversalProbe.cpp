@@ -54,7 +54,8 @@ void AGreenveilTraversalProbe::Tick(float DeltaSeconds)
     {
         UE_LOG(LogTemp, Display, TEXT("GREENVEIL_PROBE waypoint=%d loc=%s grounded=%d elapsed=%.2f"),
             Leg,*Pawn->GetActorLocation().ToCompactString(),Pawn->GetCharacterMovement()->IsMovingOnGround(),Now-Started);
-        FScreenshotRequest::RequestScreenshot(FPaths::ProjectSavedDir()/FString::Printf(TEXT("GreenveilEvidence/Waypoint%02d.png"),Leg),true,false);
+        if (!FParse::Param(FCommandLine::Get(), TEXT("GreenveilNoScreenshots")))
+            FScreenshotRequest::RequestScreenshot(FPaths::ProjectSavedDir()/FString::Printf(TEXT("GreenveilEvidence/Waypoint%02d.png"),Leg),true,false);
         ++Leg; LegStarted=Now;
         if (Leg==Route.Num()) { Finish(true,TEXT("Full loop traversed using movement input")); return; }
         UNavigationPath* Path=UNavigationSystemV1::FindPathToLocationSynchronously(GetWorld(),Pawn->GetActorLocation(),Route[Leg],Pawn);

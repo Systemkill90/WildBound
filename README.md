@@ -81,7 +81,7 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest fresh Windows package passed a **326.1 m / 15-waypoint** automated traversal at native 1080p Medium, with zero navigation failures or animal actors. One uncapped run averaged **50.61 FPS**, below the 60 FPS goal. The exposure pass restored some sunlit ground detail, though the clearing remains bright; Quinn and cottages are placeholders. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. A guarded native-1080p traversal with all settings Medium except Low shadows passed **15/15 waypoints over 327.7 m at 75.89 FPS** (p95 15.205 ms), with zero navigation failures or animal actors. Low shadows remain a candidate pending visual QA; the normal Medium default is unchanged, and this is not sustained-60 certification. The clearing remains bright; Quinn and cottages are placeholders. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
@@ -96,6 +96,10 @@ The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zon
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
 
 ## Development log
+
+### October 22, 2026 · GPU profile and shadow-quality comparison
+
+Added a screenshot-free traversal option and local Unreal Insights tracing. The all-Medium native-1080p route measured 55.26 FPS; the trace pointed to GPU frame time, with shadow depth averaging 5.45 ms. A guarded repeat kept all groups at Medium except Low shadows and measured **75.89 FPS** with 15/15 waypoints, zero navigation failures and zero animal actors. The benchmark now defers to loaded Ollama models and stops only its own test process if one becomes active. Low shadows need a human visual check, so the normal Medium default remains. Raw profiling data stays local. [Full verification record →](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md)
 
 ### October 22, 2026 · Greenveil exposure and packaged traversal
 

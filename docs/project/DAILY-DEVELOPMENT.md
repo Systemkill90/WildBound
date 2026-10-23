@@ -2,6 +2,10 @@
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
 
+## October 22, 2026 · GPU profile and shadow-quality comparison
+
+Built and packaged the current map with optional screenshot suppression and Unreal Insights tracing. The all-Medium, native-1080p route passed 15/15 grounded waypoints over 327.6 m at **55.26 FPS** (18.096 ms mean, 21.612 ms p95). The trace showed GPU frame time near 17.94 ms and shadow depth averaging 5.45 ms. Keeping all settings Medium except shadows at Low produced a guarded repeat of **75.89 FPS** (13.178 ms mean, 15.205 ms p95), 15/15 waypoints over 327.7 m, zero navigation failures and zero animals. The traversal helper checks Ollama and yields if a local model loads; no model was loaded in its preflight or polling samples. Low shadows are still a candidate pending a human visual check, so the normal Medium default did not change. The raw trace stays local. [Test details](GREENVEIL-EXPLORATION-2026-10-22.md).
+
 ## October 22, 2026 · Greenveil exposure pass
 
 The game-mode field grade now reduces exposure and highlight contrast to retain more ground detail in the sunlit clearing. A fresh UE 5.8.4 editor build and Windows package succeeded without regenerating the map. The native-1080p Medium automated route passed **15/15 waypoints over 326.1 m**, with zero navigation failures and zero animal actors. Across 2,790 frames, one uncapped run averaged **50.61 FPS** (p95 22.616 ms, p99 24.239 ms; peak process memory 1,595.5 MiB), still below the 60 FPS goal. The clearing remains too bright; Quinn and cottages are placeholders. The same change disables unused Android File Server access for the current Windows build and adds a regression check against non-empty tokens. [Full verification record](GREENVEIL-EXPLORATION-2026-10-22.md).

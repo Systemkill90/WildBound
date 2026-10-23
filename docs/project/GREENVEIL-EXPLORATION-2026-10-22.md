@@ -114,3 +114,15 @@ The Greenveil game-mode field grade was adjusted to a −1.5 exposure bias and l
 The UE 5.8.4 editor build and a fresh Windows package succeeded without map regeneration. One uncapped native-1920×1080 Medium traversal passed **15/15 movement waypoints over 326.1 m**, with **zero navigation failures and zero animal actors** across **2,790 frames**. Mean performance was **50.61 FPS** (19.760 ms), with **22.616 ms p95 / 24.239 ms p99** and **1,595.5 MiB peak process memory**. This single run is below the 60 FPS goal and does not establish sustained performance.
 
 Visual review of the packaged waypoint capture shows additional detail in the sunlit ground and cottage walls. The clearing still appears too bright, the player remains Quinn's mannequin, and cottages remain placeholders. The change did not alter the map or gameplay. The new archive and raw captures remain local; prior checkpoints remain intact.
+
+## GPU profile and shadow-quality A/B — October 22
+
+The latest editor build and a fresh Win64 package succeeded after adding opt-in screenshot suppression and Unreal Insights tracing to the packaged traversal helper. This did not regenerate or modify the Greenveil exploration map. The trace was analyzed locally and its raw data and CSV exports remain outside GitHub.
+
+The native-1080p Medium run, with screenshots disabled and no frame cap, passed **15/15 grounded waypoints over 327.6 m**, all 14 navigation legs, zero navigation failures and zero animal actors. It averaged **55.26 FPS** (18.096 ms mean, 21.612 ms p95, 23.172 ms p99). In the traced steady route interval, GPU frames averaged 17.94 ms (18.50 ms median, 21.28 ms p95); the shadow-depth pass averaged 5.45 ms. CPU frame timing closely tracked the GPU, consistent with a GPU-limited scene on this run. Trace instrumentation and the single workstation session limit how broadly these numbers generalize.
+
+An A/B run kept every scalability group at Medium except shadows at Low. The first pass reached **75.85 FPS**. The launcher now checks Ollama before a traversal and polls during it; the guarded repeat passed **15/15 waypoints over 327.7 m** at **75.89 FPS**, 13.178 ms mean, 15.205 ms p95 and 15.878 ms p99, with zero nav failures and zero animal actors. Ollama remained running but had no model loaded at the preflight or sampled during this test. If a model loads mid-test, the helper stops only the benchmark process to yield GPU time.
+
+Low shadows are **not yet the default**: their visual impact needs a human screenshot/playtest check. This is a repeatable automated traversal, not a locked-60 or long-duration certification. The normal Medium launcher setting is unchanged. One separate all-Low run reached 94.47 FPS, but reduced multiple quality groups and is not proposed as the visual target. The medium-with-low-shadows result is the useful candidate for the next visual check.
+
+[Current state](CURRENT-STATE.md) · [Daily notes](DAILY-DEVELOPMENT.md) · [Handoff](SESSION-HANDOFF.md)

@@ -69,6 +69,17 @@ if afs_match:
     expect(re.search(r"(?m)^SecurityToken=\s*$", afs) is not None,
            "do not commit an Android File Server security token")
 
+launcher = ROOT / "Tools" / "Launch-GreenveilExploration.ps1"
+expect(launcher.is_file(), "Greenveil launcher missing")
+if launcher.is_file():
+    launcher_text = launcher.read_text(encoding="utf-8")
+    expect("function Get-LoadedOllamaModelCount" in launcher_text,
+           "traversal benchmark must inspect local Ollama state")
+    expect("Traversal stopped to yield the GPU" in launcher_text,
+           "traversal benchmark must yield to Ollama if a model loads")
+    expect("ShadowQualityOverride" in launcher_text,
+           "Greenveil launcher must support an isolated shadow-quality test")
+
 tests = (ROOT / "Tests" / "Native" / "AnimalSimulationTests.cpp")
 expect(tests.is_file(), "native tests missing")
 expect((PUBLIC / "WildboundAnimalSimulation.h").is_file(),
