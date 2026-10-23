@@ -1,10 +1,14 @@
 # Wildbound session handoff
 
-Updated October 23, 2026 after acquiring the free Medieval Village Megascans Sample for isolated inspection. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 23, 2026 after the resource-aware source audit and village-sample inspection attempt. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
 **No animal gameplay work yet.** The current generated scene is a mechanics/traversal proof, not an acceptable art base. Greenveil's next test grounds should be a compact starter village with enterable homes/work buildings, garden/farm edge, creek/bridge and a short returning forest loop. Use a bounded licensed authored environment as the shell and retain Wildbound's existing player/game-mode foundation. Preserve the current generated map/package as rollback. The free Medieval Village Megascans Sample has now been acquired locally as a separate local project with five village World Partition maps; its output project is associated with UE 5.8, while the cached package source reports UE 5.3. The main sample World Partition map loaded in UE 5.8 editor mode, but its 16K minimap started an estimated 11.7 GiB texture rebuild; the editor was stopped before visual inspection. Standalone game mode bypassed the minimap and Zen 507, but rebuilt static-mesh/Nanite data; the warm-cache retry reached 192/258 meshes before system commit pressure forced a stop, before gameplay. A reversible local sample-only shader-worker cap is in place, and the DDC cache is retained. The original forest editor remains responsive. No sample assets have been brought into WildBound. Resolve local paging/commit capacity or identify a smaller sample slice, then inspect `MedievalVillage_P_WP` before adapting anything. Electric Dreams remains a local woodland source but is too large to serialize whole. Keep animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) paused, draft and unmerged; see the [starter village brief](../world/greenveil-starter-village.md).
+
+## Source maintenance checkpoint
+
+The build helpers now cap and adapt UnrealBuildTool parallel actions from available system commit; they stop before low-headroom compile, map generation or packaging. Their policy tests and static checks pass. A recent editor build ran Unreal Header Tool but was stopped before the full C++ target completed. Do not mark the latest source optimization as UE-compiled or launch a package from it until the guarded editor build succeeds. The animal-needs component now ticks at 1 Hz, animal HUD line traces at 10 Hz, and module dependencies are narrower; these changes have not had an Unreal compile yet. The previous packaged Greenveil build remains the latest verified playtest build.
 
 ## Project and recovery points
 

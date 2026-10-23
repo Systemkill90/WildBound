@@ -48,21 +48,24 @@ void AWildboundPrototypeHUD::DrawHUD()
 
     UWorld* World = GetWorld();
     if (!World) return;
-    FVector Eye;
-    FRotator View;
-    PC->GetPlayerViewPoint(Eye, View);
-    FCollisionQueryParams Params(SCENE_QUERY_STAT(WildboundHUD), false);
-    if (PC->GetPawn()) Params.AddIgnoredActor(PC->GetPawn());
-
-    FHitResult Hit;
-    if (!World->LineTraceSingleByChannel(
-            Hit, Eye, Eye + View.Vector() * 525.0f, ECC_Visibility, Params))
+    const float Now = World->GetTimeSeconds();
+    if (Now >= NextAnimalTraceTime)
     {
-        return;
+        NextAnimalTraceTime = Now + 0.1f;
+        FVector Eye;
+        FRotator View;
+        PC->GetPlayerViewPoint(Eye, View);
+        FCollisionQueryParams Params(SCENE_QUERY_STAT(WildboundHUD), false);
+        if (PC->GetPawn()) Params.AddIgnoredActor(PC->GetPawn());
+
+        FHitResult Hit;
+        LookedAtAnimal = World->LineTraceSingleByChannel(
+                Hit, Eye, Eye + View.Vector() * 525.0f, ECC_Visibility, Params)
+            ? Cast<AWildboundPrototypeAnimal>(Hit.GetActor())
+            : nullptr;
     }
 
-    if (const AWildboundPrototypeAnimal* Animal =
-            Cast<AWildboundPrototypeAnimal>(Hit.GetActor()))
+    if (const AWildboundPrototypeAnimal* Animal = LookedAtAnimal.Get())
     {
         const UWildboundAnimalNeedsComponent* Needs = Animal->GetNeeds();
         if (!Needs) return;
