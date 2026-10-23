@@ -25,3 +25,9 @@
 ## Continuity notes
 
 This group portrait is the approved visual benchmark for all six individuals. Use it to keep character proportions and material styles consistent in future individual design sheets and the eventual all-species ensemble. **Concept reference only:** no 3D models, skeletal rigs, animations or playable characters are verified by this art.
+
+## Approved master image to import
+
+The owner re-uploaded the exact approved six-character reference in the Wildbound conversation. Master filename: `Wildbound_Approved_Dwarves_Kethri_Nimrui_Master.jpeg` (1536 × 1024, JPEG). SHA-256: `5d4f90674992387f455628f7db657d0d303a7f789e8753eb116275aa16c56342`. Proposed in-repository asset location: `docs/art/character-references/dwarves-kethri-nimrui-approved.jpeg`.
+
+**Binary import remains pending**: the GitHub text connector cannot read the local uploaded image bytes directly. Do not claim that the image itself is in GitHub until its binary file is committed and verified. The approved full-resolution original can be obtained from the conversation upload.
