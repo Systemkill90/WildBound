@@ -24,6 +24,7 @@ void AWildboundPrototypePlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();
     if (!InputComponent) return;
+    if (GetWorld() && GetWorld()->GetMapName().Contains(TEXT("GreenveilExploration"))) return;
 
     InputComponent->BindAction(TEXT("CareFeed"), IE_Pressed, this,
         &AWildboundPrototypePlayerController::FeedViewedAnimal);

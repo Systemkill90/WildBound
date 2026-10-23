@@ -25,6 +25,8 @@
 
 [Read the world and biome notes →](../world/biomes.md) · [Read the animal design notes →](../systems/animals.md)
 
+Greenveil's concept anchor is the [pastoral basin mood sheet](concept-atlas/biomes-atlas.webp): orchard villages and clear streams framed by birch groves, meadow flowers, mossy stone, warm timber, and honey daylight. Realistic scanned assets should carry surface and foliage detail; the art grade and composition should still read as inviting, fertile Greenveil with only occasional quiet magic. Do not copy a darker sample's mood over the Wildbound board.
+
 ## New illustrated concept atlas
 
 [![Six speculative Wildbound biome and settlement visual directions](concept-atlas/biomes-atlas.webp)](concept-atlas/README.md)
@@ -34,6 +36,10 @@ The [**new illustrated atlas**](concept-atlas/README.md) collects **20 speculati
 [![Woodland creature design studies](concept-atlas/creatures-i-meadows.webp)](concept-atlas/README.md)
 
 [Explore all eight concept plates →](concept-atlas/README.md)
+
+## Latest Idea Board studies
+
+The [October 23 character and culture studies](concept-atlas/idea-board-2026-10-23/README.md) add grounded settlers, woodland kin, elves and more overt Fae imagery. They are exploratory art and broaden the conversation; they do not replace the Greenveil biome mood sheet or lock the game's style.
 
 ## Inside the creative workshop
 

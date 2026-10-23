@@ -55,6 +55,32 @@ for action in ("CareFeed", "CareWater", "CareReassure", "PlaceBlock", "RemoveBlo
 mode = (ROOT / "Config" / "DefaultEngine.ini").read_text(encoding="utf-8")
 expect("GlobalDefaultGameMode=/Script/Wildbound.WildboundPrototypeGameMode" in mode,
        "prototype game mode not selected")
+afs_match = re.search(
+    r"(?ms)^\[/Script/AndroidFileServerEditor\.AndroidFileServerRuntimeSettings\]\s*(.*?)(?=^\[|\Z)",
+    mode,
+)
+expect(afs_match is not None, "Android File Server settings section missing")
+if afs_match:
+    afs = afs_match.group(1)
+    expect(re.search(r"(?m)^bEnablePlugin=False\s*$", afs) is not None,
+           "Android File Server must remain disabled for this Windows prototype")
+    expect(re.search(r"(?m)^bAllowNetworkConnection=False\s*$", afs) is not None,
+           "Android File Server network access must remain disabled")
+    expect(re.search(r"(?m)^SecurityToken=\s*$", afs) is not None,
+           "do not commit an Android File Server security token")
+
+launcher = ROOT / "Tools" / "Launch-GreenveilExploration.ps1"
+expect(launcher.is_file(), "Greenveil launcher missing")
+if launcher.is_file():
+    launcher_text = launcher.read_text(encoding="utf-8")
+    expect("function Get-LoadedOllamaModelCount" in launcher_text,
+           "traversal benchmark must inspect local Ollama state")
+    expect("Traversal stopped to yield the GPU" in launcher_text,
+           "traversal benchmark must yield to Ollama if a model loads")
+    expect("ShadowQualityOverride" in launcher_text,
+           "Greenveil launcher must support an isolated shadow-quality test")
+    expect("FoliageQualityOverride" in launcher_text,
+           "Greenveil launcher must support an isolated foliage-quality test")
 
 tests = (ROOT / "Tests" / "Native" / "AnimalSimulationTests.cpp")
 expect(tests.is_file(), "native tests missing")

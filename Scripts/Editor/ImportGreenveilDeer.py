@@ -1,9 +1,10 @@
 """Import the CC0 deer model into Wildbound's asset library."""
 
+import os
 import unreal
 
 
-SOURCE = r"<local-project-root>\Source\ArtSource\Animals\deer-standing.glb"
+SOURCE = os.path.join(unreal.Paths.project_dir(), "ArtSource", "Animals", "deer-standing.glb")
 DESTINATION = "/Game/Wildbound/Art/Animals"
 
 if not unreal.EditorAssetLibrary.does_directory_exist(DESTINATION):

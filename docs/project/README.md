@@ -15,13 +15,13 @@
 
 ## Status in one paragraph
 
-As of the **October 20, 2026 development record**, Unreal Engine 5.8.4 successfully compiled Wildbound's editor/game targets, and a small Greenveil Windows test package was launched. The first deer is still a static-pose model with basic ground-probed wandering. Standalone C++ rules tests pass, but in-game feeding, building, gameplay-state replication, dedicated server operation and world persistence are **not verified or built as complete features**.
+As of **October 22, 2026**, UE 5.8.4 compiled and packaged the original populated Greenveil exploration zone. Both packaged traversal runs passed all 15 points and 14 navigation checks with zero animal actors. Native-1080p measurements were 52.2 FPS Medium / 41.7 FPS High. [Full report](GREENVEIL-EXPLORATION-2026-10-22.md). Animal gameplay and PR #9 are paused.
 
 ## The next practical milestone
 
-[**Issue #2 — Hands-on Greenveil interaction validation**](https://github.com/Systemkill90/WildBound/issues/2)
+[**Greenveil exploration — packaged test and remaining QA**](GREENVEIL-EXPLORATION-2026-10-22.md)
 
-Confirm character movement, care inputs and the temporary block test, then record what worked and what failed. Build the next system *after* collecting that evidence.
+Current priority supersedes the older interaction issue: manually explore and refine the populated zone, check side paths/jump/camera/collisions, and profile before expanding. Care, construction, co-op and persistence remain deferred.
 
 Other tracked engineering gates: [Co-op replication](https://github.com/Systemkill90/WildBound/issues/3) · [Voxel/enclosure proof](https://github.com/Systemkill90/WildBound/issues/4) · [World persistence](https://github.com/Systemkill90/WildBound/issues/5).
 

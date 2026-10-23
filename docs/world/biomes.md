@@ -2,7 +2,7 @@
 
 [Vision](../vision.md) · [Animal life](../systems/animals.md)
 
-**Status (last recorded October 20, 2026):** a small Greenveil forest-clearing *prototype map* has been built, cooked and launched. The full Greenveil region, Drowned March, Emberstep Highlands and other production biomes remain design concepts. The habitat/species examples below are candidates, not an approved production roster; no complete biome has been implemented.
+**Status (October 22, 2026):** a populated 180 × 160 m Greenveil exploration zone has been compiled, packaged and traversed: forest, creek, bridges, cottage placeholders and connected trails. [Test evidence](../project/GREENVEIL-EXPLORATION-2026-10-22.md). No animal gameplay is active in this map. The full region and other production biomes remain design concepts; habitat/species examples below are candidates, not a locked roster.
 
 ## Greenveil Basin — a home worth tending
 
@@ -13,6 +13,8 @@ Rolling meadows, birch groves, orchards, creek crossings, flower banks, and enor
 Candidate wildlife includes deer, rabbits, foxes, meadow birds, and large grazing herbivores. Chickens, sheep, goats, and cattle are candidate livestock. Glowing moths, mushroom rings, hollow ancient trees, and springs surrounded by unusually vigorous plants introduce quiet magic. Effects should be observed before they are explained.
 
 **Design role:** learn gathering, building, growing food, animal care, and cooperative settlement. Cozy still leaves room for danger.
+
+**First test grounds:** Greenveil begins at a compact starter village, not in a large empty clearing. See the [starter village slice brief](greenveil-starter-village.md) for the arrival green, home/workshop lane, farm edge, creek crossing, forest loop, and verification order. The village is the visual and movement test environment; animal gameplay remains deferred.
 
 ## The Drowned March — the water remembers
 

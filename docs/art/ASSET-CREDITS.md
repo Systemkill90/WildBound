@@ -1,5 +1,7 @@
 # Prototype asset sources
 
+**October 22 exploration audit:** see the [local asset inventory](GREENVEIL-ASSET-INVENTORY.md) for selected canopy/grass/clover, CC0 understory/props, original structure placeholders, mannequin and source-redistribution boundaries. The public Fab listings do not independently prove account-specific acquisition terms; the older generic license descriptions below should be read with that limitation. Concept images remain illustrations.
+
 ## Original pre-production artwork (October 21, 2026)
 
 The eight images in [the illustrated concept atlas](concept-atlas/README.md) were generated for Wildbound during a ChatGPT design session and exported as optimized WebP art plates for this repository. They are not third-party Unreal store assets, engine models, or evidence of finished gameplay. Their creature names, biome titles, tools and costume details are creative proposals pending review. The AI-rendered captions may contain inaccuracies.
@@ -11,6 +13,7 @@ Wildbound keeps art provenance alongside the content. Approved imported Unreal a
 | Asset set | Source | License | Use in Wildbound |
 | :-- | :-- | :-- | :-- |
 | Greenveil forest ground, ferns, shrubs, mossy rocks, stump, wooden bowl and bucket | [Poly Haven](https://polyhaven.com/) | [CC0](https://polyhaven.com/license) | Greenveil test-map environment and care-point dressing |
+| Meadow grass, flowering groundcovers, boulder, root cluster and modular pier (2K FBX and texture sources; 40 Unreal candidate assets imported locally) | [Poly Haven](https://polyhaven.com/) — [Grass Medium 01](https://polyhaven.com/a/grass_medium_01), [Flower Gazania](https://polyhaven.com/a/flower_gazania), [Flower Ursinia](https://polyhaven.com/a/flower_ursinia), [Boulder 01](https://polyhaven.com/a/boulder_01), [Root Cluster 01](https://polyhaven.com/a/root_cluster_01), [Modular Wooden Pier](https://polyhaven.com/a/modular_wooden_pier) | [CC0](https://polyhaven.com/license) | Candidate-only; not placed in a map or committed. Flower texture parameters still need setup. |
 | Standing deer | [Innerscene — Deer standing](https://www.innerscene.com/tools/library/3d-parts/deer-standing-35e2f5f6) | CC0, public domain dedication | First deer visual; the prototype supplies server-controlled wandering and care stats |
 | Electric Dreams Environment (local import) | [Epic Games / Fab](https://www.fab.com/listings/d79688f5-29be-4fb2-a650-2d4a813f5306) | Fab Standard License; use in a UE product is permitted, but source assets must not be redistributed as standalone files | Two European hornbeam forest meshes, foliage/trunk materials and required dependencies dress the Greenveil perimeter. Imported binaries remain local and are not committed to GitHub. |
 | Animal Variety Pack (local import) | [Protofactor Inc. on Fab](https://www.fab.com/listings/2dd7964c-a601-4264-a53d-465dcae1644c) | Fab Standard License; integrated use permitted, standalone source redistribution prohibited | Rigged doe mesh with idle-breath, walk and run sequences for the Greenveil prototype. Acquired through the user's logged-in Fab account; local import remains outside Git. |

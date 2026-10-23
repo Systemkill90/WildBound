@@ -30,6 +30,7 @@ void FromModel(const WildboundSim::FAnimalVitals& Source, FWildboundAnimalVitals
 UWildboundAnimalNeedsComponent::UWildboundAnimalNeedsComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.TickInterval = 1.0f;
     SetIsReplicatedByDefault(true);
 }
 

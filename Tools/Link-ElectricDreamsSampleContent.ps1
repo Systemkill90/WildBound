@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$SampleRoot = "<local-project-root>\Assets\Samples"
+    [string]$SampleRoot = $env:WILDBOUND_SAMPLE_ASSET_ROOT
 )
 
 Set-StrictMode -Version Latest
@@ -8,6 +8,7 @@ $ErrorActionPreference = "Stop"
 
 $ProjectRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $ProjectContent = Join-Path $ProjectRoot "Content"
+if (-not $SampleRoot) { throw 'Set WILDBOUND_SAMPLE_ASSET_ROOT or pass -SampleRoot with the locally installed sample directory.' }
 $SampleContent = Join-Path $SampleRoot "Content"
 $CacheRoot = Join-Path (Split-Path $ProjectRoot -Parent) "Cache"
 $BackupRoot = Join-Path $CacheRoot ("SampleContentLinkBackup-" + (Get-Date -Format "yyyyMMdd-HHmmss"))

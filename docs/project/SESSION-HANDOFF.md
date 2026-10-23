@@ -1,94 +1,43 @@
 # Wildbound session handoff
 
-Updated: October 21, 2026.
+Updated October 23, 2026 after the Greenveil compile, map generation, Windows package, and automated traversal. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
-Read [Current state](CURRENT-STATE.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md) before new work.
+## Current owner scope
 
-## October 21 field presentation pass
+**Offline village-sample finding:** a read-only package-file audit found the auxiliary levels are template, audio, atmosphere and cinematics tests, while the actual village actors belong to the main World Partition map. No smaller ready-made village level was identified. Inspect a bounded asset subset without repeating its full minimap rebuild; no sample assets have been added to Wildbound yet.
 
-- Applied a runtime, unbound Wildbound field grade over the authored Electric Dreams close-range creek: restrained exposure/saturation/bloom and local contrast recovery for highlights and shaded foliage. It keeps Epic's authored lighting and content intact.
-- Reworked the pre-alpha HUD into a smaller field-test card. The launcher disables Unreal on-screen debug messages; its intrusive ray-tracing residency warning is now kept out of the image, while the underlying warning remains in the log and remains an optimization item (171 MiB / 400 MiB reported).
-- Captured the actual game window at 1920×1080. The loaded world shows the creek, layered roots/rock banks and moving deer beside the player. The Quinn mannequin remains a temporary placeholder; this pass did not measure frame rate or change the authored level.
+**No animal gameplay work yet.** The current generated scene is a mechanics/traversal proof, not an acceptable art base. Grow the compact starter village with enterable homes/work buildings, garden/farm edge, creek/bridge and a short returning forest loop inside `/Game/Maps/GreenveilExplorationPolish`, the canonical Greenveil world. Keep Wildbound's existing player/game-mode foundation. Use prior Git revisions and the preserved package as recovery points; do not make a disposable parallel WildBound map. The free Medieval Village Megascans Sample has now been acquired locally as a separate local project with five village World Partition maps; its output project is associated with UE 5.8, while the cached package source reports UE 5.3. The main sample World Partition map loaded in UE 5.8 editor mode, but its 16K minimap started an estimated 11.7 GiB texture rebuild; the editor was stopped before visual inspection. Standalone game mode bypassed the minimap and Zen 507, but rebuilt static-mesh/Nanite data; the warm-cache retry reached 192/258 meshes before system commit pressure forced a stop, before gameplay. A reversible local sample-only shader-worker cap is in place, and the DDC cache is retained. The old Electric Dreams editor was closed normally after its memory use was identified. No sample assets have been brought into WildBound. Once resource guards permit, inspect `MedievalVillage_P_WP`, select bounded assets, and incorporate them into the canonical Greenveil world. Electric Dreams remains a local woodland source but is too large to serialize whole. Keep animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) paused, draft and unmerged; see the [starter village brief](../world/greenveil-starter-village.md).
 
-## October 21 character, collision and animal movement pass
+## Source maintenance checkpoint
 
-- `WildboundEditor` compiled successfully on UE 5.8.4 and launched the close-range Electric Dreams map at native 1920×1080.
-- The player now uses Unreal’s bundled Quinn rig and Unarmed locomotion Animation Blueprint. Install locally with `Tools/Install-PrototypeCharacterAssets.ps1`; it copies the engine’s 125 MB character pack to ignored `Content/Characters/Mannequins/`. Keep it local; those engine content files are not committed.
-- Player and deer use Pawn-profile capsules with Character Movement collision. Deer now auto-possesses `AIController_0`, turns toward its wander input and moves through swept floor-following Character Movement instead of direct transform stepping.
-- Live window screenshots several seconds apart showed the deer move down from the bank, across the creek and change direction. The player mesh and forest rendered. This pass did not run an exhaustive obstacle course or re-test care/build/network actions. The Quinn asset is a temporary developer mannequin, not final Wildbound character art.
-- Added opt-in `-AutoMovementTest` to `Tools/Start-Wildbound.ps1`. It drives the actual Character Movement input for forward, camera-relative turn and strafe phases, rotates the PlayerController camera yaw, then logs distance, yaw change and grounded mode. Verified in the live preview: **PASS**, 547.4 cm planar movement, 55° camera yaw change, grounded in Walking mode; the test emitted one final result after timer cleanup was corrected. The regular preview was relaunched without the test flag.
+The build helper uses a 6.5 GiB one-action floor for compilation, bounded map generation and packaging; the 16 GiB special gate was removed. UBT parallel actions remain selected from live commit headroom. The local model was unloaded and the old Electric Dreams editor closed normally before building. The editor compile, map generation, UAT package and movement traversal passed. Preserve the new package and its evidence; next inspect a bounded village-asset subset and continue cumulative work on the canonical map.
 
-## Delivered and verified
+## Project and recovery points
 
-- Installed toolchain identified on the local development workshop: Unreal Engine 5.8.4, Visual Studio 2022, MSVC toolchain and Windows SDK 10.
-- Fixed UE 5.8 target settings and C++ compile diagnostics. `WildboundEditor` and game build pass.
-- Generated and saved `/Game/Maps/GreenveilField`: small forest clearing with real imported forest assets, floor, trail, set dressing, player start, deer and default game mode.
-- Imported a CC0 deer static model and Poly Haven CC0 environment assets; credits/license record is in `docs/art/ASSET-CREDITS.md`.
-- Packaged/cooked Win64 Development build successfully and launched it in a window. Local output: `<local-project-root>\Builds\WildBoundGreenveil\Windows\Wildbound.exe`.
-- Static verification passed 58 checks; native simulation, snapshot and placement suites passed 34, 22 and 13 checks respectively.
-- Packaged listen server accepted two simulated client connections. No gameplay RPC or replication assertions were run.
-- Reproduced and fixed the white-screen defect through movable generated foliage and controlled exposure/lighter fog. Rebuilt the package and visually confirmed the standalone window renders; startup log confirms GreenveilField loaded.
-- Owner feedback: use an official free Unreal environment as the visual starting point. Electric Dreams now serves as the bounded local preview; experimental PCG/Substrate features remain outside required Wildbound runtime systems.
-- The 1920×1080 output held 60 FPS in the starting view with saved Medium scalability settings and 60% TSR (1152×648 internal); this is upscaled, not a native-1080p or traversal benchmark.
-- Ground-probed deer placement and short-range wandering compiled in both the sample plugin and main Wildbound target. Live preview showed the deer moving along the creek bank with its feet grounded; the model still has no walk cycle.
-- Updated README, roadmap and developer/project state documents to distinguish compile/package evidence from playtest evidence.
+- Keep the Unreal checkout, engine, licensed asset sources, local caches, local AI data and packaged builds in workstation-configured locations. Do not publish local paths, host details or source-restricted assets.
+- Branch: the Greenveil exploration staging branch, based on the project's current `main`.
+- Map/default launch: `/Game/Maps/GreenveilExplorationPolish`.
+- Latest package: fresh archive with the canonical map. Native-1080p traversal passed 15/15 grounded points over 326.1 m, zero navigation failures and no animals. All-Medium averaged 50.38 FPS; Medium with Low shadows averaged 75.65 FPS; Low averaged 93.53 FPS. The click-to-play launcher defaults to Medium/Low-shadow and accepts high for High settings. Earlier package checkpoints remain intact. WASD move, mouse look, Space jump.
+- Preserve older package directories and the pre-existing local GreenveilField map edit; the latter is intentionally excluded from this commit.
 
-## October 21 asset-integration continuation
+## Verified
 
-- Rebased local work onto current `origin/main` at `c193dc1` after discovering GitHub had advanced 105 commits beyond the original checkout. The older local build commit is preserved on `backup/asset-based-greenveil-2026-10-21`; do not force-push it.
-- Integrated the local Fab Animal Variety Pack doe mesh with idle-breath, walk and run sequences; retained the CC0 standing deer as a fallback when that optional local pack is absent. Added 12 Free Shrubs Pack instances around the forest edge in the local generated map.
-- Fab packs remain excluded from Git because their source files cannot be redistributed standalone. Asset references, attribution, optional shrub generation and fallback behavior are in the tracked source/docs; the locally generated map that contains Fab references remains uncommitted.
-- Rebuilt `WildboundEditor` and the Win64 Development game, reran native suites (34/22/13), static source checks (58) and documentation links (169), then cooked 620 packages and launched `<local-project-root>\Builds\WildBoundPreAlpha2\Windows\Wildbound.exe`.
-- PreAlpha5 is the latest package. It cooks 685 packages and is running windowed at 1920×1080, `r.ScreenPercentage=100`, dynamic resolution disabled and a 60 FPS cap; the cap is not evidence of a measured frame rate. A Windows Security firewall prompt still overlays the game; click Cancel to continue offline.
+Editor compilation, canonical-map generation, packaging and the latest packaged traversal passed. The movement-input route reached 15/15 grounded points over 326.1 m with zero navigation failures and no animals. At native 1080p, Medium with Low shadows averaged **75.65 FPS** (p95 15.354 ms; peak 1,489.2 MiB), all-Medium averaged **50.38 FPS**, and Low averaged **93.53 FPS**. These are automated single-route measurements, not sustained certification. Visual review still shows the mannequin and cottage placeholders. See [daily notes](DAILY-DEVELOPMENT.md).
 
-## Current owner playtest
+The latest GPU trace showed about 17.94 ms average GPU frame time at all-Medium quality, with shadow depth averaging 5.45 ms. The latest packaged run measured 75.65 FPS with Medium settings and Low shadows. The test helper checks Ollama before and during traversal and defers/stops its own test process when a local model is loaded. No local inference should be interrupted. The first cook failed because `SkipCookingEditorContent` excluded textures used by Landmass startup materials. The verified helper omits that flag. Authoring defects involving Python rotation order, zero-size navigation bounds, instanced-material usage, terrain axes and the return trail were corrected and retested. Do not restore earlier generated scenes.
 
-The current launch target is the close-range Electric Dreams forest level, running with Wildbound's GameMode. It uses native 1920×1080, a 60 FPS cap and 100% screen percentage; no traversal frame-time measurement has been made. The window is running with the Quinn mannequin and wandering deer. Check capsule collisions around the roots/logs, player movement, feeding/watering, needs and block placement.
+## Reproduce locally
 
-## Known visual and gameplay limits
+1. Verify local content mounts with `Tools/Link-ElectricDreamsSampleContent.ps1 -SampleRoot <locally installed sample directory>` and install Quinn using `Tools/Install-PrototypeCharacterAssets.ps1 -EngineRoot <installed UE 5.8 root>`. Follow the [asset inventory](../art/GREENVEIL-ASSET-INVENTORY.md); never upload the packs.
+2. Run `Tools/Build-GreenveilExploration.ps1 -EngineRoot <installed UE 5.8 root> -GenerateMap` to compile the editor and rebuild the scene from its deterministic script.
+3. To package, add `-Package -ArchiveDirectory <new local directory outside the repository>`. The helper refuses an existing archive directory. Copy `Tools/Launch-PackagedGreenveil.cmd` to the archive root as `Launch-Greenveil.cmd`.
+4. Test using `Tools/Launch-GreenveilExploration.ps1 -Executable <new Windows/Wildbound.exe> -Quality 1 -TraversalTest -ExitAfterTest`. Quality 2 selects High; use `-ShadowQualityOverride 0` for the experimental Medium-with-Low-shadows comparison. The script defers to Ollama models. Use `-SkipScreenshots` for cleaner frame timing and `-TraceFile <local .utrace path>` for a local-only Insights capture. Test launches are uncapped; read the summary's PASS/FAIL rather than trusting process exit alone.
+5. Runtime logs go to ignored project `Saved/GreenveilBuild`. The package's `Windows/Wildbound/Saved` holds the summary, frame CSV and screenshots. Preserve evidence before rerunning because those filenames are reused. The current verification summary and its limits are in the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
-- The player is now a rigged and animated engine Quinn mannequin, still temporary visual art rather than a finished Wildbound homesteader.
-- The doe has a local skeletal mesh and idle/walk/run assets wired into the actor. The AI controller and character movement now visibly change position/direction in the live preview; test ground contact and obstacle response across the whole slice.
-- Bowl and pail are environment props; no inventory or actual bowl-target interaction exists.
-- Starter supplies and world state are in memory. Blocks are temporary cubes; no voxel terrain.
-- White-screen issue is fixed. The current world renders, but still needs a better environmental foundation and visual review.
-- Client connections were tested only. No action was sent to verify replication, denial logic, animal vitals or building state.
+Portable C++ and static checks, with their scope clearly separated from gameplay evidence, are documented in the [developer setup](../developers/README.md#repeatable-source-checks).
 
-## Next implementation sequence
+## Next bounded work
 
-1. Playtest the player/deer capsule collision around sample roots, logs and foliage; verify movement, care, needs and block placement.
-2. Measure native-1080p traversal frame time and assess the sample ray-tracing warning.
-3. Source/import licensed Wildbound homesteader art and improve the small forest slice only after its packaged readability/performance is assessed.
-4. Add two-client functional assertions for authoritative care and block replication.
-5. Test animal movement around a small enclosure, then evaluate persistence and dedicated-server packaging.
+The `ElectricDreams_PCGForest` breakdown map has been inventoried read-only. Its forest blueprint spans roughly 512 × 512 m and contains about 572,150 instances across 164 mesh types; do not use the full generated actor as the Greenveil world. `Saved/Logs/SaveForestSliceCopy.log` shows the full-map save triggered Nanite builds for 199 referenced meshes (several estimated at 3–6 GB each) and ultimately failed on a 137.3 MiB allocation because the paging file was too small. No candidate map was saved, and the source is unchanged. The editor overhead view confirms dense authored canopy but does not establish playable ground-level composition. The read-only 50 m scatter grid identifies X=5,000–15,000 cm, Y=5,000–15,000 cm as the lowest-density interior 100 m window sampled (552 points versus a 1,081 median); treat it only as a ground-level inspection candidate. Before another map save, inspect a bounded set of source assets and preflight its Nanite requirements; do not serialize or duplicate the whole sample world or create a throwaway WildBound gameplay map. The verified Greenveil package was launched and its route captures reviewed: canopy assets are promising, but clearing exposure, the mannequin, and blockout cottages remain obvious. Choose assets from rendered ground-level evidence, retain Wildbound's existing game mode and movement, and add them to the canonical Greenveil map while preserving the known-good package and Git revision for recovery. The six Poly Haven CC0 candidate sets are imported locally but not placed; wire and validate the flower materials before using them. Then verify traversal, collision and performance. No animal gameplay.
 
-
-Do not start a large world, major new systems, or expensive asset generation before this foundation behaves correctly.
-
-## Documentation-only review — October 21, 2026
-
-Developer setup, first-playable gates, system-status summaries, asset-rights wording and documentation navigation were updated against the recorded UE 5.8.4 prototype evidence. [Audit findings](DOCUMENTATION-AUDIT-2026-10-21.md) describe corrected drift and open security/configuration and reproducibility follow-ups. **No desktop check, new Unreal compile, game interaction test, server session or game feature implementation was performed in the documentation audit.** The next real work remains the hands-on Greenveil interaction acceptance in [Issue #2](https://github.com/Systemkill90/WildBound/issues/2).
-
-## Concept art homepage addition — October 21, 2026
-
-Eight generated art plates from the preceding design session were prepared as original-dimension, optimized WebP files and added to the GitHub homepage and [illustrated concept atlas](../art/concept-atlas/README.md) in one atomic repository update: four plates covering **20 creature ideas**, a six-biome mood board, one starter equipment sheet and two male/female homesteader costume/model-reference sheets. All are **concept art only**; no new Unreal characters, models, items, biomes or gameplay were implemented or tested. Existing decisions and the next practical milestone (Greenveil hands-on care/build validation) remain unchanged.
-
-## Repository presentation refresh — October 21, 2026
-
-The public `README.md` now opens with existing Wildbound concept art, a concise game introduction, simpler thematic navigation, an evidence-based prototype summary, and an expandable developer section. Added dedicated landing pages for art, the world, gameplay systems, and project records; reorganized the documentation hub and visually clarified the roadmap. This was **presentation/documentation work only**: no Unreal source changes, no new gameplay verification, and no changes to approved game lore. Draft speculative concepts remain in their review PRs. Next technical step remains [hands-on Greenveil care/build validation](https://github.com/Systemkill90/WildBound/issues/2).
-
-## Greenveil canopy update — October 21, 2026
-
-- Replaced the sparse tree line with 72 instances of two mature European hornbeam forest meshes from the local Electric Dreams sample, arranged in three irregular rows around the open animal-care meadow. The assets use the sample’s textured trunk, seasonal foliage, wind-capable materials and Nanite geometry. Meshes and dependencies are local-only; the public Git repository does not contain them.
-- Removed the unsuccessful Grab3D willow experiment from the generated level. Its stylized drooping leaves did not fit Wildbound’s realism target.
-- Regenerated and map-checked `/Game/Maps/GreenveilField` with zero Unreal map errors/warnings. Cooked 685 packages, archived `<local-project-root>\Builds\WildBoundPreAlpha5\Windows\Wildbound.exe`, and launched it windowed at 1920×1080 with 100% screen percentage, dynamic resolution disabled, and a 60 FPS cap.
-- The Windows Security firewall prompt overlays the game. Click **Cancel** to reveal the offline demo. Do not treat the cap as a frame-rate measurement; gameplay interactions, doe animation and traversal performance remain untested in PreAlpha5.
-- The generated map remains local because it includes local Fab asset references. The repeatable tree dependency migration helper is `Scripts/Editor/ImportElectricDreamsTrees.py` and expects the locally installed sample at `<local-project-root>\Assets\Samples\ElectricDreamsEnv.uproject`.
-
-## Electric Dreams full-world foundation — October 21, 2026
-
-- Owner rejected the generated shrub-ring visual and asked for a prebuilt world as the base. Inspection found `/Game/Levels/PCG/ElectricDreams_PCG` has 392 level actors (four landscape proxies) and a designated player start; the full `/Game/Levels/ElectricDreams_Env` has 15,244 actors.
-- `Tools/Link-ElectricDreamsSampleContent.ps1` locally junctions the Epic sample's content folders into `Project/Content`; no Epic sample files are added to Git. A partial earlier migration is retained under `<local-project-root>\Cache\SampleContentLinkBackup-2026-10-21`.
-- `/Game/Levels/ElectricDreams_Env` overrides its default GameMode with `GM_AnimSandbox_C`. `Tools/Start-Wildbound.ps1` now appends Wildbound's GameMode via a map URL option so the Wildbound pawn, deer, needs HUD and construction controls are used.
-- `WildboundEditor` compiled successfully and the full level reached gameplay with the Wildbound HUD. The first image was from the sample's AnimSandbox GameMode and showed a camera under the level; after the override, the view showed the detailed forest/river environment and Wildbound HUD. The Wildbound pawn remains a primitive placeholder.
-- The first override run showed sample ray-tracing and exposure-budget warnings. The sample-matched renderer configuration is now restored for the close-range level; its live HUD still shows a ray-tracing geometry-budget warning. The 15,244-actor main level caused an 829-mesh Nanite rebuild and nearly exhausted virtual-memory commit, so it was stopped. The smaller PCG forest map is the current default to bound the local test.
+Do not resume animal gameplay, huge sample worlds, networking, persistence or other major systems without a new owner priority. The automated route is useful evidence, not exhaustive manual QA or release certification.
