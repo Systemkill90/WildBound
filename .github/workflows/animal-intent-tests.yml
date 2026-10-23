@@ -1,0 +1,29 @@
+name: Animal intent tests (portable C++)
+
+on:
+  push:
+    paths:
+      - 'Source/Wildbound/Public/WildboundAnimalIntent.h'
+      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
+      - 'Tests/Native/AnimalIntentTests.cpp'
+      - '.github/workflows/animal-intent-tests.yml'
+  pull_request:
+    paths:
+      - 'Source/Wildbound/Public/WildboundAnimalIntent.h'
+      - 'Source/Wildbound/Public/WildboundAnimalSimulation.h'
+      - 'Tests/Native/AnimalIntentTests.cpp'
+      - '.github/workflows/animal-intent-tests.yml'
+
+jobs:
+  native-intent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile intent policy tests
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic \
+            -I Source/Wildbound/Public \
+            Tests/Native/AnimalIntentTests.cpp -o /tmp/wildbound-intent-tests
+      - name: Test animal need and threat priorities
+        run: /tmp/wildbound-intent-tests
