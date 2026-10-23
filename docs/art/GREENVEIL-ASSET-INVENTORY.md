@@ -1,6 +1,6 @@
 # Greenveil exploration asset inventory
 
-Inspected October 22, 2026 in the local development environment. This is an availability and provenance audit, not a purchase receipt or a grant of redistribution rights.
+Inspected October 23, 2026 in the local development environment. This is an availability and provenance audit, not a purchase receipt or a grant of redistribution rights.
 
 | Local source | Available content | Exploration use and boundary |
 | :-- | :-- | :-- |
@@ -9,6 +9,7 @@ Inspected October 22, 2026 in the local development environment. This is an avai
 | `Assets/PolyHaven/rock_moss_set_02`, `tree_stump_01` | Mossy rocks and stump FBX/textures | Rocks and woodland dressing. CC0. |
 | `Assets/PolyHaven/wooden_bowl_01`, `wooden_bucket_01` | Household prop FBX/textures | Cottage supply props. CC0; decorative only. |
 | `Assets/PolyHaven/TreeSmall02` | Additional tree FBX/textures | Inspected, not required by this slice; keep the selected canopy cohesive. |
+| Poly Haven CC0 2K FBX sources: `grass_medium_01`, `flower_gazania`, `flower_ursinia`, `boulder_01`, `root_cluster_01` | Five newly staged model/texture sets; about 85 MB total | Ready for import review and small-map composition tests. Download and hashes verified; **not yet imported into Unreal or used in a map**. Optional assets, not a fixed Greenveil species/palette decision. [Source pages and CC0 terms](ASSET-CREDITS.md). |
 | `Assets/Samples/Content/Megascans` | Electric Dreams hornbeam canopy, Kikuyu grass, clover; many additional forest/rock/landscape assets | Two hornbeam meshes, two grass meshes and one clover mesh selected. Sample source stays in its local installation, junctioned into the project. Neither the sample maps nor its source meshes/materials/textures are added to Git. |
 | `Assets/Samples/Content/Megascans/Surfaces/SwampWater` | Swamp-water normal texture | Referenced by the original Greenveil creek material for local testing. Keep the source texture and Epic sample installation local; the authored material does not embed or redistribute that texture. Confirm the owner's Fab/Epic entitlement before any external package distribution. |
 | `Assets/Samples/Content/GV_FreeShrubsPack` | Wind-authored shrub pack | Three shrub variants selected, with distance culling. Source remains local. |
@@ -23,7 +24,7 @@ Inspected October 22, 2026 in the local development environment. This is an avai
 
 ## Greenveil style anchor
 
-Use the [Greenveil Basin concept sheet](concept-atlas/biomes-atlas.webp) and [biome notes](../world/biomes.md) as the art-direction source: pastoral, fertile and settled; rolling meadow, birch and orchard groves, a clear stream, flower banks, mossy stone, practical timber/stone buildings, warm honey sunlight and restrained ecology-linked magic. This should be a realistic game environment with a quiet fantasy layer, not a uniformly dark forest or generic Megascans showcase. Electric Dreams supplies production-quality foliage, terrain and material craft; its darker sample grade is a reference for asset fidelity, while Greenveil keeps the brighter pastoral palette and lived-in settlement composition. The board is concept art, not a literal asset checklist.
+Use the [Greenveil Basin concept sheet](concept-atlas/biomes-atlas.webp) and [biome notes](../world/biomes.md) as the current art-direction source: pastoral, fertile and settled; rolling meadow, birch and orchard groves, a clear stream, flower banks, mossy stone, practical timber/stone buildings, warm honey sunlight and restrained ecology-linked magic. Aim for realistic game-environment craft with a quiet fantasy layer. This is a flexible direction, not a locked specification: evolve it as more details, assets, playtests and ideas are added. Electric Dreams supplies production-quality foliage, terrain and material craft; its darker sample grade is a reference for asset fidelity, not a required Greenveil palette. The board is concept art, not a literal asset checklist.
 
 The local sample also contains unselected forest sets that may support this pass: `Megascans/3D_Assets/ForestGround`, `ForestTerrain`, `MossyForestRoots`, `OldFallenTree`, `LargeFallenTree`, `ForestRockFormation`, and `MossyForestRock`; plant sets include `3D_Plants/GroundCover`, `DeadLeaves`, and additional fern variants. They remain local sample references until deliberately added to a verified Greenveil map. The authored Electric Dreams PCG forest breakdown is a candidate bounded base, not a direction to ship its entire sample world.
 
