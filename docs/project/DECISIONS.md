@@ -2,10 +2,10 @@
 
 | Date | Decision | Reason |
 | :-- | :-- | :-- |
-| 2026-10-22 | Keep the Unreal checkout/DDC and local tools on E:, engine/licensed asset source in local storage, packages on D:, and local-model weights on USB G:; preserve existing D:/C: paths with junctions where possible | Reduce pressure on the Windows drive without moving active Unreal source assets to removable/network storage. Buffalo NAS was not mounted. |
+| 2026-10-22 | Keep Unreal source, engine, licensed assets, packages and local-model data in separately configured local storage; keep machine-specific locations out of the public project | Reduce Windows-drive pressure without moving active source assets to removable/network storage |
 | 2026-10-22 | Prioritize populated Greenveil exploration; pause animal gameplay and PR #9 | Explicit owner correction supersedes the earlier care/enclosure implementation sequence |
 | 2026-10-22 | Author a new 180 × 160 m map with selected local assets, HISM vegetation and original structure placeholders | Bound memory/performance, preserve the old map and packages, and avoid loading the full sample world |
-| 2026-10-22 | Disable hardware ray tracing; use Medium native-1080p as the normal demo launch | Actual packaged tests measured 52.20 FPS Medium / 41.72 FPS High on the local [GPU model redacted]; neither proves locked 60 |
+| 2026-10-22 | Disable hardware ray tracing; use Medium native-1080p as the normal demo launch | Actual packaged tests remain below the 60 FPS target; continue profiling within the bounded zone |
 | 2026-10-20 | Independent public Wildbound repository | Dedicated record for this original game |
 | 2026-10-20 | Unreal Engine 5.8.4 for current Windows prototype | Installed engine and MSVC toolchain compile/package the editor and game; keep version evidence explicit |
 | 2026-10-20 | UE targets use BuildSettingsVersion V7 and Unreal 5.8 include order | Avoid shared-target environment conflicts in installed UE 5.8.4 |

@@ -6,9 +6,9 @@
 
 ## The journey in brief
 
-**Verified October 22:** UE 5.8.4 editor/game compilation and a fresh Windows package of the original 180 × 160 m Greenveil exploration zone, built after moving the project to E: and the engine and assets in local storage. The latest packaged run completed 15/15 grounded route points over 326 m with zero navigation failures or animal actors. [Evidence](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+**Verified October 22:** UE 5.8.4 editor/game compilation and fresh V5 Windows package of the original 180 × 160 m Greenveil exploration zone. Two packaged Medium traversals completed 15/15 grounded route points over 326 m with zero navigation failures or animal actors. The cache-warmed pass averaged 49.89 FPS; the water remains nearly black in captures. [Evidence and daily field notes](docs/project/DAILY-DEVELOPMENT.md).
 
-**Our next step:** manual exploration, off-trail collision/camera/jump QA, exposure and cottage refinement, and profiling within this populated zone. The latest cold native-1080p Medium traversal averaged 49.0 FPS (p95 23.0 ms), including shader/PSO warm-up; locked 60 remains open.
+**Our next step:** diagnose creek visibility and exposure from packaged captures, then manual side-path, off-trail collision/camera/jump QA and profiling within this populated zone. Latest V5 cache-warmed native-1080p Medium traversal averaged 49.89 FPS (p95 22.764 ms); locked 60 remains open.
 
 **Owner priority:** no animal gameplay work yet. Animal-intent [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains paused, draft and unmerged. The older care/enclosure sequence below is deferred, not the current implementation order.
 
@@ -36,7 +36,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 **Now:** explore the packaged Greenveil zone manually. Check side routes, jump/camera and off-trail collisions; refine cottage interiors, materials, grass placement and zone boundaries.
 
-The local Windows demo uses native 1920×1080 and Medium settings by default. The latest fresh package measured 20.398 ms mean / 23.046 ms p95 frame time during automated traversal; shader/PSO misses were logged. A normal launch caps at 60; optimization for sustained native-1080p 60 remains open.
+The local Windows demo uses native 1920×1080 and Medium settings by default. V5 measured 25.391 ms mean / 44.751 ms p95 cold and 20.043 ms mean / 22.764 ms p95 after a second cache-warmed traversal. A normal launch caps at 60; optimization for sustained native-1080p 60 remains open.
 
 **Next:** improve this slice from actual exploration feedback and profiling. Keep source-restricted art local, protect the tested package, and expand content only within a measured memory/frame budget.
 

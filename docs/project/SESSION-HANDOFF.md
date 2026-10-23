@@ -1,6 +1,6 @@
 # Wildbound session handoff
 
-Updated October 22, 2026 after NVMe storage relocation, fresh packaged exploration testing and launch. Read [Current state](CURRENT-STATE.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
+Updated October 22, 2026 after V5 map regeneration, packaging and two traversal probes. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [test report](GREENVEIL-EXPLORATION-2026-10-22.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Current owner scope
 
@@ -8,32 +8,28 @@ Updated October 22, 2026 after NVMe storage relocation, fresh packaged explorati
 
 ## Project and recovery points
 
-- Workshop checkout: `<local-project-root>\Project`; UE 5.8.4: `<local-project-root>\Engine\UE_5.8`; local licensed asset library: `<local-project-root>\Assets`.
-- Legacy `<local-project-root>\Project`, `<local-project-root>\Engine\UE_5.8` and `<local-project-root>\Assets` paths resolve to the new locations through junctions. Package/archive stays on D:.
-- Unreal Derived Data Cache: `<local-project-root>\Caches\UnrealDerivedDataCache`. VS Code extensions/profile are on E:, with C: compatibility junctions.
-- Ollama model files: `<local-project-root>\LocalAI\Models` (USB). Ollama install was copied and verified at `<local-project-root>\LocalAI\Ollama` and added to the user PATH, but the original C: install remains intact because the cleanup/junction action was blocked by automatic review. The Ollama server is stopped and did not load the model during this session; startup remains unverified. `OLLAMA_MODELS` user setting points to G:.
-- C: had about 17.0 GB free at this checkpoint. Buffalo NAS was not mounted and was not used.
-- Branch: `staging/greenveil-exploration-2026-10-22`, from `6ca9fc9` on `main`.
+- Keep the Unreal checkout, engine, licensed asset sources, local caches, local AI data and packaged builds in workstation-configured locations. Do not publish local paths, host details or source-restricted assets.
+- Branch: the Greenveil exploration staging branch, based on the project's current `main`.
 - Map/default launch: `/Game/Maps/GreenveilExplorationPolish`.
-- Package: `<local-project-root>\Builds\GreenveilExploration-2026-10-22-NVMe-Verified\Windows\Wildbound.exe`; it is currently running windowed at native 1080p Medium. The root launcher is `Launch-Greenveil.cmd`. WASD move, mouse look, Space jump.
-- Preserve older package directories, especially `WildBoundPreAlpha5`. The pre-existing local GreenveilField map edit was copied to `Cache/GreenveilExplorationBaseline-2026-10-22` and is excluded from this commit.
+- Latest package: the local V5 Windows archive; no game process is currently running. The prior V4 package remains intact. Use its root `Launch-Greenveil.cmd` launcher. WASD move, mouse look, Space jump.
+- Preserve older package directories and the pre-existing local GreenveilField map edit; the latter is intentionally excluded from this commit.
 
 ## Verified
 
-Editor/game compilation and fresh Windows packaging passed after the storage move. The latest cold Medium run passed 15/15 grounded points and 326 m with zero nav failures/animals, averaging **49.03 FPS**, p95/p99 **23.046/24.917 ms** and peak memory **3,991 MiB**, while shader PSOs warmed. The launched package remains open on the desktop. This is not a locked-60 result; see the test report for earlier results and limitations.
+Editor/game compilation, map generation, Windows packaging and two packaged traversals passed. Both runs completed 15/15 grounded points and approximately 326 m with zero nav failures/animals. V5's first cold run averaged **39.38 FPS**, p95/p99 **44.751/66.686 ms**, peak **1,592.1 MiB**; the second cache-warmed run averaged **49.89 FPS**, p95/p99 **22.764/24.609 ms**, peak **1,545.8 MiB**. This is not a locked-60 result. The creek still reads nearly black and clearings over-bright in actual captures; see [daily notes](DAILY-DEVELOPMENT.md) and the [test report](GREENVEIL-EXPLORATION-2026-10-22.md).
 
 The first cook failed because `SkipCookingEditorContent` excluded textures used by Landmass startup materials. The verified helper omits that flag. Authoring defects involving Python rotation order, zero-size navigation bounds, instanced-material usage, terrain axes and the return trail were corrected and retested. Do not restore earlier generated scenes.
 
 ## Reproduce locally
 
-1. Verify local content mounts with `Tools/Link-ElectricDreamsSampleContent.ps1` and install Quinn using `Tools/Install-PrototypeCharacterAssets.ps1`. Follow the [asset inventory](../art/GREENVEIL-ASSET-INVENTORY.md); never upload the packs.
-2. Run `Tools/Build-GreenveilExploration.ps1 -GenerateMap` to compile the editor and rebuild the scene from its deterministic script.
-3. To package, add `-Package -ArchiveDirectory <local-project-root>\Builds\GreenveilExploration-NEW-NAME`. The helper refuses an existing archive directory. Copy `Tools/Launch-PackagedGreenveil.cmd` to the archive root as `Launch-Greenveil.cmd`.
+1. Verify local content mounts with `Tools/Link-ElectricDreamsSampleContent.ps1 -SampleRoot <locally installed sample directory>` and install Quinn using `Tools/Install-PrototypeCharacterAssets.ps1 -EngineRoot <installed UE 5.8 root>`. Follow the [asset inventory](../art/GREENVEIL-ASSET-INVENTORY.md); never upload the packs.
+2. Run `Tools/Build-GreenveilExploration.ps1 -EngineRoot <installed UE 5.8 root> -GenerateMap` to compile the editor and rebuild the scene from its deterministic script.
+3. To package, add `-Package -ArchiveDirectory <new local directory outside the repository>`. The helper refuses an existing archive directory. Copy `Tools/Launch-PackagedGreenveil.cmd` to the archive root as `Launch-Greenveil.cmd`.
 4. Test using `Tools/Launch-GreenveilExploration.ps1 -Executable <new Windows/Wildbound.exe> -Quality 1 -TraversalTest -ExitAfterTest`. Quality 2 selects High. Test launches are uncapped; read the summary's PASS/FAIL rather than trusting process exit alone.
-5. Runtime logs go to project `Saved/GreenveilBuild`. The package's `Windows/Wildbound/Saved` holds the summary, frame CSV and screenshots. Preserve evidence before rerunning because those filenames are reused. Latest summary is `<local-project-root>\Builds\GreenveilExploration-2026-10-22-NVMe-Verified\Windows\Wildbound\Saved\GreenveilTraversal-summary.txt`.
+5. Runtime logs go to ignored project `Saved/GreenveilBuild`. The package's `Windows/Wildbound/Saved` holds the summary, frame CSV and screenshots. Preserve evidence before rerunning because those filenames are reused. The latest summary is the local V5 archive's `Windows/Wildbound/Saved/GreenveilTraversal-summary.txt` (the second run); the cold-run detail remains in ignored `Saved/GreenveilBuild` runtime logs.
 
 ## Next bounded work
 
-Manually inspect side trails, jumping/camera and off-trail collisions; improve cottage interiors/materials, grass distribution and obvious zone edges. Profile before adding more mesh varieties. Preserve the tested package as a recovery point.
+Diagnose creek visibility and exposure from the packaged captures; then manually inspect side trails, jumping/camera and off-trail collisions when the owner is available. Improve cottage interiors/materials, grass distribution and obvious zone edges. Profile before adding more mesh varieties. Preserve both V4 and V5 packages as recovery points.
 
 Do not resume animal gameplay, huge sample worlds, networking, persistence or other major systems without a new owner priority. The automated route is useful evidence, not exhaustive manual QA or release certification.

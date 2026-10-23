@@ -79,7 +79,7 @@ if ($EngineRoot -and -not (Test-Engine $EngineRoot)) {
 if ($Candidates.Count -eq 0) {
     Write-Note "BLOCKED: No Unreal Editor installation found."
     Write-Note "Install UE5 through Epic Games Launcher and a supported Visual Studio C++ toolchain."
-    Write-Note "Or rerun with -EngineRoot 'C:\Path\To\UE_5.x'."
+    Write-Note "Or rerun with -EngineRoot <installed Unreal Engine root>."
     exit 2
 }
 $SelectedEngine = $Candidates[0]

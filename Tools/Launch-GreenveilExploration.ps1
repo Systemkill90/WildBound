@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$EngineRoot = '<local-project-root>\Engine\UE_5.8',
+    [string]$EngineRoot = $env:WILDBOUND_UNREAL_ENGINE_ROOT,
     [string]$Map = '/Game/Maps/GreenveilExplorationPolish',
     [string]$Executable = '',
     [ValidateRange(0,3)][int]$Quality = 1,
@@ -8,6 +8,7 @@ param(
     [switch]$ExitAfterTest
 )
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if (-not $Executable -and -not $EngineRoot) { throw 'Set WILDBOUND_UNREAL_ENGINE_ROOT or pass -EngineRoot / -Executable.' }
 $Evidence = Join-Path $RepoRoot 'Saved\GreenveilBuild'
 New-Item -ItemType Directory $Evidence -Force | Out-Null
 $Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'

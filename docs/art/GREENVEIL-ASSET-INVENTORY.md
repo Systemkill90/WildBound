@@ -1,6 +1,6 @@
 # Greenveil exploration asset inventory
 
-Inspected October 22, 2026 in the owner's `<local-project-root>` workshop. This is an availability and provenance audit, not a purchase receipt or a grant of redistribution rights.
+Inspected October 22, 2026 in the local development environment. This is an availability and provenance audit, not a purchase receipt or a grant of redistribution rights.
 
 | Local source | Available content | Exploration use and boundary |
 | :-- | :-- | :-- |
@@ -10,6 +10,7 @@ Inspected October 22, 2026 in the owner's `<local-project-root>` workshop. This 
 | `Assets/PolyHaven/wooden_bowl_01`, `wooden_bucket_01` | Household prop FBX/textures | Cottage supply props. CC0; decorative only. |
 | `Assets/PolyHaven/TreeSmall02` | Additional tree FBX/textures | Inspected, not required by this slice; keep the selected canopy cohesive. |
 | `Assets/Samples/Content/Megascans` | Electric Dreams hornbeam canopy, Kikuyu grass, clover; many additional forest/rock/landscape assets | Two hornbeam meshes, two grass meshes and one clover mesh selected. Sample source stays in its local installation, junctioned into the project. Neither the sample maps nor its source meshes/materials/textures are added to Git. |
+| `Assets/Samples/Content/Megascans/Surfaces/SwampWater` | Swamp-water normal texture | Referenced by the original Greenveil creek material for local testing. Keep the source texture and Epic sample installation local; the authored material does not embed or redistribute that texture. Confirm the owner's Fab/Epic entitlement before any external package distribution. |
 | `Assets/Samples/Content/GV_FreeShrubsPack` | Wind-authored shrub pack | Three shrub variants selected, with distance culling. Source remains local. |
 | Engine-bundled `Characters/Mannequins` | Quinn rig and unarmed locomotion | Controllable temporary player; locally installed using the existing helper. Source remains ignored. |
 | `Assets/Grab3D/WeepingWillow` | FBX, manifest and local `LICENSE.txt` declaring CC0 | Inspected and excluded: prior visual review rejected its stylized silhouette. |

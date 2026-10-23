@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$EngineRoot = '<local-project-root>\Engine\UE_5.8',
+    [string]$EngineRoot = $env:WILDBOUND_UNREAL_ENGINE_ROOT,
     [string]$Map = '/Game/Maps/GreenveilExplorationPolish',
     [string]$ArchiveDirectory = '',
     [switch]$GenerateMap,
@@ -8,6 +8,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if (-not $EngineRoot) { throw 'Set WILDBOUND_UNREAL_ENGINE_ROOT or pass -EngineRoot with the installed UE 5.8 root.' }
 $Project = Join-Path $RepoRoot 'Wildbound.uproject'
 $Evidence = Join-Path $RepoRoot 'Saved\GreenveilBuild'
 New-Item -ItemType Directory $Evidence -Force | Out-Null
@@ -19,7 +20,7 @@ if ($GenerateMap) {
     if ($LASTEXITCODE -ne 0) { throw 'Map generation failed; previous packages remain intact.' }
 }
 if ($Package) {
-    if (-not $ArchiveDirectory) { $ArchiveDirectory = "<local-project-root>\Builds\GreenveilExploration-$Stamp" }
+    if (-not $ArchiveDirectory) { throw 'Pass -ArchiveDirectory to a local output folder outside the repository.' }
     if (Test-Path -LiteralPath $ArchiveDirectory) { throw 'Choose a NEW archive directory to protect existing packages.' }
     & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$Project" -noP4 -platform=Win64 -clientconfig=Development -build -cook "-map=$Map" -stage -pak -iostore -compressed -archive "-archivedirectory=$ArchiveDirectory" -nodebuginfo -utf8output *> "$Evidence\Package-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Packaging failed; see Saved/GreenveilBuild.' }

@@ -2,12 +2,13 @@
 # Epic's engine files remain the source of truth; this keeps content out of Git.
 [CmdletBinding()]
 param(
-    [string]$EngineRoot = "<local-project-root>\Engine\UE_5.8"
+    [string]$EngineRoot = $env:WILDBOUND_UNREAL_ENGINE_ROOT
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+if (-not $EngineRoot) { throw 'Set WILDBOUND_UNREAL_ENGINE_ROOT or pass -EngineRoot with the installed UE 5.8 root.' }
 $Source = Join-Path $EngineRoot "Templates\TemplateResources\High\Characters\Content\Mannequins"
 $Destination = Join-Path $RepoRoot "Content\Characters\Mannequins"
 

@@ -9,11 +9,10 @@
 | Component | Last recorded working version |
 | :-- | :-- |
 | Unreal Engine | **5.8.4** |
-| Visual Studio | Community 2022 **[compiler version redacted]** |
-| MSVC | **[toolchain version redacted]** |
-| Windows SDK | **[SDK version redacted]** |
-| Source checkout (example, not a requirement) | `<local-project-root>\Source` |
-| Latest Windows package (local only) | `<local-project-root>\Builds\GreenveilExploration-2026-10-22-R2\Windows\Wildbound.exe` |
+| Supported compiler | Visual Studio 2022 with the Unreal C++ workload |
+| Windows SDK | A version supported by the installed Unreal Engine |
+| Source checkout | Any local development directory |
+| Latest Windows package | Local-only archive; no machine-specific location is published |
 
 Do not assume the previous package exists on a new machine or that the editor is still open. No packaged executable is committed. Record your actual engine/toolchain versions when repeating the build.
 
@@ -24,7 +23,7 @@ Do not assume the previous package exists on a new machine or that the editor is
 3. Use `Tools/Start-Wildbound.cmd -ShowEngines` to inspect recognized local editor installs, or pass `-EngineRoot` to the helper.
 4. Run `Tools/Start-Wildbound.cmd -BuildOnly` to try compiling `WildboundEditor` with the selected installation. Look in ignored `Saved/WildboundBootstrap` for build logs and the exact result.
 5. Verify the local sample mounts and mannequin using the existing install/link helpers. `Tools/Start-Wildbound.cmd` now defaults to `/Game/Maps/GreenveilExploration`. For explicit measured settings, use `Tools/Launch-GreenveilExploration.ps1`; see the [handoff](../project/SESSION-HANDOFF.md).
-6. Use `Tools/Build-GreenveilExploration.ps1 -GenerateMap -Package -ArchiveDirectory <new directory>` to rebuild and package. Never target an existing working archive. Run the packaged traversal probe and manually inspect WASD/mouse/jump, side paths and collisions. Record PASS, FAIL or BLOCKED.
+6. Use `Tools/Build-GreenveilExploration.ps1 -EngineRoot <installed UE 5.8 root> -GenerateMap -Package -ArchiveDirectory <new local directory outside the repository>` to rebuild and package. Never target an existing working archive. Run the packaged traversal probe and manually inspect WASD/mouse/jump, side paths and collisions. Record PASS, FAIL or BLOCKED.
 7. The [older prototype playtest](PROTOTYPE-PLAYTEST.md) covers deferred care/build work. Multiplayer, dedicated server operation and persistence remain outside the active exploration task.
 
 ## Source layout

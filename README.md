@@ -81,7 +81,7 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 desktop build delivers a new **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest relocated local storage package passed a **326 m / 15-waypoint** automated traversal at native 1080p Medium, with grounded checkpoints and zero navigation failures or animal actors. Its cold run averaged **49.0 FPS**; shader/PSO warm-up caused noticeable hitches, so 60 FPS is not yet achieved. [Read the actual test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
+The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. The latest V5 package passed two **326 m / 15-waypoint** automated traversals at native 1080p Medium, with grounded checkpoints and zero navigation failures or animal actors. It averaged **39.38 FPS cold** and **49.89 FPS on the cache-warmed repeat**; the creek still appears nearly black and 60 FPS is not yet achieved. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
@@ -94,6 +94,12 @@ The October 22 desktop build delivers a new **180 × 160 m Greenveil exploration
 **The next milestone:** manually explore the populated zone, refine architecture/materials and side paths, and optimize further. No animal gameplay work yet. Epic/Fab source stays local; concept art remains illustration, not 3D content. The normal launcher's 60 FPS ceiling is not a locked-60 result.
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
+
+## Development log
+
+### October 22, 2026 · Greenveil creek and crossing pass
+
+Rebuilt and packaged the saved Greenveil exploration map with a new PBR creek surface and shorter footbridge decks. Two packaged traversals completed **15/15 grounded waypoints over 325.9–326.0 m**, with **14/14 navigation legs**, zero navigation failures and zero animal actors. Native-1080p Medium performance averaged **39.38 FPS cold** and **49.89 FPS on the cache-warmed repeat**; the creek still reads nearly black in the capture, so its appearance remains open. [Read today's field notes and evidence →](docs/project/DAILY-DEVELOPMENT.md)
 
 ## Find what you're looking for
 
@@ -116,7 +122,7 @@ New mythical creatures, fantastical villages, walking trees and giant mushroom f
 <details>
 <summary><strong>For developers: build notes and checks</strong></summary>
 
-The last recorded setup used Unreal Engine **5.8.4**, Visual Studio Community 2022 **[compiler version redacted]**, MSVC **[toolchain version redacted]**, and Windows SDK **[SDK version redacted]**. The packaged Windows executable is kept outside GitHub.
+The project currently targets Unreal Engine **5.8.4** and a compatible Visual Studio 2022 C++ workload. The packaged Windows executable is kept outside GitHub.
 
 - [Get set up](docs/developers/README.md) and [follow the hands-on playtest](docs/developers/PROTOTYPE-PLAYTEST.md).
 - From a compatible Windows checkout, `Tools/Start-Wildbound.cmd` attempts an editor build and Greenveil launch. Passing this script is not proof of playable features.
