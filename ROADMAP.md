@@ -6,13 +6,32 @@
 
 ## The journey in brief
 
+**First major milestone: Early Access.** Current engineering work is a foundation toward an owner-defined Early Access scope; it is not a release-date or feature-count promise.
+
 **Foundation established:** Unreal Engine 5.8.4 editor/game compilation, a locally launched Wildbound prototype and an authored Electric Dreams environment as the visual base were recorded on October 21, 2026.
 
 **Our next step:** verify real in-game movement, deer care and construction inputs. The code compiling is not the same as those interactions working.
 
 **After that:** a rigged animal, enclosures that affect navigation, two-client authoritative gameplay, and eventually reliable persistent dedicated worlds. Breeding, villages and new biomes build on those foundations.
 
-## Detailed milestones
+## Early Access readiness
+
+Early Access is Wildbound's **first major milestone**. Use the [Project Playbook](docs/project/PROJECT-PLAYBOOK.md) to organize a full readiness audit across product scope, the core playable loop, stability and performance, co-op, persistence, content and asset rights, player-facing readiness, release process, and quality approval.
+
+The exact scope, supported platforms, price, release date and acceptance thresholds are not set here. The readiness gates below are planning questions, not promises that every system is already built or will ship in Early Access. Mark each gate with evidence as **pass**, **fail**, **deferred by owner**, or **not yet checked**. A missing check is not a pass.
+
+Before an Early Access candidate can be called ready:
+
+- The owner has approved what the build includes, what remains deferred, and the limitations communicated to players.
+- The included core loop has repeatable, hands-on acceptance steps in a packaged build. Source code, native tests, a compile, or a successful cook alone do not prove it.
+- Stability and performance have been measured against owner-approved target hardware and budgets during representative play.
+- Every co-op, server, or persistence claim included in the scope has been tested at the gameplay level; omitted claims are clearly marked deferred.
+- The representative slice has no known critical progression blockers, its remaining issues are triaged, and shipped content has documented provenance and distribution rights.
+- A clean checkout can build/package the approved candidate using documented steps, and the release candidate has an owner go/no-go review.
+
+These gates do not promote a proposed feature or alter the current implementation record. The [Current State](docs/project/CURRENT-STATE.md) and [Session Handoff](docs/project/SESSION-HANDOFF.md) remain the evidence records for work completed and next steps.
+
+## Detailed engineering milestones
 
 Milestones show evidence, **not percent-finished guesses**. The first packaged Unreal prototype now launches locally. Gameplay quality and interaction checks remain open until verified in play.
 
