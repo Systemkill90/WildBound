@@ -49,4 +49,6 @@
 
 | 2026-10-22 | **Sylvae** is the approved name for Ellowyn's recreated, once-thought-extinct playable species, named after the Sylweave; they carry more of Ellowyn's DNA / living essence than any creation **since the Ancients** | Explicit owner selection; identity of the Ancients, Sylvae anatomy and specific power mechanics remain open |
 
+| 2026-10-24 | **Greenveil Basin master visual board approved**: realistic high-fidelity eternally green fantasy rolling countryside; forests, lakes, valleys, Kethri canopy village, Nimrui fungal hollow, Wolfkin lakefront timber settlement, natural and restrained magical details; fall biome separate | Explicit owner approval of visual design; [approved direction](../world/greenveil-approved-visual-direction.md); no Unreal implementation implied |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
