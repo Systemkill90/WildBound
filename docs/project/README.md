@@ -6,6 +6,7 @@
 
 | Need to know | Open |
 | :-- | :-- |
+| **What rules guide project work and Early Access planning?** | [Project Playbook](PROJECT-PLAYBOOK.md) |
 | **What's built and verified?** | [Current State](CURRENT-STATE.md) |
 | **What happens next?** | [Session Handoff](SESSION-HANDOFF.md) |
 | **What did we decide?** | [Decision Log](DECISIONS.md) |
@@ -16,6 +17,10 @@
 ## Status in one paragraph
 
 As of the **October 20, 2026 development record**, Unreal Engine 5.8.4 successfully compiled Wildbound's editor/game targets, and a small Greenveil Windows test package was launched. The first deer is still a static-pose model with basic ground-probed wandering. Standalone C++ rules tests pass, but in-game feeding, building, gameplay-state replication, dedicated server operation and world persistence are **not verified or built as complete features**.
+
+## First major milestone
+
+**Early Access is the first major milestone.** The detailed included scope, release date, price, and final acceptance thresholds remain owner decisions. The [roadmap](../../ROADMAP.md) lists evidence gates, while the [playbook](PROJECT-PLAYBOOK.md) describes how to audit readiness without turning proposals into release promises.
 
 ## The next practical milestone
 
