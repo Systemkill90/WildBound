@@ -14,6 +14,14 @@ Candidate wildlife includes deer, rabbits, foxes, meadow birds, and large grazin
 
 **Design role:** learn gathering, building, growing food, animal care, and cooperative settlement. Cozy still leaves room for danger.
 
+## Greenveil's permanent season — approved October 24, 2026
+
+**Owner decision:** Greenveil Basin stays **eternally green, lush and springlike**. Its trees do **not** turn autumn colors and do **not** undergo seasonal leaf fall. Keep thriving green foliage, flowers, greenery, meadows and verdant forests as the region's distinctive year-round appearance. Ordinary daily weather and lighting can still vary; do not infer a required four-season visual cycle for this biome.
+
+A **separate fall/autumn biome elsewhere in Wildbound** will provide autumn colors and atmosphere. Its name, geography, inhabitants and design are **not decided**. Do not reclassify an established biome or approve an exploratory biome name without owner approval.
+
+Earlier suggestions about seasonal flower blooms or seasonal fishing changes **are superseded for Greenveil** by this simplified permanent-green direction; specific flower and fish populations remain to be designed separately.
+
 ## Greenveil Basin — expanded fantasy geography (owner direction, October 23, 2026)
 
 **Confirmed direction:** Greenveil should be a **sprawling rolling countryside**, with extensive forests, lakes and networks of **smaller valleys**, not one single broad mountain-enclosed bowl. Give the pastoral setting a **more overt fantasy atmosphere** while retaining ecology and believable materials. Include **small villages belonging to Kethri, Nimrui and Wolfkin**, reflecting each people's distinct identity and scale. They are allied or friendly in the broader established relationship map, although individual settlements retain their own cultures.
