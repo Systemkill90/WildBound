@@ -6,8 +6,8 @@
 
 | Need to know | Open |
 | :-- | :-- |
-| **What are the full repository instructions?** | [Wildbound project instructions](../../AGENTS.md) |
-| **What rules guide project work and Early Access planning?** | [Project Playbook](PROJECT-PLAYBOOK.md) |
+| **What instructions guide GPT work on Wildbound?** | [Wildbound project instructions](../../AGENTS.md) |
+| **How are audits and Early Access readiness organized?** | [Project Playbook](PROJECT-PLAYBOOK.md) |
 | **What's built and verified?** | [Current State](CURRENT-STATE.md) |
 | **What happens next?** | [Session Handoff](SESSION-HANDOFF.md) |
 | **What did we decide?** | [Decision Log](DECISIONS.md) |
