@@ -19,3 +19,8 @@ Pin a UE5 minor version and supported C++ compiler. Compile the UE5 scaffold and
 No Unreal engine/toolchain confirmation in this environment; therefore editor/game/server builds, gameplay and replication remain unverified. Voxel plugin/approach and animal save identity remain open.
 
 Keep Wildbound separate from ShroudForge. Exclude credentials, server saves, unlicensed assets, engine binaries and platform SDKs. Conversations are not automatically synced to GitHub.
+
+
+## Greenveil visual-direction approval — October 24, 2026
+
+Owner approved the complete Greenveil environment concept board. Treat [this master visual specification](../world/greenveil-approved-visual-direction.md) as the art target. Next development action is a **bounded lake-and-forest slice**, with scale plan, approved-source vegetation/assets, village-site blockouts, collision traversal and measured packaged FPS. Keep image binary separate until imported and verified; do not claim the full biome is implemented. Keep new animal gameplay paused. Existing older entries above are historical and may not reflect main-branch compilation records.
