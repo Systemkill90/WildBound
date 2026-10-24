@@ -23,3 +23,8 @@ Validate the toolchain and compile; prototype editable construction and animal n
 ## Release and Xbox expectations
 
 There is no release date, downloadable game, Xbox approval, store submission, certification result, or announced console support. PC is the proposed initial development environment.
+
+
+## Approved Greenveil environment look — October 24, 2026
+
+The owner approved the complete [Greenveil master visual direction](docs/world/greenveil-approved-visual-direction.md): eternally green, photorealistic fantasy rolling hills/lakes/forests with three distinct peoples' settlements. **Visual approval only**; build a small measured, navigable lake-and-forest vertical environment slice first. Existing roadmap statuses in this staging branch are historically stale; use recent main-branch verification to assess gameplay and build status before implementation. Animal gameplay expansion remains paused.
