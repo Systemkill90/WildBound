@@ -39,3 +39,8 @@ The owner wants all five approved Greenveil families made as game-ready Unreal t
 ## Greenveil settlement roster consolidated — October 25, 2026
 
 Confirmed landscape settlement peoples: **Kethri, Nimrui, Wolfkin, freshwater Brinefolk, independent humans rejecting Veyrath, Elves and Wildlings**. Elves and Wildlings are especially present in the Ancient Woodlands, each with distinct approved art direction. See [settlement concepts](../world/greenveil-settlement-concepts.md) and [master visuals](../world/greenveil-approved-visual-direction.md). These remain world design; no villages, characters or gameplay were implemented during this documentation change. Next: landmark and settlement site markers in a bounded first playable lake-and-forest environment; preserve map/build and leave animal gameplay paused.
+
+
+## Greenveil ground layer approved — October 25, 2026
+
+Owner approved [the ground-layer concept and specification](../world/greenveil-ground-layer-approved.md): meadow, forest, lakeshore, glade, Sylweave flora and ground-cover details. Artwork PNG has not yet been committed to GitHub; visual implementation and packaged tests remain pending. Next: build a bounded Unreal terrain/ground-cover slice. New animal gameplay stays paused.
