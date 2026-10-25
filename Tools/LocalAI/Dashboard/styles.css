@@ -288,6 +288,13 @@ body { background: var(--garage-bg); color: var(--garage-text); }
 .creative-library-form .library-wide { grid-column:1 / -1; }
 .creative-library-form button { justify-self:start; }
 .creative-library-records small { color:#a6b5a0; }
+.creative-library-records>label { display:block; margin-top:8px; }
+.creative-library-records input[type=search] { box-sizing:border-box; width:100%; margin-top:4px; padding:7px; color:#eef2e9; background:#172017; border:1px solid #51644a; border-radius:6px; }
+.creative-library-records .library-detail { margin-top:8px; display:grid; gap:8px; }
+.library-detail section { padding:8px; border:1px solid #40543c; border-radius:7px; }
+.library-detail pre { max-height:190px; overflow:auto; white-space:pre-wrap; color:#dbe7d5; }
+.library-detail img { display:block; max-width:min(100%,340px); max-height:240px; object-fit:contain; }
+.library-detail audio { display:block; max-width:100%; }
 .production-availability,.production-agent-panel { padding:9px 13px; }
 .production-availability>summary,.production-agent-panel>summary { cursor:pointer; display:flex; justify-content:space-between; gap:10px; color:#d7e5d0; font-size:11px; font-weight:600; }
 .production-availability>summary span { color:#b8cda9; font-weight:400; }

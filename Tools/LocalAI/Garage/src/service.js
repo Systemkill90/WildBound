@@ -89,6 +89,15 @@ async function sendArtifact(res,id,kind){
   res.writeHead(200,{'Content-Type':type,'Content-Length':stat.size,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Disposition':'inline'});
   fs.createReadStream(file).on('error',()=>res.destroy()).pipe(res);
 }
+function sendLibraryMedia(res,id,version,index){
+  const record=library.record(id),entry=record?.versions.find(item=>item.version===Number(version)),media=entry?.media[Number(index)];
+  if(!media)return reply(res,404,{error:'Original media was not found.'});
+  const file=within(library.archive,path.join(library.nasRoot,media.object));
+  if(fs.statSync(file).size!==media.bytes||crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')!==media.sha256)return reply(res,409,{error:'Original media failed archive verification.'});
+  const ext=path.extname(file).toLowerCase(),type={'.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.wav':'audio/wav','.flac':'audio/flac','.mp3':'audio/mpeg','.m4a':'audio/mp4'}[ext]||'application/octet-stream';
+  res.writeHead(200,{'Content-Type':type,'Content-Length':media.bytes,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Disposition':'inline'});
+  fs.createReadStream(file).on('error',()=>res.destroy()).pipe(res);
+}
 async function attachUploadedModel(req,res,id,url){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
   const name=String(url.searchParams.get('filename')||'');
@@ -116,6 +125,10 @@ async function handle(req,res){
   const url=new URL(req.url,'http://127.0.0.1:'+config.port);
   if(req.method==='GET'&&url.pathname==='/status')return reply(res,200,await status());
   if(req.method==='GET'&&url.pathname==='/library')return reply(res,200,library.status());
+  const recordMatch=url.pathname.match(/^\/library\/records\/([a-z0-9][a-z0-9-]{2,79})$/);
+  if(req.method==='GET'&&recordMatch){const record=library.record(recordMatch[1]);return record?reply(res,200,record):reply(res,404,{error:'Design record not found.'});}
+  const mediaMatch=url.pathname.match(/^\/library\/media\/([a-z0-9][a-z0-9-]{2,79})\/(\d+)\/(\d+)$/);
+  if(req.method==='GET'&&mediaMatch)return sendLibraryMedia(res,mediaMatch[1],mediaMatch[2],mediaMatch[3]);
   if(req.method==='POST'&&url.pathname==='/library/sync'){if(library.busy)return reply(res,409,{error:'Idea Board sync is already running.'});void library.sync().then(()=>queue.resumeMissing()).catch(error=>console.error('Creative Library sync:',error));return reply(res,202,{started:true});}
   if(req.method==='POST'&&url.pathname==='/library/supply'){const payload=await body(req,40*1024*1024);const result=library.supply(payload);void library.sync().then(()=>queue.resumeMissing()).catch(error=>console.error('Creative Library sync:',error));return reply(res,202,result);}
   if(req.method==='POST'&&url.pathname==='/library/approve'){const payload=await body(req);const record=library.approve(payload.id,Number(payload.version));const resumed=queue.resumeMissing();return reply(res,200,{record,resumed});}

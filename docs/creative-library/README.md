@@ -4,7 +4,7 @@ The Garage's **Update Idea Board** button imports bundles placed in its private 
 
 ## Supply a design
 
-Open Production Team → Creative Library → **Supply a design and original files**. Enter the original design notes and `subject:facet` reference tags, and select any accessible original image or audio files. The local Garage writes the files to its private NAS inbox, verifies them during archival, and creates an exploratory Git record. Each UI upload accepts up to ten files, 15 MiB per file and 25 MiB total. Larger originals can be placed in the NAS inbox manually. No SMB port or public share is exposed. If an original is unavailable, leave it missing rather than substituting a summary.
+Open Production Team → Creative Library → **Supply a design and original files**. Enter the original design notes and `subject:facet` reference tags, and select any accessible original image or audio files. The local Garage writes the files to its private NAS inbox, verifies them during archival, and creates an exploratory Git record. Each UI upload accepts up to ten files, 15 MiB per file and 25 MiB total. Larger originals can be placed in the NAS inbox manually. Search the design list and use **Review originals** to inspect text, provenance, images, audio, and checksums before approval. No SMB port or public share is exposed. If an original is unavailable, leave it missing rather than substituting a summary.
 
 Place one folder per design under the configured `CreativeLibrary/inbox`. Include `manifest.json`, a UTF-8 text file, and original media. Example:
 
