@@ -54,3 +54,8 @@ Two illustrated regional atlas images are owner approved and packaged in the Cha
 ## Greenveil first-corridor technical design — October 25, 2026
 
 [Engineering plan](../world/greenveil-first-corridor-engineering-plan.md) reconciles the approved regional map against the existing 512 m R16 prototype. Heights sampled from the PNG: meadow +12.47 m, forest +11.78 m, glade +5.76 m. Old lake lookout (366,228) is **underwater at −2.80 m**; new dry candidate (320,200) is about +6.9 m. **Replace old marker during next versioned terrain regeneration**, confirm paths and drainage. The current heightfield has an east lake basin but no tested river/outflow system. Desktop UE demo acceptance remains the blocker; do not merge or change the working map. No gameplay tests occurred in this planning pass.
+
+
+## Great Lake District detailed draft — October 25, 2026
+
+[Great Lake District environment design](../world/greenveil-great-lake-district-design.md) now describes credible linked freshwater hydrology, five shoreline types, underwater habitats, Brinefolk protected-cove and Wolfkin lakefront settlement blockouts, islands, routes, vistas and staged Unreal acceptance. Design concepts are **proposed, not new canon or built features**. Next: owner review or a detailed settlement visual layout, while waiting for demo acceptance. Animal gameplay remains paused.
