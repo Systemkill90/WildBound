@@ -34,3 +34,8 @@ The owner approved the final detailed Ellowyn concept illustration, featuring lo
 ## Five game-ready tree families — October 25, 2026
 
 The owner wants all five approved Greenveil families made as game-ready Unreal tree assets. See [the production specification](../world/greenveil-tree-production-spec.md) for distinct variants, materials, wind, collision, licensed inputs, packaging and measured playtest acceptance. Actual custom meshes remain outstanding. Next: stage the asset-build work as part of the bounded Greenveil environment slice, preserve the working project, and leave animal gameplay paused.
+
+
+## Greenveil settlement roster consolidated — October 25, 2026
+
+Confirmed landscape settlement peoples: **Kethri, Nimrui, Wolfkin, freshwater Brinefolk, independent humans rejecting Veyrath, Elves and Wildlings**. Elves and Wildlings are especially present in the Ancient Woodlands, each with distinct approved art direction. See [settlement concepts](../world/greenveil-settlement-concepts.md) and [master visuals](../world/greenveil-approved-visual-direction.md). These remain world design; no villages, characters or gameplay were implemented during this documentation change. Next: landmark and settlement site markers in a bounded first playable lake-and-forest environment; preserve map/build and leave animal gameplay paused.
