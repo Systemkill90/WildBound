@@ -2,7 +2,7 @@
 
 ## Creative Library pilot — October 25
 
-The first vertical slice is implemented on `feature/creative-library-pilot`: private NAS inbox/archive, direct desktop upload of accessible originals, checksummed media, Git design records, explicit approval, worker reference packages, and Garage Missing Reference Requests. The next acceptance step is a coherent owner-supplied design bundle and approved worker retrieval. Semantic conflict review and automated PR creation remain later increments. See [pilot workflow](docs/creative-library/README.md). Do not resume paused animal gameplay during this work.
+The first vertical slice is implemented on `feature/creative-library-pilot`: private NAS inbox/archive, direct desktop upload of accessible originals, checksummed media, Git design records, explicit approval, worker reference packages, and Garage Missing Reference Requests. Garage `2.5.0-pilot` also persists nine supported lifecycle stages through checksum-verified recovery archival and final handoff. The full Node suite passes 39/39, and startup reconciliation completed the two new stages for an existing owner-approved Unreal import without rerunning it. The next creative acceptance step is a coherent owner-supplied design bundle and approved worker retrieval. Prompt-to-3D and new rigging/animation authoring remain Limited. Semantic conflict review and automated PR creation remain later increments. See [pilot workflow](docs/creative-library/README.md) and [completion evidence](docs/project/evidence/ai-garage-completion-2026-10-25.json). Do not resume paused animal gameplay during this work.
 
 *One full, walkable place first — then the wilderness grows.*
 

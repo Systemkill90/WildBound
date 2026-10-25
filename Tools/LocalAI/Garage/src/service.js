@@ -47,7 +47,9 @@ function agentReadiness(id,c){
     'technical-artist':[['blender','Blender model worker']],
     'rigging-animator':[['rigging','Auto-rigging and animation authoring model']],
     'asset-inspector':[['python','Local media inspection runtime'],['blender','3D model inspection worker']],
-    'unreal-integrator':[['unreal','Unreal Editor commandlet']]
+    'unreal-integrator':[['unreal','Unreal Editor commandlet']],
+    'recovery-manager':[['recovery','Writable checksummed recovery archive']],
+    'release-manager':[['recovery','Verified evidence and handoff ledger']]
   }[id]||[];
   const missing=checks.filter(([key])=>!c[key]).map(([,name])=>name);
   return {ready:missing.length===0,state:missing.length?'limited':'ready',missing};
@@ -62,7 +64,8 @@ async function status(){
   const image=probes[1].status==='fulfilled'?probes[1].value:null;
   const audio=probes[2].status==='fulfilled'?probes[2].value:null;
   const engineRoot=path.join(config.engineRoot,'Engine','Binaries','Win64','UnrealEditor-Cmd.exe');
-  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),rigging:false};
+  const recoveryRoot=path.join(jobsRoot,'recovery');let recovery=false;try{fs.mkdirSync(recoveryRoot,{recursive:true});fs.accessSync(recoveryRoot,fs.constants.W_OK);recovery=true;}catch{}
+  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),recovery,rigging:false};
   const agents=TEAMS.map(agent=>({...agent,...agentReadiness(agent.id,checks)}));
   const capabilities=[
     {id:'image',name:'Image / texture production',available:checks.image&&checks.ollama,reason:checks.image?'Requires the local text model and Image Studio.':'Image Studio is offline.'},
@@ -71,10 +74,22 @@ async function status(){
     {id:'character-rigging-animation',name:'Character rigging and animation authoring',available:false,reason:'New rigs and animation clips need a local authoring model. Existing supplied rigs and clips are preserved during preparation.'},
     {id:'model',name:'Supplied 3D model preparation',available:checks.blender,reason:checks.blender?'Attach an approved GLB or FBX; Garage inspects and prepares it.':'Blender is not installed at the configured path.'},
     {id:'unreal',name:'Unreal import and verification',available:checks.unreal,reason:checks.unreal?'Reviewed assets can be imported and package-checked.':'Unreal Editor commandlet is unavailable.'},
+    {id:'recovery',name:'Recovery archive and handoff',available:checks.recovery,reason:checks.recovery?'Approved artifacts, manifests, and final handoffs are written to a checksummed local vault.':'The local recovery vault is not writable.'},
     {id:'text-to-3d',name:'Prompt-to-3D static assets',available:checks.text3d&&checks.image&&checks.ollama&&checks.blender,reason:checks.text3d?'Uses character design, local concept-image generation, TripoSR CPU inference, and Blender mesh preparation. Outputs are static meshes and need 3D artist review.':'The local TripoSR CPU runtime or model weights are not installed.'},
     {id:'sfx',name:'Isolated sound effects',available:checks.sfx&&checks.ollama,reason:checks.sfx?'Uses the local Stable Audio 3 small-SFX model on CPU with local Qwen art direction.':'Stable Audio 3 small-SFX model or its isolated Python runtime is not installed.'}
   ];
-  return {name:'WildBound AI Garage',version:'2.4.0-pilot',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  const lifecycle=[
+    {id:'intake',name:'Intake',ready:true,detail:'Durable local task queue with typed requests and saved revisions.'},
+    {id:'references',name:'References',ready:checks.library,detail:checks.library?'AI Librarian supplies approved, version-pinned packages.':'Creative Library storage is unavailable.'},
+    {id:'planning',name:'Planning',ready:checks.ollama,detail:checks.ollama?'Local Production Director creates briefs and dependency needs.':'Local Production Director model is unavailable.'},
+    {id:'assignment',name:'Assignment',ready:true,detail:'Typed work routes to named specialists and tool workers.'},
+    {id:'execution',name:'Execution',ready:capabilities.some(item=>item.available&&['image','audio','voice','model','sfx'].includes(item.id)),detail:'Serial resource-safe local production with timeouts and persisted state.'},
+    {id:'qa',name:'QA evidence',ready:checks.python&&checks.unreal,detail:'Files are inspected before review and rechecked before verified Unreal writes.'},
+    {id:'approval',name:'Owner approval',ready:true,detail:'Generated work stops for approve, revise, or reject; only approval permits import.'},
+    {id:'archive',name:'Recovery archive',ready:checks.recovery,detail:'Approved bytes and evidence are copied and checksum verified by revision.'},
+    {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
+  ];
+  return {name:'WildBound AI Garage',version:'2.5.0-pilot',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -161,5 +176,5 @@ async function handle(req,res){
   return reply(res,404,{error:'Unknown production endpoint.'});
 }
 const server=http.createServer((req,res)=>handle(req,res).catch(error=>reply(res,error.statusCode||400,{error:error.message||'Production request failed.'})));
-server.listen(config.port,'127.0.0.1',()=>console.log('Native Garage production service ready.'));
+(async()=>{const recovered=await queue.reconcileCompleted();server.listen(config.port,'127.0.0.1',()=>console.log(`Native Garage production service ready. Recovered handoffs: ${recovered}.`));})().catch(error=>{console.error('Garage startup recovery failed:',error);process.exitCode=1;});
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{await queue.shutdown();server.close(()=>process.exit(0));});
