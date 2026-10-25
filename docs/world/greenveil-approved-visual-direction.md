@@ -30,3 +30,7 @@ The page locks artistic direction, not world size, precise village placements, t
 3. Produce one authored, navigable scenic slice with realistic forest vegetation, streambank, one small Kethri settlement exterior and at least one recognizable landmark.
 4. Test packaged Windows traversal and collision (slopes, roads, bridge, steps), visibility/readability, and measured frame times. Record evidence before calling the area playable.
 5. Expand Nimrui/Wolfkin settlements only after the slice is validated; keep new animal gameplay work paused until owner approval.
+
+## Approved regional master map (October 25, 2026)
+
+The two approved regional cartography boards now have a [written geographic atlas](greenveil-regional-master-map.md) with seven culture settlements, a connected lake watershed, roads and landmark candidates. The illustrated proper names remain working names. The pictures are packaged in the conversation, and binary import to GitHub remains pending. This approval does not certify a UE5 playable landscape.
