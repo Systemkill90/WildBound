@@ -49,3 +49,8 @@ Owner approved [the ground-layer concept and specification](../world/greenveil-g
 ## Approved Greenveil regional master map — October 25, 2026
 
 Two illustrated regional atlas images are owner approved and packaged in the ChatGPT conversation as `Greenveil_Master_Map_Approved.zip`; the binary PNGs are **not yet uploaded to GitHub**. Detailed zone/watershed/roads/settlements/landmarks and the golden first-slice boundary are documented in [regional master map](../world/greenveil-regional-master-map.md). All newly invented names are **working names, not approved canon**. Before landscape import, desktop Codex must verify current demo acceptance [issue #16](https://github.com/Systemkill90/WildBound/issues/16), reconcile separate 512 m heightmap with regional map, and preserve the working build. No map geometry or playtest occurred during this documentation-only work. New animal gameplay remains paused.
+
+
+## Greenveil first-corridor technical design — October 25, 2026
+
+[Engineering plan](../world/greenveil-first-corridor-engineering-plan.md) reconciles the approved regional map against the existing 512 m R16 prototype. Heights sampled from the PNG: meadow +12.47 m, forest +11.78 m, glade +5.76 m. Old lake lookout (366,228) is **underwater at −2.80 m**; new dry candidate (320,200) is about +6.9 m. **Replace old marker during next versioned terrain regeneration**, confirm paths and drainage. The current heightfield has an east lake basin but no tested river/outflow system. Desktop UE demo acceptance remains the blocker; do not merge or change the working map. No gameplay tests occurred in this planning pass.
