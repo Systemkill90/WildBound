@@ -55,4 +55,6 @@
 
 | 2026-10-25 | All five approved Greenveil tree families are targets for game-ready Unreal models, not only reference art | Owner instruction; see [tree production specification](../world/greenveil-tree-production-spec.md). No new meshes or Unreal tests completed by this documentation update |
 
+| 2026-10-25 | Greenveil includes **Kethri, Nimrui, Wolfkin, freshwater Brinefolk, independent anti-Veyrath human settlers, Elves and Wildlings**; Elves and Wildlings particularly inhabit the ancient forests | Owner explicitly approved the combined Greenveil landscape and settlement concepts; [settlement design](../world/greenveil-settlement-concepts.md) and [visual direction](../world/greenveil-approved-visual-direction.md) remain design-level, not implemented villages |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
