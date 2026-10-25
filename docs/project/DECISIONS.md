@@ -51,4 +51,6 @@
 
 | 2026-10-24 | **Greenveil Basin master visual board approved**: realistic high-fidelity eternally green fantasy rolling countryside; forests, lakes, valleys, Kethri canopy village, Nimrui fungal hollow, Wolfkin lakefront timber settlement, natural and restrained magical details; fall biome separate | Explicit owner approval of visual design; [approved direction](../world/greenveil-approved-visual-direction.md); no Unreal implementation implied |
 
+| 2026-10-25 | **Ellowyn final appearance approved:** sentient cloud-high willow with exceptionally long green leaf curtains and trailing small vines, fine pastel pink/yellow flowers, dark shimmering brown bark with darker aged patches and moss; strictly non-humanoid | Explicit owner approval of revised image and [final visual sheet](../world/ellowyn-final-visual-reference.md); image binary import and UE5 asset creation remain outstanding |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
