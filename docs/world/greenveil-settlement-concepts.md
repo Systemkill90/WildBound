@@ -1,6 +1,6 @@
 # Greenveil — additional settlement concepts (owner discussion, October 25, 2026)
 
-**Status: PROPOSED / UNDER REVIEW.** Greenveil's Kethri, Nimrui and Wolfkin settlement presence is already approved; this page captures later ideas without prematurely locking details.
+**Status: APPROVED SETTLEMENT PEOPLES; SITE DESIGN DETAILS STILL UNDER REVIEW.** The owner explicitly approved Greenveil settlement presence for **Kethri, Nimrui, Wolfkin, freshwater Brinefolk, independent humans who left or rejected Veyrath, Elves and Wildlings**. Wildlings must not be omitted from the roster. Architecture and approximate landscape associations below reflect the owner-approved concept direction, while precise coordinates, village names, population, architectural engineering and gameplay implementation remain open.
 
 ## Elves and Wildlings — ancient forests (owner-directed addition, October 25, 2026)
 
