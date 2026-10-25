@@ -26,3 +26,9 @@ The first standalone landscape asset package has been generated outside GitHub a
 This prototype is a **landscape import artifact**, *not* a built Greenveil village, finished original forest, co-op playable world, water simulation or accepted terrain material. Keep species settlement landmarks as eventual map planning markers, not generated buildings. Do not merge before local UE tests and owner review.
 
 Approved art direction: [ground layer](https://github.com/Systemkill90/WildBound/blob/staging/idea-board/docs/world/greenveil-ground-layer-approved.md), [Greenveil master](https://github.com/Systemkill90/WildBound/blob/staging/idea-board/docs/world/greenveil-approved-visual-direction.md).
+
+## Import-ready package validation — October 25, 2026
+
+The conversation now includes `Greenveil_UE_Import_Ready.zip`, containing the 513×513 16-bit source PNG, all six verified 513×513 8-bit masks, existing generator/manifest, and a newly exported **unsigned little-endian `Greenveil_512m_Height.r16` (526,338 bytes)**. The archive includes `UE-IMPORT-NOTES.md` with an isolated-level import workflow, XY scale, approximate Z calibration and weightmap handling notes. The source image opened as uint16 with sampled pixel range 29,900–50,407.
+
+**No UE import was run**: the current execution environment lacks the user's Windows Unreal Editor. Local desktop operator must import into a new map, align landscape height center/water elevation, configure material layers, validate routes and record builds/performance; never modify the existing Electric Dreams/GreenveilField launch maps. Image archives remain conversation attachments and are not contained in this Git commit.
