@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WildBound AI Garage · Audio Studio</title>
+  <style>
+    :root{color-scheme:dark;--bg:#111711;--panel:#1a211b;--line:#384638;--text:#e7eee4;--muted:#abb6a8;--accent:#a5c88a;--gold:#d8bd83}*{box-sizing:border-box}body{margin:0;padding:clamp(14px,3vw,28px);background:radial-gradient(ellipse at 80% 0,#263426 0,transparent 40%),var(--bg);color:var(--text);font:14px/1.5 system-ui,Segoe UI,sans-serif}main{max-width:1050px;margin:auto}.eyebrow{color:var(--accent);font-size:10px;letter-spacing:.16em;font-weight:700}h1{font-size:27px;letter-spacing:-.03em;margin:3px 0}p{color:var(--muted);margin:4px 0 17px}.mode-tabs{display:flex;gap:7px;margin:15px 0}.mode-tab{width:auto;padding:9px 15px;background:#202a20;color:var(--muted);cursor:pointer}.mode-tab.active{color:var(--text);background:#354a30;border-color:#607b51}.panel{padding:clamp(16px,3vw,24px);border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#1d271f,#171d18);box-shadow:0 12px 30px #0002}.panel[hidden]{display:none}label{display:block;margin:14px 0 6px;color:#c4cdc0;font-size:12px}select,textarea,input,button{font:inherit;color:var(--text);background:#111711;border:1px solid var(--line);border-radius:8px;padding:10px}textarea{width:100%;min-height:108px;resize:vertical}select,input{width:100%}button{background:#31442e;border-color:#617a53;cursor:pointer;font-weight:650}button:disabled{opacity:.55;cursor:wait}.row{display:grid;grid-template-columns:1fr 190px;gap:16px}.voice-row{display:grid;grid-template-columns:1fr 190px;gap:16px}.status{margin-top:14px;min-height:22px;color:var(--accent);font-size:12px}.status.error{color:#edaa9c}audio{display:block;width:100%;margin-top:14px}small{color:var(--muted)}.hint{font-size:11px;color:#91a08d;margin-top:13px}.metadata{display:block;margin-top:9px} @media(max-width:560px){body{padding:14px}.row,.voice-row{grid-template-columns:1fr}h1{font-size:23px}}
+  </style>
+</head>
+<body><main>
+  <div class="eyebrow">WILDBOUND AI GARAGE · LOCAL MODELS ONLY</div>
+  <h1>Audio Studio</h1>
+  <p>Make game-ready music, environments, and character dialogue without opening ComfyUI or sending prompts to a cloud audio service.</p>
+  <nav class="mode-tabs" aria-label="Audio tools"><button class="mode-tab active" type="button" data-mode="voice">Character voice</button><button class="mode-tab" type="button" data-mode="music">Music &amp; ambience</button></nav>
+  <section id="voicePanel" class="panel">
+    <div class="eyebrow">KOKORO 82M · OFFLINE · CPU</div>
+    <form id="voiceForm">
+      <div class="voice-row"><div><label for="voice">Voice preset</label><select id="voice"><option value="af_bella">Bella · warm, clear</option><option value="af_nicole">Nicole · calm, airy</option><option value="am_adam">Adam · grounded, low</option></select></div><div><label for="speed">Speaking pace</label><select id="speed"><option value="0.88">Measured</option><option value="0.96" selected>Natural</option><option value="1.06">Brisk</option></select></div></div>
+      <label for="voiceText">Character dialogue</label><textarea id="voiceText" maxlength="1500" required>Welcome to Greenveil. The river is calm, the forest is waking, and there is room here for every kind of life.</textarea>
+      <button id="voiceGenerate" type="submit">Generate voice on this PC</button>
+    </form>
+    <div id="voiceStatus" class="status" role="status" aria-live="polite">Voice model is installed locally. First render may take a few seconds.</div><audio id="voicePlayer" controls hidden></audio><small id="voiceMeta" class="metadata"></small>
+    <div class="hint">Speech synthesis uses the CPU so it can run without waking the shared image and music GPU.</div>
+  </section>
+  <section id="musicPanel" class="panel" hidden>
+    <div class="eyebrow">ACE-STEP 3.5B · OFFLINE · AMD GPU</div>
+    <form id="musicForm">
+      <div class="row"><div><label for="kind">Sound type</label><select id="kind"><option value="music">Instrumental score</option><option value="ambience">Musical ambience</option></select></div><div><label for="seconds">Length (seconds)</label><input id="seconds" type="number" min="4" max="20" value="8"></div></div>
+      <label for="prompt">Describe the sound</label><textarea id="prompt" maxlength="3000" required placeholder="Greenveil creekside at dusk: gentle wooden flute, low strings, soft water texture and distant birds, subtle wonder, no vocals"></textarea>
+      <button id="musicGenerate" type="submit">Generate music on this PC</button>
+    </form>
+    <div id="musicStatus" class="status" role="status" aria-live="polite"></div><audio id="musicPlayer" controls hidden></audio><small id="musicMeta" class="metadata"></small>
+  </section>
+  <script>
+    const tabs=[...document.querySelectorAll('.mode-tab')];
+    tabs.forEach(tab=>tab.addEventListener('click',()=>{tabs.forEach(item=>item.classList.toggle('active',item===tab));document.querySelector('#voicePanel').hidden=tab.dataset.mode!=='voice';document.querySelector('#musicPanel').hidden=tab.dataset.mode!=='music';}));
+    document.querySelector('#voiceForm').addEventListener('submit',async e=>{e.preventDefault();const button=document.querySelector('#voiceGenerate'),status=document.querySelector('#voiceStatus'),player=document.querySelector('#voicePlayer'),meta=document.querySelector('#voiceMeta');button.disabled=true;player.hidden=true;meta.textContent='';status.classList.remove('error');status.textContent='Rendering speech locally on the CPU…';try{const response=await fetch('/api/voice/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:document.querySelector('#voiceText').value,voice:document.querySelector('#voice').value,speed:Number(document.querySelector('#speed').value)})});const result=await response.json();if(!response.ok)throw Error(result.error||'Voice generation failed.');player.src=result.url;player.hidden=false;meta.textContent=`${result.model} · ${result.voice} · ${Math.round(result.sampleRate/1000)} kHz · ${result.bitDepth}-bit PCM · stereo · normalized · native ${Math.round(result.sourceSampleRate/1000)} kHz mono saved in VoiceStudio/Generated/Native`;status.textContent='Voice render complete.';}catch(error){status.textContent=error.message;status.classList.add('error');}finally{button.disabled=false;}});
+    document.querySelector('#musicForm').addEventListener('submit',async e=>{e.preventDefault();const button=document.querySelector('#musicGenerate'),status=document.querySelector('#musicStatus'),player=document.querySelector('#musicPlayer'),meta=document.querySelector('#musicMeta');button.disabled=true;player.hidden=true;meta.textContent='';status.classList.remove('error');status.textContent='Waking the shared local GPU engine…';try{const response=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:document.querySelector('#kind').value,seconds:Number(document.querySelector('#seconds').value),prompt:document.querySelector('#prompt').value})});const job=await response.json();if(!response.ok)throw Error(job.error||'Could not start generation.');const start=Date.now();let result;while(Date.now()-start<900000){await new Promise(resolve=>setTimeout(resolve,1500));const poll=await fetch('/api/history/'+encodeURIComponent(job.prompt_id));result=await poll.json();if(result.status)throw Error(result.status);if(result.done)break;status.textContent='Generating locally… '+Math.floor((Date.now()-start)/1000)+' sec';}if(!result?.done)throw Error('Generation timed out. Check local Garage status before retrying.');player.src=result.url;player.hidden=false;meta.textContent=`${result.model} · ${result.seconds}s · seed ${result.seed} · ${result.elapsedSeconds}s`;status.textContent='Generation complete. Audio remains on this PC.';}catch(error){status.textContent=error.message;status.classList.add('error');}finally{button.disabled=false;}});
+  </script>
+</main></body></html>

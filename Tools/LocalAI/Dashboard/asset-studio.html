@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151a16">
+  <title>WildBound Asset Studio</title>
+  <link rel="stylesheet" href="/asset-studio.css">
+  <script type="module" src="/vendor/model-viewer-4.4.0.min.js"></script>
+  <script src="/asset-studio.js" defer></script>
+</head>
+<body>
+  <main class="asset-shell">
+    <aside class="library-panel">
+      <div class="library-heading"><div><span class="eyebrow">LOCAL MODEL LIBRARY</span><h1>3D Assets</h1></div><button id="refreshLibrary" class="quiet-button" type="button" title="Refresh models" aria-label="Refresh models">↻</button></div>
+      <p class="library-intro">Preview a GLB here, then add it to the WildBound project library.</p>
+      <div class="library-path">Content / GeneratedAIAssets / ModelStudio</div>
+      <div id="libraryStatus" class="library-status" role="status" aria-live="polite">Reading local model library…</div>
+      <ul id="modelList" class="model-list" aria-label="Saved 3D models"></ul>
+      <div class="import-card">
+        <div class="eyebrow">ADD A MODEL</div>
+        <p>Choose a self-contained glTF 2.0 binary file. Textures and geometry must be embedded in the GLB.</p>
+        <label class="file-picker" for="modelFile">Choose GLB</label>
+        <input id="modelFile" type="file" accept=".glb,model/gltf-binary" hidden>
+        <div id="selectedFile" class="selected-file">No file selected</div>
+        <button id="saveModel" class="primary-button" type="button" disabled>Add to library</button>
+        <small>Local only · max 250 MB · saved inside the WildBound project</small>
+      </div>
+      <div class="library-footnote">Unreal import is a separate step. This library preserves the GLB source for review and conversion.</div>
+    </aside>
+
+    <section class="preview-panel" aria-label="3D model preview">
+      <div class="preview-heading"><div><span class="eyebrow">INTERACTIVE PREVIEW</span><h2 id="modelTitle">Choose or drop a model</h2><p id="modelDetails">Drag to orbit · scroll to zoom · right-drag to pan</p></div><span id="modelBadge" class="format-badge">GLB · LOCAL</span></div>
+      <div id="dropZone" class="viewer-wrap">
+        <model-viewer id="modelViewer" camera-controls touch-action="pan-y" shadow-intensity="1" shadow-softness="0.8" exposure="1" tone-mapping="neutral" environment-image="neutral" interaction-prompt="none" loading="eager" reveal="auto" loop>
+          <div slot="progress-bar" class="progress-track"><div class="progress-fill"></div></div>
+        </model-viewer>
+        <div id="emptyState" class="empty-state"><div class="empty-mark">3D</div><strong>Your model preview appears here</strong><span>Choose a saved model or drop a .glb file into this area.</span></div>
+        <div id="viewerStatus" class="viewer-status" role="status" aria-live="polite"></div>
+      </div>
+      <div class="animation-bar">
+        <label class="animation-select">Animation<select id="animationSelect" disabled><option>No animation clips</option></select></label>
+        <button id="playAnimation" class="control-button" type="button" disabled>▶ Play</button>
+        <button id="resetView" class="control-button" type="button" disabled>Reset view</button>
+        <label class="speed-control">Speed <input id="animationSpeed" type="range" min="0.25" max="2" value="1" step="0.25" disabled><span id="speedValue">1×</span></label>
+        <span id="animationInfo" class="animation-info">Animation clips embedded in the GLB will appear here.</span>
+      </div>
+      <div class="preview-note"><span class="note-dot"></span><span>Animation playback uses clips already embedded in the model. Static meshes need rigging and animation authored before they can walk or idle.</span></div>
+    </section>
+  </main>
+</body>
+</html>
