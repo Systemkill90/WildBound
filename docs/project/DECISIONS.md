@@ -61,4 +61,6 @@
 
 | 2026-10-25 | **Greenveil regional master map and atlas visual composition approved**: interconnected lake watershed, ancient forests, green ridges, heartlands, hollows, seven settlement cultures, roads/trails and sacred landmarks | Owner approved both images. **All newly illustrated settlement/waterway/landmark names remain provisional**. [Master map](../world/greenveil-regional-master-map.md) is design only, not built Unreal terrain |
 
+| 2026-10-25 | **Magically realistic Greenveil freshwater underwater appearance approved**: natural sunbeams/caustics, rooted plants and mossy stones, rare understated blue-white Sylweave glow, believable freshwater clarity | Owner accepted generated underwater visual. [Indexed reference GV-LAKE-UNDERWATER-001](../art/environment/greenveil/REFERENCE-INDEX.md). Brinefolk village design remains PROPOSED and no engine work completed |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
