@@ -48,3 +48,8 @@ The owner approved both full visual region/atlas boards. The [written master map
 ## Greenveil first-corridor engineering audit — October 25, 2026
 
 [Measured technical design](docs/world/greenveil-first-corridor-engineering-plan.md) specifies meadow–forest–glade–lake route and separates regional hydrology from the small 512 m test field. A submerged former lookout marker is rejected; replace in new data release and verify route/waterline in Unreal after demo stabilization. This is a **design-stage** milestone, not a tested terrain actor or playable landscape.
+
+
+## Great Lake District design study — October 25, 2026
+
+[Detailed lake environment design](docs/world/greenveil-great-lake-district-design.md) is staged for review, including connected water flow, Brinefolk/Wolfkin villages, shoreline biomes, underwater ecological zones and exploratory islands. No terrain sculpt, fish gameplay, swimming/boats or in-engine tests in this pass. First build a bounded shore and shallow-water test after demo acceptance.
