@@ -19,6 +19,7 @@ const VOICE_MODEL = path.join(VOICE_ROOT, 'models', 'kokoro-v1.0.int8.onnx');
 const VOICE_STYLES = path.join(VOICE_ROOT, 'models', 'voices-v1.0.bin');
 const VOICE_PYTHON = process.env.WILDBOUND_VOICE_PYTHON || 'python';
 const VOICE_WORKER = path.join(__dirname, 'voice-worker.py');
+const VOICE_CATALOG = require('./voice-catalog.json').voices;
 const VOICE_OUTPUT = path.join(VOICE_ROOT, 'Generated');
 const jobs = new Map();
 let activeJob = null;
@@ -75,13 +76,14 @@ async function handle(req, res) {
     catch { return fail(res, 500, 'Audio Studio page is missing.'); }
   }
   if (req.method === 'GET' && url.pathname === '/api/status') return send(res, 200, await status());
+  if (req.method === 'GET' && url.pathname === '/api/voices') return send(res, 200, {voices:VOICE_CATALOG});
   if (req.method === 'POST' && url.pathname === '/api/voice/generate') {
     let args;
     try { args = await bodyJson(req, 8_000); } catch (error) { return fail(res, 400, error.message); }
     if (!(await status()).voiceAvailable) return fail(res, 503, 'The offline Kokoro voice model is not installed.');
     const text = String(args.text || '').trim();
     if (!text || text.length > 1_500) return fail(res, 400, 'Enter text from 1 to 1,500 characters.');
-    const voice = ['af_bella', 'af_nicole', 'am_adam'].includes(args.voice) ? args.voice : 'af_bella';
+    const voice = VOICE_CATALOG.some(item => item.id === args.voice) ? args.voice : 'af_bella';
     const speed = Math.min(1.15, Math.max(0.8, Number(args.speed) || 0.96));
     const stamp = new Date().toISOString().replace(/[-:.]/g, '').replace('T', '_').replace('Z', '');
     const filename = `wildbound_voice_${stamp}_${Math.random().toString(16).slice(2, 8)}.wav`;

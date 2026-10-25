@@ -18,7 +18,9 @@ from kokoro_onnx import Kokoro  # noqa: E402
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--voice", choices=("af_bella", "af_nicole", "am_adam"), required=True)
+    with open(os.path.join(os.path.dirname(__file__), "voice-catalog.json"), encoding="utf-8") as catalog_file:
+        voices = {voice["id"] for voice in json.load(catalog_file)["voices"]}
+    parser.add_argument("--voice", choices=sorted(voices), required=True)
     parser.add_argument("--speed", type=float, choices=None, default=0.96)
     parser.add_argument("--output", required=True)
     parser.add_argument("--native-output", required=True)
@@ -32,7 +34,7 @@ def main() -> int:
         os.path.join(VOICE_ROOT, "models", "kokoro-v1.0.int8.onnx"),
         os.path.join(VOICE_ROOT, "models", "voices-v1.0.bin"),
     )
-    audio, sample_rate = engine.create(text, voice=args.voice, speed=args.speed, lang="en-us")
+    audio, sample_rate = engine.create(text, voice=args.voice, speed=args.speed, lang="en-gb" if args.voice.startswith("b") else "en-us")
     native = np.nan_to_num(np.asarray(audio, dtype=np.float32).squeeze())
     if native.ndim != 1 or native.size == 0:
         raise ValueError("Kokoro returned an empty or unsupported audio shape.")

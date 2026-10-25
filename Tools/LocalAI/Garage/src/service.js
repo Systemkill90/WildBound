@@ -11,6 +11,12 @@ const {adapters,json}=require('./adapters');
 
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'garage.config.json'),'utf8'));
+const sfxRoot=path.resolve(path.dirname(config.dashboardRoot),'Tools','StableAudio3','optimized','tflite');
+const sfxFiles=['models/tflite/sa3-sm-sfx/dit_w8a8.tflite','models/tflite/same-s/enc_w8a8.tflite','models/tflite/same-s/dec_w8a8.tflite','models/tflite/t5gemma/encoder_fp16.tflite'];
+const sfxReady=()=>fs.existsSync(path.join(sfxRoot,'.venv','Scripts','python.exe'))&&sfxFiles.every(file=>fs.existsSync(path.join(sfxRoot,file)));
+const tripoRoot=path.resolve(path.dirname(config.dashboardRoot),'Tools','TripoSR');
+const tripoModel=path.resolve(path.dirname(config.dashboardRoot),'Models','TripoSR');
+const tripoReady=()=>fs.existsSync(path.join(tripoRoot,'.venv','Scripts','python.exe'))&&fs.existsSync(path.join(tripoModel,'config.yaml'))&&fs.existsSync(path.join(tripoModel,'model.ckpt'));
 const token=fs.readFileSync(path.join(config.dashboardRoot,'runtime','control-token.txt'),'utf8').trim();
 const jobsRoot=path.join(root,'runtime','jobs');
 const lock=path.join(root,'runtime','production.lock.json');
@@ -28,8 +34,15 @@ function agentReadiness(id,c){
   const checks={
     'production-director':[['ollama','Local text model']],
     'visual-artist':[['ollama','Local text model'],['image','Image generation service']],
-    'sound-designer':[['ollama','Local text model'],['audio','Music / ambience service'],['voice','Offline speech service']],
+    'sound-designer':[['ollama','Local text model'],['audio','Music / ambience service']],
+    'sound-effects-designer':[['ollama','Local text model'],['sfx','Isolated sound-effects model']],
+    'voice-director':[['ollama','Local text model'],['voice','Offline speech service']],
+    'voice-actor':[['voice','Offline speech service']],
+    'audio-engineer':[['python','Local audio conversion and inspection tools']],
+    'character-designer':[['ollama','Local text model']],
+    '3d-artist':[['ollama','Local text model']],
     'technical-artist':[['blender','Blender model worker']],
+    'rigging-animator':[['rigging','Auto-rigging and animation authoring model']],
     'asset-inspector':[['python','Local media inspection runtime'],['blender','3D model inspection worker']],
     'unreal-integrator':[['unreal','Unreal Editor commandlet']]
   }[id]||[];
@@ -46,18 +59,19 @@ async function status(){
   const image=probes[1].status==='fulfilled'?probes[1].value:null;
   const audio=probes[2].status==='fulfilled'?probes[2].value:null;
   const engineRoot=path.join(config.engineRoot,'Engine','Binaries','Win64','UnrealEditor-Cmd.exe');
-  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot)};
+  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),rigging:false};
   const agents=TEAMS.map(agent=>({...agent,...agentReadiness(agent.id,checks)}));
   const capabilities=[
     {id:'image',name:'Image / texture production',available:checks.image&&checks.ollama,reason:checks.image?'Requires the local text model and Image Studio.':'Image Studio is offline.'},
     {id:'audio',name:'Instrumental music and ambience',available:checks.audio&&checks.ollama,reason:checks.audio?'Requires the local text model and Audio Studio.':'Audio Studio is offline.'},
     {id:'voice',name:'Character voice',available:checks.voice&&checks.ollama,reason:checks.voice?'Uses the local text model and offline speech renderer.':'Offline speech renderer is unavailable.'},
+    {id:'character-rigging-animation',name:'Character rigging and animation authoring',available:false,reason:'New rigs and animation clips need a local authoring model. Existing supplied rigs and clips are preserved during preparation.'},
     {id:'model',name:'Supplied 3D model preparation',available:checks.blender,reason:checks.blender?'Attach an approved GLB or FBX; Garage inspects and prepares it.':'Blender is not installed at the configured path.'},
     {id:'unreal',name:'Unreal import and verification',available:checks.unreal,reason:checks.unreal?'Reviewed assets can be imported and package-checked.':'Unreal Editor commandlet is unavailable.'},
-    {id:'text-to-3d',name:'Text-to-3D generation',available:false,reason:'No local text-to-3D or auto-rigging model is installed.'},
-    {id:'sfx',name:'Isolated sound effects',available:false,reason:'The installed ACE-Step model creates music and musical ambience, not isolated sound effects.'}
+    {id:'text-to-3d',name:'Prompt-to-3D static assets',available:checks.text3d&&checks.image&&checks.ollama&&checks.blender,reason:checks.text3d?'Uses character design, local concept-image generation, TripoSR CPU inference, and Blender mesh preparation. Outputs are static meshes and need 3D artist review.':'The local TripoSR CPU runtime or model weights are not installed.'},
+    {id:'sfx',name:'Isolated sound effects',available:checks.sfx&&checks.ollama,reason:checks.sfx?'Uses the local Stable Audio 3 small-SFX model on CPU with local Qwen art direction.':'Stable Audio 3 small-SFX model or its isolated Python runtime is not installed.'}
   ];
-  return {name:'WildBound AI Garage',version:'2.1.0',pid:process.pid,activeJob:queue.active,teams:agents,agents,capabilities,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  return {name:'WildBound AI Garage',version:'2.3.0',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),capabilities,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -109,13 +123,13 @@ async function handle(req,res){
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);
   if(req.method==='POST'&&sourceMatch)return attachUploadedModel(req,res,sourceMatch[1],url);
-  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|cancel|attach|retry-import))?$/);
+  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|retry-import))?$/);
   if(match){
     if(req.method==='GET'&&!match[2])return reply(res,200,queue.get(match[1]));
     if(req.method==='POST'){
       const payload=await body(req),action=match[2];
-      const functions={approve:'approve',reject:'reject',cancel:'cancel',attach:'attach', 'retry-import':'retryImport'};
-      if(action&&functions[action])return reply(res,200,queue[functions[action]](match[1],payload.sourcePath));
+      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach', 'retry-import':'retryImport'};
+      if(action&&functions[action])return reply(res,200,action==='revise'?queue.revise(match[1],payload.feedback,payload.voice):queue[functions[action]](match[1],payload.sourcePath));
     }
   }
   if(req.method==='POST'&&url.pathname==='/shutdown'){

@@ -70,14 +70,15 @@
               <label for="productionPrompt">What should the team make or prepare?</label>
               <textarea id="productionPrompt" rows="4" maxlength="4000" required placeholder="Describe the asset, its purpose, and any WildBound identity or biome constraints."></textarea>
               <div class="production-fields">
-                <label>Asset type<select id="productionKind"><option value="auto">Let the director choose</option><option value="texture">Texture</option><option value="voice">Character voice</option><option value="music">Music</option><option value="ambience">Musical ambience</option><option value="model">Prepare a supplied 3D model</option></select></label>
+                <label>Asset type<select id="productionKind"><option value="auto">Let the director choose</option><option value="texture">Texture</option><option value="voice">Character voice</option><option value="music">Music</option><option value="ambience">Musical ambience</option><option value="sfx" disabled>Isolated sound effect</option><option value="text-to-3d" disabled>Generate a 3D asset from text</option><option value="model">Prepare a supplied 3D model</option></select></label>
                 <label>Biome<select id="productionBiome"><option value="greenveil">Greenveil</option><option value="drowned_march">Drowned March</option><option value="emberstep">Emberstep</option><option value="gloamwood">Gloamwood</option></select></label>
-                <label>Voice<select id="productionVoice"><option value="af_bella">Bella</option><option value="af_nicole">Nicole</option><option value="am_adam">Adam</option></select></label>
+                <label>Voice<select id="productionVoice"><option value="auto">Auto cast a unique voice</option></select></label>
                 <label>Audio length<select id="productionSeconds"><option value="8">8 seconds</option><option value="12">12 seconds</option><option value="16">16 seconds</option><option value="20">20 seconds</option></select></label>
               </div>
+              <label id="productionCharacterLabel" hidden>Character name<input id="productionCharacterName" maxlength="80" placeholder="Name this character to remember their approved voice"></label>
               <button id="submitProduction" class="production-primary" type="submit">Send to the team</button>
               <input id="productionModelFile" type="file" accept=".glb,.fbx,model/gltf-binary,application/octet-stream" hidden>
-              <p class="production-footnote">Available means the local backend or tool is present; every output is still a draft. Texture imports get a basic Base Color material. Supplied models keep their existing UVs, materials, and textures, but Garage does not auto-unwrap UVs or author polished materials. Review before approved Unreal import. Text-to-3D and isolated sound effects are not installed.</p>
+              <p class="production-footnote">Available means the local backend or tool is present; every output is still a draft. Texture imports get a basic Base Color material. Supplied models keep their existing UVs, materials, and textures, but Garage does not auto-unwrap UVs or author polished materials. Review before approved Unreal import.</p>
             </form>
             <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">AGENT AVAILABILITY</div><h2>Connected workers</h2></div><span id="agentReadinessSummary" class="production-muted"></span></div><div id="productionAgents" class="production-agent-list"></div></div>
           </div>

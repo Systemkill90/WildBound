@@ -1,7 +1,7 @@
 'use strict';
 (() => {
   const $ = selector => document.querySelector(selector);
-  const state = { visible:false, busy:false, jobs:[], status:null, selectedId:'', timer:null, detailFingerprint:'', modelCache:new Map() };
+  const state = { visible:false, busy:false, jobs:[], status:null, statusAt:0, selectedId:'', timer:null, clock:null, detailFingerprint:'', modelCache:new Map() };
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const labels = { queued:'Queued',running:'Working',cancelling:'Cancelling',awaiting_review:'Ready for your review',needs_source:'Waiting for a model source',importing:'Importing to Unreal',completed:'Completed',failed:'Needs attention',interrupted:'Interrupted',cancelled:'Cancelled',rejected:'Rejected' };
   const api = async (url, options={}) => {
@@ -18,10 +18,13 @@
   function renderCapabilities() {
     const items=state.status?.capabilities||[];
     $('#productionCapabilities').innerHTML=items.map(item=>`<article class="production-capability ${item.available?'ready':'limited'}"><span>${item.available?'AVAILABLE':'LIMITED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.reason)}</small></article>`).join('');
+    const sfxOption=$('#productionKind option[value="sfx"]');if(sfxOption)sfxOption.disabled=!items.some(item=>item.id==='sfx'&&item.available);
+    const text3dOption=$('#productionKind option[value="text-to-3d"]');if(text3dOption)text3dOption.disabled=!items.some(item=>item.id==='text-to-3d'&&item.available);
     const agents=state.status?.agents||state.status?.teams||[];
     const availableCount=agents.filter(agent=>agent.ready).length;
     $('#agentReadinessSummary').textContent=`${availableCount} of ${agents.length} available`;
     $('#productionAgents').innerHTML=agents.map(agent=>`<article class="production-agent"><div class="production-agent-dot ${agent.ready?'ready':'limited'}"></div><div><strong>${escape(agent.name)}</strong><span>${escape(agent.engine)}</span><small>${escape(agent.role)}</small>${(agent.missing||[]).length?`<em>Needs: ${escape(agent.missing.join(', '))}</em>`:''}</div><b class="agent-state ${agent.ready?'ready':'limited'}">${agent.ready?'Available':'Limited'}</b></article>`).join('')||'<p class="production-muted">Agent status is unavailable.</p>';
+    const picker=$('#productionVoice'),current=picker.value;picker.innerHTML='<option value="auto">Auto cast a unique voice</option>'+((state.status?.voices||[]).map(voice=>`<option value="${escape(voice.id)}">${escape(voice.name)} · ${escape(voice.accent)}</option>`).join(''));picker.value=[...picker.options].some(option=>option.value===current)?current:'auto';
   }
   function visibleJobs() {
     const filter=$('#productionFilter').value;
@@ -44,7 +47,7 @@
     if(!job.artifact)return '<div class="preview-empty">The team’s output will appear here when production and technical review are complete.</div>';
     const id=encodeURIComponent(job.id),kind=job.artifact.kind;
     if(kind==='texture')return `<div class="artifact-preview"><img alt="Generated texture preview" src="/api/garage/jobs/${id}/files/preview"><a href="/api/garage/jobs/${id}/files/preview" download>Download texture</a></div>`;
-    if(['voice','music','ambience'].includes(kind))return `<div class="artifact-preview audio-preview"><div><strong>${kind==='voice'?'Character voice':kind==='music'?'Music':'Musical ambience'}</strong><small>${escape(job.checks?.seconds??'')} seconds · ${escape(job.checks?.sampleRate??'')} Hz</small></div><audio controls preload="metadata" src="/api/garage/jobs/${id}/files/preview"></audio><a href="/api/garage/jobs/${id}/files/preview" download>Download WAV</a></div>`;
+    if(['voice','music','ambience','sfx'].includes(kind))return `<div class="artifact-preview audio-preview"><div><strong>${kind==='voice'?'Character voice':kind==='music'?'Music':kind==='sfx'?'Sound effect':'Musical ambience'}</strong><small>${escape(job.checks?.seconds??'')} seconds · ${escape(job.checks?.sampleRate??'')} Hz</small></div><audio controls preload="metadata" src="/api/garage/jobs/${id}/files/preview"></audio><a href="/api/garage/jobs/${id}/files/preview" download>Download WAV</a></div>`;
     return `<div class="artifact-preview model-preview"><canvas id="modelPreviewCanvas" width="720" height="460" aria-label="Interactive 3D model preview"></canvas><small>Drag to orbit · scroll to zoom · material colors previewed without Unreal lighting</small><a href="/api/garage/jobs/${id}/files/source" download>Download prepared model</a></div>`;
   }
   function renderDetails(job) {
@@ -52,14 +55,18 @@
     const status=labels[job.status]||job.status;
     const checks=job.checks;
     let report='';
-    if(checks){report=job.artifact?.kind==='model'?`${checks.triangles||0} triangles · ${checks.meshes||0} meshes · ${checks.armatures||0} armatures · ${checks.animations?.length||0} animation clips`:job.artifact?.kind==='texture'?`${checks.width} × ${checks.height} · ${checks.format||'image'}`:`${Number(checks.seconds||0).toFixed(1)} seconds · ${checks.sampleRate} Hz · ${checks.bitDepth}-bit · ${checks.channels} channels`;}
+    if(checks){report=['model','text-to-3d'].includes(job.artifact?.kind)?`${checks.triangles||0} triangles · ${checks.meshes||0} meshes · ${checks.armatures||0} armatures · ${checks.animations?.length||0} animation clips`:job.artifact?.kind==='texture'?`${checks.width} × ${checks.height} · ${checks.format||'image'}`:`${Number(checks.seconds||0).toFixed(1)} seconds · ${checks.sampleRate} Hz · ${checks.bitDepth}-bit · ${checks.channels} channels`;}
     const engineAssets=job.engine?.assets||[];
     const actionButtons=[];
     if(job.status==='awaiting_review')actionButtons.push('<button data-job-action="approve" class="production-primary">Approve &amp; import</button>','<button data-job-action="reject" class="production-secondary">Reject</button>');
     if(job.status==='needs_source')actionButtons.push('<button data-job-action="attach" class="production-primary">Attach GLB / FBX</button>');
     if(['queued','running','cancelling','importing','needs_source'].includes(job.status))actionButtons.push('<button data-job-action="cancel" class="production-secondary">Cancel task</button>');
     if(['failed','interrupted'].includes(job.status)&&job.approvedAt)actionButtons.push('<button data-job-action="retry-import" class="production-primary">Retry Unreal import</button>');
-    $('#productionDetails').innerHTML=`<div class="production-detail-heading"><div><div class="eyebrow">TASK REVIEW</div><h2>${escape(summary(job))}</h2><span class="job-state ${escape(job.status)}">${escape(status)} · ${escape(kindLabel(job))}</span></div><button class="quiet-refresh" data-job-action="refresh" type="button">↻</button></div>${job.error?`<p class="production-error">${escape(job.error)}</p>`:''}${report?`<p class="asset-report">${escape(report)}</p>`:''}${renderSteps(job)}${renderAgentRuns(job)}<div class="production-preview">${renderPreview(job)}</div>${engineAssets.length?`<div class="engine-evidence"><strong>Unreal verified</strong><span>${engineAssets.map(a=>escape(a.class)+' · '+escape(a.path)).join('<br>')}</span></div>`:''}<div class="production-job-actions">${actionButtons.join('')}</div>`;
+    const current=job.agentRuns?.findLast(run=>run.status==='running');
+    const live=current?`<div class="production-live" role="status"><i></i><strong>${escape(current.agentName)} is working</strong><span>${escape(current.step)}</span><time data-live-start="${escape(current.startedAt)}">0:00</time></div>`:'';
+    const voice=job.brief?.kind==='voice'?`<p class="asset-report">${job.characterName?`Character: ${escape(job.characterName)} · `:''}Voice: ${escape((state.status?.voices||[]).find(item=>item.id===job.voice)?.name||job.voice)}</p>`:'';
+    const revision=job.status==='awaiting_review'?`<div class="production-revision"><label for="productionRevision">Request specific changes for version ${escape(job.revision||1)}</label><textarea id="productionRevision" maxlength="2000" rows="2" placeholder="Describe what to change in the next pass."></textarea>${job.brief?.kind==='voice'?`<select id="productionRevisionVoice" aria-label="Voice for the next take"><option value="auto">Try a different unique voice</option>${(state.status?.voices||[]).filter(item=>item.id!==job.voice).map(item=>`<option value="${escape(item.id)}">${escape(item.name)} · ${escape(item.accent)}</option>`).join('')}</select>`:''}${job.brief?.kind==='model'?'<small>Geometry edits need an updated GLB or FBX after you submit the feedback.</small>':''}<button type="button" data-job-action="revise" class="production-secondary">Request changes</button></div>`:'';
+    $('#productionDetails').innerHTML=`<div class="production-detail-heading"><div><div class="eyebrow">TASK REVIEW · VERSION ${escape(job.revision||1)}</div><h2>${escape(summary(job))}</h2><span class="job-state ${escape(job.status)}">${escape(status)} · ${escape(kindLabel(job))}</span></div><button class="quiet-refresh" data-job-action="refresh" type="button">↻</button></div>${live}${voice}${job.error?`<p class="production-error">${escape(job.error)}</p>`:''}${report?`<p class="asset-report">${escape(report)}</p>`:''}<div class="production-job-actions">${actionButtons.join('')}</div>${revision}<div class="production-preview">${renderPreview(job)}</div><details class="production-process"><summary>Production stages and agent handoffs</summary>${renderSteps(job)}${renderAgentRuns(job)}</details>${job.revisionHistory?.length?`<details class="production-process"><summary>Earlier reviews (${job.revisionHistory.length})</summary>${job.revisionHistory.map(entry=>`<p>Version ${escape(entry.revision)} · ${escape(entry.feedback)}</p>`).join('')}</details>`:''}${engineAssets.length?`<div class="engine-evidence"><strong>Unreal verified</strong><span>${engineAssets.map(a=>escape(a.class)+' · '+escape(a.path)).join('<br>')}</span></div>`:''}`;
     if(job.artifact?.kind==='model')loadModelPreview(job);
   }
   async function loadModelPreview(job) {
@@ -84,16 +91,18 @@
   async function refresh(selectId=state.selectedId) {
     if(state.busy)return;state.busy=true;
     try{
-      const [status,jobs]=await Promise.all([api('/api/garage/status'),api('/api/garage/jobs?limit=100')]);
+      const needStatus=!state.status||Date.now()-state.statusAt>10000;
+      const [status,jobs]=await Promise.all([needStatus?api('/api/garage/status'):Promise.resolve(state.status),api('/api/garage/jobs?limit=100')]);if(needStatus)state.statusAt=Date.now();
       state.status=status;state.jobs=jobs.jobs||[];state.selectedId=selectId&&state.jobs.some(j=>j.id===selectId)?selectId:(state.jobs[0]?.id||'');
-      renderCapabilities();renderJobs();const job=state.jobs.find(j=>j.id===state.selectedId);const fingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';if(fingerprint!==state.detailFingerprint){state.detailFingerprint=fingerprint;renderDetails(job);}
-      $('#productionUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;if(!state.jobs.length)notice('All six production roles are connected to the shared queue. Start a task to create the first handoff.','success');else notice('Your tasks and review decisions stay on this PC.','success');
+      renderCapabilities();renderJobs();const job=state.jobs.find(j=>j.id===state.selectedId);const fingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';if(fingerprint!==state.detailFingerprint){state.detailFingerprint=fingerprint;renderDetails(job);}tickLive();
+      $('#productionUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;if(!state.jobs.length)notice(`${state.status?.agents?.length||0} production roles are connected to the shared queue. Start a task to create the first handoff.`,'success');else notice('Your tasks and review decisions stay on this PC.','success');
     }catch(error){$('#productionUpdated').textContent='Production service unavailable';notice(`${error.message} The browser, image, audio, and asset studios remain available.`, 'error');}
     finally{state.busy=false;}
   }
   async function act(action,job) {
     if(action==='refresh')return refresh(job.id);
     if(action==='attach')return $('#productionModelFile').click();
+    if(action==='revise'){const feedback=$('#productionRevision')?.value.trim(),voice=$('#productionRevisionVoice')?.value||'auto';if(!feedback){notice('Describe the changes you want in the next version.','error');$('#productionRevision')?.focus();return;}try{await api(`/api/garage/jobs/${encodeURIComponent(job.id)}/revise`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback,voice})});notice('Changes saved. The next version is starting.','success');await refresh(job.id);}catch(error){notice(error.message,'error');}return;}
     const endpoint={approve:'approve',reject:'reject',cancel:'cancel','retry-import':'retry-import'}[action];
     if(!endpoint)return;
     const labelsByAction={approve:'approve this asset and start its Unreal import',reject:'reject this asset',cancel:'cancel this production task','retry-import':'retry importing this approved asset'};
@@ -105,14 +114,16 @@
   $('#productionJobs').addEventListener('click',event=>{const button=event.target.closest('[data-select-job]');if(button){state.selectedId=button.dataset.selectJob;state.detailFingerprint='';renderJobs();renderDetails(selectedJob());state.detailFingerprint=selectedJob()?.id+':'+selectedJob()?.updatedAt+':'+selectedJob()?.status;}});
   $('#productionDetails').addEventListener('click',event=>{const button=event.target.closest('[data-job-action]');const job=selectedJob();if(button&&job)act(button.dataset.jobAction,job);});
   $('#productionFilter').addEventListener('change',renderJobs);
+  $('#productionKind').addEventListener('change',()=>{$('#productionCharacterLabel').hidden=$('#productionKind').value!=='voice';});
   $('#refreshProduction').addEventListener('click',()=>refresh());
   $('#productionForm').addEventListener('submit',async event=>{
     event.preventDefault();const submit=$('#submitProduction');if(submit.disabled)return;submit.disabled=true;notice('The production director is assigning this task to the shared team…');
-    try{const job=await api('/api/garage/jobs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:$('#productionPrompt').value,kind:$('#productionKind').value,biome:$('#productionBiome').value,voice:$('#productionVoice').value,seconds:Number($('#productionSeconds').value)})});$('#productionPrompt').value='';state.selectedId=job.id;notice('Task accepted. The director and specialist are starting their handoff.','success');await refresh(job.id);}
+    try{const job=await api('/api/garage/jobs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:$('#productionPrompt').value,kind:$('#productionKind').value,biome:$('#productionBiome').value,characterName:$('#productionCharacterName').value,voice:$('#productionVoice').value,seconds:Number($('#productionSeconds').value)})});$('#productionPrompt').value='';state.selectedId=job.id;notice('Task accepted. The director and specialist are starting their handoff.','success');await refresh(job.id);}
     catch(error){notice(error.message,'error');}
     finally{submit.disabled=false;}
   });
   $('#productionModelFile').addEventListener('change',async event=>{const file=event.target.files?.[0],job=selectedJob();event.target.value='';if(!file||!job)return;if(file.size>250*1024*1024){notice('Model files must be 250 MB or smaller.','error');return;}notice('Uploading the selected model to the local production queue…');try{await api(`/api/garage/jobs/${encodeURIComponent(job.id)}/source?filename=${encodeURIComponent(file.name)}`,{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:file});notice('Model attached. The technical artist is preparing it.','success');await refresh(job.id);}catch(error){notice(error.message,'error');}});
-  window.WildBoundProductionStudio={setVisible(visible){state.visible=visible;if(visible){refresh();if(!state.timer)state.timer=setInterval(()=>{if(state.visible)refresh();},4000);}else if(state.timer){clearInterval(state.timer);state.timer=null;}},refresh};
+  function tickLive(){for(const element of document.querySelectorAll('[data-live-start]')){const elapsed=Math.max(0,Math.floor((Date.now()-Date.parse(element.dataset.liveStart))/1000));element.textContent=`${Math.floor(elapsed/60)}:${String(elapsed%60).padStart(2,'0')}`;}}
+  window.WildBoundProductionStudio={setVisible(visible){state.visible=visible;if(visible){refresh();if(!state.timer)state.timer=setInterval(()=>{if(state.visible)refresh();},2000);if(!state.clock)state.clock=setInterval(tickLive,1000);}else{if(state.timer){clearInterval(state.timer);state.timer=null;}if(state.clock){clearInterval(state.clock);state.clock=null;}}},refresh};
   window.addEventListener('beforeunload',event=>{if(state.visible&&state.jobs.some(job=>['queued','running','cancelling','importing'].includes(job.status))){event.preventDefault();event.returnValue='';}});
 })();

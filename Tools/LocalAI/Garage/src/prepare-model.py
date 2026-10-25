@@ -9,6 +9,13 @@ if source.lower().endswith('.glb'):
     bpy.ops.import_scene.gltf(filepath=source)
 else:
     bpy.ops.import_scene.fbx(filepath=source)
+helpers = {bone.custom_shape for armature in bpy.context.scene.objects if armature.type == 'ARMATURE' for bone in armature.pose.bones if bone.custom_shape}
+for armature in (obj for obj in bpy.context.scene.objects if obj.type == 'ARMATURE'):
+    for bone in armature.pose.bones:
+        if bone.custom_shape in helpers:
+            bone.custom_shape = None
+for helper in helpers:
+    bpy.data.objects.remove(helper, do_unlink=True)
 meshes = [o for o in bpy.context.scene.objects if o.type == 'MESH']
 if not meshes:
     raise RuntimeError('The supplied model has no mesh geometry.')
@@ -58,10 +65,12 @@ bpy.ops.export_scene.fbx(filepath=output, use_selection=False, object_types={'ME
     apply_unit_scale=True, add_leaf_bones=False, bake_anim=True, path_mode='COPY', embed_textures=True)
 preview = os.path.join(folder, 'preview.mesh.json')
 json.dump({'groups':groups}, open(preview,'w',encoding='utf-8'))
+points = [obj.matrix_world @ vertex.co for obj in meshes for vertex in obj.data.vertices]
+dimensions = [float(max(point[i] for point in points) - min(point[i] for point in points)) for i in range(3)]
 report = {'vertices':vertices,'triangles':triangles,'meshes':len(meshes),
     'armatures':sum(o.type=='ARMATURE' for o in bpy.context.scene.objects),
     'animations':[a.name for a in bpy.data.actions],
-    'dimensionsMeters': [float(max((o.dimensions[i] for o in meshes),default=0)) for i in range(3)],
+    'dimensionsMeters': dimensions,
     'preview':preview,'prepared':output,
     'note':'Native preview shows the bind/rest pose. Existing skeletons and actions are exported; their gameplay suitability needs review.'}
 json.dump(report,open(os.path.join(folder,'model-report.json'),'w',encoding='utf-8'),indent=2)

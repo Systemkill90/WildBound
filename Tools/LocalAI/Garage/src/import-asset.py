@@ -56,7 +56,7 @@ else:
         if obj:
             unreal.EditorAssetLibrary.save_loaded_asset(obj)
             assets.append({'path':obj.get_path_name(),'class':obj.get_class().get_name()})
-    expected={'texture':'Texture2D','voice':'SoundWave','music':'SoundWave','ambience':'SoundWave','model':'SkeletalMesh' if request.get('skeletal') else 'StaticMesh'}[request['kind']]
+    expected={'texture':'Texture2D','voice':'SoundWave','music':'SoundWave','ambience':'SoundWave','sfx':'SoundWave','model':'SkeletalMesh' if request.get('skeletal') else 'StaticMesh'}[request['kind']]
     if not any(a['class']==expected for a in assets): raise RuntimeError('Expected Unreal asset class missing: '+expected)
     json.dump({'verified':True,'sha256':request['sha256'],'expectedClass':expected,'assets':assets,'destination':destination,
         'limits':'Loaded and saved in Unreal. In-level appearance, animation behavior, collision quality, and packaged gameplay require scene review.'},open(result_path,'w',encoding='utf-8'),indent=2)
