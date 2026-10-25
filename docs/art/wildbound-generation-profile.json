@@ -22,6 +22,21 @@
     "Do not infer that a race has no visual reference from the checked-in atlas alone; consult the full Idea Board chat including its images. The user confirms Siren references exist in the Idea Board; follow those references over generic mythology or the current generated Siren draft.",
     "Avoid the specific rejected CC0 Trench Naga placeholder as Siren reference: its flat playdough-like finish, low surface detail, and multi-armed serpent silhouette were rejected as mismatching the concept art. It remains a viewer-only placeholder."
   ],
+  "approvedTreeReferenceExamples": {
+    "greenveil": {
+      "status": "Idea Board reference examples; not a claim that these assets already exist in Unreal",
+      "examples": [
+        "Sylweave Willow",
+        "Ancient Oak",
+        "Silver Birch",
+        "Cathedral Beech",
+        "Stonewood Hornbeam"
+      ],
+      "direction": "Use recognizable real tree species, subtly transformed by the Sylweave into more graceful, lush, ancient, and magical forms.",
+      "ellowyn": "Keep Ellowyn separate and unique above the normal Greenveil tree variants.",
+      "willow": "Use longer leaves and vines, a more willowy silhouette, and darker bark."
+    }
+  },
   "generationLimits": {
     "maxWidth": 1024,
     "maxHeight": 1024,
