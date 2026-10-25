@@ -44,3 +44,8 @@ Confirmed landscape settlement peoples: **Kethri, Nimrui, Wolfkin, freshwater Br
 ## Greenveil ground layer approved — October 25, 2026
 
 Owner approved [the ground-layer concept and specification](../world/greenveil-ground-layer-approved.md): meadow, forest, lakeshore, glade, Sylweave flora and ground-cover details. Artwork PNG has not yet been committed to GitHub; visual implementation and packaged tests remain pending. Next: build a bounded Unreal terrain/ground-cover slice. New animal gameplay stays paused.
+
+
+## Approved Greenveil regional master map — October 25, 2026
+
+Two illustrated regional atlas images are owner approved and packaged in the ChatGPT conversation as `Greenveil_Master_Map_Approved.zip`; the binary PNGs are **not yet uploaded to GitHub**. Detailed zone/watershed/roads/settlements/landmarks and the golden first-slice boundary are documented in [regional master map](../world/greenveil-regional-master-map.md). All newly invented names are **working names, not approved canon**. Before landscape import, desktop Codex must verify current demo acceptance [issue #16](https://github.com/Systemkill90/WildBound/issues/16), reconcile separate 512 m heightmap with regional map, and preserve the working build. No map geometry or playtest occurred during this documentation-only work. New animal gameplay remains paused.
