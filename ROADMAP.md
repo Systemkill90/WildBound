@@ -53,3 +53,8 @@ The owner approved both full visual region/atlas boards. The [written master map
 ## Great Lake District design study — October 25, 2026
 
 [Detailed lake environment design](docs/world/greenveil-great-lake-district-design.md) is staged for review, including connected water flow, Brinefolk/Wolfkin villages, shoreline biomes, underwater ecological zones and exploratory islands. No terrain sculpt, fish gameplay, swimming/boats or in-engine tests in this pass. First build a bounded shore and shallow-water test after demo acceptance.
+
+
+## Brinefolk environment reference and settlement draft — October 25, 2026
+
+[Underwater image library record](docs/art/environment/greenveil/REFERENCE-INDEX.md) captures the owner-approved magically realistic freshwater appearance with SHA and librarian retrieval/fail-missing contract. [Detailed Brinefolk architecture](docs/world/greenveil-brinefolk-village-design.md) is proposed, not canon or a UE asset. Binary art still requires verified repository/NAS import; do not proceed with an engine graybox before existing demo verification.
