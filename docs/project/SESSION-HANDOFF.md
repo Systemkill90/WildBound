@@ -1,5 +1,13 @@
 # Wildbound session handoff
 
+## Creative Library handoff — October 25
+
+Review `feature/creative-library-pilot` and [Creative Library pilot](../creative-library/README.md). Garage and Dashboard source were deployed to the local runtime; the runtime's private config points the Library record root to this review worktree and the archive/inbox to the existing private NAS. The Update Idea Board UI, verified original-media archival, exploratory record, approved version-pinned package lookup, and visible Missing Reference Request are working. The desktop supply form and general subject/facet Librarian replace phone-specific work and example-specific rules. The pilot mixed-media fixture must stay exploratory. After PR merge, point the runtime record root to the merged checkout and restart Garage. No Unreal work or animal gameplay was resumed.
+
+The final live generation pass left five owner-review tasks in Garage: texture `63d704ee-431d-4f97-a44e-16c59d954e6b`, voice `e9919377-b19c-415d-b114-fbb122535908`, music `66fe8014-5655-4608-8bcf-02110f90a4ff`, ambience `6eab92ac-b21a-4374-aaaa-1e353ff7fe52`, and SFX `f6728823-f021-43a4-9e5a-856778dcc597`. All have inspected artifacts and status `awaiting_review`; leave them for the owner to approve, revise, or reject. The stone texture may not tile cleanly. The first SFX attempt failed because the model emitted 44.1 kHz WAV; the final adapter preserves that original and converts a 48 kHz review copy. The repaired live attempt passed. Text-to-3D and new rig/animation authoring remain Limited. The existing supplied-model preparation check is still the earlier BoxAnimated Test; no new character model was approved.
+
+Garage `2.5.0-pilot` is deployed locally. Its supported task lifecycle now includes Recovery archive and Handoff after engine verification. Startup reconciliation processed the existing approved BoxAnimated task `f21f0b8f-dbbe-4d97-a010-db34795eab7d` without another Unreal import: its archived artifact SHA-256 matches the reviewed artifact, its archive manifest hash verifies, and all nine stages are complete. The full Node suite passes 39/39. See [machine-readable evidence](evidence/ai-garage-completion-2026-10-25.json). The final Edge click-through still needs repeating because Windows browser automation could not establish the tab URL during the prior attempt; API and persisted-file checks passed independently.
+
 Updated October 24, 2026 after local AI recovery checks and successful World Partition packaging/traversal. Read [Current state](CURRENT-STATE.md), [daily log](DAILY-DEVELOPMENT.md), [Decisions](DECISIONS.md) and [Roadmap](../../ROADMAP.md).
 
 ## Latest verified checkpoint — October 24

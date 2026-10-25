@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "id": "garage-pilot-2026-10-25",
+  "title": "Idea Board transfer pilot — exploratory mixed media",
+  "coverage": [
+    "pilot:transfer",
+    "woodland-kin:exploratory"
+  ],
+  "relations": [
+    "kethri",
+    "nimrui",
+    "greenveil"
+  ],
+  "versions": [
+    {
+      "version": 1,
+      "fingerprint": "71d02342e785750d00165811167358d306f867e9bb7282a34bb6c247ba80de65",
+      "approval": "exploratory",
+      "origin": {
+        "note": "Transport fixture only; image, text and audio are not one approved character design.",
+        "createdAt": "2026-10-25",
+        "method": "desktop-copy-of-accessible-originals",
+        "source": "Tracked exploratory Idea Board art and local Garage voice QA"
+      },
+      "text": "# Idea Board · character and culture studies\r\n\r\n[← Illustrated concept atlas](../README.md) · [Art direction](../../README.md)\r\n\r\n> Exploratory generated art saved from the Wildbound Idea Board on October 23, 2026. These images are references, not approved canon, production character designs, playable species, or in-game assets. Individual visual details may be inconsistent or malformed; use them to discuss shape, material, culture and mood rather than as literal model sheets.\r\n\r\nThe strongest recurring direction is a lived-in forest settlement: practical layered clothing, leather and woven details, timber and stone architecture, earthy colors, and nature motifs. The human and woodland-kin studies keep the character presentation grounded. The Fae studies push toward more visible magic; use those as a separate, more overt expression of the setting instead of applying glowing effects to every character or environment.\r\n\r\n## Character and culture studies\r\n\r\n### Woodland kin\r\n\r\n![Kethri and Nimrui woodland character study](kethri-nimrui-character-study.jpg)\r\n\r\n![Woodland kin gathered in a forest settlement](woodland-kin-settlement-study.jpg)\r\n\r\n![Wildlings character and camouflage study](wildlings.jpg)\r\n\r\n![Wolfkin character and pack study](wolfkin.jpg)\r\n\r\n### Settlers and elves\r\n\r\n![Grounded human settler clothing and turnaround study](human-settler-turnarounds.jpg)\r\n\r\n![Human and elven character comparison](humans-and-elves.jpg)\r\n\r\n![Elven settler clothing and turnaround study](elven-settlers.jpg)\r\n\r\n### Fae\r\n\r\n![Fae character study with luminous wings](fae-character-study.jpg)\r\n\r\n![Human, elf and fae character lineup](humans-elves-fae-lineup.jpg)\r\n\r\n## Use in development\r\n\r\n- For Greenveil, prioritize convincing forest ecology, readable trails and water, useful small-scale settlement details, and believable foliage. These character sheets do not define a new biome palette or require settlement NPCs in the current exploration slice.\r\n- Keep magic tied to ecology and story. Use subtle traces in the ordinary woodland; reserve obvious wings, strong glow and ornate presentation for explicit Fae concepts or later scenes.\r\n- Do not create or extend animal gameplay from these images. Creature and character mechanics remain separate priorities.\r\n- When a concept advances, make a new, reviewable design decision and produce proper production references for anatomy, silhouette, materials, rigging and animation.\r\n\r\nAll artwork on this page was supplied in the Wildbound Idea Board and saved here for project reference. The images do not grant rights to any third-party model, costume, or other depicted source material.\r\n",
+      "originalText": {
+        "sha256": "162b6da2b0bd7c50860cf392d497bc41f3a6dba1707c31d0539f91dae431a74d",
+        "bytes": 2655,
+        "object": "archive/16/162b6da2b0bd7c50860cf392d497bc41f3a6dba1707c31d0539f91dae431a74d.md"
+      },
+      "originalManifest": {
+        "sha256": "d794a7e3f224083d3016aae0fe02fe758c8cf276eb0faccb83fbf67f2caa1fe0",
+        "bytes": 903,
+        "object": "archive/d7/d794a7e3f224083d3016aae0fe02fe758c8cf276eb0faccb83fbf67f2caa1fe0.json"
+      },
+      "media": [
+        {
+          "kind": "image",
+          "name": "concept.jpg",
+          "source": "docs/art/concept-atlas/idea-board-2026-10-23/kethri-nimrui-character-study.jpg",
+          "sha256": "5dd27098c0ca940c127c3274bcb4437d8a98b227e60154ffe3557b4e3291d7f3",
+          "bytes": 730813,
+          "object": "archive/5d/5dd27098c0ca940c127c3274bcb4437d8a98b227e60154ffe3557b4e3291d7f3.jpg"
+        },
+        {
+          "kind": "audio",
+          "name": "voice.wav",
+          "source": "local Garage voice QA render; unrelated to the concept art",
+          "sha256": "4b638490fb3f6e168d15f02349d7f720c663b265829089782b5b5a9c69642172",
+          "bytes": 887468,
+          "object": "archive/4b/4b638490fb3f6e168d15f02349d7f720c663b265829089782b5b5a9c69642172.wav"
+        }
+      ],
+      "importedAt": "2026-10-25T17:55:16.087Z",
+      "approvalAllowed": false
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 'use strict';
 (() => {
   const $ = selector => document.querySelector(selector);
-  const state = { visible:false, busy:false, jobs:[], status:null, statusAt:0, selectedId:'', timer:null, clock:null, detailFingerprint:'', modelCache:new Map() };
+  const state = { visible:false, busy:false, jobs:[], status:null, library:null, statusAt:0, selectedId:'', timer:null, clock:null, detailFingerprint:'', modelCache:new Map(),recordCache:new Map() };
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const labels = { queued:'Queued',running:'Working',cancelling:'Cancelling',awaiting_review:'Ready for your review',needs_source:'Waiting for a model source',importing:'Importing to Unreal',completed:'Completed',failed:'Needs attention',interrupted:'Interrupted',cancelled:'Cancelled',rejected:'Rejected' };
+  const labels = { queued:'Queued',running:'Working',cancelling:'Cancelling',awaiting_review:'Ready for your review',needs_source:'Waiting for a model source',missing_references:'Needs approved references',importing:'Importing to Unreal',completed:'Completed',failed:'Needs attention',interrupted:'Interrupted',cancelled:'Cancelled',rejected:'Rejected' };
   const api = async (url, options={}) => {
     const response = await fetch(url,{cache:'no-store',...options});
     const type=response.headers.get('content-type')||'';
@@ -18,6 +18,10 @@
   function renderCapabilities() {
     const items=state.status?.capabilities||[];
     $('#productionCapabilities').innerHTML=items.map(item=>`<article class="production-capability ${item.available?'ready':'limited'}"><span>${item.available?'AVAILABLE':'LIMITED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.reason)}</small></article>`).join('');
+    $('#capabilitySummary').textContent=`${items.filter(item=>item.available).length} available · ${items.filter(item=>!item.available).length} limited`;
+    const lifecycle=state.status?.lifecycle||[];
+    $('#productionLifecycle').innerHTML=lifecycle.map(item=>`<article class="production-capability ${item.ready?'ready':'limited'}"><span>${item.ready?'READY':'BLOCKED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.detail)}</small></article>`).join('');
+    $('#lifecycleSummary').textContent=`${lifecycle.filter(item=>item.ready).length} of ${lifecycle.length} ready`;
     const sfxOption=$('#productionKind option[value="sfx"]');if(sfxOption)sfxOption.disabled=!items.some(item=>item.id==='sfx'&&item.available);
     const text3dOption=$('#productionKind option[value="text-to-3d"]');if(text3dOption)text3dOption.disabled=!items.some(item=>item.id==='text-to-3d'&&item.available);
     const agents=state.status?.agents||state.status?.teams||[];
@@ -26,9 +30,28 @@
     $('#productionAgents').innerHTML=agents.map(agent=>`<article class="production-agent"><div class="production-agent-dot ${agent.ready?'ready':'limited'}"></div><div><strong>${escape(agent.name)}</strong><span>${escape(agent.engine)}</span><small>${escape(agent.role)}</small>${(agent.missing||[]).length?`<em>Needs: ${escape(agent.missing.join(', '))}</em>`:''}</div><b class="agent-state ${agent.ready?'ready':'limited'}">${agent.ready?'Available':'Limited'}</b></article>`).join('')||'<p class="production-muted">Agent status is unavailable.</p>';
     const picker=$('#productionVoice'),current=picker.value;picker.innerHTML='<option value="auto">Auto cast a unique voice</option>'+((state.status?.voices||[]).map(voice=>`<option value="${escape(voice.id)}">${escape(voice.name)} · ${escape(voice.accent)}</option>`).join(''));picker.value=[...picker.options].some(option=>option.value===current)?current:'auto';
   }
+  function renderLibrary(){const library=state.library;if(!library)return;const items=library.items||[],verified=items.filter(item=>['verified','unchanged'].includes(item.status)).length,errors=items.filter(item=>item.status==='error');$('#creativeLibraryStatus').textContent=`${library.busy?'Sync in progress · ':''}${verified} verified inbox items · ${(library.records||[]).length} searchable designs${errors.length?` · ${errors.length} need attention`:''}`;$('#creativeLibraryMissing').innerHTML=(library.missing||[]).map(item=>`<article class="missing-reference"><strong>Missing references for task ${escape(item.jobId)}</strong><span>${escape(item.missing.join(', '))}</span><small>${escape(item.action)}</small><div><button class="production-secondary" data-library-action="explore" data-request-id="${escape(item.id)}">Explore design</button><button class="production-secondary" data-library-action="recheck" data-job-id="${escape(item.jobId)}">Recheck references</button></div></article>`).join('')+errors.map(item=>`<article class="missing-reference"><strong>Sync error: ${escape(item.id)}</strong><span>${escape(item.error)}</span></article>`).join('');$('#creativeLibraryRecords').innerHTML=(library.records||[]).map(item=>`<article><strong>${escape(item.title)}</strong> <small>v${escape(item.version)} · ${escape(item.approval)} · ${escape((item.coverage||[]).join(', '))}</small>${item.approval!=='approved'&&item.approvalAllowed!==false?`<button type="button" class="production-secondary" data-library-action="approve" data-record-id="${escape(item.id)}" data-record-version="${escape(item.version)}">Approve this version</button>`:''}</article>`).join('')||'<p>No imported designs yet.</p>';}
+  function renderLibraryItems(){
+    const items=state.library?.items||[];
+    $('#creativeLibraryItems').innerHTML=items.map(item=>`<article><strong>${escape(item.id)}</strong> <small>${escape(item.status)} · v${escape(item.version||'—')}${item.error?` · ${escape(item.error)}`:''}</small></article>`).join('')||'<p>No inbox items checked yet.</p>';
+    for(const request of state.library?.missing||[]){
+      const button=document.createElement('button');button.type='button';button.className='production-secondary';button.textContent='Supply references';button.dataset.libraryAction='supply';button.dataset.requestId=request.id;
+      const actions=$('#creativeLibraryMissing').querySelector(`[data-request-id="${CSS.escape(request.id)}"]`)?.parentElement;
+      actions?.append(button);
+      if(request.conflicts?.length){const note=document.createElement('small');note.textContent='Conflicting approvals: '+request.conflicts.map(pair=>pair.join(' / ')).join(', ');actions?.parentElement?.append(note);}
+    }
+    (state.library?.records||[]).forEach((record,index)=>{
+      const article=$('#creativeLibraryRecords').querySelectorAll('article')[index];if(!article)return;
+      const inspect=document.createElement('button');inspect.type='button';inspect.className='production-secondary';inspect.textContent='Review originals';inspect.dataset.libraryAction='inspect';inspect.dataset.recordId=record.id;article.append(inspect);
+      if(record.approval==='approved'){const button=document.createElement('button');button.type='button';button.className='production-secondary';button.textContent='Withdraw approval';button.dataset.libraryAction='withdraw';button.dataset.recordId=record.id;button.dataset.recordVersion=record.version;article.append(button);}
+      const detail=state.recordCache.get(record.id);if(detail){const container=document.createElement('div');container.className='library-detail';container.innerHTML=detail.versions.map(version=>`<section><strong>Version ${escape(version.version)} · ${escape(version.approval)}</strong><small>Source: ${escape(version.origin?.method||'unknown')} · ${escape(version.origin?.source||'unknown')}</small><pre>${escape(version.text)}</pre>${(version.media||[]).map((file,index)=>{const src=`/api/garage/library/media/${encodeURIComponent(detail.id)}/${version.version}/${index}`;return `<div><small>${escape(file.kind)} · ${escape(file.name)} · SHA-256 ${escape(file.sha256)}</small>${file.kind==='image'?`<img loading="lazy" alt="Original reference ${escape(file.name)}" src="${src}">`:file.kind==='audio'?`<audio controls preload="none" src="${src}"></audio>`:`<a href="${src}" download>Download original</a>`}</div>`;}).join('')}</section>`).join('');article.append(container);}
+    });
+    filterLibraryRecords();
+  }
+  function filterLibraryRecords(){const query=$('#librarySearch').value.trim().toLowerCase();(state.library?.records||[]).forEach((record,index)=>{$('#creativeLibraryRecords').querySelectorAll('article')[index].hidden=!!query&&!`${record.title} ${record.id} ${(record.coverage||[]).join(' ')}`.toLowerCase().includes(query);});}
   function visibleJobs() {
     const filter=$('#productionFilter').value;
-    return state.jobs.filter(job=>filter==='all'||(filter==='active'?['queued','running','cancelling','importing','needs_source'].includes(job.status):filter==='failed'?['failed','interrupted'].includes(job.status):job.status===filter));
+    return state.jobs.filter(job=>filter==='all'||(filter==='active'?['queued','running','cancelling','importing','needs_source','missing_references'].includes(job.status):filter==='failed'?['failed','interrupted'].includes(job.status):job.status===filter));
   }
   function renderJobs() {
     const items=visibleJobs();
@@ -60,7 +83,7 @@
     const actionButtons=[];
     if(job.status==='awaiting_review')actionButtons.push('<button data-job-action="approve" class="production-primary">Approve &amp; import</button>','<button data-job-action="reject" class="production-secondary">Reject</button>');
     if(job.status==='needs_source')actionButtons.push('<button data-job-action="attach" class="production-primary">Attach GLB / FBX</button>');
-    if(['queued','running','cancelling','importing','needs_source'].includes(job.status))actionButtons.push('<button data-job-action="cancel" class="production-secondary">Cancel task</button>');
+    if(['queued','running','cancelling','importing','needs_source','missing_references'].includes(job.status))actionButtons.push('<button data-job-action="cancel" class="production-secondary">Cancel task</button>');
     if(['failed','interrupted'].includes(job.status)&&job.approvedAt)actionButtons.push('<button data-job-action="retry-import" class="production-primary">Retry Unreal import</button>');
     const current=job.agentRuns?.findLast(run=>run.status==='running');
     const live=current?`<div class="production-live" role="status"><i></i><strong>${escape(current.agentName)} is working</strong><span>${escape(current.step)}</span><time data-live-start="${escape(current.startedAt)}">0:00</time></div>`:'';
@@ -92,9 +115,9 @@
     if(state.busy)return;state.busy=true;
     try{
       const needStatus=!state.status||Date.now()-state.statusAt>10000;
-      const [status,jobs]=await Promise.all([needStatus?api('/api/garage/status'):Promise.resolve(state.status),api('/api/garage/jobs?limit=100')]);if(needStatus)state.statusAt=Date.now();
-      state.status=status;state.jobs=jobs.jobs||[];state.selectedId=selectId&&state.jobs.some(j=>j.id===selectId)?selectId:(state.jobs[0]?.id||'');
-      renderCapabilities();renderJobs();const job=state.jobs.find(j=>j.id===state.selectedId);const fingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';if(fingerprint!==state.detailFingerprint){state.detailFingerprint=fingerprint;renderDetails(job);}tickLive();
+      const [status,jobs,library]=await Promise.all([needStatus?api('/api/garage/status'):Promise.resolve(state.status),api('/api/garage/jobs?limit=100'),api('/api/garage/library')]);if(needStatus)state.statusAt=Date.now();
+      state.status=status;state.jobs=jobs.jobs||[];state.library=library;state.selectedId=selectId&&state.jobs.some(j=>j.id===selectId)?selectId:(state.jobs[0]?.id||'');
+      renderCapabilities();renderLibrary();renderLibraryItems();renderJobs();const job=state.jobs.find(j=>j.id===state.selectedId);const fingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';if(fingerprint!==state.detailFingerprint){state.detailFingerprint=fingerprint;renderDetails(job);}tickLive();
       $('#productionUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;if(!state.jobs.length)notice(`${state.status?.agents?.length||0} production roles are connected to the shared queue. Start a task to create the first handoff.`,'success');else notice('Your tasks and review decisions stay on this PC.','success');
     }catch(error){$('#productionUpdated').textContent='Production service unavailable';notice(`${error.message} The browser, image, audio, and asset studios remain available.`, 'error');}
     finally{state.busy=false;}
@@ -114,6 +137,24 @@
   $('#productionJobs').addEventListener('click',event=>{const button=event.target.closest('[data-select-job]');if(button){state.selectedId=button.dataset.selectJob;state.detailFingerprint='';renderJobs();renderDetails(selectedJob());state.detailFingerprint=selectedJob()?.id+':'+selectedJob()?.updatedAt+':'+selectedJob()?.status;}});
   $('#productionDetails').addEventListener('click',event=>{const button=event.target.closest('[data-job-action]');const job=selectedJob();if(button&&job)act(button.dataset.jobAction,job);});
   $('#productionFilter').addEventListener('change',renderJobs);
+  $('#updateIdeaBoard').addEventListener('click',async()=>{const button=$('#updateIdeaBoard');button.disabled=true;notice('Checking the private Idea Board inbox and verifying originals…');try{await api('/api/garage/library/sync',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});notice('Idea Board sync started. Progress and missing references update here.','success');await refresh();}catch(error){notice(error.message,'error');}finally{button.disabled=false;}});
+  $('#creativeLibraryForm').addEventListener('submit',async event=>{
+    event.preventDefault();const button=event.submitter;button.disabled=true;
+    try{
+      const files=[...[...$('#libraryImages').files].map(file=>({file,kind:'image'})),...[...$('#libraryAudio').files].map(file=>({file,kind:'audio'}))];
+      if(files.length>10||files.some(({file})=>file.size>15*1024*1024)||files.reduce((sum,{file})=>sum+file.size,0)>25*1024*1024)throw new Error('Choose up to ten original files, 15 MiB each and 25 MiB total. Larger files can use the private NAS inbox.');
+      const media=[];
+      for(const {file,kind} of files){const bytes=new Uint8Array(await file.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));media.push({kind,name:file.name,base64:btoa(binary)});}
+      const tags=$('#libraryCoverage').value.split(',').map(value=>value.trim().toLowerCase()).filter(Boolean);
+      const payload={id:$('#libraryDesignId').value.trim(),title:$('#libraryTitle').value.trim(),text:$('#libraryText').value,coverage:tags,relations:$('#libraryRelations').value.split(',').map(value=>value.trim().toLowerCase()).filter(Boolean),media};
+      await api('/api/garage/library/supply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      notice('Originals saved to the private Library inbox. Verification is running; this version stays exploratory until you approve it.','success');event.target.reset();$('#creativeLibrarySupply').open=false;await refresh();
+    }catch(error){notice(error.message,'error');}finally{button.disabled=false;}
+  });
+  $('#creativeLibraryStatus').addEventListener('click',()=>refresh());
+  $('#librarySearch').addEventListener('input',filterLibraryRecords);
+  $('#creativeLibraryMissing').addEventListener('click',async event=>{const button=event.target.closest('[data-library-action]');if(!button)return;if(button.dataset.libraryAction==='supply'){const request=(state.library?.missing||[]).find(item=>item.id===button.dataset.requestId);if(request){$('#creativeLibrarySupply').open=true;$('#libraryCoverage').value=request.missing.join(', ');$('#libraryTitle').value=`References for ${request.prompt.slice(0,90)}`;$('#libraryDesignId').focus();}return;}if(button.dataset.libraryAction==='explore'){const request=(state.library?.missing||[]).find(item=>item.id===button.dataset.requestId);if(request){$('#productionPrompt').value=`Explore references for ${request.prompt}. Missing: ${request.missing.join(', ')}. Mark all results exploratory for owner review.`;$('#productionPrompt').focus();}return;}if(button.dataset.libraryAction==='recheck'){try{await api('/api/garage/library/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jobId:button.dataset.jobId})});await refresh();}catch(error){notice(error.message,'error');}}});
+  $('#creativeLibraryRecords').addEventListener('click',async event=>{const button=event.target.closest('[data-library-action]');if(!button)return;if(button.dataset.libraryAction==='inspect'){try{const record=await api(`/api/garage/library/records/${encodeURIComponent(button.dataset.recordId)}`);state.recordCache.set(record.id,record);renderLibrary();renderLibraryItems();}catch(error){notice(error.message,'error');}return;}const withdraw=button.dataset.libraryAction==='withdraw';if(!window.confirm(`${withdraw?'Withdraw approval of':'Approve'} ${button.dataset.recordId} version ${button.dataset.recordVersion} ${withdraw?'for future worker tasks':'for creative worker use'}?`))return;try{await api(`/api/garage/library/${withdraw?'withdraw':'approve'}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:button.dataset.recordId,version:Number(button.dataset.recordVersion)})});state.recordCache.delete(button.dataset.recordId);notice(withdraw?'Approval withdrawn for future tasks.':'Reference version approved and available to workers.','success');await refresh();}catch(error){notice(error.message,'error');}});
   $('#productionKind').addEventListener('change',()=>{$('#productionCharacterLabel').hidden=$('#productionKind').value!=='voice';});
   $('#refreshProduction').addEventListener('click',()=>refresh());
   $('#productionForm').addEventListener('submit',async event=>{

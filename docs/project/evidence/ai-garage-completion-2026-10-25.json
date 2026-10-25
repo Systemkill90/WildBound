@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25",
+  "garageVersion": "2.5.0-pilot",
+  "environment": {
+    "platform": "Windows desktop",
+    "node": "v24.22.1",
+    "unreal": "5.8.4",
+    "localDirectorModel": "qwen3.5:9b"
+  },
+  "verification": {
+    "command": "node --test Tools/LocalAI/Garage/tests/*.test.js Tools/LocalAI/Dashboard/tests/*.test.js",
+    "tests": 39,
+    "passed": 39,
+    "failed": 0,
+    "diffCheck": "passed"
+  },
+  "lifecycle": [
+    "Intake",
+    "References",
+    "Planning",
+    "Assignment",
+    "Execution",
+    "QA evidence",
+    "Owner approval",
+    "Recovery archive",
+    "Handoff"
+  ],
+  "completedTask": {
+    "id": "f21f0b8f-dbbe-4d97-a010-db34795eab7d",
+    "kind": "model",
+    "purpose": "Previously owner-approved BoxAnimated supplied-model import smoke",
+    "status": "completed",
+    "stagesCompleted": 9,
+    "unrealImportRerunDuringReconciliation": false,
+    "reviewedArtifactSha256": "e77c4fd97da290fb133cab250075f81ed28b52418cd19cf19682a3c78f25c387",
+    "archivedArtifactSha256": "e77c4fd97da290fb133cab250075f81ed28b52418cd19cf19682a3c78f25c387",
+    "archiveManifestSha256": "5b516e17f0d746978a010684f3fa49dced07e01705b70b9f546ef4f908d9608c",
+    "handoffStatus": "verified-and-archived"
+  },
+  "reviewQueue": {
+    "texture": "63d704ee-431d-4f97-a44e-16c59d954e6b",
+    "voice": "e9919377-b19c-415d-b114-fbb122535908",
+    "music": "66fe8014-5655-4608-8bcf-02110f90a4ff",
+    "ambience": "6eab92ac-b21a-4374-aaaa-1e353ff7fe52",
+    "sfx": "f6728823-f021-43a4-9e5a-856778dcc597",
+    "status": "awaiting_review"
+  },
+  "knownLimits": [
+    "Prompt-to-3D model weights/runtime are unavailable.",
+    "New rigging and animation authoring are unavailable.",
+    "The generated stone texture passed file checks but may not tile cleanly and needs owner art review.",
+    "Final browser click-through must be repeated because Windows browser automation could not verify the current tab URL."
+  ]
+}

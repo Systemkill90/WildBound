@@ -62,7 +62,28 @@
       <section id="productionStudioView" class="production-view" hidden>
         <div class="studio-heading"><div><div class="eyebrow">SHARED AGENT WORKSPACE</div><h1>Production Team</h1><p>One queue connects the production director, specialists, inspectors, and Unreal workers. Every generated asset waits for your review before import.</p></div><div class="production-actions"><span id="productionUpdated" class="activity-updated">Connecting to the production service…</span><button id="refreshProduction" class="refresh-button" type="button">Refresh</button></div></div>
         <div id="productionNotice" class="production-notice" role="status" hidden></div>
-        <div id="productionCapabilities" class="production-capabilities" aria-live="polite"></div>
+        <section class="production-card creative-library-panel" aria-label="Creative Library">
+          <div><div class="eyebrow">PRIVATE IDEA BOARD SYNC</div><h2>Creative Library</h2><p>Import verified originals from the private NAS inbox. Only approved versions reach creative workers.</p></div>
+          <button id="updateIdeaBoard" class="production-primary" type="button">Update Idea Board</button>
+          <div id="creativeLibraryStatus" class="creative-library-status" role="status" aria-live="polite">Checking the private library…</div>
+          <div id="creativeLibraryMissing" class="creative-library-missing" aria-live="polite"></div>
+          <details id="creativeLibrarySupply" class="creative-library-records"><summary>Supply a design and original files</summary>
+            <form id="creativeLibraryForm" class="creative-library-form">
+              <label>Design ID <input id="libraryDesignId" required pattern="[a-z0-9][a-z0-9-]{2,79}" placeholder="named-design-study"></label>
+              <label>Title <input id="libraryTitle" required maxlength="160" placeholder="Design study"></label>
+              <label>Reference tags <input id="libraryCoverage" placeholder="subject:appearance, subject:culture"></label>
+              <label>Related subjects <input id="libraryRelations" placeholder="biome, culture, character"></label>
+              <label class="library-wide">Original design text <textarea id="libraryText" required maxlength="1000000" rows="3" placeholder="Paste your original design notes here."></textarea></label>
+              <label>Original images <input id="libraryImages" type="file" accept=".png,.jpg,.jpeg,.webp" multiple></label>
+              <label>Original audio <input id="libraryAudio" type="file" accept=".wav,.flac,.mp3,.m4a" multiple></label>
+              <button class="production-primary" type="submit">Save originals to Library</button>
+            </form>
+          </details>
+          <details class="creative-library-records"><summary>Sync results and original files</summary><div id="creativeLibraryItems"></div></details>
+          <details class="creative-library-records"><summary>Design records and approvals</summary><label>Search designs <input id="librarySearch" type="search" placeholder="Title, subject, or facet"></label><div id="creativeLibraryRecords"></div></details>
+        </section>
+        <details class="production-card production-availability"><summary>End-to-end completion gate <span id="lifecycleSummary"></span></summary><div id="productionLifecycle" class="production-capabilities" aria-live="polite"></div></details>
+        <details class="production-card production-availability"><summary>Production capabilities <span id="capabilitySummary"></span></summary><div id="productionCapabilities" class="production-capabilities" aria-live="polite"></div></details>
         <div class="production-layout">
           <div class="production-left">
             <form id="productionForm" class="production-card production-form">
@@ -80,7 +101,7 @@
               <input id="productionModelFile" type="file" accept=".glb,.fbx,model/gltf-binary,application/octet-stream" hidden>
               <p class="production-footnote">Available means the local backend or tool is present; every output is still a draft. Texture imports get a basic Base Color material. Supplied models keep their existing UVs, materials, and textures, but Garage does not auto-unwrap UVs or author polished materials. Review before approved Unreal import.</p>
             </form>
-            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">AGENT AVAILABILITY</div><h2>Connected workers</h2></div><span id="agentReadinessSummary" class="production-muted"></span></div><div id="productionAgents" class="production-agent-list"></div></div>
+            <details class="production-card production-agent-panel"><summary>Connected workers <span id="agentReadinessSummary" class="production-muted"></span></summary><div id="productionAgents" class="production-agent-list"></div></details>
           </div>
           <div class="production-right">
             <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">SHARED QUEUE</div><h2>Recent tasks</h2></div><select id="productionFilter" aria-label="Filter production tasks"><option value="all">All tasks</option><option value="active">Active</option><option value="awaiting_review">Awaiting review</option><option value="completed">Completed</option><option value="failed">Needs attention</option></select></div><div id="productionJobs" class="production-jobs" aria-live="polite"></div></div>
