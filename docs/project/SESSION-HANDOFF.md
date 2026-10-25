@@ -24,3 +24,8 @@ Keep Wildbound separate from ShroudForge. Exclude credentials, server saves, unl
 ## Greenveil visual-direction approval — October 24, 2026
 
 Owner approved the complete Greenveil environment concept board. Treat [this master visual specification](../world/greenveil-approved-visual-direction.md) as the art target. Next development action is a **bounded lake-and-forest slice**, with scale plan, approved-source vegetation/assets, village-site blockouts, collision traversal and measured packaged FPS. Keep image binary separate until imported and verified; do not claim the full biome is implemented. Keep new animal gameplay paused. Existing older entries above are historical and may not reflect main-branch compilation records.
+
+
+## Final Ellowyn visual approval — October 25, 2026
+
+The owner approved the final detailed Ellowyn concept illustration, featuring longer willow leaf curtains/vines and darker, shimmery brown mossy bark. Follow [Ellowyn final visual reference](../world/ellowyn-final-visual-reference.md) for future art/modeling. The visual image binary is preserved in the downloadable conversation archive but has not been verified in GitHub. Import binary only after verifying exact source; no UE model or playtest was produced by the concept approval. Next step is art-asset import and a bounded, measured Greenveil environment slice; new animal gameplay remains paused.
