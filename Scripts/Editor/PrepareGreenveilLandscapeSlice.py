@@ -17,7 +17,6 @@ MASKS = ("Mask_Meadow.png", "Mask_Forest.png", "Mask_Lakeshore.png",
 
 
 def prepare_greenveil(source_folder, create_level=False):
-    from PIL import Image
     root = Path(source_folder).expanduser().resolve()
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     if manifest.get("grid_vertices") != [513, 513] or manifest.get("side_length_m") != 512:
@@ -25,10 +24,16 @@ def prepare_greenveil(source_folder, create_level=False):
     heightmap = root / "Greenveil_512m_Height.r16"
     if heightmap.stat().st_size != 513 * 513 * 2:
         raise ValueError("Bad R16 length or dimensions")
+    import struct
     for mask in MASKS:
-        with Image.open(root / mask) as image:
-            if image.size != (513, 513) or image.mode != "L":
-                raise ValueError("Expected 513x513 8-bit grayscale mask: " + mask)
+        with (root / mask).open("rb") as f:
+            header = f.read(26)
+        if header[:8] != b"\\x89PNG\\r\\n\\x1a\\n" or header[12:16] != b"IHDR":
+            raise ValueError("Invalid PNG: " + mask)
+        width, height = struct.unpack(">II", header[16:24])
+        bit_depth, color_type = header[24:26]
+        if (width, height, bit_depth, color_type) != (513, 513, 8, 0):
+            raise ValueError("Expected 513x513 8-bit grayscale PNG: " + mask)
     print("PREFLIGHT OK: R16 + six grayscale masks at 513x513")
     print("Landscape XY scale 100 cm; approximate Z scale 12.50019; water level 0m.")
     print("CAUTION: verify terrain elevation calibration and waterline in editor.")
