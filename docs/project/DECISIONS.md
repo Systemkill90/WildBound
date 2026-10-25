@@ -53,4 +53,6 @@
 
 | 2026-10-25 | **Ellowyn final appearance approved:** sentient cloud-high willow with exceptionally long green leaf curtains and trailing small vines, fine pastel pink/yellow flowers, dark shimmering brown bark with darker aged patches and moss; strictly non-humanoid | Explicit owner approval of revised image and [final visual sheet](../world/ellowyn-final-visual-reference.md); image binary import and UE5 asset creation remain outstanding |
 
+| 2026-10-25 | All five approved Greenveil tree families are targets for game-ready Unreal models, not only reference art | Owner instruction; see [tree production specification](../world/greenveil-tree-production-spec.md). No new meshes or Unreal tests completed by this documentation update |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
