@@ -4,6 +4,8 @@
 
 > **Pre-production ideas, not shipped assets.** These eight generated concept sheets explore 20 candidate creatures, six environment directions, 14 starter tools and two homesteader character presentations. They are image studies only: no rigged character models, creature animations, equipment meshes, new playable biomes, or implemented gameplay are implied. Names and traits are working proposals, not final canon.
 
+Newer character and culture references from the Idea Board are preserved in the [October 23 study](idea-board-2026-10-23/README.md). That study is intentionally separate from this original biome and creature atlas.
+
 The 2026-10-21 illustrations are included as optimized, **original-dimension WebP images** in this folder so the GitHub pages load without adding the full uncompressed PNG masters. Art direction follows believable anatomy, timber-and-stone materials, lived-in clothes, and unusual magic tied to ecology.
 
 ## Creatures · Meadow and Woodland (5)

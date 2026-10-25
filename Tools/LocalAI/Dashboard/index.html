@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#202123">
+  <meta name="application-name" content="WildBound AI Garage">
+  <title>WildBound AI Garage</title>
+  <link rel="icon" href="/ai-garage.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div id="launchSplash" class="launch-splash" role="status" aria-live="polite"><div class="splash-mark"><span>W</span><i></i></div><div class="splash-brand">WILDBOUND</div><h1>AI Garage</h1><p>Starting local AI and creative tools…</p><div class="splash-loader"><i></i></div></div>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="AI Garage navigation">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div><div class="brand-title">WildBound</div><div class="brand-subtitle">LOCAL AI GARAGE</div></div>
+        <button id="sidebarToggle" class="icon-button sidebar-collapse" title="Collapse sidebar" aria-label="Collapse sidebar">◀</button>
+      </div>
+      <button id="newChat" class="new-chat"><span class="plus">＋</span> New chat <kbd>Ctrl K</kbd></button>
+      <div class="side-label">WORKSPACE</div>
+      <div class="workspace-card">
+        <div class="workspace-icon">W</div>
+        <div class="workspace-copy"><strong>WildBound</strong><small>Unreal project · E:</small></div>
+        <span class="online-dot" title="Workspace found"></span>
+      </div>
+      <div class="side-label history-label">RECENT CHATS <button id="clearChats" class="quiet-button">Clear</button></div>
+      <nav id="chatList" class="chat-list" aria-label="Recent chats"></nav>
+      <div class="sidebar-spacer"></div>
+      <div class="privacy-note"><span class="lock-icon">▣</span><div><strong>Private by default</strong><small>Chat and project context stay on this PC.</small></div></div>
+      <div class="profile-row"><div class="avatar">WB</div><div><strong>WildBound Developer</strong><small>Local model</small></div><span class="ellipsis">···</span></div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="topbar-title"><span class="mobile-mark">W</span><span>WildBound AI Garage</span><span class="beta-pill">LOCAL AI</span></div>
+        <div class="topbar-right"><nav class="view-tabs" aria-label="Main workspaces"><button id="activityViewButton" class="view-tab active" type="button">Overview &amp; Log</button><button id="productionStudioButton" class="view-tab" type="button">Production Team</button><button id="imageStudioViewButton" class="view-tab" type="button">Image Studio</button><button id="audioStudioViewButton" class="view-tab" type="button">Audio Studio</button><button id="assetStudioButton" class="view-tab" type="button">Asset Studio</button></nav><span id="connectionStatus" class="connection-pill pending"><i></i><span>Checking local model…</span></span><button id="settingsButton" class="icon-button" title="Workspace settings" aria-label="Workspace settings">⚙</button></div>
+      </header>
+
+      <section id="settingsPanel" class="settings-panel" hidden>
+        <div><strong>Local workspace settings</strong><button id="closeSettings" class="icon-button" aria-label="Close settings">×</button></div>
+        <label>Model <select id="modelSelect"><option value="qwen3.5:9b">qwen3.5:9b</option></select></label>
+        <label class="toggle-row"><input id="contextToggle" type="checkbox" checked><span><strong>Use WildBound files as context</strong><small>Search docs, source, tools, config and tests on E: for each prompt.</small></span></label>
+        <p class="settings-footnote">This chat always uses Ollama locally. Codex can route bounded WildBound assignments through the local control API; difficult or ambiguous tasks remain in the main Codex chat for cloud handling and review.</p>
+      </section>
+
+      <section id="activityView" class="activity-view" hidden>
+        <div class="activity-heading"><div><div class="eyebrow">TASK ROUTING</div><h1>Work log</h1><p>One place to see both agents, local studios, and recorded work.</p></div><div class="activity-actions"><time id="activityUpdated" class="activity-updated">Waiting for log data…</time><button id="refreshActivity" class="refresh-button" type="button">Refresh</button></div></div>
+        <div class="garage-status-grid" id="garageStatusGrid" aria-live="polite">
+          <article class="garage-status-card online" id="localAgentCard"><span class="status-kicker">LOCAL AI · OLLAMA</span><strong class="status-value">Checking…</strong><small class="status-detail">qwen3.5:9b</small></article>
+          <article class="garage-status-card ready" id="codexAgentCard"><span class="status-kicker">CODEX · CLOUD</span><strong class="status-value">Task log ready</strong><small class="status-detail">Entries appear when Codex records work.</small></article>
+          <button class="garage-status-card idle" id="imageStatusCard" type="button"><span class="status-kicker">IMAGE STUDIO</span><strong class="status-value">Checking…</strong><small class="status-detail">DreamShaper XL · local GPU</small></button>
+          <button class="garage-status-card idle" id="audioStatusCard" type="button"><span class="status-kicker">AUDIO STUDIO</span><strong class="status-value">Checking…</strong><small class="status-detail">Music and voice model status</small></button>
+        </div>        <div class="agent-legend" hidden><div><span class="agent-dot local-dot"></span><strong>Local AI</strong><small>Ollama inference runs on this PC</small></div><div><span class="agent-dot codex-dot"></span><strong>Codex</strong><small>Uses your Codex account allotment</small></div></div>
+        <p class="activity-disclosure">Measured Ollama activity and Codex work-log tasks are shown separately. Codex request counts and tokens are not available here, so cloud usage share and credit savings cannot be calculated.</p>
+        <div id="usageSummary" class="usage-summary" aria-live="polite"></div>
+        <div id="activityList" class="activity-list" aria-live="polite"></div>
+      </section>
+
+      <section id="productionStudioView" class="production-view" hidden>
+        <div class="studio-heading"><div><div class="eyebrow">SHARED AGENT WORKSPACE</div><h1>Production Team</h1><p>One queue connects the production director, specialists, inspectors, and Unreal workers. Every generated asset waits for your review before import.</p></div><div class="production-actions"><span id="productionUpdated" class="activity-updated">Connecting to the production service…</span><button id="refreshProduction" class="refresh-button" type="button">Refresh</button></div></div>
+        <div id="productionNotice" class="production-notice" role="status" hidden></div>
+        <div id="productionCapabilities" class="production-capabilities" aria-live="polite"></div>
+        <div class="production-layout">
+          <div class="production-left">
+            <form id="productionForm" class="production-card production-form">
+              <div class="eyebrow">START A SHARED PRODUCTION TASK</div>
+              <label for="productionPrompt">What should the team make or prepare?</label>
+              <textarea id="productionPrompt" rows="4" maxlength="4000" required placeholder="Describe the asset, its purpose, and any WildBound identity or biome constraints."></textarea>
+              <div class="production-fields">
+                <label>Asset type<select id="productionKind"><option value="auto">Let the director choose</option><option value="texture">Texture</option><option value="voice">Character voice</option><option value="music">Music</option><option value="ambience">Musical ambience</option><option value="sfx" disabled>Isolated sound effect</option><option value="text-to-3d" disabled>Generate a 3D asset from text</option><option value="model">Prepare a supplied 3D model</option></select></label>
+                <label>Biome<select id="productionBiome"><option value="greenveil">Greenveil</option><option value="drowned_march">Drowned March</option><option value="emberstep">Emberstep</option><option value="gloamwood">Gloamwood</option></select></label>
+                <label>Voice<select id="productionVoice"><option value="auto">Auto cast a unique voice</option></select></label>
+                <label>Audio length<select id="productionSeconds"><option value="8">8 seconds</option><option value="12">12 seconds</option><option value="16">16 seconds</option><option value="20">20 seconds</option></select></label>
+              </div>
+              <label id="productionCharacterLabel" hidden>Character name<input id="productionCharacterName" maxlength="80" placeholder="Name this character to remember their approved voice"></label>
+              <button id="submitProduction" class="production-primary" type="submit">Send to the team</button>
+              <input id="productionModelFile" type="file" accept=".glb,.fbx,model/gltf-binary,application/octet-stream" hidden>
+              <p class="production-footnote">Available means the local backend or tool is present; every output is still a draft. Texture imports get a basic Base Color material. Supplied models keep their existing UVs, materials, and textures, but Garage does not auto-unwrap UVs or author polished materials. Review before approved Unreal import.</p>
+            </form>
+            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">AGENT AVAILABILITY</div><h2>Connected workers</h2></div><span id="agentReadinessSummary" class="production-muted"></span></div><div id="productionAgents" class="production-agent-list"></div></div>
+          </div>
+          <div class="production-right">
+            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">SHARED QUEUE</div><h2>Recent tasks</h2></div><select id="productionFilter" aria-label="Filter production tasks"><option value="all">All tasks</option><option value="active">Active</option><option value="awaiting_review">Awaiting review</option><option value="completed">Completed</option><option value="failed">Needs attention</option></select></div><div id="productionJobs" class="production-jobs" aria-live="polite"></div></div>
+            <div id="productionDetails" class="production-card production-details"><div class="production-empty">Select a task to follow its handoffs, review its output, and approve or reject the Unreal import.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="imageStudioView" class="image-studio-view" hidden>
+        <div class="studio-heading"><div><div class="eyebrow">LOCAL IMAGE GENERATION</div><h1>Image Studio</h1><p>Create an image on this PC, then add it to the WildBound Unreal project when it’s ready.</p></div><button id="reloadImageStudio" class="refresh-button" type="button">Reload studio</button></div>
+        <div id="imageStudioStatus" class="studio-status" role="status">Image Studio starts when this tab opens.</div>
+        <iframe id="imageStudioFrame" title="WildBound Image Studio" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </section>
+
+      <section id="audioStudioView" class="image-studio-view" hidden>
+        <div class="studio-heading"><div><div class="eyebrow">LOCAL AUDIO GENERATION</div><h1>Audio Studio</h1><p>Generate local music, ambience, and character voices. Each engine stays asleep until you use it.</p></div><button id="reloadAudioStudio" class="refresh-button" type="button">Check audio engine</button></div>
+        <div id="audioStudioStatus" class="studio-status" role="status">Checking local audio models…</div>
+        <iframe id="audioStudioFrame" title="WildBound Audio Studio" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </section>
+
+      <section id="assetStudioView" class="image-studio-view" hidden>
+        <div class="studio-heading"><div><div class="eyebrow">LOCAL 3D ASSET REVIEW</div><h1>Asset Studio</h1><p>Preview GLB models, materials, and any animation clips included in the file.</p></div><button id="reloadAssetStudio" class="refresh-button" type="button">Reload Asset Studio</button></div>
+        <div id="assetStudioStatus" class="studio-status" role="status">Loading the local model viewer…</div>
+        <iframe id="assetStudioFrame" title="WildBound 3D Asset Studio" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </section>
+
+      <div id="welcome" class="welcome-view">
+        <div class="welcome-emblem"><div class="brand-mark large" aria-hidden="true"><span></span><span></span><span></span></div></div>
+        <div class="eyebrow">WILDBOUND AI GARAGE</div>
+        <h1>What are we building<br><span>today?</span></h1>
+        <p class="welcome-copy">Ask about the game. I can pull relevant notes and code from your local WildBound workspace.</p>
+        <div class="suggestion-grid">
+          <button class="suggestion" data-prompt="Summarize the current Greenveil prototype and its verified limits."><span class="suggestion-icon leaf">✳</span><span><strong>Review the prototype</strong><small>Summarize Greenveil’s current state</small></span><span class="arrow">↗</span></button>
+          <button class="suggestion" data-prompt="Find the next practical development step for WildBound from the roadmap and current state."><span class="suggestion-icon route">⌁</span><span><strong>Plan the next step</strong><small>Use the roadmap and handoff</small></span><span class="arrow">↗</span></button>
+          <button class="suggestion" data-prompt="Explain how to rebuild and launch the latest Greenveil map from this project."><span class="suggestion-icon code">⌘</span><span><strong>Build the game</strong><small>Find the local Unreal build steps</small></span><span class="arrow">↗</span></button>
+          <button class="suggestion" data-prompt="Search the project for current player movement and input bindings. Cite the source files."><span class="suggestion-icon search">⌕</span><span><strong>Find a system</strong><small>Search code and project notes</small></span><span class="arrow">↗</span></button>
+        </div>
+      </div>
+
+      <section id="conversation" class="conversation" aria-live="polite" hidden></section>
+
+      <div class="composer-wrap">
+        <div id="offlineHint" class="offline-hint" hidden><span>Ollama isn’t connected.</span> Start it with <code>Start-WildBoundLocalAI.cmd</code>, then retry.</div>
+        <form id="composer" class="composer">
+          <textarea id="promptInput" rows="1" placeholder="Message WildBound Local" aria-label="Message WildBound Local"></textarea>
+          <div class="composer-tools"><div class="composer-meta"><span class="context-chip"><span>✳</span> WildBound context <span class="chip-state">ON</span></span><span class="local-chip"><span class="mini-lock">▣</span> Local only</span></div><button id="sendButton" class="send-button" type="submit" aria-label="Send message">↑</button></div>
+        </form>
+        <p class="disclaimer">Local model responses can be wrong. Build and gameplay claims require real tests.</p>
+      </div>
+      <footer class="footer-line"><span>WildBound AI Garage</span><span>Running on your PC</span></footer>
+    </main>
+  </div>
+  <script src="/production-studio.js" defer></script>
+</body>
+</html>

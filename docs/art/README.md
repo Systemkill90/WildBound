@@ -25,6 +25,8 @@
 
 [Read the world and biome notes →](../world/biomes.md) · [Read the animal design notes →](../systems/animals.md)
 
+Greenveil's concept anchor is the [pastoral basin mood sheet](concept-atlas/biomes-atlas.webp): orchard villages and clear streams framed by birch groves, meadow flowers, mossy stone, warm timber, and honey daylight. Realistic scanned assets should carry surface and foliage detail; the art grade and composition should still read as inviting, fertile Greenveil with only occasional quiet magic. Do not copy a darker sample's mood over the Wildbound board.
+
 ## New illustrated concept atlas
 
 [![Six speculative Wildbound biome and settlement visual directions](concept-atlas/biomes-atlas.webp)](concept-atlas/README.md)
@@ -34,6 +36,10 @@ The [**new illustrated atlas**](concept-atlas/README.md) collects **20 speculati
 [![Woodland creature design studies](concept-atlas/creatures-i-meadows.webp)](concept-atlas/README.md)
 
 [Explore all eight concept plates →](concept-atlas/README.md)
+
+## Latest Idea Board studies
+
+The [October 23 character and culture studies](concept-atlas/idea-board-2026-10-23/README.md) add grounded settlers, woodland kin, elves and more overt Fae imagery. They are exploratory art and broaden the conversation; they do not replace the Greenveil biome mood sheet or lock the game's style.
 
 ## Inside the creative workshop
 
@@ -46,6 +52,8 @@ The following are **draft concepts**, deliberately staged separately from the ga
 ## From study to game asset
 
 A pretty image does not become a usable game asset automatically. Before production, each model or material needs a clear source, approved usage rights, correct scale, Unreal import settings and (when applicable) collision, animation, LODs and server performance testing.
+
+The local WildBound Workshop applies the flexible, Idea Board-derived [generation profile](wildbound-generation-profile.json) to image prompts. Generated outputs are references or source textures until reviewed; importing a `Texture2D` does not create or place a mesh, material, or level asset. Preserve the original prompt, seed, and model metadata with each output, and review generated anatomy, style consistency, source-model terms, and project fit before publishing or shipping.
 
 [See the credited sources and licensing restrictions →](ASSET-CREDITS.md)
 

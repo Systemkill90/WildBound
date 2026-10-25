@@ -1,0 +1,7 @@
+# Workstation-only data
+**/runtime/
+Garage/garage.config.json
+Garage/WildBoundGarage.exe
+Garage/*.exe.config
+Garage/bin/
+Garage/obj/

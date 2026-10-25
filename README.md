@@ -81,20 +81,55 @@ The broader world includes candidate grasslands, mountain habitats, strange crea
 
 **Early PC prototype · Unreal Engine 5.8.4 · Development in progress**
 
-The October 22 Windows session compiled Wildbound and launched it in Epic's authored Electric Dreams forest environment with Wildbound's GameMode and HUD. The sample is installed locally and stays outside Git because its content is not redistributed by this project. The view uses native 1920×1080 and a 60 FPS cap, but traversal frame time has not been benchmarked. A bundled Quinn mannequin replaces the sphere as temporary rigged player art; its local asset setup is documented in [Current State](docs/project/CURRENT-STATE.md).
+The October 22 desktop build delivers a **180 × 160 m Greenveil exploration zone**: dense woodland, a creek, two bridges, three cottage placeholders, gardens, trails and an overlook. A guarded native-1080p traversal with all settings Medium except Low shadows passed **15/15 waypoints over 327.7 m at 75.89 FPS** (p95 15.205 ms), with zero navigation failures or animal actors. Low shadows remain a candidate pending visual QA; the normal Medium default is unchanged, and this is not sustained-60 certification. The clearing remains bright; Quinn and cottages are placeholders. [Read the test report](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md).
 
 | Area | Actual status |
 | :-- | :-- |
-| **Unreal foundation** | Editor and game compiled; Windows test package launched. |
-| **First Greenveil scene** | Epic's detailed authored Electric Dreams forest and river valley are the local visual base. The player uses a temporary rigged mannequin; the deer now wanders with a collision capsule. Check obstacle traversal and performance before carving out a small Greenveil slice. |
-| **Animal needs** | Core C++ rules tested; care interactions still need in-game validation. |
-| **Construction** | Temporary snapped blocks compiled; **not** voxel terrain and not yet playtested. |
-| **Multiplayer** | Two clients joined a listen server; gameplay state synchronization **not yet verified**. |
-| **Persistence, breeding & villages** | Not implemented. |
+| **Unreal foundation** | UE 5.8.4 editor/game compilation and local Windows packaging passed. |
+| **Greenveil exploration** | Original bounded map with locally licensed vegetation, real collision/navigation and Quinn movement; packaged route verified. |
+| **Buildings, water and tools** | Original visual placeholders; sparse interiors, no settlement or fluid simulation. |
+| **Animal gameplay** | Paused by owner priority; [PR #9](https://github.com/Systemkill90/WildBound/pull/9) remains separate and unmerged. |
+| **Construction, multiplayer & persistence** | Deferred; no new gameplay verification in this exploration pass. |
 
-**The next milestone:** playtest the new player/deer collision around roots and logs, verify care and block placement, then create a small authored Greenveil slice before expanding the world.
+**The next milestone:** build a bounded Greenveil starter village as the first real testing ground: a small arrival green, enterable home/work spaces, garden edge, creek crossing and short forest loop. Use an authored, licensed village environment for the visual base, adapt it around Wildbound's working player/game-mode foundation, and preserve the current playable map/package as rollback. Animal gameplay remains deferred. See the [starter-village brief](docs/world/greenveil-starter-village.md).
 
 [Current development state](docs/project/CURRENT-STATE.md) · [Next handoff](docs/project/SESSION-HANDOFF.md) · [Open milestones](ROADMAP.md)
+
+## Development log
+
+### October 23, 2026 · Village sample map audit
+
+A read-only package-file audit confirmed the sample's small auxiliary levels are dedicated to the first-person template, audio, atmosphere and cinematics; they are not a smaller village map. The actual village remains in the resource-heavy World Partition level, whose external actors are separate. No sample content was changed or copied. The next useful check is a visual review of the main village map after Windows commit capacity is available, followed by a bounded extraction plan. The current Greenveil package remains the playable rollback. [Session handoff](docs/project/SESSION-HANDOFF.md) · [Current state](docs/project/CURRENT-STATE.md).
+
+### October 23, 2026 · Free village sample acquired
+
+Fab downloaded the Medieval Village Megascans Sample as a separate local project. Its main World Partition map loaded in UE 5.8 editor mode, but Unreal began rebuilding its 16K minimap texture (estimated 11.7 GiB of texture-build memory); the editor was stopped before visual inspection. A standalone game-mode launch bypassed the minimap and Zen 507, but rebuilt Nanite/static-mesh data; a warm-cache retry reached 192 of 258 static meshes before system commit pressure forced a stop, before gameplay. A reversible local-only shader-worker cap reduced the editor to two workers, and its DDC is retained for future retries. No sample assets were brought into Wildbound; the playable Greenveil project and map remain untouched. Next, resolve local paging/commit capacity or identify a smaller sample slice that avoids the large rebuilds, then verify the actual visuals before adapting anything. [Starter-village brief](docs/world/greenveil-starter-village.md) · [Current state](docs/project/CURRENT-STATE.md) · [Roadmap](ROADMAP.md).
+
+### Greenveil starter-village direction
+
+Greenveil's next test map is a small, useful village rather than an empty forest clearing or a whole demo world. It will connect the arrival point, home/workshop lane, garden/farm edge, creek bridge and a short woodland return loop. The layout is documented with movement, collision, camera-clearance and block-placement checks. The free Medieval Village Megascans Sample is now acquired as a separate local project with five village maps. Its first editor-review launch stopped during texture processing before the map appeared, so its visuals and UE 5.8 behavior remain unverified; no sample content has been brought into Wildbound. The current playable build remains the rollback; no new map or gameplay build is claimed. [Slice brief](docs/world/greenveil-starter-village.md) · [Daily development notes](docs/project/DAILY-DEVELOPMENT.md).
+
+### October 23, 2026 · Greenveil art-base correction
+
+The current package proves traversal, but its generated terrain, scattered foliage, mannequin and box-built cottages are not close enough to the intended world. The existing decision to use Electric Dreams as the environment base was not carried through. The next slice will use a bounded authored forest/PCG area for realistic asset and shader quality, then be composed and graded to match Greenveil's warm pastoral board: meadows, orchards, birch groves, a clear creek, mossy stone and lived-in timber/stone architecture. Keep the current map as rollback; no animal gameplay. [Art direction](docs/art/README.md) · [Current state](docs/project/CURRENT-STATE.md).
+
+The concept art is a flexible guide and can evolve with new details and playtesting. Six free Poly Haven CC0 source sets (meadow grass, two flowering groundcovers, boulder, roots and a modular pier) have been imported into a local candidate-only Unreal folder; they are not placed in a map, and the flower materials still need their texture parameters wired. The Electric Dreams forest breakdown was inspected read-only: its authored PCG actor spans roughly 512 × 512 m and contains 572,150 instances across 164 mesh types, so the next scene should use a bounded, performance-conscious subset rather than drop in the whole forest. [Asset provenance and status](docs/art/GREENVEIL-ASSET-INVENTORY.md).
+
+### October 22, 2026 · GPU profile and shadow-quality comparison
+
+Added a screenshot-free traversal option and local Unreal Insights tracing. The all-Medium native-1080p route measured 55.26 FPS; the trace pointed to GPU frame time, with shadow depth averaging 5.45 ms. A guarded repeat kept all groups at Medium except Low shadows and measured **75.89 FPS** with 15/15 waypoints, zero navigation failures and zero animal actors. The benchmark now defers to loaded Ollama models and stops only its own test process if one becomes active. Low shadows need a human visual check, so the normal Medium default remains. Raw profiling data stays local. [Full verification record →](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md)
+
+### October 22, 2026 · Greenveil exposure and packaged traversal
+
+Lowered the Greenveil field-grade exposure and highlight contrast, then compiled and packaged a fresh Windows build without regenerating the map. The packaged capture shows more detail in the sunlit clearing, though it remains brighter than intended. The native-1080p Medium traversal passed **15/15 waypoints over 326.1 m**, with zero navigation failures or animal actors; one uncapped run averaged **50.61 FPS** (p95 22.616 ms, p99 24.239 ms). That is below the 60 FPS target and is not sustained-performance proof. Also disabled the unused Android File Server in project config and added a static check against committing its token. [Full verification record →](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md)
+
+### October 22, 2026 · Clean build and traversal after source sync
+
+The synchronized Greenveil branch compiled and packaged cleanly with Unreal Engine 5.8.4. The map was not regenerated, and the earlier package checkpoints were left intact. The fresh native-1080p Medium package passed **15/15 movement waypoints over 326.1 m**, with zero navigation failures and zero animal actors. It averaged **49.19 FPS** over 2,713 frames (p95 22.786 ms; peak process memory 1,538.3 MiB), still short of 60 FPS. The packaged capture confirms the bright clearing, mannequin player and cottage placeholders remain visible work. This automated run does not verify animal, building, or care gameplay. [Read the complete verification record →](docs/project/GREENVEIL-EXPLORATION-2026-10-22.md)
+
+### October 22, 2026 · Greenveil creek visibility check
+
+V5's new PBR creek surface compiled and packaged, but the actual capture showed near-black water. V6 restores the established creek material and short bridge decks: its packaged 1080p Medium traversal passed **15/15 grounded waypoints over 326.1 m** and **14/14 navigation legs**, with zero navigation failures and zero animal actors. The captured creek is readable again; the clearing remains over-bright. The uncapped run averaged **50.03 FPS** (p95 22.649 ms, p99 24.587 ms), below the 60 FPS target. [Read today's field notes and evidence →](docs/project/DAILY-DEVELOPMENT.md)
 
 ## Find what you're looking for
 
@@ -117,7 +152,7 @@ New mythical creatures, fantastical villages, walking trees and giant mushroom f
 <details>
 <summary><strong>For developers: build notes and checks</strong></summary>
 
-The last recorded setup used Unreal Engine **5.8.4**, Visual Studio Community 2022 **[compiler version redacted]**, MSVC **[toolchain version redacted]**, and Windows SDK **[SDK version redacted]**. The packaged Windows executable is kept outside GitHub.
+The project currently targets Unreal Engine **5.8.4** and a compatible Visual Studio 2022 C++ workload. The packaged Windows executable is kept outside GitHub.
 
 - [Get set up](docs/developers/README.md) and [follow the hands-on playtest](docs/developers/PROTOTYPE-PLAYTEST.md).
 - From a compatible Windows checkout, `Tools/Start-Wildbound.cmd` attempts an editor build and Greenveil launch. Passing this script is not proof of playable features.

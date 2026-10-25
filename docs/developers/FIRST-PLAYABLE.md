@@ -1,5 +1,7 @@
 # First playable — Greenveil acceptance gates
 
+**Priority correction, October 22:** the care/build gates below are historical and deferred. Current work is the populated exploration zone with no animal gameplay. See the [packaged exploration results](../project/GREENVEIL-EXPLORATION-2026-10-22.md) and [current handoff](../project/SESSION-HANDOFF.md).
+
 [Current state](../project/CURRENT-STATE.md) · [Developer setup](README.md) · [Detailed playtest](PROTOTYPE-PLAYTEST.md) · [Roadmap](../../ROADMAP.md)
 
 **Last evidence updated:** October 20, 2026. **Documentation review:** October 21, 2026. This is a continuing engineering checklist, not a fresh Unreal playtest.

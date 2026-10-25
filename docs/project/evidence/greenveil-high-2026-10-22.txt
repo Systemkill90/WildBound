@@ -1,0 +1,1 @@
+GREENVEIL_PROBE PASS reason=Full loop traversed using movement input waypoints=15/15 travel_m=326.1 frames=2311 mean_ms=23.968 p95_ms=26.480 p99_ms=29.668 mean_fps=41.72 process_physical_mib=1528.6 process_peak_mib=4408.7 resolution=1920x1080 animals=0 navigation_failures=0

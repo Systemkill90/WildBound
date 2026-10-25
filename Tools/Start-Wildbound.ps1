@@ -4,7 +4,8 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = "",
-    [string]$Map = "/Game/Levels/PCG/ElectricDreams_PCGCloseRange?game=/Script/Wildbound.WildboundPrototypeGameMode",
+    [string]$Map = "/Game/Maps/GreenveilExplorationPolish_WP",
+    [ValidateRange(1, 32)][int]$MaxParallelActions = 2,
     [switch]$BuildOnly,
     [switch]$ShowEngines,
     [switch]$AutoMovementTest
@@ -13,6 +14,17 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$SystemDriveRoot = [IO.Path]::GetPathRoot(($env:SystemDrive + "\"))
+if ([IO.Path]::GetPathRoot($RepoRoot) -ieq $SystemDriveRoot) { throw "Wildbound must be checked out on a non-system volume before starting." }
+$WildboundDataRoot = Split-Path $RepoRoot -Parent
+$BuildScratch = Join-Path $RepoRoot "Saved\BuildScratch"
+New-Item -ItemType Directory -Path $BuildScratch -Force | Out-Null
+# Keep this project's Unreal editor/build scratch beside the non-system checkout.
+$env:TEMP = $BuildScratch
+$env:TMP = $BuildScratch
+$DdcPath = Join-Path $WildboundDataRoot "EngineDDC\Local"
+New-Item -ItemType Directory -Path $DdcPath -Force | Out-Null
+Set-Item -Path 'Env:UE-LocalDataCachePath' -Value $DdcPath
 $Project = Join-Path $RepoRoot "Wildbound.uproject"
 $LogDir = Join-Path $RepoRoot "Saved\WildboundBootstrap"
 New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
@@ -79,14 +91,34 @@ if ($EngineRoot -and -not (Test-Engine $EngineRoot)) {
 if ($Candidates.Count -eq 0) {
     Write-Note "BLOCKED: No Unreal Editor installation found."
     Write-Note "Install UE5 through Epic Games Launcher and a supported Visual Studio C++ toolchain."
-    Write-Note "Or rerun with -EngineRoot 'C:\Path\To\UE_5.x'."
+    Write-Note "Or rerun with -EngineRoot <installed Unreal Engine root>."
     exit 2
 }
 $SelectedEngine = $Candidates[0]
 $Batch = Join-Path $SelectedEngine "Engine\Build\BatchFiles\Build.bat"
 $Editor = Join-Path $SelectedEngine "Engine\Binaries\Win64\UnrealEditor.exe"
+if (-not (Test-Path -LiteralPath $Batch -PathType Leaf) -or
+    -not (Test-Path -LiteralPath $Editor -PathType Leaf)) {
+    throw "The selected Unreal Engine installation is incomplete: $SelectedEngine"
+}
+if (-not $BuildOnly) {
+    if ($Map -notmatch '^/(Game|Engine)/') {
+        throw "-Map must be an Unreal package path under /Game or /Engine, such as /Game/Maps/GreenveilExplorationPolish."
+    }
+    if ($Map.StartsWith("/Game/")) {
+        $MapPackage = ($Map -split '\?', 2)[0]
+        $MapRelativePath = ($MapPackage.Substring(6).Replace('/', '\') + ".umap")
+        $MapAsset = Join-Path (Join-Path $RepoRoot "Content") $MapRelativePath
+        if (-not (Test-Path -LiteralPath $MapAsset -PathType Leaf)) {
+            throw "The requested /Game map is not present in Content: $MapAsset"
+        }
+    }
+}
+. (Join-Path $PSScriptRoot "WildboundBuildResources.ps1")
+$BuildPlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions
 Write-Note ("Project: " + $Project)
 Write-Note ("Engine candidate: " + $SelectedEngine)
+Write-Note ("Windows free commit: {0:N1} GiB; UnrealBuildTool parallel actions: {1}" -f $BuildPlan.FreeCommitGiB, $BuildPlan.MaxParallelActions)
 Write-Note "The project has not yet pinned an approved minor UE version. This is an initial compile attempt."
 Write-Note ("Build log: " + $BuildLog)
 
@@ -94,7 +126,7 @@ Write-Note ("Build log: " + $BuildLog)
 $PreviousPreference = $ErrorActionPreference
 try {
     $ErrorActionPreference = "Continue"
-    & $Batch "WildboundEditor" "Win64" "Development" "-Project=$Project" "-WaitMutex" "-NoHotReload" *>&1 |
+    & $Batch "WildboundEditor" "Win64" "Development" "-Project=$Project" "-MaxParallelActions=$($BuildPlan.MaxParallelActions)" "-WaitMutex" "-NoHotReload" *>&1 |
         Out-File -FilePath $BuildLog -Encoding utf8
     $BuildExitCode = $LASTEXITCODE
 }
@@ -114,24 +146,10 @@ if ($BuildOnly) {
     exit 0
 }
 
-# Start the requested map. The default is Epic's free Electric Dreams
-# authored PCG forest environment, used as Greenveil's visual foundation. Its local
-# sample Content folders are junctioned into Project/Content and stay out of Git.
-if ($Map -notmatch '^/(Game|Engine)/') {
-    throw "-Map must be an Unreal package path under /Game or /Engine, such as /Game/Maps/GreenveilField."
-}
-$MapAsset = $null
-if ($Map.StartsWith("/Game/")) {
-    $MapPackage = ($Map -split '\?', 2)[0]
-    $MapRelativePath = ($MapPackage.Substring(6).Replace('/', '\') + ".umap")
-    $MapAsset = Join-Path (Join-Path $RepoRoot "Content") $MapRelativePath
-    if (-not (Test-Path $MapAsset -PathType Leaf)) {
-        throw "The requested /Game map is not present in Content: $MapAsset"
-    }
-}
+# Start the requested map only after its path and local /Game asset have been preflighted.
 $MapArgument = $Map
 $TestArgument = if ($AutoMovementTest) { " -WildboundAutoMovementTest" } else { "" }
-$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60 -ExecCmds="r.ScreenPercentage 100,r.DynamicRes.OperationMode 0,DisableAllScreenMessages"' + $TestArgument)
+    $Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60 -ExecCmds="r.EyeAdaptationQuality 0,r.ScreenPercentage 100,r.DynamicRes.OperationMode 0,DisableAllScreenMessages"' + $TestArgument)
 try {
     $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru
     Start-Sleep -Seconds 3

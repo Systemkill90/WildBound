@@ -4,7 +4,7 @@ assets = [
     "/Game/Megascans/3D_Plants/EuropeanHornbeam/Geometry/SimpleWind/SM_EuropeanHornbeam_Forest_05",
     "/Game/Megascans/3D_Plants/EuropeanHornbeam/Geometry/SimpleWind/SM_EuropeanHornbeam_Forest_07",
 ]
-destination = r"<local-project-root>\Project\Content"
+destination = unreal.Paths.project_content_dir()
 tools = unreal.AssetToolsHelpers.get_asset_tools()
 for asset_path in assets:
     asset = unreal.load_asset(asset_path)
