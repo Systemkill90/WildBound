@@ -43,3 +43,8 @@ Approved art direction: [ground-layer specification](docs/world/greenveil-ground
 ## Greenveil regional master atlas — approved October 25, 2026
 
 The owner approved both full visual region/atlas boards. The [written master map](docs/world/greenveil-regional-master-map.md) lays out region-scale watershed geography, all seven settlement cultures (including Wildlings), roads/water routes, ancient and sacred landmarks, and a first landscape-slice corridor. **Place names are provisional**; actual dimensions and UE terrain remain unimplemented. Next: pass demo acceptance, then refine hydrology and the isolated 512m landscape slice. No new animal gameplay or PR merge authorized.
+
+
+## Greenveil first-corridor engineering audit — October 25, 2026
+
+[Measured technical design](docs/world/greenveil-first-corridor-engineering-plan.md) specifies meadow–forest–glade–lake route and separates regional hydrology from the small 512 m test field. A submerged former lookout marker is rejected; replace in new data release and verify route/waterline in Unreal after demo stabilization. This is a **design-stage** milestone, not a tested terrain actor or playable landscape.
