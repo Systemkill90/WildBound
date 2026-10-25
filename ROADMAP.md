@@ -1,5 +1,9 @@
 # The Road Ahead
 
+## Creative Library pilot — October 25
+
+The first vertical slice is implemented on `feature/creative-library-pilot`: private NAS inbox/archive, direct desktop upload of accessible originals, checksummed media, Git design records, explicit approval, worker reference packages, and Garage Missing Reference Requests. The next acceptance step is a coherent owner-supplied design bundle and approved worker retrieval. Semantic conflict review and automated PR creation remain later increments. See [pilot workflow](docs/creative-library/README.md). Do not resume paused animal gameplay during this work.
+
 *One full, walkable place first — then the wilderness grows.*
 
 [← Wildbound home](README.md) · [Development desk](docs/project/README.md) · [Current state](docs/project/CURRENT-STATE.md) · [First playable](docs/developers/FIRST-PLAYABLE.md)

@@ -9,6 +9,7 @@ const TYPES = ['auto', 'texture', 'voice', 'music', 'ambience', 'sfx', 'text-to-
 const STEPS = ['Brief', 'Specialist', 'Production', 'Technical review', 'Art review', 'Unreal import', 'Engine verification'];
 const TEAMS = [
   { id: 'production-director', name: 'Production director', engine: 'Qwen · local AI', role: 'Turns a prompt into a typed brief, records requirements, and routes it to the right specialist.' },
+  { id: 'ai-librarian', name: 'AI Librarian', engine: 'Approved Creative Library · local service', role: 'Assembles version-pinned design references and pauses only work missing approved sources.' },
   { id: 'visual-artist', name: 'Material & texture artist', engine: 'Qwen + DreamShaper XL', role: 'Directs seamless material textures and visual surface details for game assets.' },
   { id: 'sound-designer', name: 'Sound designer & composer', engine: 'Qwen + ACE-Step', role: 'Creates the art direction for instrumental music and musical ambience.' },
   { id: 'sound-effects-designer', name: 'Sound-effects designer', engine: 'Qwen + Stable Audio 3', role: 'Designs one isolated, non-musical sound effect for the local SFX generator.' },
@@ -45,8 +46,9 @@ function validateRequest(data) {
   return {prompt:data.prompt.trim(),kind,biome:String(data.biome||'greenveil').slice(0,60),sourcePath:data.sourcePath||null,characterName,voice,seconds:Math.max(4,Math.min(20,Number(data.seconds)||8))};
 }
 class Pipeline extends EventEmitter {
-  constructor(root, adapters) {
+  constructor(root, adapters, library=null) {
     super(); this.root=root;this.adapters=adapters;this.jobs=new Map();this.active=null;this.controller=null;this.closed=false;this.shuttingDown=false;
+    this.library=library;
     fs.mkdirSync(root,{recursive:true});this.castFile=path.join(root,'cast.json');this.cast=fs.existsSync(this.castFile)?JSON.parse(fs.readFileSync(this.castFile,'utf8')):{};
     for(const name of fs.readdirSync(root)) {
       if(!/^[0-9a-f-]{36}$/.test(name))continue;
@@ -70,6 +72,18 @@ class Pipeline extends EventEmitter {
         j.brief=await this.stage(j,0,s=>this.adapters.brief(j,s),'production-director');this.save(j);
       }
       if(j.brief.kind==='voice'){this.assignVoice(j);this.save(j);}
+      if(this.library&&!j.spec){
+        const references=this.library.resolve(j.id,j.prompt,j.brief);
+        j.referencePackage=references;
+        const signature=JSON.stringify({missing:references.missing,conflicts:references.conflicts,versions:references.references.map(ref=>[ref.id,ref.version])});
+        if(signature!==j.referencePackageSignature){
+          const now=new Date().toISOString();
+          j.agentRuns.push({id:crypto.randomUUID(),agentId:'ai-librarian',agentName:'AI Librarian',step:'Reference check',status:'completed',startedAt:now,completedAt:now,summary:{references:references.references.map(ref=>ref.id+'@'+ref.version),missing:references.missing,conflicts:references.conflicts}});
+          j.referencePackageSignature=signature;
+        }
+        if(references.missing.length||references.conflicts.length){j.status='missing_references';j.error=references.conflicts.length?'Approved references conflict: '+references.conflicts.map(pair=>pair.join(' / ')).join(', '):'Approved references are needed: '+references.missing.join(', ');this.save(j);return;}
+        this.save(j);
+      }
       if(j.brief.kind==='model'&&!j.sourcePath){j.status='needs_source';j.error='No local 3D generation or auto-rigging model is installed. Attach an approved GLB/FBX source to continue this model task.';this.save(j);return;}
       const generatedModel=j.brief.kind==='text-to-3d';
       const suppliedModel=j.brief.kind==='model';
@@ -102,8 +116,9 @@ class Pipeline extends EventEmitter {
   reject(id){const j=this.get(id);if(j.status!=='awaiting_review')throw new Error('Only an asset awaiting review can be rejected.');j.status='rejected';j.steps[4].status='rejected';this.save(j);return j;}
   revise(id,feedback,voice='auto'){const j=this.get(id);if(j.status!=='awaiting_review')throw new Error('Only an asset awaiting review can be revised.');if(typeof feedback!=='string'||!feedback.trim()||feedback.length>2000)throw new Error('Describe the changes in 1–2,000 characters.');if(j.brief.kind==='voice'&&voice!=='auto'&&!VOICE_IDS.has(voice))throw new Error('Choose an installed voice preset.');const oldVoice=j.voice;j.revisionHistory??=[];j.revisionHistory.push({revision:j.revision||1,feedback:feedback.trim(),artifact:j.artifact,spec:j.spec,checks:j.checks,characterDesign:j.characterDesign,voice:oldVoice,reviewedAt:new Date().toISOString()});j.revision=(j.revision||1)+1;j.revisionFeedback=feedback.trim();j.spec=null;j.artifact=null;j.checks=null;j.characterDesign=null;j.backendJob=null;j.approvedAt=null;j.engine=null;j.verification=null;j.error=null;for(let i=1;i<j.steps.length;i++)j.steps[i]={name:STEPS[i],status:'pending',agentId:STAGE_AGENTS[i]};if(j.brief.kind==='model'){j.sourcePath=null;j.status='needs_source';j.error='Attach an updated GLB or FBX to apply geometry changes. Your feedback is saved for the character designer and 3D artist.';}else{j.status='queued';if(j.brief.kind==='voice'){j.voice=voice;this.assignVoice(j,voice==='auto'?oldVoice:null);}}this.save(j);if(j.status==='queued')void this.pump();return j;}
   attach(id,sourcePath){const j=this.get(id);if(j.status!=='needs_source')throw new Error('This task is not waiting for a model.');validateRequest({...j,sourcePath});j.sourcePath=sourcePath;j.error=null;j.status='queued';this.save(j);void this.pump();return j;}
-  cancel(id){const j=this.get(id);if(!['queued','running','importing','awaiting_review','needs_source'].includes(j.status))throw new Error('This task cannot be cancelled.');j.cancelRequested=true;if(this.active===id){j.status='cancelling';this.save(j);this.controller.abort(new Error('Cancelled by the owner.'));}else{j.status='cancelled';this.save(j);}return j;}
+  cancel(id){const j=this.get(id);if(!['queued','running','importing','awaiting_review','needs_source','missing_references'].includes(j.status))throw new Error('This task cannot be cancelled.');j.cancelRequested=true;if(this.active===id){j.status='cancelling';this.save(j);this.controller.abort(new Error('Cancelled by the owner.'));}else{j.status='cancelled';this.save(j);}return j;}
   retryImport(id){const j=this.get(id);if(!['failed','interrupted'].includes(j.status)||!j.artifact||!j.approvedAt)throw new Error('This task has no approved asset to retry importing.');j.status='queued';j.error=null;j.cancelRequested=false;this.save(j);void this.pump();return j;}
+  resumeMissing(){if(!this.library)return 0;let resumed=0;for(const j of this.jobs.values())if(j.status==='missing_references'){const references=this.library.resolve(j.id,j.prompt,j.brief);j.referencePackage=references;if(!references.missing.length&&!references.conflicts.length){j.status='queued';j.error=null;this.save(j);resumed++;}}if(resumed)void this.pump();return resumed;}
   async shutdown(){this.closed=true;this.shuttingDown=true;if(this.controller)this.controller.abort(new Error('Garage is closing. The task was saved and can be reviewed or retried after restart.'));while(this.active)await new Promise(r=>setTimeout(r,100));}
 }
 function stageSummary(value){if(!value||typeof value!=='object')return String(value||'').slice(0,240);const fields=['kind','name','summary','width','height','format','seconds','sampleRate','bitDepth','channels','triangles','meshes','armatures','verified','sha256'];const result={};for(const key of fields)if(value[key]!==undefined)result[key]=value[key];return result;}

@@ -368,8 +368,8 @@ async function proxyGarage(req, res, url) {
   if (req.headers.host !== `${HOST}:${PORT}`) return json(res, 403, { error: 'Loopback host required.' });
   if (req.method !== 'GET' && req.headers.origin !== `http://${HOST}:${PORT}`) return json(res, 403, { error: 'Production actions are accepted only from the local WildBound Garage.' });
   const target = url.pathname.slice('/api/garage'.length) || '/';
-  const safeRead = req.method === 'GET' && (/^\/status$/.test(target) || /^\/jobs(?:\/[0-9a-f-]{36}(?:\/files\/(?:preview|source))?)?$/.test(target));
-  const safeWrite = req.method === 'POST' && (/^\/jobs$/.test(target) || /^\/jobs\/[0-9a-f-]{36}\/(?:approve|reject|revise|cancel|attach|retry-import|source)$/.test(target));
+  const safeRead = req.method === 'GET' && (/^\/(?:status|library)$/.test(target) || /^\/jobs(?:\/[0-9a-f-]{36}(?:\/files\/(?:preview|source))?)?$/.test(target));
+  const safeWrite = req.method === 'POST' && (/^\/jobs$/.test(target) || /^\/jobs\/[0-9a-f-]{36}\/(?:approve|reject|revise|cancel|attach|retry-import|source)$/.test(target) || /^\/library\/(?:sync|supply|approve|withdraw|package|resolve)$/.test(target));
   if (!safeRead && !safeWrite) return json(res, 404, { error: 'Unknown production endpoint.' });
   if (target.endsWith('/source') && Number(req.headers['content-length'] || 0) > MAX_MODEL_BYTES) return json(res, 413, { error: 'Model files must be 250 MB or smaller.' });
   const headers = { Authorization: `Bearer ${CONTROL_TOKEN}` };

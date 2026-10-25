@@ -8,6 +8,7 @@ const {Transform}=require('node:stream');
 const {pipeline}=require('node:stream/promises');
 const {Pipeline,TEAMS}=require('./pipeline');
 const {adapters,json}=require('./adapters');
+const {CreativeLibrary}=require('./creative-library');
 
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'garage.config.json'),'utf8'));
@@ -20,19 +21,21 @@ const tripoReady=()=>fs.existsSync(path.join(tripoRoot,'.venv','Scripts','python
 const token=fs.readFileSync(path.join(config.dashboardRoot,'runtime','control-token.txt'),'utf8').trim();
 const jobsRoot=path.join(root,'runtime','jobs');
 const lock=path.join(root,'runtime','production.lock.json');
+const library=new CreativeLibrary({nasRoot:config.libraryNasRoot||process.env.WILDBOUND_LIBRARY_NAS_ROOT||null,repoRoot:config.libraryRepoRoot||config.repoRoot,stateRoot:path.join(root,'runtime','creative-library')});
 let queue;
-queue=new Pipeline(jobsRoot,adapters(config,jobsRoot,j=>queue.save(j)));
+queue=new Pipeline(jobsRoot,adapters(config,jobsRoot,j=>queue.save(j)),library);
 queue.on('active',j=>fs.writeFileSync(lock,JSON.stringify({pid:process.pid,job:j.id,updatedAt:new Date().toISOString()})));
 queue.on('idle',()=>{if(fs.existsSync(lock))fs.unlinkSync(lock);});
 
 function reply(res,status,data){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(data));}
 function fail(status,message){const e=new Error(message);e.statusCode=status;return e;}
-async function body(req){let raw='';for await(const b of req){raw+=b;if(raw.length>12000)throw fail(413,'Request too large.');}try{return JSON.parse(raw||'{}');}catch{throw fail(400,'Invalid JSON request.');}}
+async function body(req,limit=12000){let size=0;const chunks=[];for await(const b of req){size+=b.length;if(size>limit)throw fail(413,'Request too large.');chunks.push(b);}try{return JSON.parse(Buffer.concat(chunks).toString('utf8')||'{}');}catch{throw fail(400,'Invalid JSON request.');}}
 function validId(value){return /^[0-9a-f-]{36}$/.test(value);}
 function within(rootDir,file){const base=fs.realpathSync(rootDir),real=fs.realpathSync(file),rel=path.relative(base,real);if(!rel||rel.startsWith('..')||path.isAbsolute(rel))throw fail(403,'Requested file is outside the Garage task directory.');return real;}
 function agentReadiness(id,c){
   const checks={
     'production-director':[['ollama','Local text model']],
+    'ai-librarian':[['library','Private Creative Library NAS and index']],
     'visual-artist':[['ollama','Local text model'],['image','Image generation service']],
     'sound-designer':[['ollama','Local text model'],['audio','Music / ambience service']],
     'sound-effects-designer':[['ollama','Local text model'],['sfx','Isolated sound-effects model']],
@@ -40,7 +43,7 @@ function agentReadiness(id,c){
     'voice-actor':[['voice','Offline speech service']],
     'audio-engineer':[['python','Local audio conversion and inspection tools']],
     'character-designer':[['ollama','Local text model']],
-    '3d-artist':[['ollama','Local text model']],
+    '3d-artist':[['ollama','Local text model'],['text3d','Local 3D mesh generator']],
     'technical-artist':[['blender','Blender model worker']],
     'rigging-animator':[['rigging','Auto-rigging and animation authoring model']],
     'asset-inspector':[['python','Local media inspection runtime'],['blender','3D model inspection worker']],
@@ -59,7 +62,7 @@ async function status(){
   const image=probes[1].status==='fulfilled'?probes[1].value:null;
   const audio=probes[2].status==='fulfilled'?probes[2].value:null;
   const engineRoot=path.join(config.engineRoot,'Engine','Binaries','Win64','UnrealEditor-Cmd.exe');
-  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),rigging:false};
+  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),rigging:false};
   const agents=TEAMS.map(agent=>({...agent,...agentReadiness(agent.id,checks)}));
   const capabilities=[
     {id:'image',name:'Image / texture production',available:checks.image&&checks.ollama,reason:checks.image?'Requires the local text model and Image Studio.':'Image Studio is offline.'},
@@ -71,7 +74,7 @@ async function status(){
     {id:'text-to-3d',name:'Prompt-to-3D static assets',available:checks.text3d&&checks.image&&checks.ollama&&checks.blender,reason:checks.text3d?'Uses character design, local concept-image generation, TripoSR CPU inference, and Blender mesh preparation. Outputs are static meshes and need 3D artist review.':'The local TripoSR CPU runtime or model weights are not installed.'},
     {id:'sfx',name:'Isolated sound effects',available:checks.sfx&&checks.ollama,reason:checks.sfx?'Uses the local Stable Audio 3 small-SFX model on CPU with local Qwen art direction.':'Stable Audio 3 small-SFX model or its isolated Python runtime is not installed.'}
   ];
-  return {name:'WildBound AI Garage',version:'2.3.0',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),capabilities,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  return {name:'WildBound AI Garage',version:'2.4.0-pilot',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -112,6 +115,13 @@ async function handle(req,res){
   if(req.headers.authorization!=='Bearer '+token)return reply(res,401,{error:'Authentication required.'});
   const url=new URL(req.url,'http://127.0.0.1:'+config.port);
   if(req.method==='GET'&&url.pathname==='/status')return reply(res,200,await status());
+  if(req.method==='GET'&&url.pathname==='/library')return reply(res,200,library.status());
+  if(req.method==='POST'&&url.pathname==='/library/sync'){if(library.busy)return reply(res,409,{error:'Idea Board sync is already running.'});void library.sync().then(()=>queue.resumeMissing()).catch(error=>console.error('Creative Library sync:',error));return reply(res,202,{started:true});}
+  if(req.method==='POST'&&url.pathname==='/library/supply'){const payload=await body(req,40*1024*1024);const result=library.supply(payload);void library.sync().then(()=>queue.resumeMissing()).catch(error=>console.error('Creative Library sync:',error));return reply(res,202,result);}
+  if(req.method==='POST'&&url.pathname==='/library/approve'){const payload=await body(req);const record=library.approve(payload.id,Number(payload.version));const resumed=queue.resumeMissing();return reply(res,200,{record,resumed});}
+  if(req.method==='POST'&&url.pathname==='/library/withdraw'){const payload=await body(req);const record=library.withdraw(payload.id,Number(payload.version));return reply(res,200,{record});}
+  if(req.method==='POST'&&url.pathname==='/library/package'){const payload=await body(req);return reply(res,200,library.packageFor({jobId:payload.jobId||null,prompt:payload.prompt||'',brief:payload.brief||{},required:Array.isArray(payload.required)?payload.required:undefined}));}
+  if(req.method==='POST'&&url.pathname==='/library/resolve'){const payload=await body(req);const j=queue.jobs.get(payload.jobId),request=library.status().missing.find(item=>item.jobId===payload.jobId);if(!j&&!request)return reply(res,404,{error:'Missing-reference request not found.'});const pack=library.resolve(payload.jobId,j?.prompt||request.prompt,j?.brief||{referenceNeeds:(request?.missing||[]).map(tag=>({subject:tag.split(':')[0],facet:tag.split(':')[1]}))});const resumed=queue.resumeMissing();return reply(res,200,{package:pack,resumed});}
   if(req.method==='GET'&&url.pathname==='/jobs'){
     const limit=Math.min(100,Math.max(1,Number(url.searchParams.get('limit')||100)));
     const state=url.searchParams.get('status');

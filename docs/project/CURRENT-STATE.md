@@ -1,5 +1,9 @@
 # Wildbound current state
 
+## October 25 Creative Library pilot
+
+The Garage now has a private-NAS Creative Library importer, an Update Idea Board button, desktop supply form, searchable versioned Git design records, a controlled reference-package service, an AI Librarian staff role, and persistent Missing Reference Requests. A mixed-media transport fixture (Idea Board text, original concept JPG, unrelated Garage voice QA WAV) was copied to the NAS and archived with matching SHA-256 checksums. It is explicitly exploratory and cannot be approved as a coherent design. The Librarian now uses validated subject/facet needs and indexed relationships rather than Dwarf/Merfolk special cases. Focused checks are in [pilot instructions and limits](../creative-library/README.md). The work is on `feature/creative-library-pilot` for PR review; no Unreal maps, builds, saves, licensed assets, or paused animal gameplay were changed.
+
 Updated October 24, 2026: local AI recovery checks passed; World Partition Greenveil package and automated traversal passed. See the newest entry in [daily development](DAILY-DEVELOPMENT.md) and [session handoff](SESSION-HANDOFF.md).
 
 ## October 24 verified checkpoint

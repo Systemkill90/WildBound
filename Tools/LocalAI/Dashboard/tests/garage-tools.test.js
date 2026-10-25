@@ -12,7 +12,7 @@ test('Workshop MCP exposes the shared Garage production workflow to Codex',()=>{
   assert.equal(result.status,0,result.stderr);
   const response=JSON.parse(result.stdout.trim());
   const tools=new Map(response.result.tools.map(tool=>[tool.name,tool]));
-  for(const name of ['wildbound_garage_status','wildbound_garage_list_tasks','wildbound_garage_submit_task','wildbound_garage_get_task','wildbound_garage_cancel_task','wildbound_garage_attach_model','wildbound_garage_approve_task','wildbound_garage_reject_task','wildbound_garage_retry_import'])assert.ok(tools.has(name),`Missing MCP tool: ${name}`);
+  for(const name of ['wildbound_garage_status','wildbound_garage_library_status','wildbound_garage_sync_library','wildbound_garage_reference_package','wildbound_garage_list_tasks','wildbound_garage_submit_task','wildbound_garage_get_task','wildbound_garage_cancel_task','wildbound_garage_attach_model','wildbound_garage_approve_task','wildbound_garage_reject_task','wildbound_garage_retry_import'])assert.ok(tools.has(name),`Missing MCP tool: ${name}`);
   assert.match(tools.get('wildbound_garage_approve_task').description,/only when the user explicitly asks/i);
   assert.match(tools.get('wildbound_garage_submit_task').description,/pauses for the owner to review/i);
 });
