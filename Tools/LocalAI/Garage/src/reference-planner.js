@@ -20,10 +20,6 @@ const contains=(text,term)=>new RegExp('(^|[^a-z0-9])'+term.replace(/[.*+?^${}()
 function planReferences({prompt,brief={},records=[]}){
   const required=new Set(),text=String(prompt||'').toLowerCase();
   const add=value=>{if(key(value))required.add(value);};
-  for(const need of Array.isArray(brief.referenceNeeds)?brief.referenceNeeds.slice(0,20):[]){
-    if(typeof need==='string')add(normalize(need.split(':')[0])+':'+normalize(need.split(':')[1]));
-    else if(need&&typeof need==='object')add(normalize(need.subject)+':'+normalize(need.facet));
-  }
   const known=new Map();
   for(const record of records){
     for(const version of record.versions||[]){
@@ -35,6 +31,11 @@ function planReferences({prompt,brief={},records=[]}){
       }
     }
   }
+  const declared=(Array.isArray(brief.referenceNeeds)?brief.referenceNeeds:[]).slice(0,20).map(need=>typeof need==='string'?{subject:normalize(need.split(':')[0]),facet:normalize(need.split(':')[1])}:{subject:normalize(need?.subject),facet:normalize(need?.facet)}).filter(need=>key(need.subject+':'+need.facet));
+  const generic=/\b(?:generic|unbranded|capability check|qa review)\b/i.test(prompt);
+  const grounded=declared.some(need=>contains(text,need.subject)||known.has(need.subject));
+  if(grounded&&!generic)for(const need of declared)add(need.subject+':'+need.facet);
+  if(generic)for(const need of declared)if(known.has(need.subject)&&contains(text,need.subject))add(need.subject+':'+need.facet);
   const kind=String(brief.kind||'').toLowerCase();
   const role=Object.keys(FACETS).find(word=>contains(text,word))||kind;
   const facets=FACETS[role]||[];
