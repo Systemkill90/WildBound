@@ -10,8 +10,8 @@
   },
   "verification": {
     "command": "node --test Tools/LocalAI/Garage/tests/*.test.js Tools/LocalAI/Dashboard/tests/*.test.js",
-    "tests": 39,
-    "passed": 39,
+    "tests": 40,
+    "passed": 40,
     "failed": 0,
     "diffCheck": "passed"
   },
@@ -26,6 +26,22 @@
     "Recovery archive",
     "Handoff"
   ],
+  "threeDVerification": {
+    "checkpoint": "stabilityai/TripoSR",
+    "checkpointSha256": "429e2c6b22a0923967459de24d67f05962b235f79cde6b032aa7ed2ffcd970ee",
+    "configSha256": "74ca708ce086bf68e97709ea6b3d91f14717921c04691e84043f0eb8fcc68e62",
+    "inference": "local CPU with offline Hugging Face cache",
+    "boundarySmoke": {
+      "status": "passed",
+      "stages": ["TripoSR inference", "mesh extraction", "texture bake", "OBJ export", "Blender OBJ import", "prepared FBX export", "model report"]
+    },
+    "queueAttempts": [
+      {"status": "failed", "reason": "initial exporter/Blender format mismatch; fixed at Garage boundary"},
+      {"status": "failed", "reason": "local Qwen token repeat limit during director brief"}
+    ],
+    "ownerApproved": false,
+    "unrealImported": false
+  },
   "completedTask": {
     "id": "f21f0b8f-dbbe-4d97-a010-db34795eab7d",
     "kind": "model",
@@ -47,9 +63,9 @@
     "status": "awaiting_review"
   },
   "knownLimits": [
-    "Prompt-to-3D model weights/runtime are unavailable.",
     "New rigging and animation authoring are unavailable.",
     "The generated stone texture passed file checks but may not tile cleanly and needs owner art review.",
+    "Two bounded full prompt-to-3D queue attempts were not owner-reviewable: one exposed the repaired exporter boundary, and a later attempt stopped on a transient local Qwen token-repeat failure. The direct TripoSR-to-Blender boundary smoke passed.",
     "Final browser click-through must be repeated because Windows browser automation could not verify the current tab URL."
   ]
 }

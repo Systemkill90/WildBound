@@ -6,6 +6,7 @@ const delay=(ms,signal)=>new Promise((resolve,reject)=>{if(signal?.aborted)retur
 function sha(file){return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}
 function contained(root,file){const real=fs.realpathSync(file),base=fs.realpathSync(root);const rel=path.relative(base,real);if(!rel||rel.startsWith('..')||path.isAbsolute(rel))throw new Error('Artifact escaped its local source directory.');return real;}
 function slug(value){return String(value||'Asset').replace(/[^A-Za-z0-9_]/g,'_').replace(/^([^A-Za-z_])/,'_$1').slice(0,60)||'Asset';}
+function assertTextTo3DScope(job){if(isCharacterRequest(job))throw new Error('Local prompt-to-3D is limited to static props. The single-view TripoSR worker did not produce an acceptable character and cannot be used for player characters, creatures, or NPCs. Attach a reviewed character GLB/FBX or install a character-capable modeling and rigging pipeline.');}
 async function json(url,data,signal,timeout=15000){const response=await fetch(url,{method:data===undefined?'GET':'POST',headers:{'Content-Type':'application/json',Origin:new URL(url).origin},body:data===undefined?undefined:JSON.stringify(data),signal:signal?AbortSignal.any([signal,AbortSignal.timeout(timeout)]):AbortSignal.timeout(timeout)});const result=await response.json();if(!response.ok)throw new Error(typeof result.error==='string'?result.error:JSON.stringify(result.error||result));return result;}
 function adapters(config,root,save){
   const folder=j=>(j.revision||1)>1?path.join(root,j.id,'revisions','v'+j.revision):path.join(root,j.id);
@@ -18,6 +19,11 @@ function adapters(config,root,save){
   const tripoRoot=path.resolve(path.dirname(config.dashboardRoot),'Tools','TripoSR');
   const tripoPython=path.join(tripoRoot,'.venv','Scripts','python.exe');
   const tripoModel=path.resolve(path.dirname(config.dashboardRoot),'Models','TripoSR');
+  // Keep the image encoder cache beside the local TripoSR weights. The Garage
+  // is intentionally offline during inference, so every auxiliary Hugging
+  // Face file must already be present on a non-system local volume.
+  const huggingfaceHome=path.resolve(path.dirname(config.dashboardRoot),'Models','HuggingFace');
+  const tripoEnv={HF_HOME:huggingfaceHome,HF_HUB_CACHE:path.join(huggingfaceHome,'hub'),TRANSFORMERS_CACHE:path.join(huggingfaceHome,'transformers'),HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1',OMP_NUM_THREADS:'8',MKL_NUM_THREADS:'8'};
   const tripoAvailable=()=>fs.existsSync(tripoPython)&&fs.existsSync(path.join(tripoModel,'config.yaml'))&&fs.existsSync(path.join(tripoModel,'model.ckpt'));
   const profilePath=path.join(config.repoRoot,'docs','art','wildbound-generation-profile.json');
   async function infer(j,role,instruction,signal){
@@ -33,7 +39,7 @@ function adapters(config,root,save){
   async function poll(base,id,signal){const until=Date.now()+15*60000;while(Date.now()<until){await delay(1500,signal);const r=await json(base+'/api/history/'+encodeURIComponent(id),undefined,signal);if(r.status||r.terminal)throw new Error(r.status||'Generation failed.');if(r.done)return r;}throw new Error('Generation deadline exceeded.');}
   function localArtifact(j,file,type,more={}){return {kind:type,source:file,sha256:sha(file),bytes:fs.statSync(file).size,...more};}
   return {
-    async brief(j,signal){const sfxRequest=j.kind==='sfx'||(j.kind==='auto'&&/\b(sfx|sound effects?|footsteps?|gunshots?)\b/i.test(j.prompt));const modelRequest=j.kind==='text-to-3d'||(j.kind==='auto'&&/\b(?:generate|create|make|design|build)\b.{0,40}\b(?:3d|model|mesh|prop|creature|character)\b/i.test(j.prompt));if(sfxRequest&&!sfxAvailable())throw new Error('Local SFX generation is not installed yet. Install the Stable Audio 3 small-SFX bundle before submitting sound-effect tasks.');if(modelRequest&&!tripoAvailable())throw new Error('Prompt-to-3D generation is not installed yet. The local TripoSR model and Python runtime are required.');const b=await infer(j,'production director','Return {"kind":"texture|voice|music|ambience|sfx|text-to-3d|model","name":"short_asset_name","summary":"one sentence","requirements":["concrete checks"],"referenceNeeds":[{"subject":"named-world-subject","facet":"needed-reference-type"}]}. For a named culture, character, biome, material, building, or prop, list the design facets a specialist needs before production, using short lowercase slugs. Never claim references exist or are approved; the Librarian checks that. Return [] for a generic test asset with no established WildBound identity. Respect an explicit kind. Model means preparation of a supplied file. Text-to-3D means one static game asset generated from a local concept image. Ambience means musical ambience only. SFX means one isolated sound effect, not music.',signal);
+    async brief(j,signal){const sfxRequest=j.kind==='sfx'||(j.kind==='auto'&&/\b(sfx|sound effects?|footsteps?|gunshots?)\b/i.test(j.prompt));const modelRequest=j.kind==='text-to-3d'||(j.kind==='auto'&&/\b(?:generate|create|make|design|build)\b.{0,40}\b(?:3d|model|mesh|prop|creature|character)\b/i.test(j.prompt));if(sfxRequest&&!sfxAvailable())throw new Error('Local SFX generation is not installed yet. Install the Stable Audio 3 small-SFX bundle before submitting sound-effect tasks.');if(modelRequest)assertTextTo3DScope(j);if(modelRequest&&!tripoAvailable())throw new Error('Prompt-to-3D generation is not installed yet. The local TripoSR model and Python runtime are required.');const b=await infer(j,'production director','Return {"kind":"texture|voice|music|ambience|sfx|text-to-3d|model","name":"short_asset_name","summary":"one sentence","requirements":["concrete checks"],"referenceNeeds":[{"subject":"named-world-subject","facet":"needed-reference-type"}]}. For a named culture, character, biome, material, building, or prop, list the design facets a specialist needs before production, using short lowercase slugs. Never claim references exist or are approved; the Librarian checks that. Return [] for a generic test asset with no established WildBound identity. Respect an explicit kind. Model means preparation of a supplied file. Text-to-3D means one static non-character prop generated from a local concept image. Ambience means musical ambience only. SFX means one isolated sound effect, not music.',signal);
       const kind=j.kind==='auto'?b.kind:j.kind;if(!['texture','voice','music','ambience','sfx','text-to-3d','model'].includes(kind))throw new Error('The director selected an unsupported asset kind.');
       const resolvedKind=sfxRequest?'sfx':modelRequest?'text-to-3d':kind;
       const referenceNeeds=(Array.isArray(b.referenceNeeds)?b.referenceNeeds:[]).slice(0,20).map(need=>({subject:normalize(need?.subject),facet:normalize(need?.facet)})).filter(need=>key(need.subject+':'+need.facet));
@@ -83,9 +89,17 @@ function adapters(config,root,save){
         const concept=path.join(out,'concept.png');fs.copyFileSync(original,concept,fs.constants.COPYFILE_EXCL);
         await json(base+'/api/release',{},undefined,30000).catch(()=>{});
         const generatedRoot=path.join(out,'triposr');
-        await run(tripoPython,[path.join(tripoRoot,'run.py'),concept,'--device','cpu','--pretrained-model-name-or-path',tripoModel,'--chunk-size','4096','--mc-resolution','192','--model-save-format','glb','--output-dir',generatedRoot,'--no-remove-bg','--bake-texture','--texture-resolution','1024'],{signal,timeout:20*60_000,cwd:tripoRoot,env:{HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1',OMP_NUM_THREADS:'8',MKL_NUM_THREADS:'8'}});
-        const source=path.join(generatedRoot,'0','mesh.glb');if(!fs.existsSync(source)||fs.statSync(source).size>250*1024*1024)throw new Error('TripoSR did not produce a valid mesh under 250 MB.');
-        const preparedSource=path.join(out,'source.glb');fs.copyFileSync(source,preparedSource,fs.constants.COPYFILE_EXCL);atomic(path.join(out,'model-request.json'),{source:preparedSource,folder:out});
+        // TripoSR's runner only creates per-image folders when it removes the
+        // background. Garage deliberately keeps the generated concept intact,
+        // so create the folder explicitly before the no-remove-bg export.
+        fs.mkdirSync(path.join(generatedRoot,'0'),{recursive:true});
+        // xatlas.export writes its text interchange format regardless of the
+        // filename extension. Request OBJ explicitly so Blender can import a
+        // valid mesh; the preparation step converts it to the FBX used by the
+        // Unreal adapter.
+        await run(tripoPython,[path.join(tripoRoot,'run.py'),concept,'--device','cpu','--pretrained-model-name-or-path',tripoModel,'--chunk-size','4096','--mc-resolution','192','--model-save-format','obj','--output-dir',generatedRoot,'--no-remove-bg','--bake-texture','--texture-resolution','1024'],{signal,timeout:20*60_000,cwd:tripoRoot,env:tripoEnv});
+        const source=path.join(generatedRoot,'0','mesh.obj');if(!fs.existsSync(source)||fs.statSync(source).size>250*1024*1024)throw new Error('TripoSR did not produce a valid mesh under 250 MB.');
+        const preparedSource=path.join(out,'source.obj');fs.copyFileSync(source,preparedSource,fs.constants.COPYFILE_EXCL);atomic(path.join(out,'model-request.json'),{source:preparedSource,folder:out});
         await run(config.blender,['--background','--factory-startup','--disable-autoexec','--python',path.join(__dirname,'prepare-model.py'),'--',path.join(out,'model-request.json')],{signal,timeout:300000,cwd:out});
         const report=JSON.parse(fs.readFileSync(path.join(out,'model-report.json'),'utf8'));return localArtifact(j,report.prepared,kind,{preview:report.preview,model:'TripoSR · local CPU static mesh',modelReport:report,conceptImage:concept,originalSource:preparedSource});
       }
@@ -118,4 +132,4 @@ function adapters(config,root,save){
     async release(j){if(j.backendJob){if(j.status==='failed'||j.status==='cancelled'||j.status==='interrupted'){await json('http://127.0.0.1:8188/interrupt',{}).catch(()=>{});await json('http://127.0.0.1:8188/queue',{delete:[j.backendJob.id]}).catch(()=>{});}await json('http://127.0.0.1:8190/api/release',{},undefined,30000).catch(()=>{});}},
   };
 }
-module.exports={adapters,sha,contained,slug,json};
+module.exports={adapters,sha,contained,slug,json,assertTextTo3DScope};
