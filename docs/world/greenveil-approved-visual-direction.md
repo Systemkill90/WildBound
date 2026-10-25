@@ -13,6 +13,10 @@ Owner explicitly approved the latest generated “GREENVEIL BASIN — ETERNALLY 
 - Kethri: small-scale woodland canopy villages integrating elevated homes, footbridges and enormous living trees.
 - Nimrui: small-scale sheltered mushroom hollows near streams, with giant fungi, cozy homes and restrained magical glow.
 - Wolfkin: lakefront timber-and-stone communities with broad communal halls, piers and rugged construction suited to the people's stature.
+- Freshwater Brinefolk: lake-dwelling communities in the Great Lake District, potentially using reeds, sheltered coves, stilted structures and semi-submerged architecture; exact structures are still design proposals.
+- Humans who have rejected or left Veyrath: modest independent refuge settlements and farms in Greenveil, distinct from hostile Veyrath holdings. Their exact sites and names remain open.
+- Elves: elegant carved timber and pale-stone settlements in the forests, especially ancient forest clearings, with bridges, gardens and living-tree integration.
+- Wildlings: distinct, deeply forest-integrated sanctuaries in the ancient forests, using bark, roots, natural shelters and concealed paths; preserve their approved antlered, dark-skinned, green-eyed, white-tattooed identity. They are allied with elves.
 - Ancient mossy ruins, unusually old trees, Sylweave landmarks and naturally mysterious spaces; not everything should glow.
 - Bright days, misty mornings, golden sunsets, moonlit nights and rain/storm changes without seasonal landscape recoloring.
 
