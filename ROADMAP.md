@@ -38,3 +38,8 @@ The approved environmental roster for later settlement placement is Kethri, Nimr
 ## Greenveil ground-layer art approval — October 25, 2026
 
 Approved art direction: [ground-layer specification](docs/world/greenveil-ground-layer-approved.md). Build and measure one walkable meadow-to-forest-to-lakeshore test area before expanding. The art is not game-ready assets or a tested map.
+
+
+## Greenveil regional master atlas — approved October 25, 2026
+
+The owner approved both full visual region/atlas boards. The [written master map](docs/world/greenveil-regional-master-map.md) lays out region-scale watershed geography, all seven settlement cultures (including Wildlings), roads/water routes, ancient and sacred landmarks, and a first landscape-slice corridor. **Place names are provisional**; actual dimensions and UE terrain remain unimplemented. Next: pass demo acceptance, then refine hydrology and the isolated 512m landscape slice. No new animal gameplay or PR merge authorized.
