@@ -61,11 +61,24 @@ void AGreenveilTraversalProbe::Tick(float DeltaSeconds)
         UNavigationPath* Path=UNavigationSystemV1::FindPathToLocationSynchronously(GetWorld(),Pawn->GetActorLocation(),Route[Leg],Pawn);
         const bool NavOK=Path && Path->IsValid() && !Path->IsPartial();
         if (!NavOK) ++NavigationFailures;
-        UE_LOG(LogTemp,Display,TEXT("GREENVEIL_NAV leg=%d valid=%d"),Leg,NavOK);
+        ActivePath=NavOK ? Path->PathPoints : TArray<FVector>();
+        PathPointIndex=ActivePath.Num()>1 ? 1 : 0;
+        UE_LOG(LogTemp,Display,TEXT("GREENVEIL_NAV leg=%d valid=%d points=%d"),Leg,NavOK,ActivePath.Num());
         Offset=Route[Leg]-Pawn->GetActorLocation(); Offset.Z=0;
     }
     if (Now-LegStarted>45) { Finish(false,FString::Printf(TEXT("Blocked or slow leg %d"),Leg)); return; }
     if (Pawn->GetActorLocation().Z < -500) { Finish(false,TEXT("Fell below terrain")); return; }
+    while (ActivePath.IsValidIndex(PathPointIndex)
+        && PathPointIndex<ActivePath.Num()-1
+        && FVector::Dist2D(Pawn->GetActorLocation(),ActivePath[PathPointIndex])<100.0f)
+    {
+        ++PathPointIndex;
+    }
+    if (ActivePath.IsValidIndex(PathPointIndex))
+    {
+        Offset=ActivePath[PathPointIndex]-Pawn->GetActorLocation();
+        Offset.Z=0;
+    }
     FRotator View=Offset.Rotation(); View.Pitch=-12;
     PC->SetControlRotation(View);
     Pawn->AddMovementInput(Offset.GetSafeNormal(),1);

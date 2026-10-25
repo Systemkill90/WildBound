@@ -4,7 +4,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = "",
-    [string]$Map = "/Game/Maps/GreenveilExplorationPolish",
+    [string]$Map = "/Game/Maps/GreenveilExplorationPolish_WP",
     [ValidateRange(1, 32)][int]$MaxParallelActions = 2,
     [switch]$BuildOnly,
     [switch]$ShowEngines,
@@ -14,6 +14,17 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$SystemDriveRoot = [IO.Path]::GetPathRoot(($env:SystemDrive + "\"))
+if ([IO.Path]::GetPathRoot($RepoRoot) -ieq $SystemDriveRoot) { throw "Wildbound must be checked out on a non-system volume before starting." }
+$WildboundDataRoot = Split-Path $RepoRoot -Parent
+$BuildScratch = Join-Path $RepoRoot "Saved\BuildScratch"
+New-Item -ItemType Directory -Path $BuildScratch -Force | Out-Null
+# Keep this project's Unreal editor/build scratch beside the non-system checkout.
+$env:TEMP = $BuildScratch
+$env:TMP = $BuildScratch
+$DdcPath = Join-Path $WildboundDataRoot "EngineDDC\Local"
+New-Item -ItemType Directory -Path $DdcPath -Force | Out-Null
+Set-Item -Path 'Env:UE-LocalDataCachePath' -Value $DdcPath
 $Project = Join-Path $RepoRoot "Wildbound.uproject"
 $LogDir = Join-Path $RepoRoot "Saved\WildboundBootstrap"
 New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
@@ -138,7 +149,7 @@ if ($BuildOnly) {
 # Start the requested map only after its path and local /Game asset have been preflighted.
 $MapArgument = $Map
 $TestArgument = if ($AutoMovementTest) { " -WildboundAutoMovementTest" } else { "" }
-$Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60 -ExecCmds="r.ScreenPercentage 100,r.DynamicRes.OperationMode 0,DisableAllScreenMessages"' + $TestArgument)
+    $Args = ('"' + $Project + '" ' + $MapArgument + ' -game -log -windowed -ResX=1920 -ResY=1080 -fps=60 -ExecCmds="r.EyeAdaptationQuality 0,r.ScreenPercentage 100,r.DynamicRes.OperationMode 0,DisableAllScreenMessages"' + $TestArgument)
 try {
     $Process = Start-Process -FilePath $Editor -ArgumentList $Args -WorkingDirectory $RepoRoot -PassThru
     Start-Sleep -Seconds 3

@@ -19,7 +19,7 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 | Milestone | Current status | What counts as complete |
 | :-- | :-- | :-- |
 | 0 — Unreal foundation | **Editor/game compile and Win64 package succeed on UE 5.8.4; packaged app launches. Dedicated-server target not tested.** | Reproducible toolchain setup; clean game/editor/server builds; launch and recover a test world |
-| 1 — Greenveil exploration | **Gameplay/traversal foundation verified; visual environment remains an art-blockout.** The current generated slice has canopy/ground-cover instances, creek, bridges and cottage placeholders, but is not yet a representative finished biome. | Bounded playable zone based on authored forest content, Wildbound pawn/game mode, readable materials, connected route, measured performance and manual visual/collision QA |
+| 1 — Greenveil exploration | **World Partition traversal and performance baseline verified; village art is in progress.** The 180 × 160 m slice now uses locally installed modular village assets for three cottage shells, shuttered windows, a shared well, creek and bridges; visual review is still pending. | Bounded playable zone based on authored forest content, Wildbound pawn/game mode, readable materials, connected route, measured performance and manual visual/collision QA |
 | 2 — Construction proof | **Portable placement rules pass; temporary snapped block code compiles. In-game placement/removal is not verified; not voxel.** | Server-validated construction interaction, collision, animal enclosure navigation and tested persistence boundary |
 | 3 — Animal needs and trust | **34 portable simulation tests pass; replicated component and care RPCs compile. Runtime needs/care/trust behavior is not yet playtested in this checkout.** | Observe needs, care costs, refusal cases, stress/trust response and credible movement in play |
 | 4 — Co-op and persistence | **Listen server accepted two simulated client connections. Gameplay replication and dedicated server untested; no integrated world saves.** | Two-client state/RPC tests, server validation, restart, versioned save and backup recovery |
@@ -34,15 +34,13 @@ Milestones show evidence, **not percent-finished guesses**. The first packaged U
 
 ## Near-term sequence
 
-**Now:** inspect the acquired free Medieval Village Megascans Sample by loading a bounded asset subset; do not open its full World Partition/minimap rebuild or repeat the failed full-map Electric Dreams save. No sample asset has been transferred into WildBound. Select a suitable village asset set and grow the canonical Greenveil world; verify route, collision, lighting, and native-1080p performance.
+**Now:** get a clear visual review of the current Greenveil package, then improve the compact village with existing local licensed assets where the render shows gaps. The canonical generator map is `/Game/Maps/GreenveilExplorationPolish`; its World Partition runtime copy is `/Game/Maps/GreenveilExplorationPolish_WP`. Preserve the current package/revisions and avoid saving the full sample world.
 
-The local Windows demo uses native 1920×1080, Medium settings, and Low shadows by default. Low-shadow visual impact still needs owner review; Medium with Low shadows measured 13.218 ms mean and 15.354 ms p95 in the latest packaged run.
+The new Win64 build is 1920×1080, Medium with Low shadows. One clean automated route measured 89.41 FPS mean, 13.493 ms p95, and 14.116 ms p99, with peak process memory 1,547.6 MiB. This is a route sample, not sustained certification. A Windows prompt for the optional Unreal trace hub currently obscures visual inspection.
 
-**Next:** use actual sample-world assets and materials instead of trying to make graybox geometry look finished. Keep the area small and representative; run profiling after the visual baseline exists and local Ollama is idle. Keep source-restricted art local and preserve the tested package.
+**Next:** review the scene against the Idea Board; refine cottage/yard/bridge composition and collision based on that render; repeat the route/performance check after substantive changes. Keep sample assets local and out of public Git.
 
-**Deferred:** animal care/intent, construction systems, co-op, persistence, farming and settlement simulation. Broader biomes and platforms require a later owner priority. Current cottages are visual placeholders, not village simulation; concept illustrations are not 3D models.
-
-Native C++ tests and a successful package are useful but independent evidence. Neither alone proves that the in-game interaction loop works.
+**Deferred:** animal care/intent, construction expansion, co-op, persistence and settlement simulation. No animal gameplay work before the Greenveil village baseline is reviewed. Broader biomes and platforms remain later work.
 
 ## Development constraints
 

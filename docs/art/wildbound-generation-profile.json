@@ -1,0 +1,43 @@
+{
+  "profileId": "wildbound-idea-board-grounded-v1",
+  "version": 1,
+  "referenceSources": [
+    "docs/art/concept-atlas/biomes-atlas.webp",
+    "docs/art/concept-atlas/creatures-i-meadows.webp",
+    "docs/art/concept-atlas/idea-board-2026-10-23/README.md"
+  ],
+  "promptPrefix": "WildBound production reference art, grounded realistic game-world craft, coherent natural history, believable anatomy and weight, physically plausible materials with visible surface detail, layered composition and clear subject readability, natural exposure and restrained color grading, specific purposeful details, original design not imitating a named artist or franchise",
+  "negativePrompt": "plastic skin, waxy surfaces, toy-like forms, low-poly placeholder, blurry, pixelated, oversharpened, oversaturated, generic fantasy poster, excessive glow, floating objects, impossible anatomy, extra limbs, fused anatomy, malformed hands, text, lettering, logo, watermark, frame, collage",
+  "styleRules": [
+    "Use the Idea Board as mood and ecological guidance, not as literal asset sheets or fixed canon.",
+    "Favor believable real-world anatomy, scale, weight, contact shadows, material response, and practical construction.",
+    "Keep magic rare, local, and related to ecology; avoid omnipresent glow, runes, and fantasy-poster effects.",
+    "Preserve natural detail and readable values; avoid blur, pixelation, oversharpening, and plastic-looking surfaces.",
+    "Keep outputs as concept/reference assets; review anatomy, silhouette, material, provenance, and production rights before shipping.",
+    "Use the latest Idea Board artwork plus current Git history and working-tree art guidance; do not follow stale prompts when newer direction exists.",
+    "Keep each race or group and each biome within its own approved visual bounds; do not transfer defining anatomy, palette, clothing, or motifs between groups without direction. Apply the same identity to voice, ambience, and music when a generation task includes audio.",
+    "If a material style choice is not answered by the Idea Board or current project guidance, ask the user before treating it as canonical; label low-impact exploratory outputs as drafts.",
+    "When Codex receives new approved Idea Board direction, record it in project guidance or the profile before handing work to local AI so every agent has the same current reference.",
+    "When the user rejects a visual or audio style or generated asset, keep it out of active assets, record rejected traits as avoid guidance, and ask what missed unless already clear before generating a replacement.",
+    "Do not infer that a race has no visual reference from the checked-in atlas alone; consult the full Idea Board chat including its images. The user confirms Siren references exist in the Idea Board; follow those references over generic mythology or the current generated Siren draft.",
+    "Avoid the specific rejected CC0 Trench Naga placeholder as Siren reference: its flat playdough-like finish, low surface detail, and multi-armed serpent silhouette were rejected as mismatching the concept art. It remains a viewer-only placeholder."
+  ],
+  "generationLimits": {
+    "maxWidth": 1024,
+    "maxHeight": 1024,
+    "maxBatch": 1,
+    "defaultWidth": 768,
+    "defaultHeight": 768
+  },
+  "notice": "Prompt guidance does not validate generated outputs. Model: DreamShaper XL Lightning (existing local model); generated images may require human art and licensing review.",
+  "audioStyleRules": [
+    "Use the latest Idea Board direction and current Git art/audio guidance for the character race and biome.",
+    "Keep voice, ambience, and music within that race and biome identity; do not reuse another group motif or mood without direction.",
+    "Ask the user when a material audio-style choice is not established. Treat generated audio as a draft until reviewed.",
+    "When audio is rejected, mark the unwanted traits as avoid guidance and ask why unless the reason is clear before regenerating."
+  ],
+  "raceNamingRules": [
+    "The race name is Sirens. Use Sirens in prompts, docs, and asset labels.",
+    "Match the Siren anatomy, silhouette, materials, clothing, and culture to the Idea Board references; do not substitute generic mythological conventions."
+  ]
+}

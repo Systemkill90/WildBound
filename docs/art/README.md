@@ -53,6 +53,8 @@ The following are **draft concepts**, deliberately staged separately from the ga
 
 A pretty image does not become a usable game asset automatically. Before production, each model or material needs a clear source, approved usage rights, correct scale, Unreal import settings and (when applicable) collision, animation, LODs and server performance testing.
 
+The local WildBound Workshop applies the flexible, Idea Board-derived [generation profile](wildbound-generation-profile.json) to image prompts. Generated outputs are references or source textures until reviewed; importing a `Texture2D` does not create or place a mesh, material, or level asset. Preserve the original prompt, seed, and model metadata with each output, and review generated anatomy, style consistency, source-model terms, and project fit before publishing or shipping.
+
 [See the credited sources and licensing restrictions →](ASSET-CREDITS.md)
 
 ---

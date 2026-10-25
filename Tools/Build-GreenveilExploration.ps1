@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$EngineRoot = $env:WILDBOUND_UNREAL_ENGINE_ROOT,
-    [string]$Map = '/Game/Maps/GreenveilExplorationPolish',
+    [string]$Map = '/Game/Maps/GreenveilExplorationPolish_WP',
     [string]$ArchiveDirectory = '',
     [ValidateRange(1, 32)][int]$MaxParallelActions = 2,
     [switch]$GenerateMap,
@@ -10,6 +10,17 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+$SystemDriveRoot = [IO.Path]::GetPathRoot(($env:SystemDrive + '\'))
+if ([IO.Path]::GetPathRoot($RepoRoot) -ieq $SystemDriveRoot) { throw 'Wildbound must be checked out on a non-system volume before building.' }
+$WildboundDataRoot = Split-Path $RepoRoot -Parent
+$BuildScratch = Join-Path $RepoRoot 'Saved\BuildScratch'
+New-Item -ItemType Directory -Path $BuildScratch -Force | Out-Null
+# Keep this Wildbound build's transient data beside its generated outputs.
+$env:TEMP = $BuildScratch
+$env:TMP = $BuildScratch
+$DdcPath = Join-Path $WildboundDataRoot 'EngineDDC\Local'
+New-Item -ItemType Directory -Path $DdcPath -Force | Out-Null
+Set-Item -Path 'Env:UE-LocalDataCachePath' -Value $DdcPath
 if (-not $EngineRoot) { $EngineRoot = $env:UE_ENGINE_ROOT }
 if (-not $EngineRoot) {
     $EngineCandidates = @()
@@ -64,6 +75,14 @@ if ($GenerateMap) {
     Write-Host ("Map generation preflight: {0:N1} GiB free commit" -f $GenerationPlan.FreeCommitGiB)
     & $EditorCommandlet $Project -run=pythonscript "-script=$RepoRoot\Scripts\Editor\CreateGreenveilExploration.py" -unattended -nosplash -NoSound -nullrhi "-abslog=$Evidence\Generate-$Stamp.log" *> "$Evidence\Generate-console-$Stamp.log"
     if ($LASTEXITCODE -ne 0) { throw 'Map generation failed; previous packages remain intact.' }
+    # Keep the authored source map as a recoverable, reproducible input, then
+    # generate a separate World Partition map for launch and packaging.
+    $WorldPartitionLog = Join-Path $Evidence "WorldPartition-$Stamp.log"
+    $WorldPartitionConsoleLog = Join-Path $Evidence "WorldPartition-console-$Stamp.log"
+    & $EditorCommandlet $Project -run=WorldPartitionConvertCommandlet '/Game/Maps/GreenveilExplorationPolish' -ConversionSuffix -AllowCommandletRendering -SCCProvider=None -unattended -nop4 -nosplash -NullRHI "-abslog=$WorldPartitionLog" *> $WorldPartitionConsoleLog
+    if ($LASTEXITCODE -ne 0) { throw "World Partition conversion failed; the authored source map remains intact. See $WorldPartitionLog." }
+    $WorldPartitionMap = Join-Path $RepoRoot 'Content\Maps\GreenveilExplorationPolish_WP.umap'
+    if (-not (Test-Path -LiteralPath $WorldPartitionMap -PathType Leaf)) { throw "World Partition conversion exited successfully but did not produce $WorldPartitionMap." }
 }
 if ($Package) {
     $PackagePlan = Get-WildboundBuildResourcePlan -RequestedMaxParallelActions $MaxParallelActions -MinimumFreeCommitGiB 6.5

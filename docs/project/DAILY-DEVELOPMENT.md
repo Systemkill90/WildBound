@@ -1,6 +1,19 @@
+## October 24, 2026 · Asset-backed village facade and clean 1080p route
+
+Completed a bounded village pass: inspected actual module bounds in UE 5.8, added the migrated shuttered-window mesh to the three cottage fronts, and preserved the existing layout and route. UE 5.8.4 editor compile, deterministic map generation, World Partition conversion, and a separate Win64 Development package all passed; the cook processed 1,028 packages. The prior archive was left intact. The full Fab sample world was not copied.
+
+The exact package passed 15/15 grounded movement waypoints over 330 m, with zero navigation failures and zero animal actors. After closing the stale older game instance, native-1920×1080 Medium/Low-shadow traversal measured 89.41 FPS mean, 13.493 ms p95, 14.116 ms p99 over 5,195 frames; peak process memory was 1,547.6 MiB. An earlier run with both builds active averaged 56.03 FPS, so only the clean single-instance run is used as the baseline. Neither run certifies sustained performance.
+
+The new package is running as the desktop preview. The optional Unreal trace-hub firewall dialog still obscures the desktop render; no clear visual/art review is claimed. No animals were added. Source assets and package remain local; nothing was committed or pushed. [Current state](CURRENT-STATE.md) · [Session handoff](SESSION-HANDOFF.md) · [Roadmap](../../ROADMAP.md).
 # Wildbound development log
 
 Short field notes from the active build. Each entry links to its test evidence and names unfinished work plainly; a passing build or automated probe is not a claim that a feature is finished.
+
+## October 24, 2026 · Local AI recovery and World Partition traversal
+
+Restored and verified the local workflow: an actual Qwen 3.5 9B chat completed in 26.6 seconds (653 prompt / 154 response tokens), a router-approved read-only village brief completed locally in 36.2 seconds (1,762 prompt / 784 response tokens), and the AMD image backend prepared and released successfully. Ollama was explicitly unloaded after use. Added a one-request handoff guard, ten-minute deadline with server-side cancellation, truthful offline/on-demand image status, and stopped health polling from clearing pending chat progress. Garage checks passed: 9 existing Node tests, Node syntax checks, and PowerShell parser.
+
+Regenerated the canonical source map and converted its runtime copy to World Partition. UE 5.8.4 compiled WildboundEditor; generation returned zero errors, conversion returned zero errors/warnings, and Windows cook, stage and archive succeeded. The packaged 1920×1080 route passed 15/15 grounded waypoints over 330.0 m, with zero navigation failures and zero animals. One uncapped Medium/Low-shadow run measured about 89 FPS; this does not certify sustained 60 FPS. Visual review then found a black frame caused by eye adaptation, not the firewall prompt, and an incoherent asset composition: separated partial cottages, broad empty ground and disconnected prop groups. Disabling eye adaptation revealed the scene but did not make it a satisfactory village. A launch-time override is in place but has not yet been verified in a fresh package. The owner rejected the scene composition. The next pass is a planned, compact settlement built from complete source assemblies; no animal gameplay work was added. The local archive is preserved separately; no commit or push was made. [Current state](CURRENT-STATE.md) · [Session handoff](SESSION-HANDOFF.md).
 
 ## October 23, 2026 · Greenveil build, package, and resource-gate correction
 
