@@ -59,4 +59,6 @@
 
 | 2026-10-25 | Greenveil ground-layer concept board approved: meadow, ancient forest, lakeshore, hidden glade, and rare Sylweave-touched terrain and flora | Owner-approved visual direction; see [ground-layer specification](../world/greenveil-ground-layer-approved.md). No UE implementation implied |
 
+| 2026-10-25 | **Greenveil regional master map and atlas visual composition approved**: interconnected lake watershed, ancient forests, green ridges, heartlands, hollows, seven settlement cultures, roads/trails and sacred landmarks | Owner approved both images. **All newly illustrated settlement/waterway/landmark names remain provisional**. [Master map](../world/greenveil-regional-master-map.md) is design only, not built Unreal terrain |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
