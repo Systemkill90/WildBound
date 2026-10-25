@@ -59,3 +59,8 @@ Two illustrated regional atlas images are owner approved and packaged in the Cha
 ## Great Lake District detailed draft — October 25, 2026
 
 [Great Lake District environment design](../world/greenveil-great-lake-district-design.md) now describes credible linked freshwater hydrology, five shoreline types, underwater habitats, Brinefolk protected-cove and Wolfkin lakefront settlement blockouts, islands, routes, vistas and staged Unreal acceptance. Design concepts are **proposed, not new canon or built features**. Next: owner review or a detailed settlement visual layout, while waiting for demo acceptance. Animal gameplay remains paused.
+
+
+## Brinefolk / approved underwater reference — October 25, 2026
+
+Owner-approved underwater imagery is indexed as [GV-LAKE-UNDERWATER-001](../art/environment/greenveil/REFERENCE-INDEX.md), with exact PNG hash and librarian retrieval instructions. The binary PNG is preserved in a conversation download pack but **not present in GitHub**; copy and verify before claiming permanent Git binary storage. [Brinefolk village design](../world/greenveil-brinefolk-village-design.md) stages a surface-to-shallows-to-submerged three-layer village, graybox kit, and gated acceptance; these architectural choices remain proposals. Demo issue #16 still blocks Unreal acceptance. New animal work remains paused.
