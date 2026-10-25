@@ -22,3 +22,8 @@ No engine minor version or voxel plugin is selected. No assets are implemented.
 4. Test authoritative needs ticking and client replication with two clients, then validate server build and persistence separately.
 
 [Roadmap](../../ROADMAP.md) · [Handoff](SESSION-HANDOFF.md) · [Decisions](DECISIONS.md)
+
+
+## Design-only Greenveil corridor audit — October 25, 2026
+
+The [first-corridor engineering plan](../world/greenveil-first-corridor-engineering-plan.md) contains measured elevations from previously generated terrain data and identifies one incorrectly submerged lookout waypoint. No Unreal editor session, level import, packaged build, traversal or benchmark was performed in this audit. Current implementation facts must still be verified on the desktop; recent main-branch state may be newer than this staging document.
