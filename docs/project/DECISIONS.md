@@ -57,4 +57,6 @@
 
 | 2026-10-25 | Greenveil includes **Kethri, Nimrui, Wolfkin, freshwater Brinefolk, independent anti-Veyrath human settlers, Elves and Wildlings**; Elves and Wildlings particularly inhabit the ancient forests | Owner explicitly approved the combined Greenveil landscape and settlement concepts; [settlement design](../world/greenveil-settlement-concepts.md) and [visual direction](../world/greenveil-approved-visual-direction.md) remain design-level, not implemented villages |
 
+| 2026-10-25 | Greenveil ground-layer concept board approved: meadow, ancient forest, lakeshore, hidden glade, and rare Sylweave-touched terrain and flora | Owner-approved visual direction; see [ground-layer specification](../world/greenveil-ground-layer-approved.md). No UE implementation implied |
+
 Open: voxel implementation, offline care, world scale, player capacity, genetics depth, full rig/animation pipeline, persistence, platform scope, and distribution license.
