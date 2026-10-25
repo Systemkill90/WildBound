@@ -28,3 +28,8 @@ There is no release date, downloadable game, Xbox approval, store submission, ce
 ## Approved Greenveil environment look — October 24, 2026
 
 The owner approved the complete [Greenveil master visual direction](docs/world/greenveil-approved-visual-direction.md): eternally green, photorealistic fantasy rolling hills/lakes/forests with three distinct peoples' settlements. **Visual approval only**; build a small measured, navigable lake-and-forest vertical environment slice first. Existing roadmap statuses in this staging branch are historically stale; use recent main-branch verification to assess gameplay and build status before implementation. Animal gameplay expansion remains paused.
+
+
+## Greenveil landscape planning — October 25, 2026
+
+The approved environmental roster for later settlement placement is Kethri, Nimrui, Wolfkin, freshwater Brinefolk, independent humans who reject Veyrath, Elves and **Wildlings**. Concentrate Elven and Wildling communities in the Ancient Woodlands. [Settlement design](docs/world/greenveil-settlement-concepts.md). Geography and settlement sketches are approved visual targets; actual villages and NPC systems are **not implemented**. First build a modest explorable landscape section with safe markers and a measured packaged traversal test, then expand by validated increments. Existing tree prototype geometry remains separate from landscape assembly and new animal gameplay remains paused.
