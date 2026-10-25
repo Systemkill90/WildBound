@@ -29,3 +29,8 @@ Owner approved the complete Greenveil environment concept board. Treat [this mas
 ## Final Ellowyn visual approval — October 25, 2026
 
 The owner approved the final detailed Ellowyn concept illustration, featuring longer willow leaf curtains/vines and darker, shimmery brown mossy bark. Follow [Ellowyn final visual reference](../world/ellowyn-final-visual-reference.md) for future art/modeling. The visual image binary is preserved in the downloadable conversation archive but has not been verified in GitHub. Import binary only after verifying exact source; no UE model or playtest was produced by the concept approval. Next step is art-asset import and a bounded, measured Greenveil environment slice; new animal gameplay remains paused.
+
+
+## Five game-ready tree families — October 25, 2026
+
+The owner wants all five approved Greenveil families made as game-ready Unreal tree assets. See [the production specification](../world/greenveil-tree-production-spec.md) for distinct variants, materials, wind, collision, licensed inputs, packaging and measured playtest acceptance. Actual custom meshes remain outstanding. Next: stage the asset-build work as part of the bounded Greenveil environment slice, preserve the working project, and leave animal gameplay paused.
