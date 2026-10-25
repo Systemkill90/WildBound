@@ -17,11 +17,11 @@
   function selectedJob() { return state.jobs.find(job=>job.id===state.selectedId); }
   function renderCapabilities() {
     const items=state.status?.capabilities||[];
-    $('#productionCapabilities').innerHTML=items.map(item=>`<article class="production-capability ${item.available?'ready':'limited'}"><span>${item.available?'READY':'LIMITED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.reason)}</small></article>`).join('');
+    $('#productionCapabilities').innerHTML=items.map(item=>`<article class="production-capability ${item.available?'ready':'limited'}"><span>${item.available?'AVAILABLE':'LIMITED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.reason)}</small></article>`).join('');
     const agents=state.status?.agents||state.status?.teams||[];
-    const ready=agents.filter(agent=>agent.ready).length;
-    $('#agentReadinessSummary').textContent=`${ready} of ${agents.length} ready`;
-    $('#productionAgents').innerHTML=agents.map(agent=>`<article class="production-agent"><div class="production-agent-dot ${agent.ready?'ready':'limited'}"></div><div><strong>${escape(agent.name)}</strong><span>${escape(agent.engine)}</span><small>${escape(agent.role)}</small>${(agent.missing||[]).length?`<em>Needs: ${escape(agent.missing.join(', '))}</em>`:''}</div><b class="agent-state ${agent.ready?'ready':'limited'}">${agent.ready?'Ready':'Limited'}</b></article>`).join('')||'<p class="production-muted">Agent status is unavailable.</p>';
+    const availableCount=agents.filter(agent=>agent.ready).length;
+    $('#agentReadinessSummary').textContent=`${availableCount} of ${agents.length} available`;
+    $('#productionAgents').innerHTML=agents.map(agent=>`<article class="production-agent"><div class="production-agent-dot ${agent.ready?'ready':'limited'}"></div><div><strong>${escape(agent.name)}</strong><span>${escape(agent.engine)}</span><small>${escape(agent.role)}</small>${(agent.missing||[]).length?`<em>Needs: ${escape(agent.missing.join(', '))}</em>`:''}</div><b class="agent-state ${agent.ready?'ready':'limited'}">${agent.ready?'Available':'Limited'}</b></article>`).join('')||'<p class="production-muted">Agent status is unavailable.</p>';
   }
   function visibleJobs() {
     const filter=$('#productionFilter').value;

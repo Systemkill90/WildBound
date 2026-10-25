@@ -2,6 +2,9 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 const { parseAdminCommand, getAdminStatus, CHAT_TOOLS, executeAdminTool } = require('../admin-tools');
 
 test('admin parser accepts only documented fixed commands', () => {
@@ -17,7 +20,11 @@ test('admin status is read-only and returns bounded machine diagnostics', () => 
   assert.match(status.os, /^[a-z0-9]+ [\d.]+$/i);
   assert.ok(Number.isInteger(status.cpuCores) && status.cpuCores > 0);
   assert.ok(status.memory.totalBytes > 0);
-  assert.deepEqual(status.drives.map(drive => drive.drive), ['C:', 'D:', 'E:', 'F:', 'G:']);
+  assert.ok(status.drives.length > 0);
+  assert.ok(status.drives.every(drive => /^[A-Z]:$/i.test(drive.drive) && fs.existsSync(`${drive.drive}${path.sep}`)));
+  assert.equal(new Set(status.drives.map(drive => drive.drive)).size, status.drives.length);
+  const homeDrive = os.homedir().match(/^[A-Z]:/i)?.[0].toUpperCase();
+  if (homeDrive) assert.ok(status.drives.some(drive => drive.drive === homeDrive));
   assert.match(status.privileges, /read-only/i);
   assert.equal(Object.hasOwn(status, 'username'), false);
   assert.equal(Object.hasOwn(status, 'computerName'), false);
