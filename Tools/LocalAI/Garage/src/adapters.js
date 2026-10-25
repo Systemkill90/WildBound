@@ -18,6 +18,11 @@ function adapters(config,root,save){
   const tripoRoot=path.resolve(path.dirname(config.dashboardRoot),'Tools','TripoSR');
   const tripoPython=path.join(tripoRoot,'.venv','Scripts','python.exe');
   const tripoModel=path.resolve(path.dirname(config.dashboardRoot),'Models','TripoSR');
+  // Keep the image encoder cache beside the local TripoSR weights. The Garage
+  // is intentionally offline during inference, so every auxiliary Hugging
+  // Face file must already be present on a non-system local volume.
+  const huggingfaceHome=path.resolve(path.dirname(config.dashboardRoot),'Models','HuggingFace');
+  const tripoEnv={HF_HOME:huggingfaceHome,HF_HUB_CACHE:path.join(huggingfaceHome,'hub'),TRANSFORMERS_CACHE:path.join(huggingfaceHome,'transformers'),HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1',OMP_NUM_THREADS:'8',MKL_NUM_THREADS:'8'};
   const tripoAvailable=()=>fs.existsSync(tripoPython)&&fs.existsSync(path.join(tripoModel,'config.yaml'))&&fs.existsSync(path.join(tripoModel,'model.ckpt'));
   const profilePath=path.join(config.repoRoot,'docs','art','wildbound-generation-profile.json');
   async function infer(j,role,instruction,signal){
@@ -83,9 +88,17 @@ function adapters(config,root,save){
         const concept=path.join(out,'concept.png');fs.copyFileSync(original,concept,fs.constants.COPYFILE_EXCL);
         await json(base+'/api/release',{},undefined,30000).catch(()=>{});
         const generatedRoot=path.join(out,'triposr');
-        await run(tripoPython,[path.join(tripoRoot,'run.py'),concept,'--device','cpu','--pretrained-model-name-or-path',tripoModel,'--chunk-size','4096','--mc-resolution','192','--model-save-format','glb','--output-dir',generatedRoot,'--no-remove-bg','--bake-texture','--texture-resolution','1024'],{signal,timeout:20*60_000,cwd:tripoRoot,env:{HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1',OMP_NUM_THREADS:'8',MKL_NUM_THREADS:'8'}});
-        const source=path.join(generatedRoot,'0','mesh.glb');if(!fs.existsSync(source)||fs.statSync(source).size>250*1024*1024)throw new Error('TripoSR did not produce a valid mesh under 250 MB.');
-        const preparedSource=path.join(out,'source.glb');fs.copyFileSync(source,preparedSource,fs.constants.COPYFILE_EXCL);atomic(path.join(out,'model-request.json'),{source:preparedSource,folder:out});
+        // TripoSR's runner only creates per-image folders when it removes the
+        // background. Garage deliberately keeps the generated concept intact,
+        // so create the folder explicitly before the no-remove-bg export.
+        fs.mkdirSync(path.join(generatedRoot,'0'),{recursive:true});
+        // xatlas.export writes its text interchange format regardless of the
+        // filename extension. Request OBJ explicitly so Blender can import a
+        // valid mesh; the preparation step converts it to the FBX used by the
+        // Unreal adapter.
+        await run(tripoPython,[path.join(tripoRoot,'run.py'),concept,'--device','cpu','--pretrained-model-name-or-path',tripoModel,'--chunk-size','4096','--mc-resolution','192','--model-save-format','obj','--output-dir',generatedRoot,'--no-remove-bg','--bake-texture','--texture-resolution','1024'],{signal,timeout:20*60_000,cwd:tripoRoot,env:tripoEnv});
+        const source=path.join(generatedRoot,'0','mesh.obj');if(!fs.existsSync(source)||fs.statSync(source).size>250*1024*1024)throw new Error('TripoSR did not produce a valid mesh under 250 MB.');
+        const preparedSource=path.join(out,'source.obj');fs.copyFileSync(source,preparedSource,fs.constants.COPYFILE_EXCL);atomic(path.join(out,'model-request.json'),{source:preparedSource,folder:out});
         await run(config.blender,['--background','--factory-startup','--disable-autoexec','--python',path.join(__dirname,'prepare-model.py'),'--',path.join(out,'model-request.json')],{signal,timeout:300000,cwd:out});
         const report=JSON.parse(fs.readFileSync(path.join(out,'model-report.json'),'utf8'));return localArtifact(j,report.prepared,kind,{preview:report.preview,model:'TripoSR · local CPU static mesh',modelReport:report,conceptImage:concept,originalSource:preparedSource});
       }
