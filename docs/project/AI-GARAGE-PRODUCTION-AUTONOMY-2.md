@@ -112,3 +112,20 @@ Audit and extend existing Garage, Dashboard, Unreal adapter, Creative Library, I
 - **PR #20:** local TripoSR boundary and viewport; do not mistake technical success for character acceptance.
 - **PR #21:** stabilize Garage and introduce minimum viable quality preflight.
 - **This PR:** full long-term production autonomy specification and phased acceptance criteria; **documentation only**.
+
+## Release boundary: 1.0 versus later autonomy
+
+This document is the **long-term capability roadmap**, not a checklist of mandatory features before the first reliable Garage release. Implement only features proven necessary to pass the Garage 1.0 acceptance contract below; defer richer planning, advanced scheduling, broad worker fleets, deep self-correction and project-level autonomy to 1.1/2.0. Preserve milestone-level autonomy and owner gates. Do not expand the release scope simply because a subsystem is proposed.
+
+### Shared Garage 1.0 acceptance contract
+
+**Definition of done:** a dependable, local-first Garage the owner can start daily, give a bounded milestone, leave to work, and return to trustworthy status and results, with human intervention only at explicit approval gates. **Do not claim a completion percentage without an evidence-backed feature/test inventory.** Freeze the 1.0 release scope to the following six outcomes:
+
+1. **Startup and recovery:** cold start, reconnect and restart after interrupted sessions without losing verified work, duplicating jobs or falsely reporting success.
+2. **Milestone execution:** plan and execute a bounded milestone using available, capability-matched local workers and deterministic scripts, with visible progress and blockers.
+3. **Quality and correction:** preflight rejects unsuitable tools; independent quality checks reject bad outputs; bounded retries or explicit escalation handle failures.
+4. **Real Unreal integration:** produce at least one approved, usable asset, import/integrate it into the actual WildBound Unreal project, and verify it in-engine rather than relying on export-only success.
+5. **Traceability and approvals:** retain task/artifact provenance, approved Creative Library/canon references, owner decisions and required approval gates; visibly request missing references.
+6. **Repeatable end-to-end tests:** run reproducible desktop acceptance tests for the above, including a failure/restart scenario; record pass/fail, logs, evidence, environment and remaining limitations. No hidden manual fixes beyond explicit owner approvals.
+
+**Release rule:** PR #21 establishes a measured baseline and fixes 1.0 blockers. PR #22 is the future autonomy roadmap; PR #25 inventories and scopes only confirmed gaps. Unneeded advanced subsystems are **not** release blockers. Do not merge, deploy, install paid services or change canon without approval.
