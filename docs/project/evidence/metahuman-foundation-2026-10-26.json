@@ -89,6 +89,27 @@
     "cleanup": "No partial MetaHuman uasset was present. Two unintended empty NewFolder directories were removed after containment and content checks; the intended empty Player directory remains.",
     "nextAction": "Increase Windows virtual-memory capacity, restart if required, then make one new bounded character-asset attempt."
   },
+  "characterSaveGuardrail": {
+    "garageVersion": "2.8.2-metahuman-save-guardrail",
+    "auditId": "d50b2fc9-fb18-42f4-9e71-2d092e110476",
+    "auditStatus": "blocked",
+    "readyForEditorValidation": true,
+    "readyForCharacterSave": false,
+    "pageFileAllocatedBytes": 2684354560,
+    "characterSavePageFileGuardrailBytes": 17179869184,
+    "freePhysicalMemoryBytes": 21666082816,
+    "freeVirtualMemoryBytes": 15173787648,
+    "liveDesktopActionVerified": true,
+    "liveRecentWorkVerified": true,
+    "retryPerformed": false,
+    "tests": {
+      "localProductionManager": "15 passed, 0 failed",
+      "combinedGarageAndDashboard": "65 passed, 0 failed",
+      "javascriptSyntax": "passed",
+      "diffCheck": "passed"
+    },
+    "nextAction": "Increase Windows virtual-memory capacity, restart if required, then rerun the fixed read-only verification before one new character asset attempt."
+  },
   "femaleHomesteaderWorkerPackage": {
     "garageVersion": "2.7.2-reference-package",
     "jobId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
@@ -105,7 +126,7 @@
       "liveJobPackage": "approved version resolved with no missing or conflicting references"
     }
   },
-  "tests": { "passed": 51, "failed": 0 },
+  "tests": { "passed": 65, "failed": 0 },
   "notYetVerified": [
     "Epic cloud auto-rigging and texture-synthesis services are reachable and authorized",
     "A Female Homesteader MetaHuman asset exists",

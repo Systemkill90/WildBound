@@ -27,11 +27,19 @@ $bodyTextures = Join-Path $optionalContent 'BodyTextures'
 $fixedCompatibility = Join-Path $optionalContent 'Body\FixedCompatibility'
 $optionalReady = $optionalFiles.Count -gt 0
 $memory = Get-CimInstance Win32_ComputerSystem
+$operatingSystem = Get-CimInstance Win32_OperatingSystem
+$pageFiles = @(Get-CimInstance Win32_PageFileUsage)
+$pageFileAllocatedBytes = [int64](($pageFiles | Measure-Object AllocatedBaseSize -Sum).Sum * 1MB)
+$freeVirtualMemoryBytes = [int64]$operatingSystem.FreeVirtualMemory * 1KB
+$characterSavePageFileGuardrailBytes = [int64](16GB)
+$characterSaveMemoryReady = $pageFileAllocatedBytes -ge $characterSavePageFileGuardrailBytes
 $gpu = @(Get-CimInstance Win32_VideoController | Select-Object Name, DriverVersion)
+$readyForEditorValidation = $enabled -and $contentFiles.Count -gt 0 -and $optionalReady
 
 [pscustomobject]@{
     schemaVersion = 1
-    readyForEditorValidation = $enabled -and $contentFiles.Count -gt 0 -and $optionalReady
+    readyForEditorValidation = $readyForEditorValidation
+    readyForCharacterSave = $readyForEditorValidation -and $characterSaveMemoryReady
     pluginEnabled = $enabled
     pluginVersion = (Get-Content -LiteralPath $plugin -Raw | ConvertFrom-Json).VersionName
     bundledContentFiles = $contentFiles.Count
@@ -44,10 +52,16 @@ $gpu = @(Get-CimInstance Win32_VideoController | Select-Object Name, DriverVersi
     fixedCompatibilityBodiesAvailable = (Test-Path -LiteralPath $fixedCompatibility -PathType Container)
     unrealCommandletAvailable = $true
     physicalMemoryBytes = [int64]$memory.TotalPhysicalMemory
+    freePhysicalMemoryBytes = [int64]$operatingSystem.FreePhysicalMemory * 1KB
+    freeVirtualMemoryBytes = $freeVirtualMemoryBytes
+    pageFileAllocatedBytes = $pageFileAllocatedBytes
+    characterSavePageFileGuardrailBytes = $characterSavePageFileGuardrailBytes
+    characterSaveMemoryReady = $characterSaveMemoryReady
     logicalProcessors = [int]$memory.NumberOfLogicalProcessors
     videoControllers = $gpu
     limitations = @(
         if (-not $optionalReady) { 'MetaHuman Creator Core Data is not installed. Creator remains limited until the official Optional content is added through Epic Games Launcher.' }
+        if (-not $characterSaveMemoryReady) { 'MetaHuman character saving is blocked by the project guardrail because the configured Windows paging file is below 16 GiB after a recorded TextureFormatOodle save crash.' }
         'This read-only check does not prove that Epic cloud auto-rigging or texture synthesis is reachable.'
         'This read-only check does not create, assemble, render, or visually approve a MetaHuman.'
         'Custom Female Homesteader clothing, hair, materials, and owner review remain required.'

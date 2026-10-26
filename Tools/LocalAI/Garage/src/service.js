@@ -95,7 +95,7 @@ async function status(){
     {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
   ];
   const interrupted=queue.list().filter(job=>job.status==='interrupted').length;
-  return {name:'WildBound AI Garage',version:'2.8.1-asset-readiness',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},localManager:localManager.status(),teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  return {name:'WildBound AI Garage',version:'2.8.2-metahuman-save-guardrail',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},localManager:localManager.status(),teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
