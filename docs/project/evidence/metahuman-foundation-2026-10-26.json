@@ -64,9 +64,10 @@
     "postInstallAction": "Run the fixed read-only Verify again action; the status becomes ready only when the official Optional content tree exists.",
     "focusedChecks": {
       "foundationPreflight": "passed and correctly reported not ready",
-      "localManagerTests": "9 passed, 0 failed",
+      "localManagerTests": "11 passed, 0 failed",
       "dashboardContractTests": "2 passed, 0 failed",
-      "javascriptSyntax": "passed"
+      "javascriptSyntax": "passed",
+      "liveFixedAction": "process completed but prerequisite result was truthfully persisted as blocked"
     }
   },
   "tests": { "passed": 51, "failed": 0 },

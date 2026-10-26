@@ -20,7 +20,7 @@ class LocalProductionManager{
     const projectFile=path.join(this.repoRoot,'Wildbound.uproject'),metaHumanCheck=path.join(this.repoRoot,'Tools','Test-MetaHumanFoundation.ps1');
     if(this.engineRoot&&fs.existsSync(metaHumanCheck)&&fs.existsSync(projectFile)){
       const prerequisite=this.metaHumanPrerequisite();
-      result.push({id:'metahuman-foundation-preflight',name:'Verify MetaHuman foundation',write:false,approvalRequired:false,state:prerequisite.state,detail:prerequisite.detail,nextAction:prerequisite.nextAction,exe:'powershell.exe',args:['-NoProfile','-ExecutionPolicy','Bypass','-File',metaHumanCheck,'-EngineRoot',this.engineRoot,'-ProjectFile',projectFile],cwd:this.repoRoot,timeout:60_000});
+      result.push({id:'metahuman-foundation-preflight',name:'Verify MetaHuman foundation',write:false,approvalRequired:false,state:prerequisite.state,detail:prerequisite.detail,nextAction:prerequisite.nextAction,resultType:'metahuman-foundation',exe:'powershell.exe',args:['-NoProfile','-ExecutionPolicy','Bypass','-File',metaHumanCheck,'-EngineRoot',this.engineRoot,'-ProjectFile',projectFile],cwd:this.repoRoot,timeout:60_000});
     }
     if(this.nasRoot){
       const localRoot=path.dirname(this.dashboardRoot),source=path.join(localRoot,'Garage','runtime','character-reviews'),destination=path.join(path.dirname(this.nasRoot),'Character-Production','Female-Homesteader'),script=inside(this.repoRoot,path.join(this.repoRoot,'Tools','Archive-GarageCharacterSession.ps1'));
@@ -36,7 +36,7 @@ class LocalProductionManager{
     if(!fs.existsSync(optional))return {id:'metahuman-core-data',name:'MetaHuman Creator Core Data',state:'blocked',detail:'The plugin is installed, but its official Optional content is missing. Creator will run with limited features.',nextAction:'At the workstation, restart the Unreal Engine update in Epic Games Launcher, approve Windows UAC, then choose Verify again.'};
     return {id:'metahuman-core-data',name:'MetaHuman Creator Core Data',state:'ready',detail:'The official Optional content folder is present. Run the bounded verification before opening Creator.',nextAction:'Choose Verify again to record the full foundation check.'};
   }
-  publicActions(){return this.actions().map(({exe,args,cwd,confirmation,...item})=>({...item,dryRunDefault:true}));}
+  publicActions(){return this.actions().map(({exe,args,cwd,confirmation,resultType,...item})=>({...item,dryRunDefault:true}));}
   history(){return fs.readdirSync(this.auditRoot).filter(x=>x.endsWith('.json')).sort().slice(-20).reverse().map(name=>JSON.parse(fs.readFileSync(path.join(this.auditRoot,name),'utf8')));}
   async execute(id,{dryRun=true,confirmation=null}={}){
     if(this.active)throw new Error('The Local Production Manager is already running an action.');
@@ -45,7 +45,7 @@ class LocalProductionManager{
     const record={schemaVersion:1,id:crypto.randomUUID(),actionId:action.id,name:action.name,write:action.write,dryRun:Boolean(dryRun),status:'planned',startedAt:new Date().toISOString()};
     if(dryRun){record.completedAt=new Date().toISOString();atomic(path.join(this.auditRoot,record.startedAt.replaceAll(':','-')+'-'+record.id+'.json'),record);return record;}
     this.active=record.id;record.status='running';
-    try{const output=await this.executor(action.exe,action.args,{cwd:action.cwd,timeout:action.timeout});record.status='completed';record.output=String(output||'').slice(-8000);return record;}
+    try{const output=await this.executor(action.exe,action.args,{cwd:action.cwd,timeout:action.timeout});record.status='completed';record.output=String(output||'').slice(-8000);if(action.resultType==='metahuman-foundation'){try{record.result=JSON.parse(String(output||''));}catch{throw new Error('MetaHuman foundation check returned invalid JSON.');}if(record.result.readyForEditorValidation!==true){record.status='blocked';record.error='MetaHuman Creator Core Data is still missing or incomplete.';}}return record;}
     catch(error){record.status='failed';record.error=String(error.message||error).slice(-2000);throw Object.assign(error,{managerRecord:record});}
     finally{record.completedAt=new Date().toISOString();atomic(path.join(this.auditRoot,record.startedAt.replaceAll(':','-')+'-'+record.id+'.json'),record);this.active=null;}
   }
