@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-26T16:00:00Z",
+  "scope": "Female Homesteader local 3D foundation preservation",
+  "destination": "06-AI-Garage/Character-Production/Female-Homesteader/2026-10-26-mpfb-rejected-foundation",
+  "sourceFileCount": 14,
+  "classification": "rejected-development-evidence-not-approved-game-assets",
+  "copyVerified": true,
+  "verification": "Every source file was SHA-256 hashed, copied through a temporary file, verified before placement, and verified again at the destination.",
+  "verifiedManifestSha256": "72183a76938e685f048586334bd6f5887a6e27fb5548485881f652c837e3e527",
+  "notes": [
+    "The manifest timestamp and therefore its own checksum may change on a later verification-only rerun; archived payload checksums remain authoritative.",
+    "The archive contains rejected MPFB attempts for provenance only and must not be used as approved character art."
+  ]
+}
