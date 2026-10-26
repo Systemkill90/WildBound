@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-26",
+  "version": "2.7.3-model-planning",
+  "scope": "Reference-grounded specialist planning before supplied model attachment",
+  "verified": {
+    "specialistBeforeSource": true,
+    "savedHandoffReusedAfterAttachment": true,
+    "legacyWaitingTaskAction": true,
+    "desktopPlanPanel": true,
+    "codexWorkshopTool": true,
+    "javascriptSyntax": true,
+    "sourceTests": {
+      "passed": 57,
+      "failed": 0
+    },
+    "configuredOllamaModelReadiness": true
+  },
+  "livePlanning": {
+    "taskId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
+    "finalStatus": "needs_source",
+    "reference": "female-homesteader-player-anchor@v1",
+    "missingReferences": 0,
+    "conflicts": 0,
+    "characterDesignSaved": true,
+    "artistHandoffSaved": true,
+    "localModel": "qwen3.5:9b",
+    "measuredUsage": [
+      {
+        "role": "production director",
+        "promptTokens": 1350,
+        "responseTokens": 162,
+        "durationMs": 27529.3988
+      },
+      {
+        "role": "character designer",
+        "promptTokens": 2022,
+        "responseTokens": 411,
+        "durationMs": 11783.7398
+      },
+      {
+        "role": "3D artist",
+        "promptTokens": 2433,
+        "responseTokens": 187,
+        "durationMs": 29367.3909
+      }
+    ]
+  },
+  "notVerified": [
+    "MetaHuman Creator Core Data installation",
+    "MetaHuman character creation",
+    "character visual quality",
+    "Unreal character import"
+  ],
+  "blocker": "Epic Games Launcher still requires an at-workstation Windows UAC approval to install MetaHuman Creator Core Data."
+}

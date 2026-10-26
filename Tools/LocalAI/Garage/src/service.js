@@ -67,7 +67,8 @@ async function status(){
   const audio=probes[2].status==='fulfilled'?probes[2].value:null;
   const engineRoot=path.join(config.engineRoot,'Engine','Binaries','Win64','UnrealEditor-Cmd.exe');
   const recoveryRoot=path.join(jobsRoot,'recovery');let recovery=false;try{fs.mkdirSync(recoveryRoot,{recursive:true});fs.accessSync(recoveryRoot,fs.constants.W_OK);recovery=true;}catch{}
-  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),recovery,rigging:false};
+  const configuredModelAvailable=Array.isArray(dashboard?.models)&&dashboard.models.includes(config.model);
+  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&configuredModelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),recovery,rigging:false};
   const agents=TEAMS.map(agent=>({...agent,...agentReadiness(agent.id,checks)}));
   const capabilities=[
     {id:'image',name:'Image / texture production',available:checks.image&&checks.ollama,reason:checks.image?'Requires the local text model and Image Studio.':'Image Studio is offline.'},
@@ -93,7 +94,7 @@ async function status(){
     {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
   ];
   const interrupted=queue.list().filter(job=>job.status==='interrupted').length;
-  return {name:'WildBound AI Garage',version:'2.7.2-reference-package',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},localManager:localManager.status(),teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  return {name:'WildBound AI Garage',version:'2.7.3-model-planning',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},localManager:localManager.status(),teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -173,12 +174,12 @@ async function handle(req,res){
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);
   if(req.method==='POST'&&sourceMatch)return attachUploadedModel(req,res,sourceMatch[1],url);
-  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|retry-import))?$/);
+  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|prepare-plan|retry-import))?$/);
   if(match){
     if(req.method==='GET'&&!match[2])return reply(res,200,queue.get(match[1]));
     if(req.method==='POST'){
       const payload=await body(req),action=match[2];
-      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach', 'retry-import':'retryImport'};
+      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach','prepare-plan':'preparePlan','retry-import':'retryImport'};
       if(action&&functions[action])return reply(res,200,action==='revise'?queue.revise(match[1],payload.feedback,payload.voice):queue[functions[action]](match[1],payload.sourcePath));
     }
   }
