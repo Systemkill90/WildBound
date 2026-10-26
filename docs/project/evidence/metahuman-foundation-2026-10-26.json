@@ -72,6 +72,23 @@
       "noSaveEditorProbe": "MetaHumanCharacter, MetaHumanCharacterEditor, MetaHumanDefaultPipeline, and MetaHumanDefaultEditorPipeline mounted with zero fatal errors; scripted Quit hung after startup and the bounded process was stopped without retry"
     }
   },
+  "firstCharacterAssetAttempt": {
+    "assetIntent": "/Game/Characters/MHC_FemaleHomesteader_v01",
+    "referenceVersion": "female-homesteader-player-anchor@v1",
+    "creatorOpened": true,
+    "editableHumanVisible": true,
+    "saveCompleted": false,
+    "assetFileCreated": false,
+    "crashType": "OutOfMemory",
+    "crashStage": "TextureFormatOodle during MetaHuman Character asset save",
+    "error": "The paging file is too small for this operation to complete.",
+    "pageFileAllocatedMiB": 2560,
+    "freePhysicalMemoryKiB": 21169108,
+    "freeVirtualMemoryKiB": 15135776,
+    "retried": false,
+    "cleanup": "No partial MetaHuman uasset was present. Two unintended empty NewFolder directories were removed after containment and content checks; the intended empty Player directory remains.",
+    "nextAction": "Increase Windows virtual-memory capacity, restart if required, then make one new bounded character-asset attempt."
+  },
   "femaleHomesteaderWorkerPackage": {
     "garageVersion": "2.7.2-reference-package",
     "jobId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
