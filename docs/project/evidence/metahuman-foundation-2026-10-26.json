@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-26T17:15:00Z",
+  "decision": "Use Unreal 5.8 MetaHuman Creator as the first-player human foundation with custom Female Homesteader art.",
+  "projectPlugin": "MetaHumanCharacter",
+  "projectPluginEnabled": true,
+  "enginePluginVersion": "1.0.0",
+  "bundledContentFiles": 772,
+  "bundledContentBytes": 731006830,
+  "unrealCommandletAvailable": true,
+  "machine": {
+    "physicalMemoryBytes": 34254295040,
+    "logicalProcessors": 16,
+    "videoController": "AMD Radeon RX 7600 XT"
+  },
+  "localManager": {
+    "action": "metahuman-foundation-preflight",
+    "qwenSelectedCorrectAction": true,
+    "execution": "completed",
+    "approvalRequired": false,
+    "outputReadyForEditorValidation": true
+  },
+  "editorProbe": {
+    "commandletExitCode": 1,
+    "metaHumanPluginMounted": true,
+    "metaHumanErrors": 0,
+    "fatalErrors": 0,
+    "blockedBy": "The Wildbound game module is not compiled in this review worktree.",
+    "retryPolicy": "Recorded and stopped; do not compile or retry during this bounded foundation pass."
+  },
+  "tests": { "passed": 51, "failed": 0 },
+  "notYetVerified": [
+    "Full Unreal Editor project load after the Wildbound game module is compiled",
+    "Epic cloud auto-rigging and texture-synthesis services are reachable and authorized",
+    "A Female Homesteader MetaHuman asset exists",
+    "Custom outfit, hair, materials, review renders, animation and Unreal gameplay integration"
+  ]
+}

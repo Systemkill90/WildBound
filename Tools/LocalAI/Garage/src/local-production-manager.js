@@ -8,8 +8,8 @@ function atomic(file,value){fs.mkdirSync(path.dirname(file),{recursive:true});co
 function inside(root,target){const base=path.resolve(root),resolved=path.resolve(target),relative=path.relative(base,resolved);if(relative.startsWith('..')||path.isAbsolute(relative))throw new Error('Action path is outside its approved workspace.');return resolved;}
 
 class LocalProductionManager{
-  constructor({repoRoot,garageRoot,dashboardRoot,nasRoot,auditRoot,model='qwen3.5:9b',executor=run,planner=null}){
-    this.repoRoot=path.resolve(repoRoot);this.garageRoot=path.resolve(garageRoot);this.dashboardRoot=path.resolve(dashboardRoot);this.nasRoot=nasRoot?path.resolve(nasRoot):null;this.auditRoot=path.resolve(auditRoot);this.model=model;this.executor=executor;this.planner=planner;this.active=null;fs.mkdirSync(this.auditRoot,{recursive:true});
+  constructor({repoRoot,garageRoot,dashboardRoot,engineRoot=null,nasRoot,auditRoot,model='qwen3.5:9b',executor=run,planner=null}){
+    this.repoRoot=path.resolve(repoRoot);this.garageRoot=path.resolve(garageRoot);this.dashboardRoot=path.resolve(dashboardRoot);this.engineRoot=engineRoot?path.resolve(engineRoot):null;this.nasRoot=nasRoot?path.resolve(nasRoot):null;this.auditRoot=path.resolve(auditRoot);this.model=model;this.executor=executor;this.planner=planner;this.active=null;fs.mkdirSync(this.auditRoot,{recursive:true});
   }
   actions(){
     const tests=fs.existsSync(path.join(this.garageRoot,'tests'))?fs.readdirSync(path.join(this.garageRoot,'tests')).filter(x=>x.endsWith('.test.js')).sort().map(x=>path.join('tests',x)):[];
@@ -17,6 +17,8 @@ class LocalProductionManager{
       {id:'repository-status',name:'Inspect repository status',write:false,approvalRequired:false,exe:'git.exe',args:['status','--short','--branch'],cwd:this.repoRoot,timeout:30_000},
       {id:'garage-tests',name:'Run bounded Garage tests',write:false,approvalRequired:false,exe:process.execPath,args:['--test',...tests],cwd:this.garageRoot,timeout:180_000}
     ];
+    const projectFile=path.join(this.repoRoot,'Wildbound.uproject'),metaHumanCheck=path.join(this.repoRoot,'Tools','Test-MetaHumanFoundation.ps1');
+    if(this.engineRoot&&fs.existsSync(metaHumanCheck)&&fs.existsSync(projectFile))result.push({id:'metahuman-foundation-preflight',name:'Verify MetaHuman foundation',write:false,approvalRequired:false,exe:'powershell.exe',args:['-NoProfile','-ExecutionPolicy','Bypass','-File',metaHumanCheck,'-EngineRoot',this.engineRoot,'-ProjectFile',projectFile],cwd:this.repoRoot,timeout:60_000});
     if(this.nasRoot){
       const localRoot=path.dirname(this.dashboardRoot),source=path.join(localRoot,'Garage','runtime','character-reviews'),destination=path.join(path.dirname(this.nasRoot),'Character-Production','Female-Homesteader'),script=inside(this.repoRoot,path.join(this.repoRoot,'Tools','Archive-GarageCharacterSession.ps1'));
       result.push({id:'archive-character-evidence',name:'Archive character evidence to private NAS',write:true,approvalRequired:true,confirmation:'archive-character-evidence',exe:'powershell.exe',args:['-NoProfile','-ExecutionPolicy','Bypass','-File',script,'-SourceRoot',source,'-DestinationRoot',destination,'-SessionName','garage-character-evidence'],cwd:this.repoRoot,timeout:300_000});

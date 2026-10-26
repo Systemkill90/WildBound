@@ -23,7 +23,7 @@ const token=fs.readFileSync(path.join(config.dashboardRoot,'runtime','control-to
 const jobsRoot=path.join(root,'runtime','jobs');
 const lock=path.join(root,'runtime','production.lock.json');
 const library=new CreativeLibrary({nasRoot:config.libraryNasRoot||process.env.WILDBOUND_LIBRARY_NAS_ROOT||null,repoRoot:config.libraryRepoRoot||config.repoRoot,stateRoot:path.join(root,'runtime','creative-library')});
-const localManager=new LocalProductionManager({repoRoot:config.libraryRepoRoot||config.repoRoot,garageRoot:root,dashboardRoot:config.dashboardRoot,nasRoot:config.libraryNasRoot||null,auditRoot:path.join(root,'runtime','local-production-manager'),model:config.model});
+const localManager=new LocalProductionManager({repoRoot:config.libraryRepoRoot||config.repoRoot,garageRoot:root,dashboardRoot:config.dashboardRoot,engineRoot:config.engineRoot,nasRoot:config.libraryNasRoot||null,auditRoot:path.join(root,'runtime','local-production-manager'),model:config.model});
 let queue;
 queue=new Pipeline(jobsRoot,adapters(config,jobsRoot,j=>queue.save(j)),library);
 queue.on('active',j=>fs.writeFileSync(lock,JSON.stringify({pid:process.pid,job:j.id,updatedAt:new Date().toISOString()})));
