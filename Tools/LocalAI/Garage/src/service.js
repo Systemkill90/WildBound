@@ -9,6 +9,7 @@ const {pipeline}=require('node:stream/promises');
 const {Pipeline,TEAMS}=require('./pipeline');
 const {adapters,json}=require('./adapters');
 const {CreativeLibrary}=require('./creative-library');
+const {LocalProductionManager}=require('./local-production-manager');
 
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'garage.config.json'),'utf8'));
@@ -22,6 +23,7 @@ const token=fs.readFileSync(path.join(config.dashboardRoot,'runtime','control-to
 const jobsRoot=path.join(root,'runtime','jobs');
 const lock=path.join(root,'runtime','production.lock.json');
 const library=new CreativeLibrary({nasRoot:config.libraryNasRoot||process.env.WILDBOUND_LIBRARY_NAS_ROOT||null,repoRoot:config.libraryRepoRoot||config.repoRoot,stateRoot:path.join(root,'runtime','creative-library')});
+const localManager=new LocalProductionManager({repoRoot:config.libraryRepoRoot||config.repoRoot,garageRoot:root,dashboardRoot:config.dashboardRoot,nasRoot:config.libraryNasRoot||null,auditRoot:path.join(root,'runtime','local-production-manager')});
 let queue;
 queue=new Pipeline(jobsRoot,adapters(config,jobsRoot,j=>queue.save(j)),library);
 queue.on('active',j=>fs.writeFileSync(lock,JSON.stringify({pid:process.pid,job:j.id,updatedAt:new Date().toISOString()})));
@@ -91,7 +93,7 @@ async function status(){
     {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
   ];
   const interrupted=queue.list().filter(job=>job.status==='interrupted').length;
-  return {name:'WildBound AI Garage',version:'2.6.0-stabilization',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  return {name:'WildBound AI Garage',version:'2.7.0-local-manager-pilot',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},localManager:localManager.status(),teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -141,6 +143,10 @@ async function handle(req,res){
   if(req.headers.authorization!=='Bearer '+token)return reply(res,401,{error:'Authentication required.'});
   const url=new URL(req.url,'http://127.0.0.1:'+config.port);
   if(req.method==='GET'&&url.pathname==='/status')return reply(res,200,await status());
+  if(req.method==='GET'&&url.pathname==='/local-manager')return reply(res,200,localManager.status());
+  if(req.method==='POST'&&url.pathname==='/local-manager/run'){
+    const payload=await body(req);try{return reply(res,200,await localManager.execute(String(payload.actionId||''),{dryRun:payload.dryRun!==false,confirmation:payload.confirmation||null}));}catch(error){return reply(res,409,{error:error.message,record:error.managerRecord||null});}
+  }
   if(req.method==='GET'&&url.pathname==='/library')return reply(res,200,library.status());
   const recordMatch=url.pathname.match(/^\/library\/records\/([a-z0-9][a-z0-9-]{2,79})$/);
   if(req.method==='GET'&&recordMatch){const record=library.record(recordMatch[1]);return record?reply(res,200,record):reply(res,404,{error:'Design record not found.'});}
