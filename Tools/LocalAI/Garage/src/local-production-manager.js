@@ -14,10 +14,14 @@ class LocalProductionManager{
   atomicActions(){
     const tests=fs.existsSync(path.join(this.garageRoot,'tests'))?fs.readdirSync(path.join(this.garageRoot,'tests')).filter(x=>x.endsWith('.test.js')).sort().map(x=>path.join('tests',x)):[];
     const dashboardTests=fs.existsSync(path.join(this.dashboardRoot,'tests'))?fs.readdirSync(path.join(this.dashboardRoot,'tests')).filter(x=>x.endsWith('.test.js')).sort().map(x=>path.join('tests',x)):[];
+    const readinessScript=inside(this.repoRoot,path.join(this.repoRoot,'Tools','LocalAI','Garage','src','asset-readiness.js')),jobsRoot=path.join(this.runtimeRoot,'Garage','runtime','jobs'),recordsRoot=path.join(this.repoRoot,'docs','creative-library','records'),reportsRoot=path.join(this.auditRoot,'reports');
+    const readinessArgs=scope=>['--scope',scope,'--jobs-root',jobsRoot,'--records-root',recordsRoot,...(this.nasRoot?['--nas-root',this.nasRoot]:[]),'--output',path.join(reportsRoot,'asset-readiness-'+scope+'-latest.json')];
     const result=[
       {id:'repository-status',name:'Inspect repository status',write:false,approvalRequired:false,exe:'git.exe',args:['status','--short','--branch'],cwd:this.repoRoot,timeout:30_000},
       {id:'garage-tests',name:'Run bounded Garage tests',write:false,approvalRequired:false,exe:process.execPath,args:['--test',...tests],cwd:this.garageRoot,timeout:180_000},
-      {id:'dashboard-tests',name:'Run bounded Dashboard tests',write:false,approvalRequired:false,exe:process.execPath,args:['--test',...dashboardTests],cwd:this.dashboardRoot,timeout:180_000}
+      {id:'dashboard-tests',name:'Run bounded Dashboard tests',write:false,approvalRequired:false,exe:process.execPath,args:['--test',...dashboardTests],cwd:this.dashboardRoot,timeout:180_000},
+      {id:'asset-artifact-readiness',name:'Verify generated artifact readiness',write:true,approvalRequired:false,detail:'Reads task artifacts and writes only a local audit report with file, size, checksum, preview, metadata, and review-state findings.',resultType:'asset-readiness',exe:process.execPath,args:[readinessScript,...readinessArgs('artifacts')],cwd:this.repoRoot,timeout:180_000},
+      {id:'asset-reference-readiness',name:'Verify reference package readiness',write:true,approvalRequired:false,detail:'Reads version-pinned packages and writes only a local audit report covering approvals, conflicts, originals, and archive checksums.',resultType:'asset-readiness',exe:process.execPath,args:[readinessScript,...readinessArgs('references')],cwd:this.repoRoot,timeout:180_000}
     ];
     const projectFile=path.join(this.repoRoot,'Wildbound.uproject'),metaHumanCheck=path.join(this.repoRoot,'Tools','Test-MetaHumanFoundation.ps1');
     if(this.engineRoot&&fs.existsSync(metaHumanCheck)&&fs.existsSync(projectFile)){
@@ -33,6 +37,7 @@ class LocalProductionManager{
   actions(){
     const actions=this.atomicActions();
     actions.push({id:'garage-autopilot-check',name:'Run supervised Garage verification',write:false,approvalRequired:false,workflow:true,detail:'Runs repository status, Garage tests, and Dashboard tests once. It stops on the first failure and never retries automatically.',stepIds:['repository-status','garage-tests','dashboard-tests']});
+    actions.push({id:'asset-readiness-review',name:'Build asset readiness review',write:true,approvalRequired:false,workflow:true,detail:'Checks generated artifacts, review metadata, approved references, accessible originals, and checksums. It writes local audit manifests only and never approves, imports, or publishes.',stepIds:['asset-artifact-readiness','asset-reference-readiness']});
     return actions;
   }
   metaHumanPrerequisite(){
@@ -47,7 +52,7 @@ class LocalProductionManager{
   history(){return fs.readdirSync(this.auditRoot).filter(x=>x.endsWith('.json')).sort().slice(-20).reverse().map(name=>JSON.parse(fs.readFileSync(path.join(this.auditRoot,name),'utf8')));}
   recoverInterrupted(){for(const name of fs.readdirSync(this.auditRoot).filter(x=>x.endsWith('.json'))){const file=path.join(this.auditRoot,name);try{const record=JSON.parse(fs.readFileSync(file,'utf8'));if(record.status!=='running')continue;record.status='interrupted';record.completedAt=new Date().toISOString();record.error='The Garage stopped before this workflow completed. Completed steps remain recorded; no step was retried.';for(const step of record.steps||[])if(step.status==='running'){step.status='interrupted';step.completedAt=record.completedAt;}atomic(file,record);}catch{}}}
   auditFile(record){return path.join(this.auditRoot,record.startedAt.replaceAll(':','-')+'-'+record.id+'.json');}
-  async runAtomic(action){const output=await this.executor(action.exe,action.args,{cwd:action.cwd,timeout:action.timeout});const result={output:String(output||'').slice(-8000)};if(action.resultType==='metahuman-foundation'){try{result.result=JSON.parse(String(output||''));}catch{throw new Error('MetaHuman foundation check returned invalid JSON.');}if(result.result.readyForEditorValidation!==true){result.status='blocked';result.error='MetaHuman Creator Core Data is still missing or incomplete.';}}return result;}
+  async runAtomic(action){const output=await this.executor(action.exe,action.args,{cwd:action.cwd,timeout:action.timeout});const result={output:String(output||'').slice(-8000)};if(['metahuman-foundation','asset-readiness'].includes(action.resultType)){try{result.result=JSON.parse(String(output||''));}catch{throw new Error(action.resultType==='asset-readiness'?'Asset readiness returned invalid JSON.':'MetaHuman foundation check returned invalid JSON.');}}if(action.resultType==='metahuman-foundation'&&result.result.readyForEditorValidation!==true){result.status='blocked';result.error='MetaHuman Creator Core Data is still missing or incomplete.';}return result;}
   async execute(id,{dryRun=true,confirmation=null}={}){
     if(this.active)throw new Error('The Local Production Manager is already running an action.');
     const action=this.actions().find(item=>item.id===id);if(!action)throw new Error('Unknown or unavailable local action.');

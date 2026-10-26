@@ -30,6 +30,8 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/local-manager\/run/);
   assert.match(studio,/local-manager\/plan/);
   assert.match(studio,/manager\?\.prerequisites/);
+  assert.match(studio,/artifact checksums/);
+  assert.match(studio,/archive originals/);
   assert.match(studio,/function renderReferencePackage/);
   assert.match(studio,/function renderProductionPlan/);
   assert.match(studio,/Worker reference package/);
@@ -55,4 +57,6 @@ test('native desktop Garage exposes model planning without expanding the main la
   assert.doesNotMatch(native,/localPath/);
   assert.match(native,/Supervised Local Autopilot/);
   assert.match(native,/\/local-manager\/run/);
+  assert.match(native,/artifact checksums/);
+  assert.match(native,/archive originals/);
 });

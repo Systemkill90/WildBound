@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-26",
+  "garageVersion": "2.8.1-asset-readiness",
+  "workflow": {
+    "id": "asset-readiness-review",
+    "steps": [
+      "asset-artifact-readiness",
+      "asset-reference-readiness"
+    ],
+    "writes": "private local audit manifests only",
+    "attemptsPerStep": 1,
+    "automaticRetry": false
+  },
+  "checks": {
+    "artifacts": [
+      "task-directory containment",
+      "file availability",
+      "byte length",
+      "SHA-256",
+      "preview availability",
+      "technical-review checksum agreement",
+      "review-state completeness"
+    ],
+    "references": [
+      "version pin exists",
+      "version is approved",
+      "missing, inaccessible, and conflicting needs",
+      "Git record media agreement",
+      "private archive availability",
+      "private archive byte length and SHA-256"
+    ]
+  },
+  "excludedAuthority": [
+    "creative quality judgment",
+    "asset approval",
+    "canon changes",
+    "Unreal import",
+    "media copying",
+    "Git commit or publish"
+  ],
+  "verification": {
+    "nodeTestsPassed": 63,
+    "nodeTestsFailed": 0,
+    "nativeBuild": "passed",
+    "diffCheck": "passed",
+    "liveWorkflow": {
+      "id": "dae79fbf-d643-4fdf-9bfb-7699a241182e",
+      "status": "completed",
+      "artifactReport": {
+        "jobs": 27,
+        "artifacts": 16,
+        "verifiedChecksums": 16,
+        "readyForReview": 5,
+        "issues": 0
+      },
+      "referenceReport": {
+        "packages": 13,
+        "pinnedReferences": 2,
+        "verifiedArchiveObjects": 2,
+        "records": 2,
+        "issues": 0
+      }
+    }
+  },
+  "localModelInventory": {
+    "taskId": "d0d05c95-1300-430b-a8f9-b244c03a224d",
+    "model": "qwen3.5:9b",
+    "promptTokens": 1823,
+    "responseTokens": 537,
+    "durationMs": 14880,
+    "usedAsEvidence": false,
+    "reason": "Retrieved excerpts did not include the runtime job or Creative Library record schemas."
+  }
+}
