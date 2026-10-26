@@ -1,8 +1,9 @@
 'use strict';
 
 const CHARACTER_WORDS=/\b(character|humanoid|npc|hero|protagonist|creature|monster|beast|person|people|player)\b/i;
+const NEGATED_CHARACTER_CLAUSE=/\b(?:no|without|exclude(?:s|d|ing)?|avoid(?:s|ed|ing)?|not)\b[^.!?;\n]{0,96}\b(?:character|humanoid|npc|hero|protagonist|creature|monster|beast|person|people|player)\b/ig;
 
-function isCharacterRequest(job){return CHARACTER_WORDS.test(String(job?.prompt||''));}
+function isCharacterRequest(job){const prompt=String(job?.prompt||'').replace(/\bnon[- ]character\b/ig,'').replace(NEGATED_CHARACTER_CLAUSE,'');return CHARACTER_WORDS.test(prompt);}
 
 function preflight(request){
   const character=isCharacterRequest(request);

@@ -49,4 +49,8 @@ test('native desktop Garage exposes model planning without expanding the main la
   assert.match(native,/View specialist plan/);
   assert.match(native,/\/prepare-plan/);
   assert.match(native,/DescribePlan\(j\)/);
+  assert.match(native,/View references/);
+  assert.match(native,/DescribeReferences\(j\)/);
+  assert.match(native,/SHA-256/);
+  assert.doesNotMatch(native,/localPath/);
 });
