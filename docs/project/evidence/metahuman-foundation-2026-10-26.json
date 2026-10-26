@@ -25,12 +25,24 @@
     "metaHumanPluginMounted": true,
     "metaHumanErrors": 0,
     "fatalErrors": 0,
-    "blockedBy": "The Wildbound game module is not compiled in this review worktree.",
-    "retryPolicy": "Recorded and stopped; do not compile or retry during this bounded foundation pass."
+    "editorModuleBuild": {
+      "result": "succeeded",
+      "actions": 18,
+      "errors": 0,
+      "parallelActions": 1
+    },
+    "pluginInitialization": "limited",
+    "blockedBy": "MetaHuman Optional Content folder not found. MetaHuman Creator Core Data must be added through the existing Epic Games Launcher installation options.",
+    "unrelatedExistingWarnings": [
+      "Review worktree lacks locally linked Quinn mannequin assets.",
+      "Review worktree lacks locally linked deer assets.",
+      "The intentionally nonexistent probe package caused the commandlet exit code."
+    ],
+    "retryPolicy": "Recorded and stopped; do not retry Creator until official optional content is installed."
   },
   "tests": { "passed": 51, "failed": 0 },
   "notYetVerified": [
-    "Full Unreal Editor project load after the Wildbound game module is compiled",
+    "Full MetaHuman Creator initialization after official optional content is installed",
     "Epic cloud auto-rigging and texture-synthesis services are reachable and authorized",
     "A Female Homesteader MetaHuman asset exists",
     "Custom outfit, hair, materials, review renders, animation and Unreal gameplay integration"

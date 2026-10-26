@@ -10,7 +10,7 @@ The first Local Production Manager pilot is implemented as the smallest executab
 
 ## Next authorized work
 
-1. Continue with the owner-approved Unreal 5.8 MetaHuman Creator foundation. The plugin is enabled and the local preflight passes. MetaHuman supplies the body, face and rig foundation; custom clothing, hair and materials must reproduce the approved sheet. Epic cloud auto-rigging and texture-synthesis reachability is not yet verified.
+1. Continue with the owner-approved Unreal 5.8 MetaHuman Creator foundation. The plugin is enabled, the local preflight passes, and the Wildbound editor module compiles. Install the official MetaHuman Creator Core Data through the existing Epic Launcher installation options before reopening Creator; the current probe reports missing optional content and limited features. MetaHuman supplies the body, face and rig foundation; custom clothing, hair and materials must reproduce the approved sheet. Epic cloud auto-rigging and texture-synthesis reachability is not yet verified.
 2. Reproduce the approved silhouette with custom layered blouse, fitted vest, split skirt/trousers, weathered boots, gloves, utility belt and pouches, olive/rust/cream materials, botanical embroidery, braided brown hair, and warm freckled face. Do not add Fae or other race-specific anatomy.
 3. Keep the Garage task live while work runs. Show source, worker, current stage, reference package, failures, and review readiness in the desktop UI.
 4. Produce front, side, back, and three-quarter renders plus a short idle preview. Show the review media in the primary chat because the owner may be away from the workstation.
