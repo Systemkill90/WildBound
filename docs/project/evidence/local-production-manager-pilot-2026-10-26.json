@@ -17,14 +17,24 @@
     "gitMergeOrPublish": false,
     "creativeOrLicensingDecisions": false
   },
+  "localPlanner": {
+    "model": "qwen3.5:9b",
+    "authority": "select-fixed-action-only",
+    "canSupplyCommandsPathsOrApproval": false,
+    "liveCases": [
+      { "request": "repository status", "selected": "repository-status", "approvalRequired": false },
+      { "request": "bounded Garage tests", "selected": "garage-tests", "approvalRequired": false },
+      { "request": "archive Female Homesteader evidence", "selected": "archive-character-evidence", "approvalRequired": true }
+    ]
+  },
   "verification": {
-    "garageAndDashboardTests": { "passed": 48, "failed": 0 },
+    "garageAndDashboardTests": { "passed": 51, "failed": 0 },
     "javascriptSyntax": "passed",
     "diffWhitespace": "passed",
     "desktopDeployment": "passed",
     "dashboardHttpStatus": 200,
-    "liveReadOnlyAction": "completed",
-    "liveAuditRecord": "verified"
+    "liveReadOnlyAction": "completed after Qwen plan selection",
+    "liveAuditRecords": 5
   },
   "prReview": {
     "implementedAgainst": 24,

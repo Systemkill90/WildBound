@@ -6,7 +6,7 @@ The Female Homesteader concept sheet is the approved first-player visual anchor.
 
 The local MPFB worker proves the mechanical path: it can create an editable Blender scene, humanoid rig, FBX, four review renders, and `WB_IdleBreath`. Two bounded wardrobe attempts failed visual review. They are rejected development evidence, not approval candidates or game assets. Do not spend another pass rearranging the same stock garments.
 
-The first Local Production Manager pilot is implemented as the smallest executable slice of the broader Project Manager and worker-orchestration plan in PR #22. It exposes only fixed repository-status, Garage-test, and character-evidence archive actions; defaults programmatic calls to dry-run; requires explicit owner confirmation for the NAS write; prevents caller-supplied commands; and records an audit JSON for every plan, success, or failure. This is not yet an autonomous planner, arbitrary coding agent, Git publisher, Blender author, or Unreal operator.
+The first Local Production Manager pilot is implemented as the smallest executable slice of the broader Project Manager and worker-orchestration plan in PR #22. Local Qwen accepts one short natural-language request and may select only a fixed repository-status, Garage-test, or character-evidence archive action. It cannot supply commands, paths, or approval. Programmatic execution defaults to dry-run, the NAS write requires separate owner confirmation, and every plan, success, or failure gets an audit JSON. This is not yet an autonomous coding agent, Git publisher, Blender author, or Unreal operator.
 
 ## Next authorized work
 

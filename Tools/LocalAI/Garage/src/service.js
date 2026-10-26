@@ -23,7 +23,7 @@ const token=fs.readFileSync(path.join(config.dashboardRoot,'runtime','control-to
 const jobsRoot=path.join(root,'runtime','jobs');
 const lock=path.join(root,'runtime','production.lock.json');
 const library=new CreativeLibrary({nasRoot:config.libraryNasRoot||process.env.WILDBOUND_LIBRARY_NAS_ROOT||null,repoRoot:config.libraryRepoRoot||config.repoRoot,stateRoot:path.join(root,'runtime','creative-library')});
-const localManager=new LocalProductionManager({repoRoot:config.libraryRepoRoot||config.repoRoot,garageRoot:root,dashboardRoot:config.dashboardRoot,nasRoot:config.libraryNasRoot||null,auditRoot:path.join(root,'runtime','local-production-manager')});
+const localManager=new LocalProductionManager({repoRoot:config.libraryRepoRoot||config.repoRoot,garageRoot:root,dashboardRoot:config.dashboardRoot,nasRoot:config.libraryNasRoot||null,auditRoot:path.join(root,'runtime','local-production-manager'),model:config.model});
 let queue;
 queue=new Pipeline(jobsRoot,adapters(config,jobsRoot,j=>queue.save(j)),library);
 queue.on('active',j=>fs.writeFileSync(lock,JSON.stringify({pid:process.pid,job:j.id,updatedAt:new Date().toISOString()})));
@@ -144,6 +144,9 @@ async function handle(req,res){
   const url=new URL(req.url,'http://127.0.0.1:'+config.port);
   if(req.method==='GET'&&url.pathname==='/status')return reply(res,200,await status());
   if(req.method==='GET'&&url.pathname==='/local-manager')return reply(res,200,localManager.status());
+  if(req.method==='POST'&&url.pathname==='/local-manager/plan'){
+    const payload=await body(req);try{return reply(res,200,await localManager.plan(payload.task));}catch(error){return reply(res,409,{error:error.message});}
+  }
   if(req.method==='POST'&&url.pathname==='/local-manager/run'){
     const payload=await body(req);try{return reply(res,200,await localManager.execute(String(payload.actionId||''),{dryRun:payload.dryRun!==false,confirmation:payload.confirmation||null}));}catch(error){return reply(res,409,{error:error.message,record:error.managerRecord||null});}
   }
