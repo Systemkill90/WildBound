@@ -5,8 +5,8 @@
   "projectPlugin": "MetaHumanCharacter",
   "projectPluginEnabled": true,
   "enginePluginVersion": "1.0.0",
-  "bundledContentFiles": 772,
-  "bundledContentBytes": 731006830,
+  "bundledContentFiles": 2588,
+  "bundledContentBytes": 6908421540.0,
   "unrealCommandletAvailable": true,
   "machine": {
     "physicalMemoryBytes": 34254295040,
@@ -31,43 +31,45 @@
       "errors": 0,
       "parallelActions": 1
     },
-    "pluginInitialization": "limited",
-    "blockedBy": "MetaHuman Optional Content folder not found. MetaHuman Creator Core Data must be added through the existing Epic Games Launcher installation options.",
+    "pluginInitialization": "verified_after_core_data_install",
+    "blockedBy": null,
     "unrelatedExistingWarnings": [
       "Review worktree lacks locally linked Quinn mannequin assets.",
       "Review worktree lacks locally linked deer assets.",
       "The intentionally nonexistent probe package caused the commandlet exit code."
     ],
-    "retryPolicy": "Recorded and stopped; do not retry Creator until official optional content is installed."
+    "retryPolicy": "The post-install no-save probe was run once. MetaHuman modules mounted without a fatal error or missing-Optional warning; the scripted Quit hung after startup and the bounded process was stopped without retry."
   },
   "coreDataInstallAttempt": {
     "source": "Epic Games Launcher installation options for Unreal Engine 5.8.4",
     "componentTag": "metahuman_content",
     "requestedDownloadBytes": 5333270000,
-    "queued": true,
-    "completed": false,
-    "result": "blocked_by_windows_elevation",
-    "errorCode": "IS-0002-DP-01",
-    "launcherDetail": "Could not setup permission to the configured engine installation; the elevated helper returned Windows error 1223.",
+    "queued": false,
+    "completed": true,
+    "result": "installed_and_checksum_inventory_verified",
+    "errorCode": null,
+    "launcherDetail": "The owner completed the existing Epic Games Launcher update. The installed Optional tree contains 1,816 files totaling 6,177,414,710 bytes.",
     "directoryOwnerMatchesCurrentUser": true,
     "directoryAccessVerified": "Authenticated Users already have Modify and Synchronize access.",
-    "boundedRetry": "One launcher retry was attempted and did not start a new task. No further automated retries were made.",
-    "requiredOwnerAction": "When physically at the workstation, restart the failed Unreal Engine 5.8 update in Epic Games Launcher and approve the Windows UAC prompt."
+    "boundedRetry": "One owner-authorized Apply action was used after the prior canceled attempt; installation completed. No additional install retry was made.",
+    "requiredOwnerAction": null
   },
   "garagePrerequisiteResume": {
     "version": "2.7.1-prerequisite-resume",
-    "preflightReadyForEditorValidation": false,
-    "optionalContentAvailable": false,
-    "optionalContentFiles": 0,
-    "liveServiceState": "blocked",
+    "preflightReadyForEditorValidation": true,
+    "optionalContentAvailable": true,
+    "optionalContentFiles": 1816,
+    "optionalContentBytes": 6177414710.0,
+    "liveServiceState": "ready",
     "liveDesktopBannerVerified": true,
     "postInstallAction": "Run the fixed read-only Verify again action; the status becomes ready only when the official Optional content tree exists.",
     "focusedChecks": {
-      "foundationPreflight": "passed and correctly reported not ready",
+      "foundationPreflight": "passed after the reviewed MetaHumanCharacter entry was deployed to the active project",
       "localManagerTests": "11 passed, 0 failed",
       "dashboardContractTests": "2 passed, 0 failed",
       "javascriptSyntax": "passed",
-      "liveFixedAction": "process completed but prerequisite result was truthfully persisted as blocked"
+      "liveFixedAction": "completed and displayed in Recent Local Work",
+      "noSaveEditorProbe": "MetaHumanCharacter, MetaHumanCharacterEditor, MetaHumanDefaultPipeline, and MetaHumanDefaultEditorPipeline mounted with zero fatal errors; scripted Quit hung after startup and the bounded process was stopped without retry"
     }
   },
   "femaleHomesteaderWorkerPackage": {
@@ -88,7 +90,6 @@
   },
   "tests": { "passed": 51, "failed": 0 },
   "notYetVerified": [
-    "Full MetaHuman Creator initialization after official optional content is installed",
     "Epic cloud auto-rigging and texture-synthesis services are reachable and authorized",
     "A Female Homesteader MetaHuman asset exists",
     "Custom outfit, hair, materials, review renders, animation and Unreal gameplay integration"
