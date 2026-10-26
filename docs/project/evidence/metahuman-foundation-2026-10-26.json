@@ -70,6 +70,22 @@
       "liveFixedAction": "process completed but prerequisite result was truthfully persisted as blocked"
     }
   },
+  "femaleHomesteaderWorkerPackage": {
+    "garageVersion": "2.7.2-reference-package",
+    "jobId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
+    "status": "needs_source",
+    "referenceVersion": "female-homesteader-player-anchor@v1",
+    "missingReferences": 0,
+    "referenceConflicts": 0,
+    "mediaSha256": "48e98a159fabea701d5940da14257e03503733d2b1bf0cb705f5233b91fdb210",
+    "ui": "Collapsed task panel shows production requirements, coverage and media checksum without exposing local paths.",
+    "focusedChecks": {
+      "dashboardContractTests": "2 passed, 0 failed",
+      "javascriptSyntax": "passed",
+      "liveServedSource": "reference package panel and checksum rendering present",
+      "liveJobPackage": "approved version resolved with no missing or conflicting references"
+    }
+  },
   "tests": { "passed": 51, "failed": 0 },
   "notYetVerified": [
     "Full MetaHuman Creator initialization after official optional content is installed",

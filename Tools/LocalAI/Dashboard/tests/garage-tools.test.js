@@ -30,4 +30,8 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/local-manager\/run/);
   assert.match(studio,/local-manager\/plan/);
   assert.match(studio,/manager\?\.prerequisites/);
+  assert.match(studio,/function renderReferencePackage/);
+  assert.match(studio,/Worker reference package/);
+  assert.match(studio,/SHA-256/);
+  assert.doesNotMatch(studio,/media\.localPath/);
 });
