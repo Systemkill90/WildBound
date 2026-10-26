@@ -1,5 +1,13 @@
 # Wildbound session handoff
 
+## Garage stabilization handoff — October 26
+
+Garage `2.6.0-stabilization` is deployed to the local runtime. Character or creature requests using Auto or Text → 3D now stop at deterministic preflight before the director, local model, or 3D backend runs. Supplied character models proceed only through the existing reviewed GLB/FBX path, and the new Quality Supervisor blocks owner approval when approved references, geometry, rig, animation, or plausible scale are missing. The desktop Production Team view shows the gate and its evidence rather than a misleading model preview.
+
+Restart recovery now marks active work resumable and exposes both a global Resume Garage control and a per-task Resume from checkpoint action. A unit test proves that a completed artifact is not regenerated when an interrupted task resumes. Combined Garage and Dashboard tests pass 44/44; JavaScript syntax and diff whitespace checks pass. A live bounded player-character request was blocked with zero agent runs and no artifact, and the result was verified in the standalone desktop Garage. Evidence is in [ai-garage-stabilization-2026-10-26.json](evidence/ai-garage-stabilization-2026-10-26.json).
+
+The next character action is not another prompt-to-3D attempt. Present the exploratory character references to the owner through chat, record an explicit selection or a Missing Reference Request, then obtain or author a lawful editable humanoid source that can be rigged to the validated Unreal mannequin foundation. Do not call the Quinn placeholder, the Fae study, or any other exploratory sheet the finished player character. Do not import character art without owner approval.
+
 ## Creative Library handoff — October 25
 
 Review `feature/creative-library-pilot` and [Creative Library pilot](../creative-library/README.md). Garage and Dashboard source were deployed to the local runtime; the runtime's private config points the Library record root to this review worktree and the archive/inbox to the existing private NAS. The Update Idea Board UI, verified original-media archival, exploratory record, approved version-pinned package lookup, and visible Missing Reference Request are working. The desktop supply form and general subject/facet Librarian replace phone-specific work and example-specific rules. The pilot mixed-media fixture must stay exploratory. After PR merge, point the runtime record root to the merged checkout and restart Garage. No Unreal work or animal gameplay was resumed.

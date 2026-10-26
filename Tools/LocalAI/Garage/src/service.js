@@ -90,7 +90,8 @@ async function status(){
     {id:'archive',name:'Recovery archive',ready:checks.recovery,detail:'Approved bytes and evidence are copied and checksum verified by revision.'},
     {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
   ];
-  return {name:'WildBound AI Garage',version:'2.5.0-pilot',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  const interrupted=queue.list().filter(job=>job.status==='interrupted').length;
+  return {name:'WildBound AI Garage',version:'2.6.0-stabilization',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -158,6 +159,7 @@ async function handle(req,res){
     return reply(res,200,{jobs,total:queue.jobs.size,activeJob:queue.active,limit});
   }
   if(req.method==='POST'&&url.pathname==='/jobs')return reply(res,202,queue.create(await body(req)));
+  if(req.method==='POST'&&url.pathname==='/resume'){const payload=await body(req);return reply(res,200,{resumed:queue.resumeInterrupted(payload.jobId||null)});}
   const fileMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/files\/(preview|source)$/);
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);
