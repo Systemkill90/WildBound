@@ -10,10 +10,13 @@
     "codexWorkshopTool": true,
     "javascriptSyntax": true,
     "sourceTests": {
-      "passed": 57,
+      "passed": 58,
       "failed": 0
     },
-    "configuredOllamaModelReadiness": true
+    "configuredOllamaModelReadiness": true,
+    "nativeDesktopPlanControls": true,
+    "nativeDesktopVisualVerification": true,
+    "nativeDesktopBuild": true
   },
   "livePlanning": {
     "taskId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",

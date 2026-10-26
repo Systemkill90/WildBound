@@ -42,3 +42,11 @@ test('Garage readiness checks its configured Ollama model instead of the dashboa
   assert.match(service,/dashboard\.models\.includes\(config\.model\)/);
   assert.doesNotMatch(service,/dashboard\?\.ollamaAvailable&&dashboard\?\.modelAvailable/);
 });
+
+test('native desktop Garage exposes model planning without expanding the main layout',()=>{
+  const native=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','Garage.cs'),'utf8');
+  assert.match(native,/Prepare model plan/);
+  assert.match(native,/View specialist plan/);
+  assert.match(native,/\/prepare-plan/);
+  assert.match(native,/DescribePlan\(j\)/);
+});
