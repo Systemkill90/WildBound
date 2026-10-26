@@ -26,6 +26,8 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(app,/showView\('production-studio'\)/);
   for(const action of ['approve','reject','cancel','retry-import','attach'])assert.ok(studio.includes(action),`UI is missing the ${action} action.`);
   assert.match(html,/id="localManagerActions"/);
+  assert.match(html,/id="productionPrerequisites"/);
   assert.match(studio,/local-manager\/run/);
   assert.match(studio,/local-manager\/plan/);
+  assert.match(studio,/manager\?\.prerequisites/);
 });

@@ -48,11 +48,26 @@
     "completed": false,
     "result": "blocked_by_windows_elevation",
     "errorCode": "IS-0002-DP-01",
-    "launcherDetail": "Could not setup permission to install to D:/WildBound/Engine/UE_5.8; the elevated helper returned Windows error 1223.",
-    "directoryOwner": "ADAM_DESKTOP\\ac_za",
+    "launcherDetail": "Could not setup permission to the configured engine installation; the elevated helper returned Windows error 1223.",
+    "directoryOwnerMatchesCurrentUser": true,
     "directoryAccessVerified": "Authenticated Users already have Modify and Synchronize access.",
     "boundedRetry": "One launcher retry was attempted and did not start a new task. No further automated retries were made.",
     "requiredOwnerAction": "When physically at the workstation, restart the failed Unreal Engine 5.8 update in Epic Games Launcher and approve the Windows UAC prompt."
+  },
+  "garagePrerequisiteResume": {
+    "version": "2.7.1-prerequisite-resume",
+    "preflightReadyForEditorValidation": false,
+    "optionalContentAvailable": false,
+    "optionalContentFiles": 0,
+    "liveServiceState": "blocked",
+    "liveDesktopBannerVerified": true,
+    "postInstallAction": "Run the fixed read-only Verify again action; the status becomes ready only when the official Optional content tree exists.",
+    "focusedChecks": {
+      "foundationPreflight": "passed and correctly reported not ready",
+      "localManagerTests": "9 passed, 0 failed",
+      "dashboardContractTests": "2 passed, 0 failed",
+      "javascriptSyntax": "passed"
+    }
   },
   "tests": { "passed": 51, "failed": 0 },
   "notYetVerified": [
