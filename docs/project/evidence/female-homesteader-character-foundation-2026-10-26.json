@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-26",
+  "reference": {
+    "id": "female-homesteader-player-anchor",
+    "version": 1,
+    "approval": "approved",
+    "mediaSha256": "48e98a159fabea701d5940da14257e03503733d2b1bf0cb705f5233b91fdb210",
+    "provenance": "Tracked Idea Board concept atlas image selected by the owner in the primary Codex chat",
+    "nasChecksumVerified": true
+  },
+  "garage": {
+    "jobId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
+    "status": "needs_source",
+    "referencePackage": "female-homesteader-player-anchor@v1",
+    "missingReferences": [],
+    "conflicts": []
+  },
+  "localFoundation": {
+    "software": "MPFB 2.0.18 for Blender 4.5 LTS",
+    "extensionSha256": "c075b3e9b94b8e5556a5f03f4653602d02ea306de08126e8f55ed6dee28a2dad",
+    "softwareLicense": "GPL-3.0-or-later",
+    "coreAssetLicense": "CC0",
+    "verifiedOutput": {
+      "editableBlend": true,
+      "fbx": true,
+      "meshObjects": 14,
+      "armatures": 1,
+      "animations": ["WB_IdleBreath"],
+      "dimensionsMeters": [1.0783, 0.5159, 1.5708],
+      "reviewRenders": 4
+    }
+  },
+  "visualReview": {
+    "attempts": 2,
+    "passed": false,
+    "issues": [
+      "Stock clothing did not reproduce the approved layered practical homesteader costume.",
+      "The second outfit read as generic armor rather than the approved linen, wool and weathered-leather design.",
+      "Procedural cloak, belt and pouch geometry was visibly too crude for owner review."
+    ],
+    "unrealImported": false,
+    "ownerApprovalRequested": false
+  },
+  "nextAction": "Use a production-quality custom wardrobe or an explicitly approved higher-quality character system; do not iterate the same stock garment assembly."
+}

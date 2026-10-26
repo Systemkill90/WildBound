@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "id": "female-homesteader-player-anchor",
+  "title": "Female Homesteader — first player-character visual anchor",
+  "coverage": [
+    "player-character:appearance",
+    "player-character:anatomy",
+    "player-character:culture",
+    "player-character:clothing",
+    "player-character:character-reference",
+    "female-homesteader:appearance",
+    "female-homesteader:anatomy",
+    "female-homesteader:culture",
+    "female-homesteader:clothing",
+    "female-homesteader:character-reference"
+  ],
+  "relations": [
+    "player-character",
+    "female-homesteader",
+    "human",
+    "homesteader",
+    "greenveil"
+  ],
+  "versions": [
+    {
+      "version": 1,
+      "fingerprint": "bf5c735d5e29bcbfc416d360e32da584640c8812970ee122e6a9facc25d67e54",
+      "coverage": [
+        "player-character:appearance",
+        "player-character:anatomy",
+        "player-character:culture",
+        "player-character:clothing",
+        "player-character:character-reference",
+        "female-homesteader:appearance",
+        "female-homesteader:anatomy",
+        "female-homesteader:culture",
+        "female-homesteader:clothing",
+        "female-homesteader:character-reference"
+      ],
+      "relations": [
+        "player-character",
+        "female-homesteader",
+        "human",
+        "homesteader",
+        "greenveil"
+      ],
+      "approval": "approved",
+      "approvalAllowed": true,
+      "origin": {
+        "method": "owner-selection-through-primary-codex-chat",
+        "source": "Tracked Idea Board concept atlas image selected by the owner in the primary Codex chat",
+        "createdAt": "2026-10-26T11:17:43.325Z"
+      },
+      "text": "# Female Homesteader — first player-character visual anchor\n\nOwner decision recorded through the primary Codex chat on 2026-10-26.\n\nUse the supplied Female Homesteader concept sheet as the approved visual anchor for the first player-character model pass. Preserve its grounded, practical, capable, resourceful presentation: layered hand-crafted clothing, linen, wool, weathered leather, restrained botanical embroidery, rugged boots, gloves, belt pouches, a muted olive/rust/cream palette, warm determined facial presentation, brown braided hair, and a human silhouette suitable for exploration and homestead work.\n\nThe sheet is an appearance, clothing, culture, and silhouette reference. It does not by itself approve exact facial likeness, body topology, final anatomy measurements, production textures, rig, animations, weapons, or every depicted accessory. Produce review renders through the primary chat before treating a model as approved or importing it into Unreal.\n\nDo not add Fae wings, pointed ears, glowing ornament, Kethri animal traits, Nimrui mushroom traits, or other race-specific features. “Sylweave” remains a world influence and is not the character name unless the owner later establishes that canon.",
+      "originalText": {
+        "sha256": "d3affe016ccf2f6e128ce9fa7066cee6e714f2401a41b04d0bb1a6eec92ec0fd",
+        "bytes": 1227,
+        "object": "archive/d3/d3affe016ccf2f6e128ce9fa7066cee6e714f2401a41b04d0bb1a6eec92ec0fd.md"
+      },
+      "originalManifest": {
+        "sha256": "ecf979c7a6a62d735ebcf51ad70c7a1f2cdbe1e18c3fd56e6779be6d59233e41",
+        "bytes": 1116,
+        "object": "archive/ec/ecf979c7a6a62d735ebcf51ad70c7a1f2cdbe1e18c3fd56e6779be6d59233e41.json"
+      },
+      "media": [
+        {
+          "kind": "image",
+          "name": "female-homesteader.webp",
+          "source": "docs/art/concept-atlas/character-female-homesteader.webp selected by the owner",
+          "sha256": "48e98a159fabea701d5940da14257e03503733d2b1bf0cb705f5233b91fdb210",
+          "bytes": 217050,
+          "object": "archive/48/48e98a159fabea701d5940da14257e03503733d2b1bf0cb705f5233b91fdb210.webp"
+        }
+      ],
+      "conflictsWith": [],
+      "importedAt": "2026-10-26T11:29:57.854Z",
+      "approvedAt": "2026-10-26T11:29:57.912Z"
+    }
+  ]
+}
