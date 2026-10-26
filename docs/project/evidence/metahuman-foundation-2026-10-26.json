@@ -40,6 +40,20 @@
     ],
     "retryPolicy": "Recorded and stopped; do not retry Creator until official optional content is installed."
   },
+  "coreDataInstallAttempt": {
+    "source": "Epic Games Launcher installation options for Unreal Engine 5.8.4",
+    "componentTag": "metahuman_content",
+    "requestedDownloadBytes": 5333270000,
+    "queued": true,
+    "completed": false,
+    "result": "blocked_by_windows_elevation",
+    "errorCode": "IS-0002-DP-01",
+    "launcherDetail": "Could not setup permission to install to D:/WildBound/Engine/UE_5.8; the elevated helper returned Windows error 1223.",
+    "directoryOwner": "ADAM_DESKTOP\\ac_za",
+    "directoryAccessVerified": "Authenticated Users already have Modify and Synchronize access.",
+    "boundedRetry": "One launcher retry was attempted and did not start a new task. No further automated retries were made.",
+    "requiredOwnerAction": "When physically at the workstation, restart the failed Unreal Engine 5.8 update in Epic Games Launcher and approve the Windows UAC prompt."
+  },
   "tests": { "passed": 51, "failed": 0 },
   "notYetVerified": [
     "Full MetaHuman Creator initialization after official optional content is installed",
