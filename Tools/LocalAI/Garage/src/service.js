@@ -71,11 +71,12 @@ async function status(){
     {id:'image',name:'Image / texture production',available:checks.image&&checks.ollama,reason:checks.image?'Requires the local text model and Image Studio.':'Image Studio is offline.'},
     {id:'audio',name:'Instrumental music and ambience',available:checks.audio&&checks.ollama,reason:checks.audio?'Requires the local text model and Audio Studio.':'Audio Studio is offline.'},
     {id:'voice',name:'Character voice',available:checks.voice&&checks.ollama,reason:checks.voice?'Uses the local text model and offline speech renderer.':'Offline speech renderer is unavailable.'},
+    {id:'character-modeling',name:'Player character and creature modeling',available:false,reason:'The single-view TripoSR worker failed character-quality review. Use a reviewed supplied character model or install a character-capable modeling pipeline.'},
     {id:'character-rigging-animation',name:'Character rigging and animation authoring',available:false,reason:'New rigs and animation clips need a local authoring model. Existing supplied rigs and clips are preserved during preparation.'},
     {id:'model',name:'Supplied 3D model preparation',available:checks.blender,reason:checks.blender?'Attach an approved GLB or FBX; Garage inspects and prepares it.':'Blender is not installed at the configured path.'},
     {id:'unreal',name:'Unreal import and verification',available:checks.unreal,reason:checks.unreal?'Reviewed assets can be imported and package-checked.':'Unreal Editor commandlet is unavailable.'},
     {id:'recovery',name:'Recovery archive and handoff',available:checks.recovery,reason:checks.recovery?'Approved artifacts, manifests, and final handoffs are written to a checksummed local vault.':'The local recovery vault is not writable.'},
-    {id:'text-to-3d',name:'Prompt-to-3D static assets',available:checks.text3d&&checks.image&&checks.ollama&&checks.blender,reason:checks.text3d?'Uses character design, local concept-image generation, TripoSR CPU inference, and Blender mesh preparation. Outputs are static meshes and need 3D artist review.':'The local TripoSR CPU runtime or model weights are not installed.'},
+    {id:'text-to-3d',name:'Prompt-to-3D static props',available:checks.text3d&&checks.image&&checks.ollama&&checks.blender,reason:checks.text3d?'Uses local concept-image generation, TripoSR CPU inference, and Blender mesh preparation for non-character props. Characters and creatures are rejected before generation.':'The local TripoSR CPU runtime or model weights are not installed.'},
     {id:'sfx',name:'Isolated sound effects',available:checks.sfx&&checks.ollama,reason:checks.sfx?'Uses the local Stable Audio 3 small-SFX model on CPU with local Qwen art direction.':'Stable Audio 3 small-SFX model or its isolated Python runtime is not installed.'}
   ];
   const lifecycle=[
@@ -89,7 +90,8 @@ async function status(){
     {id:'archive',name:'Recovery archive',ready:checks.recovery,detail:'Approved bytes and evidence are copied and checksum verified by revision.'},
     {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
   ];
-  return {name:'WildBound AI Garage',version:'2.5.0-pilot',pid:process.pid,activeJob:queue.active,teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  const interrupted=queue.list().filter(job=>job.status==='interrupted').length;
+  return {name:'WildBound AI Garage',version:'2.6.0-stabilization',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -157,6 +159,7 @@ async function handle(req,res){
     return reply(res,200,{jobs,total:queue.jobs.size,activeJob:queue.active,limit});
   }
   if(req.method==='POST'&&url.pathname==='/jobs')return reply(res,202,queue.create(await body(req)));
+  if(req.method==='POST'&&url.pathname==='/resume'){const payload=await body(req);return reply(res,200,{resumed:queue.resumeInterrupted(payload.jobId||null)});}
   const fileMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/files\/(preview|source)$/);
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);

@@ -5,8 +5,10 @@ from mathutils import Vector
 request = json.load(open(sys.argv[sys.argv.index('--') + 1], encoding='utf-8'))
 source, folder = request['source'], request['folder']
 bpy.ops.wm.read_factory_settings(use_empty=True)
-if source.lower().endswith('.glb'):
+if source.lower().endswith(('.glb', '.gltf')):
     bpy.ops.import_scene.gltf(filepath=source)
+elif source.lower().endswith('.obj'):
+    bpy.ops.wm.obj_import(filepath=source)
 else:
     bpy.ops.import_scene.fbx(filepath=source)
 helpers = {bone.custom_shape for armature in bpy.context.scene.objects if armature.type == 'ARMATURE' for bone in armature.pose.bones if bone.custom_shape}

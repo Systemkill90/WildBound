@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-26",
+  "garageVersion": "2.6.0-stabilization",
+  "scope": "Character-production safety gate and restart recovery",
+  "results": {
+    "nodeTests": {
+      "passed": 44,
+      "failed": 0
+    },
+    "syntaxChecks": "passed",
+    "diffWhitespaceCheck": "passed",
+    "desktopGarageVerification": "passed",
+    "liveCharacterPreflight": {
+      "jobId": "4019d800-3588-42fd-a04e-befeffba250b",
+      "request": "Create the main player character",
+      "requestedKind": "text-to-3d",
+      "status": "blocked_capability",
+      "code": "character_pipeline_unavailable",
+      "agentRuns": 0,
+      "artifactCreated": false
+    }
+  },
+  "verifiedBehaviors": [
+    "Character-shaped Auto and Text-to-3D requests stop before local AI or geometry generation.",
+    "Supplied character models require approved references, mesh geometry, armature, animation, and plausible review scale before owner review.",
+    "Quality-failed character artifacts cannot be approved or imported and remain available for a revision request.",
+    "Interrupted work can resume from saved stage outputs without regenerating an existing artifact.",
+    "The desktop Production Team UI displays capability and quality gates with recorded reasons."
+  ],
+  "limits": [
+    "No validated character-authoring model is installed.",
+    "No editable production humanoid source mesh is tracked in the repository.",
+    "The locally installed Unreal mannequin is a gameplay placeholder, not approved Wildbound character art.",
+    "Exploratory character references are not approved canon."
+  ]
+}
