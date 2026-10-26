@@ -110,6 +110,16 @@
     },
     "nextAction": "Increase Windows virtual-memory capacity, restart if required, then rerun the fixed read-only verification before one new character asset attempt."
   },
+  "postRestartCharacterSaveReadiness": {
+    "configuredInitialBytes": 17179869184,
+    "configuredMaximumBytes": 34359738368,
+    "activeAllocatedBytes": 16564355072,
+    "readyForEditorValidation": true,
+    "readyForCharacterSave": true,
+    "liveGarageAction": "completed",
+    "characterRetryPerformed": false,
+    "note": "The guardrail accepts the configured guaranteed minimum because Windows reports the active allocation slightly below the configured value after reboot."
+  },
   "femaleHomesteaderWorkerPackage": {
     "garageVersion": "2.7.2-reference-package",
     "jobId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
