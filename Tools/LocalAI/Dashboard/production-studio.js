@@ -19,8 +19,9 @@
   function selectedJob() { return state.jobs.find(job=>job.id===state.selectedId); }
   function renderCapabilities() {
     const items=state.status?.capabilities||[];
-    $('#productionCapabilities').innerHTML=items.map(item=>`<article class="production-capability ${item.available?'ready':'limited'}"><span>${item.available?'AVAILABLE':'LIMITED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.reason)}</small></article>`).join('');
-    $('#capabilitySummary').textContent=`${items.filter(item=>item.available).length} available · ${items.filter(item=>!item.available).length} limited`;
+    const stageLabels={'review-only':'REVIEW OUTPUT','source-only':'SOURCE ONLY','unavailable':'UNAVAILABLE','supplied-input':'SUPPLIED INPUT','approval-gated':'APPROVAL GATED',experimental:'EXPERIMENTAL'};
+    $('#productionCapabilities').innerHTML=items.map(item=>`<article class="production-capability ${item.available?'ready':'limited'}"><span>${escape(stageLabels[item.stage]||(item.available?'ROUTE AVAILABLE':'UNAVAILABLE'))}</span><strong>${escape(item.name)}</strong><small>${escape(item.reason)}</small></article>`).join('');
+    $('#capabilitySummary').textContent=`${items.filter(item=>item.available).length} routes configured · ${items.filter(item=>!item.available).length} unavailable`;
     const lifecycle=state.status?.lifecycle||[];
     $('#productionLifecycle').innerHTML=lifecycle.map(item=>`<article class="production-capability ${item.ready?'ready':'limited'}"><span>${item.ready?'READY':'BLOCKED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.detail)}</small></article>`).join('');
     $('#lifecycleSummary').textContent=`${lifecycle.filter(item=>item.ready).length} of ${lifecycle.length} ready`;

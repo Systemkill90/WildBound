@@ -57,6 +57,10 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.ok(dashboardServer.includes('local-manager\\/(?:plan|run)'), 'Dashboard proxy must allow only the fixed Local Production Manager plan/run actions.');
   const garageService=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','service.js'),'utf8');
   const pipeline=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','pipeline.js'),'utf8');
+  assert.match(garageService,/id:'skybox'[^\n]*stage:'source-only'/);
+  assert.match(garageService,/id:'text-to-3d'[^\n]*stage:'experimental'/);
+  assert.match(studio,/stageLabels/);
+  assert.match(studio,/routes configured/);
   assert.match(garageService,/redo-quality/);
   assert.match(pipeline,/prepareQualityRecook/);
   assert.match(pipeline,/after the one allowed recook/);
