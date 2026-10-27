@@ -180,12 +180,12 @@ async function handle(req,res){
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);
   if(req.method==='POST'&&sourceMatch)return attachUploadedModel(req,res,sourceMatch[1],url);
-  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|prepare-plan|retry-import))?$/);
+  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|prepare-plan|retry-import|redo-quality))?$/);
   if(match){
     if(req.method==='GET'&&!match[2])return reply(res,200,queue.get(match[1]));
     if(req.method==='POST'){
       const payload=await body(req),action=match[2];
-      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach','prepare-plan':'preparePlan','retry-import':'retryImport'};
+      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach','prepare-plan':'preparePlan','retry-import':'retryImport','redo-quality':'redoQuality'};
       if(action&&functions[action])return reply(res,200,action==='revise'?queue.revise(match[1],payload.feedback,payload.voice):queue[functions[action]](match[1],payload.sourcePath));
     }
   }

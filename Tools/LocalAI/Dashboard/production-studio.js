@@ -2,7 +2,8 @@
 (() => {
   const $ = selector => document.querySelector(selector);
   const requestedJobId = new URLSearchParams(window.location.search).get('job')||'';
-  const state = { visible:false, busy:false, jobs:[], status:null, library:null, statusAt:0, selectedId:'', timer:null, clock:null, detailFingerprint:'', modelCache:new Map(),recordCache:new Map() };
+  const reviewBatch = window.WildBoundReviewBatch;
+  const state = { visible:false, busy:false, jobs:[], status:null, library:null, statusAt:0, selectedId:'', timer:null, clock:null, detailFingerprint:'', modelCache:new Map(),recordCache:new Map(), reviewBatch:reviewBatch?.load()||null };
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const labels = { queued:'Queued',running:'Working',cancelling:'Cancelling',awaiting_review:'Ready for your review',needs_source:'Waiting for a model source',missing_references:'Needs approved references',blocked_capability:'Blocked: capability unavailable',quality_failed:'Rejected by Quality Supervisor',importing:'Importing to Unreal',completed:'Completed',failed:'Needs attention',interrupted:'Interrupted',cancelled:'Cancelled',rejected:'Rejected' };
   const api = async (url, options={}) => {
@@ -68,12 +69,63 @@
     filterLibraryRecords();
   }
   function filterLibraryRecords(){const query=$('#librarySearch').value.trim().toLowerCase();(state.library?.records||[]).forEach((record,index)=>{$('#creativeLibraryRecords').querySelectorAll('article')[index].hidden=!!query&&!`${record.title} ${record.id} ${(record.coverage||[]).join(' ')}`.toLowerCase().includes(query);});}
+  const reviewStateLabels={waiting:'Waiting',queued:'Queued',working:'Working',review:'Ready for review',redo:'Needs redo',done:'Done'};
+  const samplePrompts={
+    'concept-art':'QA sample only. Create one polished 2D game concept illustration of a simple Greenveil trail lantern at dusk. Clear focal point, readable shape, intentional painterly color, no lettering, no watermark, and no new canon.',
+    texture:'QA sample only. Create one seamless tileable mossy stone ground material for a forest path. Evenly lit albedo texture, visible fine surface variation, clean repeat edges, no objects, no text, and no new canon.',
+    skybox:'QA sample only. Create a 2:1 equirectangular skybox source image of a calm forest clearing at dawn, level horizon, coherent 360-degree landscape, no foreground subject, no text, no border, and no new canon. This is source artwork, not a completed Unreal sky material.',
+    'vfx-source':'QA sample only. Create one isolated VFX source artwork texture: a readable golden leaf-and-spark burst on a plain dark background, centered with clear edges and no scenery, text, or watermark. This is source art, not a Niagara effect or flipbook.',
+    voice:'QA sample only. Produce one short, natural Greenveil homesteader voice line saying: “The trail is clear. We can move before dusk.” Keep it warm and grounded; do not add character canon.',
+    music:'QA sample only. Compose an 8-second instrumental exploration cue for a quiet woodland at dawn, light strings and woodwinds, a clear beginning and ending, no vocals, no established character or lore.',
+    ambience:'QA sample only. Compose an 8-second soft musical ambience bed for a quiet woodland clearing at dawn, gentle sustained tones and subtle organic motion, no melody lead, no voices, no established lore.',
+    sfx:'QA sample only. Create one isolated dry twig snap with a brief soft leaf rustle tail. No music, melody, rhythm, voices, or layered soundtrack.'
+  };
+  function batchJobs(){return reviewBatch?reviewBatch.selectJobs(state.jobs,state.reviewBatch):state.jobs;}
+  function renderReviewBatch(){
+    if(!reviewBatch)return;
+    const jobs=batchJobs(),cards=reviewBatch.summarize(jobs),counts=reviewBatch.counts(cards);
+    $('#reviewBatchSummary').textContent=state.reviewBatch
+      ?`${counts.readyForReview}/8 ready for review · ${counts.working} working · ${counts.redo} need attention · ${counts.waiting} not started · older history and files preserved`
+      :'Showing all task history. Start a fresh review to isolate new deliverables; existing records and files are preserved.';
+    $('#startReviewBatch').textContent=state.reviewBatch?'Start another fresh review':'Start fresh review';
+    $('#showAllReviewHistory').hidden=!state.reviewBatch;
+    $('#reviewBatchPipelines').innerHTML=cards.map(card=>{
+      const job=card.job,action=job?`<button type="button" class="production-secondary" data-review-open="${escape(job.id)}">${card.state==='review'?'Open review':card.state==='redo'?'Review failure':card.state==='done'?'Open result':'View progress'}</button>`:`<button type="button" class="production-secondary" data-review-run="${escape(card.kind)}">Run sample</button>`;
+      const detail=job?`${escape(labels[job.status]||job.status)} · ${escape(new Date(job.updatedAt||job.createdAt).toLocaleTimeString())}`:escape(card.detail);
+      return `<article class="review-pipeline state-${escape(card.state)}"><div class="review-pipeline-head"><strong>${escape(card.label)}</strong><span class="review-pipeline-state">${escape(reviewStateLabels[card.state])}</span></div><small>${detail}</small>${action}</article>`;
+    }).join('');
+  }
+  async function startFreshReview(){
+    const button=$('#startReviewBatch');button.disabled=true;
+    try{const result=await api('/api/review-batch/start',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});state.reviewBatch=result.batch;state.selectedId='';state.detailFingerprint='';$('#productionFilter').value='all';renderReviewBatch();renderJobs();renderDetails(null);notice('Fresh review started. Earlier tasks are hidden from this batch view; their records and files remain available under Show all history.','success');return result.batch;}
+    catch(error){notice(`Could not start a fresh review: ${error.message}`,'error');return null;}
+    finally{button.disabled=false;}
+  }
+  async function generateReviewSamples(){
+    if(!state.reviewBatch&&!await startFreshReview())return;
+    const existing=new Set(batchJobs().map(job=>job.brief?.kind||job.kind));
+    const pending=reviewBatch.PIPELINES.filter(item=>!existing.has(item.kind));
+    if(!pending.length){notice('Each non-3D pipeline already has an item in this review batch. Start another fresh review to generate new samples.','info');return;}
+    const button=$('#runNon3DSamples');button.disabled=true;let created=0;
+    try{
+      for(let index=0;index<pending.length;index++){
+        const item=pending[index];notice(`Queueing local samples ${index+1}/${pending.length}: ${item.label}…`,'info');
+        const job=await api('/api/garage/jobs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:samplePrompts[item.kind],kind:item.kind,biome:'greenveil',voice:'auto',seconds:8})});
+        state.jobs.unshift(job);state.selectedId=job.id;created++;
+        renderReviewBatch();renderJobs();renderDetails(job);state.detailFingerprint=`${job.id}:${job.updatedAt}:${job.status}`;
+      }
+      notice(`Queued ${created} local non-3D deliverable${created===1?'':'s'}. The queue runs one at a time; QA failures get one automatic recook, then stop for your review.`,'success');
+      await refresh(state.selectedId);
+    }catch(error){notice(`${created} sample${created===1?'':'s'} queued before this error: ${error.message}. The batch board shows what remains.`,'error');await refresh(state.selectedId);}
+    finally{button.disabled=false;}
+  }
   function visibleJobs() {
     const filter=$('#productionFilter').value;
-    return state.jobs.filter(job=>filter==='all'||(filter==='active'?['queued','running','cancelling','importing','needs_source','missing_references'].includes(job.status):filter==='failed'?['failed','interrupted'].includes(job.status):job.status===filter));
+    return batchJobs().filter(job=>filter==='all'||(filter==='active'?['queued','running','cancelling','importing','needs_source','missing_references'].includes(job.status):filter==='failed'?['failed','interrupted','quality_failed','blocked_capability'].includes(job.status):job.status===filter));
   }
   function renderJobs() {
     const items=visibleJobs();
+    if(!items.some(job=>job.id===state.selectedId))state.selectedId=items[0]?.id||'';
     $('#productionJobs').innerHTML=items.length?items.map(job=>`<button type="button" class="production-job ${job.id===state.selectedId?'selected':''}" data-select-job="${escape(job.id)}"><span><strong>${escape(summary(job))}</strong><small>${escape(kindLabel(job))} · ${escape(new Date(job.updatedAt||job.createdAt).toLocaleString())}</small></span><b class="job-state ${escape(job.status)}">${escape(labels[job.status]||job.status)}</b></button>`).join(''):'<div class="production-empty">No tasks match this filter.</div>';
   }
   function renderSteps(job) {
@@ -117,6 +169,8 @@
     const engineAssets=job.engine?.assets||[];
     const actionButtons=[];
     if(job.status==='awaiting_review')actionButtons.push('<button data-job-action="approve" class="production-primary">Approve &amp; import</button>','<button data-job-action="reject" class="production-secondary">Reject</button>');
+    if(job.status==='quality_failed'&&!job.qualityRecookUsed)actionButtons.push('<button data-job-action="quality-redo" class="production-primary">Recook once from QA findings</button>');
+    if(job.status==='quality_failed'&&job.qualityRecookUsed)actionButtons.push('<small class="production-muted">The one automatic recook was used. Review the remaining issue or request a specific change.</small>');
     if(job.status==='needs_source'&&!job.spec)actionButtons.push('<button data-job-action="prepare-plan" class="production-primary">Prepare model plan</button>');
     if(job.status==='needs_source')actionButtons.push('<button data-job-action="attach" class="production-primary">Attach GLB / FBX</button>');
     if(['queued','running','cancelling','importing','needs_source','missing_references','blocked_capability','quality_failed'].includes(job.status))actionButtons.push('<button data-job-action="cancel" class="production-secondary">Cancel task</button>');
@@ -153,15 +207,16 @@
     if(state.busy)return;state.busy=true;
     try{
       const needStatus=!state.status||Date.now()-state.statusAt>10000;
-      const [status,jobs,library]=await Promise.all([needStatus?api('/api/garage/status'):Promise.resolve(state.status),api('/api/garage/jobs?limit=100'),api('/api/garage/library')]);if(needStatus)state.statusAt=Date.now();
-      state.status=status;state.jobs=jobs.jobs||[];state.library=library;state.selectedId=selectId&&state.jobs.some(j=>j.id===selectId)?selectId:(state.jobs[0]?.id||'');const resume=$('#resumeGarage');resume.hidden=!status.recovery?.resumeAvailable;resume.textContent=status.recovery?.interrupted?`Resume Garage (${status.recovery.interrupted})`:'Resume Garage';
-      renderCapabilities();renderLocalManager();renderLibrary();renderLibraryItems();renderJobs();const job=state.jobs.find(j=>j.id===state.selectedId);const fingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';if(fingerprint!==state.detailFingerprint){state.detailFingerprint=fingerprint;renderDetails(job);}tickLive();
+      const [status,jobs,library,batchState]=await Promise.all([needStatus?api('/api/garage/status'):Promise.resolve(state.status),api('/api/garage/jobs?limit=100'),api('/api/garage/library'),api('/api/review-batch')]);if(needStatus)state.statusAt=Date.now();
+      state.status=status;state.jobs=jobs.jobs||[];state.library=library;state.reviewBatch=batchState.batch||null;const visible=batchJobs();state.selectedId=selectId&&visible.some(j=>j.id===selectId)?selectId:(visible[0]?.id||'');const resume=$('#resumeGarage');resume.hidden=!status.recovery?.resumeAvailable;resume.textContent=status.recovery?.interrupted?`Resume Garage (${status.recovery.interrupted})`:'Resume Garage';
+      renderCapabilities();renderLocalManager();renderLibrary();renderLibraryItems();renderReviewBatch();renderJobs();const job=state.jobs.find(j=>j.id===state.selectedId);const fingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';if(fingerprint!==state.detailFingerprint){state.detailFingerprint=fingerprint;renderDetails(job);}tickLive();
       $('#productionUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;if(!state.jobs.length)notice(`${state.status?.agents?.length||0} production roles are connected to the shared queue. Start a task to create the first handoff.`,'success');else notice('Your tasks and review decisions stay on this PC.','success');
     }catch(error){$('#productionUpdated').textContent='Production service unavailable';notice(`${error.message} The browser, image, audio, and asset studios remain available.`, 'error');}
     finally{state.busy=false;}
   }
   async function act(action,job) {
     if(action==='refresh')return refresh(job.id);
+    if(action==='quality-redo'){try{await api(`/api/garage/jobs/${encodeURIComponent(job.id)}/redo-quality`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});notice('Quality findings sent back for the one allowed recook.','success');await refresh(job.id);}catch(error){notice(error.message,'error');}return;}
     if(action==='attach')return $('#productionModelFile').click();
     if(action==='prepare-plan'){const button=$('[data-job-action="prepare-plan"]');if(button)button.disabled=true;try{await api(`/api/garage/jobs/${encodeURIComponent(job.id)}/prepare-plan`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});notice('The character designer and 3D artist are preparing the model plan.','success');await refresh(job.id);}catch(error){notice(error.message,'error');if(button)button.disabled=false;}return;}
     if(action==='revise'){const feedback=$('#productionRevision')?.value.trim(),voice=$('#productionRevisionVoice')?.value||'auto';if(!feedback){notice('Describe the changes you want in the next version.','error');$('#productionRevision')?.focus();return;}try{await api(`/api/garage/jobs/${encodeURIComponent(job.id)}/revise`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback,voice})});notice('Changes saved. The next version is starting.','success');await refresh(job.id);}catch(error){notice(error.message,'error');}return;}
@@ -175,10 +230,14 @@
     catch(error){notice(error.message,'error');if(button)button.disabled=false;}
   }
   $('#productionJobs').addEventListener('click',event=>{const button=event.target.closest('[data-select-job]');if(button){state.selectedId=button.dataset.selectJob;state.detailFingerprint='';renderJobs();renderDetails(selectedJob());state.detailFingerprint=selectedJob()?.id+':'+selectedJob()?.updatedAt+':'+selectedJob()?.status;}});
+  $('#reviewBatchPipelines').addEventListener('click',event=>{const open=event.target.closest('[data-review-open]'),run=event.target.closest('[data-review-run]');if(open){state.selectedId=open.dataset.reviewOpen;state.detailFingerprint='';renderJobs();renderDetails(selectedJob());return;}if(run){$('#productionKind').value=run.dataset.reviewRun;$('#productionPrompt').value=samplePrompts[run.dataset.reviewRun]||'';$('#productionPrompt').focus();}});
+  $('#startReviewBatch').addEventListener('click',startFreshReview);
+  $('#showAllReviewHistory').addEventListener('click',async()=>{const button=$('#showAllReviewHistory');button.disabled=true;try{await api('/api/review-batch/show-all',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});state.reviewBatch=null;state.selectedId='';state.detailFingerprint='';$('#productionFilter').value='all';renderReviewBatch();renderJobs();renderDetails(null);notice('All task history is visible again. No jobs or asset files were deleted.','info');}catch(error){notice(error.message,'error');}finally{button.disabled=false;}});
+  $('#runNon3DSamples').addEventListener('click',generateReviewSamples);
   $('#productionDetails').addEventListener('click',event=>{const button=event.target.closest('[data-job-action]');const job=selectedJob();if(button&&job)act(button.dataset.jobAction,job);});
   $('#localManagerActions').addEventListener('click',async event=>{const button=event.target.closest('[data-manager-action]');if(!button)return;const actionId=button.dataset.managerAction,requiresApproval=button.dataset.managerConfirm==='true';if(requiresApproval&&!window.confirm('Approve this fixed local write action? The command and destination are predefined and the result will be audited.'))return;button.disabled=true;try{const result=await api('/api/garage/local-manager/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({actionId,dryRun:false,confirmation:requiresApproval?actionId:null})});notice(result.status==='blocked'?`${result.name}: blocked. ${result.error}`:`${result.name}: ${result.status}.`,result.status==='completed'?'success':result.status==='blocked'?'error':'info');state.statusAt=0;await refresh();}catch(error){notice(error.message,'error');}finally{button.disabled=false;}});
   $('#localManagerForm').addEventListener('submit',async event=>{event.preventDefault();const button=event.submitter,task=$('#localManagerTask').value.trim();button.disabled=true;$('#localManagerPlan').textContent='Qwen is selecting from the fixed local action registry…';try{const plan=await api('/api/garage/local-manager/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task})});$('#localManagerPlan').textContent=plan.actionId==='none'?`No safe action selected: ${plan.reason}`:`Selected ${plan.actionId}${plan.approvalRequired?' · owner approval still required':''}: ${plan.reason}`;state.statusAt=0;await refresh();}catch(error){$('#localManagerPlan').textContent=error.message;}finally{button.disabled=false;}});
-  $('#productionFilter').addEventListener('change',renderJobs);
+  $('#productionFilter').addEventListener('change',()=>{renderJobs();const job=selectedJob();state.detailFingerprint='';renderDetails(job);state.detailFingerprint=job?`${job.id}:${job.updatedAt}:${job.status}`:'empty';});
   $('#updateIdeaBoard').addEventListener('click',async()=>{const button=$('#updateIdeaBoard');button.disabled=true;notice('Checking the private Idea Board inbox and verifying originals…');try{await api('/api/garage/library/sync',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});notice('Idea Board sync started. Progress and missing references update here.','success');await refresh();}catch(error){notice(error.message,'error');}finally{button.disabled=false;}});
   $('#creativeLibraryForm').addEventListener('submit',async event=>{
     event.preventDefault();const button=event.submitter;button.disabled=true;

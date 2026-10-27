@@ -20,6 +20,7 @@ const GARAGE_BASE = `http://127.0.0.1:${Number(GARAGE_CONFIG.port) || 8767}`;
 const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'qwen3.5:9b';
 const ACTIVITY_PATH = path.join(APP_ROOT, 'runtime', 'activity.json');
 const USAGE_PATH = path.join(APP_ROOT, 'runtime', 'usage.json');
+const REVIEW_BATCH_PATH = path.join(APP_ROOT, 'runtime', 'review-batch.json');
 const HOST = '127.0.0.1';
 const PORT = 8765;
 const CONTROL_HOST = '127.0.0.1';
@@ -57,6 +58,18 @@ function appendUsage(entry) {
   entries.push({ id: crypto.randomUUID(), at: new Date().toISOString(), ...entry });
   fs.mkdirSync(path.dirname(USAGE_PATH), { recursive: true });
   fs.writeFileSync(USAGE_PATH, JSON.stringify(entries.slice(-5_000), null, 2), 'utf8');
+}
+function readReviewBatch() {
+  try {
+    const value=JSON.parse(fs.readFileSync(REVIEW_BATCH_PATH,'utf8'))?.batch;
+    return value&&typeof value.id==='string'&&Number.isFinite(Date.parse(value.startedAt))?value:null;
+  } catch { return null; }
+}
+function writeReviewBatch(batch) {
+  fs.mkdirSync(path.dirname(REVIEW_BATCH_PATH),{recursive:true});
+  const temp=REVIEW_BATCH_PATH+'.tmp';
+  fs.writeFileSync(temp,JSON.stringify({schemaVersion:1,batch},null,2),'utf8');
+  fs.renameSync(temp,REVIEW_BATCH_PATH);
 }
 function sumKnown(items, field) {
   const values = items.map(item => item[field]).filter(Number.isFinite);
@@ -370,7 +383,7 @@ async function proxyGarage(req, res, url) {
   if (req.method !== 'GET' && req.headers.origin !== `http://${HOST}:${PORT}`) return json(res, 403, { error: 'Production actions are accepted only from the local WildBound Garage.' });
   const target = url.pathname.slice('/api/garage'.length) || '/';
   const safeRead = req.method === 'GET' && (/^\/(?:status|library)$/.test(target) || /^\/library\/(?:records\/[a-z0-9][a-z0-9-]{2,79}|media\/[a-z0-9][a-z0-9-]{2,79}\/\d+\/\d+)$/.test(target) || /^\/jobs(?:\/[0-9a-f-]{36}(?:\/files\/(?:preview|source))?)?$/.test(target));
-  const safeWrite = req.method === 'POST' && (/^\/jobs$/.test(target) || /^\/jobs\/[0-9a-f-]{36}\/(?:approve|reject|revise|cancel|attach|retry-import|source)$/.test(target) || /^\/library\/(?:sync|supply|approve|withdraw|package|resolve)$/.test(target));
+  const safeWrite = req.method === 'POST' && (/^\/jobs$/.test(target) || /^\/jobs\/[0-9a-f-]{36}\/(?:approve|reject|revise|cancel|attach|retry-import|redo-quality|source)$/.test(target) || /^\/library\/(?:sync|supply|approve|withdraw|package|resolve)$/.test(target));
   if (!safeRead && !safeWrite) return json(res, 404, { error: 'Unknown production endpoint.' });
   if (target.endsWith('/source') && Number(req.headers['content-length'] || 0) > MAX_MODEL_BYTES) return json(res, 413, { error: 'Model files must be 250 MB or smaller.' });
   const headers = { Authorization: `Bearer ${CONTROL_TOKEN}` };
@@ -389,6 +402,17 @@ async function proxyGarage(req, res, url) {
 
 async function handle(req, res) {
   const url = new URL(req.url, `http://${HOST}:${PORT}`);
+  if (req.method === 'GET' && url.pathname === '/api/review-batch') return json(res,200,{batch:readReviewBatch()});
+  if (req.method === 'POST' && ['/api/review-batch/start','/api/review-batch/show-all'].includes(url.pathname)) {
+    if (req.headers.origin !== `http://${HOST}:${PORT}`) return json(res,403,{error:'Review batch actions are accepted only from the local WildBound Garage.'});
+    if (url.pathname.endsWith('/start')) {
+      const batch={id:`review-${Date.now().toString(36)}`,startedAt:new Date().toISOString()};
+      writeReviewBatch(batch);
+      return json(res,201,{batch});
+    }
+    writeReviewBatch(null);
+    return json(res,200,{batch:null});
+  }
   if (url.pathname.startsWith('/api/garage/')) return proxyGarage(req, res, url);
   if (req.method === 'POST' && url.pathname === '/api/garage-heartbeat') {
     if (req.headers.origin !== `http://${HOST}:${PORT}`) return json(res, 403, { error: 'Garage heartbeat must come from the local dashboard.' });
@@ -552,10 +576,10 @@ async function handle(req, res) {
   }
   if (req.method === 'GET') {
     const name = url.pathname === '/' ? 'index.html' : url.pathname.slice(1);
-    if (!['index.html', 'app.js', 'production-studio.js', 'styles.css', 'ai-garage.ico', 'asset-studio.html', 'asset-studio.css', 'asset-studio.js', 'vendor/model-viewer-4.4.0.min.js', 'vendor/MODEL-VIEWER-LICENSE.txt'].includes(name)) return json(res, 404, { error: 'Not found' });
+    if (!['index.html', 'app.js', 'production-studio.js', 'review-batch.js', 'styles.css', 'ai-garage.ico', 'asset-studio.html', 'asset-studio.css', 'asset-studio.js', 'vendor/model-viewer-4.4.0.min.js', 'vendor/MODEL-VIEWER-LICENSE.txt'].includes(name)) return json(res, 404, { error: 'Not found' });
     try {
       const body = fs.readFileSync(path.join(APP_ROOT, name));
-      const types = { 'index.html': 'text/html; charset=utf-8', 'app.js': 'text/javascript; charset=utf-8', 'production-studio.js': 'text/javascript; charset=utf-8', 'styles.css': 'text/css; charset=utf-8', 'ai-garage.ico': 'image/x-icon', 'asset-studio.html': 'text/html; charset=utf-8', 'asset-studio.css': 'text/css; charset=utf-8', 'asset-studio.js': 'text/javascript; charset=utf-8', 'vendor/model-viewer-4.4.0.min.js': 'text/javascript; charset=utf-8', 'vendor/MODEL-VIEWER-LICENSE.txt': 'text/plain; charset=utf-8' };
+      const types = { 'index.html': 'text/html; charset=utf-8', 'app.js': 'text/javascript; charset=utf-8', 'production-studio.js': 'text/javascript; charset=utf-8', 'review-batch.js': 'text/javascript; charset=utf-8', 'styles.css': 'text/css; charset=utf-8', 'ai-garage.ico': 'image/x-icon', 'asset-studio.html': 'text/html; charset=utf-8', 'asset-studio.css': 'text/css; charset=utf-8', 'asset-studio.js': 'text/javascript; charset=utf-8', 'vendor/model-viewer-4.4.0.min.js': 'text/javascript; charset=utf-8', 'vendor/MODEL-VIEWER-LICENSE.txt': 'text/plain; charset=utf-8' };
       const frameAncestors = name === 'asset-studio.html' ? "'self'" : "'none'";
       res.writeHead(200, { 'Content-Type': types[name], 'Content-Length': body.length, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': `default-src 'self'; connect-src 'self' blob:; img-src 'self' data: blob:; media-src 'self' blob:; frame-src 'self' http://127.0.0.1:8190 http://127.0.0.1:8200; style-src 'self'; script-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors ${frameAncestors}` });
       return res.end(body);

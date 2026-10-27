@@ -42,6 +42,18 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/Worker reference package/);
   assert.match(studio,/SHA-256/);
   assert.doesNotMatch(studio,/media\.localPath/);
+  assert.match(html,/id="reviewBatchPipelines"/);
+  assert.match(html,/id="runNon3DSamples"/);
+  assert.match(html,/<script src="\/review-batch\.js" defer><\/script>/);
+  assert.match(studio,/Start fresh review/);
+  assert.match(studio,/Show all history/);
+  assert.match(studio,/one automatic recook/);
+  assert.match(fs.readFileSync(path.resolve(__dirname,'..','server.js'),'utf8'),/review-batch\.js/);
+  const garageService=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','service.js'),'utf8');
+  const pipeline=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','pipeline.js'),'utf8');
+  assert.match(garageService,/redo-quality/);
+  assert.match(pipeline,/prepareQualityRecook/);
+  assert.match(pipeline,/after the one allowed recook/);
 });
 
 test('Garage readiness checks its configured Ollama model instead of the dashboard default',()=>{

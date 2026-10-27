@@ -362,3 +362,20 @@ body { background: var(--garage-bg); color: var(--garage-text); }
   .production-steps { grid-template-columns: 1fr; }
   .garage-status-grid, .usage-summary { grid-template-columns: 1fr; }
 }
+
+.review-batch-card { display:flex; flex-direction:column; gap:12px; border-color:#40553a; background:linear-gradient(140deg,#18231a,#121714 70%); }
+.review-batch-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.production-right>.review-batch-card { grid-column:1/-1; max-height:none; overflow:visible; }
+.review-batch-pipelines { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; }
+.review-pipeline { min-width:0; padding:10px; border:1px solid #2a392d; border-radius:9px; background:#101712; display:flex; flex-direction:column; gap:6px; }
+.review-pipeline-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.review-pipeline strong { font-size:10px; color:#e6eee3; }
+.review-pipeline small { font-size:8px; color:#9ca99b; line-height:1.4; }
+.review-pipeline-state { font-size:7px; text-transform:uppercase; letter-spacing:.07em; color:#b8c8ad; border:1px solid #435640; border-radius:999px; padding:3px 6px; white-space:nowrap; }
+.review-pipeline.state-review .review-pipeline-state { color:#d6efb7; border-color:#728a57; }
+.review-pipeline.state-redo .review-pipeline-state { color:#ffc2a9; border-color:#98583f; }
+.review-pipeline.state-working .review-pipeline-state { color:#d0d7f5; border-color:#59648c; }
+.review-pipeline button { align-self:flex-start; margin-top:2px; }
+@media (max-width: 640px) { .review-batch-pipelines { grid-template-columns:repeat(2,minmax(0,1fr)); } .review-batch-actions>* { flex:1 1 140px; } }
+@media (max-width: 1120px) { .review-batch-pipelines { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width: 390px) { .review-batch-pipelines { grid-template-columns:1fr; } }

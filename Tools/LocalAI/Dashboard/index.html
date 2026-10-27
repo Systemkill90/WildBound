@@ -106,7 +106,12 @@
             <details class="production-card production-agent-panel"><summary>Connected workers <span id="agentReadinessSummary" class="production-muted"></span></summary><div id="productionAgents" class="production-agent-list"></div></details>
           </div>
           <div class="production-right">
-            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">SHARED QUEUE</div><h2>Recent tasks</h2></div><select id="productionFilter" aria-label="Filter production tasks"><option value="all">All tasks</option><option value="active">Active</option><option value="awaiting_review">Awaiting review</option><option value="completed">Completed</option><option value="failed">Needs attention</option></select></div><div id="productionJobs" class="production-jobs" aria-live="polite"></div></div>
+            <div class="production-card review-batch-card" aria-label="Non-3D pipeline review batch">
+              <div class="production-card-heading"><div><div class="eyebrow">DELIVERABLE CHECK</div><h2>Non-3D review batch</h2><small id="reviewBatchSummary" class="production-muted">Eight supported output types · old history stays recoverable</small></div></div>
+              <div class="review-batch-actions"><button id="startReviewBatch" class="production-secondary" type="button">Start fresh review</button><button id="showAllReviewHistory" class="production-secondary" type="button" hidden>Show all history</button><button id="runNon3DSamples" class="production-primary" type="button">Generate one of each</button></div>
+              <div id="reviewBatchPipelines" class="review-batch-pipelines" aria-live="polite"></div>
+            </div>
+            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">SHARED QUEUE</div><h2>Review items</h2></div><select id="productionFilter" aria-label="Filter production tasks"><option value="all">All in this batch</option><option value="active">Active</option><option value="awaiting_review">Awaiting review</option><option value="completed">Completed</option><option value="failed">Needs attention</option></select></div><div id="productionJobs" class="production-jobs" aria-live="polite"></div></div>
             <div id="productionDetails" class="production-card production-details"><div class="production-empty">Select a task to follow its handoffs, review its output, and approve or reject the Unreal import.</div></div>
           </div>
         </div>
@@ -156,6 +161,7 @@
       <footer class="footer-line"><span>WildBound AI Garage</span><span>Running on your PC</span></footer>
     </main>
   </div>
+  <script src="/review-batch.js" defer></script>
   <script src="/production-studio.js" defer></script>
 </body>
 </html>
