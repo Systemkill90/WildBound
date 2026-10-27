@@ -1,5 +1,15 @@
 # Wildbound session handoff
 
+## AI Garage fresh audit — October 27
+
+Treat the Garage as a production coordinator with mixed-depth asset routes, not a universal asset factory. Its common path is typed intake → approved version-pinned reference package → local director/specialist → one serialized worker → file inspection/structural QA → owner review → explicit approval → Unreal import/verification → checksummed archive and handoff. Skybox and VFX routes stop at source images; new rigs/clips are not authored; prompt-to-3D is static-prop-only. Current UI `available` labels must be read alongside those limits.
+
+Live service snapshot: Garage 2.8.2, idle; local Qwen ready; image/audio engines asleep on demand; voice, Blender and Unreal present; player/creature modeling and new rig/animation authoring unavailable. Library status reports available, but this audit did not write to NAS. Fourteen tasks await owner review. Do not approve old samples based on file checks.
+
+Root cause of the VFX visual mismatch: `D:\ComfyUI\ChatUI\server.js` falls back to `environment` for unrecognized asset intents. Its tracked prompt builder then adds Greenveil environment language to the VFX request. The supervisor only tests file structure; local Qwen vision was tried once on the known bad result and incorrectly described it as an isolated effect, so do not use it as an automatic art gate. The current feature branch has a prompt-builder fix and regression coverage. It is not live: the image server loads `image-studio-prompts.js` from `E:\WildBound\Project`, which differs from the review branch. After merge, deploy/copy the updated helper to the configured active checkout or point the image worker at the merged source, then reload the image server. Do not modify the dirty Greenveil map/project files in the main checkout.
+
+Verification: combined Garage + Dashboard Node suite **81/81**; `git diff --check` clean. No new media was generated, and no fresh NAS write or Unreal import was run. The next bounded acceptance step is one VFX generation after the helper fix is active, then inspect it visually and confirm the production UI shows the exact effective prompt. This validates prompt routing only, not all asset pipelines.
+
 ## Garage continuation — October 26
 
 The Dashboard now shows a prominent Creative Library storage error rather than a false healthy count when the private NAS is inaccessible. Live diagnosis: the Garage API returns `EPERM` creating its configured inbox; Windows reports the `W:` mapping as OK, but read checks fail for both `W:` and the equivalent UNC path in the current session. No credential or mapping was modified. Restore Windows SMB read/write access for the Garage's logon, then click **Update Idea Board** and verify an archived original/checksum before reopening AI Librarian tasks. The current branch is `feature/garage-character-next-session`, which already has open PR #24; this turn's changes are local until committed/pushed. Combined focused Dashboard and Creative Library tests pass 11/11.
