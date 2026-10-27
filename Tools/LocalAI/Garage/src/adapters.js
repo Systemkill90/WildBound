@@ -50,6 +50,28 @@ function adapters(config,root,save){
     let data;try{data=JSON.parse(result.message?.content||'');}catch{throw new Error(role+' returned invalid JSON. No command or output was accepted.');}return data;
   }
   async function poll(base,id,signal){const until=Date.now()+15*60000;while(Date.now()<until){await delay(1500,signal);const r=await json(base+'/api/history/'+encodeURIComponent(id),undefined,signal);if(r.status||r.terminal)throw new Error(r.status||'Generation failed.');if(r.done)return r;}throw new Error('Generation deadline exceeded.');}
+  const isGpuOom=error=>/HIP out of memory|CUDA out of memory|GPU out of memory|out of memory on your GPU/i.test(String(error?.message||error));
+  async function generateImageWithRecovery(j,base,request,signal){
+    let resolution={width:request.width,height:request.height};
+    for(let attempt=0;attempt<2;attempt++){
+      try{
+        if(attempt)await json(base+'/api/prepare',{},signal,180000);
+        const start=await json(base+'/api/generate',{...request,...resolution},signal,180000);
+        j.backendJob={base,id:start.prompt_id};save(j);
+        const result=await poll(base,start.prompt_id,signal);
+        if(attempt||j.imageRecovery?.status==='retrying')j.imageRecovery={status:'recovered',attempts:attempt?1:0,originalResolution:{width:request.width,height:request.height},recoveryResolution:resolution,originalError:j.imageRecovery?.originalError||j.retryHistory?.at(-1)?.error||null,recoveredAt:new Date().toISOString()};
+        return {start,result,resolution};
+      }catch(error){
+        if(attempt||!isGpuOom(error))throw error;
+        j.imageRecovery={status:'retrying',attempts:1,originalResolution:{width:request.width,height:request.height},originalError:j.imageRecovery?.originalError||String(error.message||error).slice(0,500),startedAt:new Date().toISOString()};
+        j.backendJob=null;save(j);
+        await json(base+'/api/release',{},undefined,30000).catch(()=>{});
+        resolution={width:Math.max(512,Math.floor(request.width*.75/64)*64),height:Math.max(request.height<512?256:512,Math.floor(request.height*.75/64)*64)};
+        // Keep the aspect ratio when the backend supports 256px panorama heights.
+        if(request.height<512)resolution.height=Math.max(256,Math.round(resolution.width*request.height/request.width/64)*64);
+      }
+    }
+  }
   function localArtifact(j,file,type,more={}){return {kind:type,source:file,sha256:sha(file),bytes:fs.statSync(file).size,...more};}
   return {
     async brief(j,signal){const modelRequest=j.kind==='text-to-3d'||(j.kind==='auto'&&/\b(?:generate|create|make|design|build)\b.{0,40}\b(?:3d|model|mesh|prop|creature|character)\b/i.test(j.prompt));if(modelRequest)assertTextTo3DScope(j);const b=await infer(j,'production director','Return {"kind":"concept-art|texture|skybox|vfx-source|voice|music|ambience|sfx|text-to-3d|model|rigging|animation","name":"short_asset_name","summary":"one sentence","requirements":["concrete checks"],"referenceNeeds":[{"subject":"named-world-subject","facet":"needed-reference-type"}]}. For a named culture, character, biome, material, building, or prop, list the design facets a specialist needs before production, using short lowercase slugs. Never claim references exist or are approved; the Librarian checks that. Return [] for a generic test asset with no established WildBound identity. Respect an explicit kind. Model means preparation of a supplied file. Rigging and animation mean inspection/preparation of supplied GLB/FBX files; do not claim authoring. Text-to-3D means one static non-character prop generated from a local concept image. Ambience means musical ambience only. SFX means one isolated sound effect, not music.',signal);
@@ -125,8 +147,9 @@ function adapters(config,root,save){
       const conceptBackground=/\b(?:isolated|plain\s+(?:neutral\s+)?studio\s+background|no\s+environmental\s+context)\b/i.test(j.spec.prompt||'');
       const negative=kind==='vfx-source'?'forest, trees, woodland scene, landscape, horizon, ground plane, mountains, background environment, scenery, multiple effects, text, lettering, logo, watermark':kind==='concept-art'&&conceptBackground?'environment, forest, trees, woodland scene, landscape, horizon, ground plane, scenery, background objects, text, lettering, logo, watermark':'';
       const imageRequest=imageKind?{prompt:j.spec.prompt,intent:kind,biome:j.biome,width:1024,height:kind==='skybox'?512:1024,negative}:{prompt:j.spec.prompt,kind,seconds:j.seconds};
-      const start=await json(base+'/api/generate',imageRequest,signal,180000);
-      j.backendJob={base,id:start.prompt_id};save(j);const result=await poll(base,start.prompt_id,signal);
+      let start,result;
+      if(imageKind){const generated=await generateImageWithRecovery(j,base,imageRequest,signal);start=generated.start;result=generated.result;}
+      else {start=await json(base+'/api/generate',imageRequest,signal,180000);j.backendJob={base,id:start.prompt_id};save(j);result=await poll(base,start.prompt_id,signal);}
       const original=contained(config.imageRoot,path.resolve(config.imageRoot,result.subfolder||'',result.filename));
       if(imageKind) {const target=path.join(out,kind+'.png');fs.copyFileSync(original,target,fs.constants.COPYFILE_EXCL);return localArtifact(j,target,kind,{preview:target,model:start.model,seed:start.seed,generationPrompt:start.prompt,limits:kind==='skybox'?'Equirectangular source image only; no Unreal cubemap/material setup.':kind==='vfx-source'?'VFX source artwork only; no Niagara system or flipbook assembly.':null});}
       const mp3=path.join(out,'source.mp3');fs.copyFileSync(original,mp3,fs.constants.COPYFILE_EXCL);const wav=path.join(out,'audio.wav');await run(config.python,[path.join(__dirname,'media.py'),'convert',mp3,wav],{signal,cwd:out});return localArtifact(j,wav,kind,{preview:wav,model:start.model,seed:start.seed,originalSource:mp3});

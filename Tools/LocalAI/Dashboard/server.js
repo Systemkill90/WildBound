@@ -383,7 +383,7 @@ async function proxyGarage(req, res, url) {
   if (req.method !== 'GET' && req.headers.origin !== `http://${HOST}:${PORT}`) return json(res, 403, { error: 'Production actions are accepted only from the local WildBound Garage.' });
   const target = url.pathname.slice('/api/garage'.length) || '/';
   const safeRead = req.method === 'GET' && (/^\/(?:status|library|local-manager)$/.test(target) || /^\/library\/(?:records\/[a-z0-9][a-z0-9-]{2,79}|media\/[a-z0-9][a-z0-9-]{2,79}\/\d+\/\d+)$/.test(target) || /^\/jobs(?:\/[0-9a-f-]{36}(?:\/files\/(?:preview|source))?)?$/.test(target));
-  const safeWrite = req.method === 'POST' && (/^\/jobs$/.test(target) || /^\/(?:resume|local-manager\/(?:plan|run))$/.test(target) || /^\/jobs\/[0-9a-f-]{36}\/(?:approve|reject|revise|cancel|attach|retry-import|redo-quality|source)$/.test(target) || /^\/library\/(?:sync|supply|approve|withdraw|package|resolve)$/.test(target));
+  const safeWrite = req.method === 'POST' && (/^\/jobs$/.test(target) || /^\/(?:resume|local-manager\/(?:plan|run))$/.test(target) || /^\/jobs\/[0-9a-f-]{36}\/(?:approve|reject|revise|cancel|attach|retry-import|redo-quality|retry-image|source)$/.test(target) || /^\/library\/(?:sync|supply|approve|withdraw|package|resolve)$/.test(target));
   if (!safeRead && !safeWrite) return json(res, 404, { error: 'Unknown production endpoint.' });
   if (target.endsWith('/source') && Number(req.headers['content-length'] || 0) > MAX_MODEL_BYTES) return json(res, 413, { error: 'Model files must be 250 MB or smaller.' });
   const headers = { Authorization: `Bearer ${CONTROL_TOKEN}` };
@@ -435,9 +435,18 @@ async function handle(req, res) {
     if (!Number.isFinite(sentAt) || Math.abs(Date.now() - sentAt) > 30_000) return json(res, 400, { error: 'Invalid garage close signal.' });
     garageCloseRequestedAt = sentAt;
     if (garageCloseTimer) clearTimeout(garageCloseTimer);
-    garageCloseTimer = setTimeout(() => {
+    garageCloseTimer = setTimeout(async () => {
       garageCloseTimer = null;
       if (garageHeartbeatAt > garageCloseRequestedAt) return;
+      // The dashboard window may crash or close while a long local generation
+      // is still running. Keep the shared workers alive until Garage work ends.
+      try {
+        const config = JSON.parse(fs.readFileSync(path.join(APP_ROOT, 'Garage', 'garage.config.json'), 'utf8'));
+        const token = fs.readFileSync(path.join(APP_ROOT, 'Dashboard', 'runtime', 'control-token.txt'), 'utf8').trim();
+        const response = await fetch(`http://127.0.0.1:${Number(config.port)}/status`, {headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(2000)});
+        const status = response.ok ? await response.json() : null;
+        if (status?.activeJob) return;
+      } catch { }
       const { spawn } = require('node:child_process');
       const stopScript = path.join(APP_ROOT, 'Stop-WildBoundLocalAI.ps1');
       const child = spawn('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-WindowStyle', 'Hidden', '-File', stopScript], { detached: true, stdio: 'ignore', windowsHide: true });

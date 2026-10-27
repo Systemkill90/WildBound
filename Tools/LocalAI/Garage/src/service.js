@@ -180,12 +180,12 @@ async function handle(req,res){
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);
   if(req.method==='POST'&&sourceMatch)return attachUploadedModel(req,res,sourceMatch[1],url);
-  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|prepare-plan|retry-import|redo-quality))?$/);
+  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|prepare-plan|retry-import|redo-quality|retry-image))?$/);
   if(match){
     if(req.method==='GET'&&!match[2])return reply(res,200,queue.get(match[1]));
     if(req.method==='POST'){
       const payload=await body(req),action=match[2];
-      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach','prepare-plan':'preparePlan','retry-import':'retryImport','redo-quality':'redoQuality'};
+      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach','prepare-plan':'preparePlan','retry-import':'retryImport','redo-quality':'redoQuality','retry-image':'retryImageRecovery'};
       if(action&&functions[action])return reply(res,200,action==='revise'?queue.revise(match[1],payload.feedback,payload.voice):queue[functions[action]](match[1],payload.sourcePath));
     }
   }
@@ -195,5 +195,6 @@ async function handle(req,res){
   return reply(res,404,{error:'Unknown production endpoint.'});
 }
 const server=http.createServer((req,res)=>handle(req,res).catch(error=>reply(res,error.statusCode||400,{error:error.message||'Production request failed.'})));
-(async()=>{const recovered=await queue.reconcileCompleted();server.listen(config.port,'127.0.0.1',()=>console.log(`Native Garage production service ready. Recovered handoffs: ${recovered}.`));})().catch(error=>{console.error('Garage startup recovery failed:',error);process.exitCode=1;});
+async function reconcileInterruptedImageRecovery(){let count=0;for(const j of queue.list()){if(j.status!=='interrupted'||j.imageRecovery?.status!=='retrying')continue;let detail='The Garage closed before saving an image result; the one recovery attempt is exhausted.';if(j.backendJob?.base&&j.backendJob?.id){try{const result=await json(j.backendJob.base+'/api/history/'+encodeURIComponent(j.backendJob.id),undefined,undefined,5000);if(result.status||result.terminal)detail=String(result.status||'Image worker reported a terminal failure.').slice(0,500);}catch{}}j.status='failed';j.resumeAvailable=false;j.imageRecovery={...j.imageRecovery,status:'failed',recoveryError:detail,failedAt:new Date().toISOString()};j.error='Image recovery did not produce a saved artifact. '+detail;for(const step of j.steps||[])if(step.status==='interrupted'||step.status==='running'){step.status='failed';step.error=j.error;}for(const run of j.agentRuns||[])if(run.status==='interrupted'||run.status==='running'){run.status='failed';run.error=j.error;run.completedAt=new Date().toISOString();}queue.save(j);count++;}return count;}
+(async()=>{const imageRecoveries=await reconcileInterruptedImageRecovery();const recovered=await queue.reconcileCompleted();if(!queue.active&&fs.existsSync(lock))fs.unlinkSync(lock);server.listen(config.port,'127.0.0.1',()=>console.log(`Native Garage production service ready. Recovered image tasks: ${imageRecoveries}. Recovered handoffs: ${recovered}.`));})().catch(error=>{console.error('Garage startup recovery failed:',error);process.exitCode=1;});
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{await queue.shutdown();server.close(()=>process.exit(0));});
