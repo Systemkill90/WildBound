@@ -6,8 +6,10 @@ const NEGATED_CHARACTER_CLAUSE=/\b(?:no|without|exclude(?:s|d|ing)?|avoid(?:s|ed
 function isCharacterRequest(job){const prompt=String(job?.prompt||'').replace(/\bnon[- ]character\b/ig,'').replace(NEGATED_CHARACTER_CLAUSE,'');return CHARACTER_WORDS.test(prompt);}
 
 function preflight(request){
-  const character=isCharacterRequest(request);
   const requestedKind=request.kind||'auto';
+  const modelKinds=['text-to-3d','model','rigging','animation'];
+  const autoMayBeModel=requestedKind==='auto'&&/\b(?:3d|model|mesh|rigging|creature|character|npc|player)\b/i.test(String(request.prompt||''));
+  const character=(modelKinds.includes(requestedKind)||autoMayBeModel)&&isCharacterRequest(request);
   const contract=character?[
     'approved character references',
     'recognizable anatomy and silhouette',
@@ -24,8 +26,8 @@ function preflight(request){
 }
 
 function evaluate(job,checks){
-  const character=isCharacterRequest(job);
   const kind=job.brief?.kind||job.kind||'unknown';
+  const character=['text-to-3d','model','rigging','animation'].includes(kind)&&isCharacterRequest(job);
   const issues=[];
   const evidence=[];
   if(checks?.valid===false)issues.push('The asset inspector marked this file invalid.');

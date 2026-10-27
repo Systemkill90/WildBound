@@ -41,6 +41,8 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/classList\.toggle\('offline'/);
   assert.match(studio,/Worker reference package/);
   assert.match(studio,/SHA-256/);
+  assert.match(studio,/structural checks/);
+  assert.match(studio,/a pass is not approval/);
   assert.doesNotMatch(studio,/media\.localPath/);
   assert.match(html,/id="reviewBatchPipelines"/);
   assert.match(html,/id="runNon3DSamples"/);
