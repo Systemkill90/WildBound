@@ -51,6 +51,10 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/Show all history/);
   assert.match(studio,/one automatic recook/);
   assert.match(fs.readFileSync(path.resolve(__dirname,'..','server.js'),'utf8'),/review-batch\.js/);
+  const dashboardServer=fs.readFileSync(path.resolve(__dirname,'..','server.js'),'utf8');
+  assert.ok(dashboardServer.includes('(?:resume|local-manager\\/(?:plan|run))'), 'Dashboard proxy must allow the resume and fixed Local Production Manager actions.');
+  assert.ok(dashboardServer.includes('|local-manager)$/'), 'Dashboard proxy must allow read-only Local Production Manager status.');
+  assert.ok(dashboardServer.includes('local-manager\\/(?:plan|run)'), 'Dashboard proxy must allow only the fixed Local Production Manager plan/run actions.');
   const garageService=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','service.js'),'utf8');
   const pipeline=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','pipeline.js'),'utf8');
   assert.match(garageService,/redo-quality/);

@@ -122,7 +122,9 @@ function adapters(config,root,save){
       const imageKind=['concept-art','texture','skybox','vfx-source'].includes(kind);
       const base=imageKind?'http://127.0.0.1:8190':'http://127.0.0.1:8200';
       if(imageKind)await json(base+'/api/prepare',{},signal,180000);
-      const imageRequest=imageKind?{prompt:j.spec.prompt,intent:kind,biome:j.biome,width:1024,height:kind==='skybox'?512:1024,negative:kind==='vfx-source'?'forest, trees, woodland scene, landscape, horizon, ground plane, mountains, background environment, scenery, multiple effects, text, lettering, logo, watermark':''}:{prompt:j.spec.prompt,kind,seconds:j.seconds};
+      const conceptBackground=/\b(?:isolated|plain\s+(?:neutral\s+)?studio\s+background|no\s+environmental\s+context)\b/i.test(j.spec.prompt||'');
+      const negative=kind==='vfx-source'?'forest, trees, woodland scene, landscape, horizon, ground plane, mountains, background environment, scenery, multiple effects, text, lettering, logo, watermark':kind==='concept-art'&&conceptBackground?'environment, forest, trees, woodland scene, landscape, horizon, ground plane, scenery, background objects, text, lettering, logo, watermark':'';
+      const imageRequest=imageKind?{prompt:j.spec.prompt,intent:kind,biome:j.biome,width:1024,height:kind==='skybox'?512:1024,negative}:{prompt:j.spec.prompt,kind,seconds:j.seconds};
       const start=await json(base+'/api/generate',imageRequest,signal,180000);
       j.backendJob={base,id:start.prompt_id};save(j);const result=await poll(base,start.prompt_id,signal);
       const original=contained(config.imageRoot,path.resolve(config.imageRoot,result.subfolder||'',result.filename));

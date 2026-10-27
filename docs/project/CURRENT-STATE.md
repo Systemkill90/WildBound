@@ -10,6 +10,18 @@ Fresh inspection found why the VFX test read as a forest image: the local image 
 
 The combined Garage + Dashboard source suite passes **81/81** after this focused change. This is source-level evidence, not a fresh generation, semantic art QA, NAS write, or Unreal import. The running image-service process loads the prompt helper from the main checkout, which differs from this review branch; the fix takes effect after the branch is merged/deployed and that image service reloads its helper. The main checkout also has unrelated dirty Greenveil files and was left untouched.
 
+## October 27 production-readiness pass
+
+The Dashboard proxy was missing the Local Production Manager endpoints even though both desktop UI surfaces exposed them. The fixed allowlist now includes read-only `/local-manager` and the two fixed `/local-manager/plan` and `/local-manager/run` actions, still guarded by loopback host and same-origin POST checks. The dashboard was safely restarted from the review-branch source, and the live UI successfully ran **Build asset readiness review**.
+
+Live readiness result: all **28/28 artifact checksums** verify; 14 artifacts are available for owner review; there are zero artifact-structure issues. Reference inspection found 29 packages, seven pinned references, seven verified archive originals, and one real missing-reference finding for `greenveil-trail-lantern:concept-art` on task `c536721a-8129-4f31-8ae3-d356c3a1a675`. No asset was approved, imported, or copied to the NAS.
+
+A bounded generic concept-art job reached the AMD ROCm worker and failed before producing an image: HIP reported out of memory while requesting 20 MiB. A local allocator probe confirmed that `expandable_segments` is unsupported by the installed PyTorch `2.9.1+rocm7.2.1`, so that suggested option was not applied and no repeat generation was attempted. The Garage task remains failed and visible in Production Studio. This means image-backed concept art, textures, skybox source art, VFX source art, and the image-dependent static-prop route are not verified as operational today.
+
+The latest existing sound-effects, musical ambience, spoken voice, and music tasks each produced a file, passed structural inspection, and remain `awaiting_review`. Those checks do not establish subjective audio quality or owner approval. The latest skybox is only a 2:1 source image; texture is a single image rather than a complete PBR material set; VFX is source artwork rather than a Niagara/flipbook deliverable. Supplied GLB/FBX preparation and inspection are available, but new player-character/creature modeling and new rigging/animation authoring remain unavailable. The 3D seed box was rejected by the owner, so prompt-to-3D is not quality-verified.
+
+The full Garage + Dashboard Node suite passes **84/84**. The source branch fixes isolated-concept and skybox prompt routing, the VFX fallback, and the local-manager proxy gap. This is not a claim that every route is production-ready: the live image failure and the scope limits above remain explicit blockers.
+
 The evidence suggests the previous “ready” language overstated completion because three distinct states were collapsed: a route exists, its worker can run, and an owner-acceptable deliverable has passed its complete finishing pipeline. Several routes deliberately stop at source art or supplied-model inspection, and the automated visual gate is not semantic. No evidence identifies the prior contributor’s personal reason for stopping.
 
 ## October 26 AI Garage asset-pipeline backbone

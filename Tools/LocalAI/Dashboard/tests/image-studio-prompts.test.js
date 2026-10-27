@@ -2,7 +2,7 @@
 
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const {buildPrompt,buildNegative,VFX_REQUIREMENTS}=require('../image-studio-prompts');
+const {buildPrompt,buildNegative,VFX_REQUIREMENTS,SKYBOX_REQUIREMENTS}=require('../image-studio-prompts');
 
 test('texture prompt excludes landscape biome context and asks for a repeatable material swatch',()=>{
   const prompt=buildPrompt({style:{promptPrefix:'grounded realistic material'},biome:'woodland, sky, meadow',intent:'texture',text:'dark willow bark with subtle vine fibers'});
@@ -24,4 +24,26 @@ test('VFX source briefs override the image service environment fallback',()=>{
   assert.match(prompt,/golden leaf-and-spark burst/);
   assert.doesNotMatch(prompt,/Greenveil|playable game level|layered composition; environment/);
   assert.match(VFX_REQUIREMENTS,/not a collage/);
+});
+
+test('isolated concept-art briefs do not inherit an environment scene',()=>{
+  const style='grounded realistic game-world craft';
+  const prompt=buildPrompt({style:{promptPrefix:style},biome:'Greenveil woodland; environment concept for a playable game level',intent:'environment',text:style+'. A polished concept illustration of a generic lantern, isolated on a plain studio background; no environmental context.'});
+  assert.match(prompt,/one standalone 2D concept illustration/);
+  assert.match(prompt,/lantern, isolated on a plain studio background/);
+  assert.doesNotMatch(prompt,/Greenveil|playable game level/);
+});
+
+test('generic skybox briefs stay canon-free and request a full equirectangular panorama',()=>{
+  const prompt=buildPrompt({style:{promptPrefix:'grounded realistic game art'},biome:'Greenveil woodland; environment concept for a playable game level',intent:'environment',text:'Generic QA, unrelated to WildBound canon. A true equirectangular panorama with a level horizon and seamless 360-degree view.'});
+  assert.match(prompt,/2:1 latitude-longitude projection/);
+  assert.match(prompt,/left and right edges must join seamlessly/);
+  assert.doesNotMatch(prompt,/Greenveil|playable game level/);
+  assert.match(SKYBOX_REQUIREMENTS,/continuous horizon/);
+});
+
+test('explicit biome skybox briefs preserve biome context',()=>{
+  const prompt=buildPrompt({style:{promptPrefix:'grounded realistic game art'},biome:'Greenveil woodland; environment concept for a playable game level',intent:'environment',text:'Create an approved Greenveil skybox: a 2:1 equirectangular panorama of the forest clearing.'});
+  assert.match(prompt,/Greenveil woodland/);
+  assert.doesNotMatch(prompt,/playable game level/);
 });
