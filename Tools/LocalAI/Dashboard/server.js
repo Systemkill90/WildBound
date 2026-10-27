@@ -6,6 +6,7 @@ const { Transform, Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 const { classifyTask, POLICY_VERSION } = require('./routing');
 const { parseAdminCommand, getAdminStatus, CHAT_TOOLS, executeAdminTool } = require('./admin-tools');
+const { JOB_ID_SEGMENT, normalizeJobId } = require('./job-ids');
 
 const APP_ROOT = __dirname;
 const REPO_ROOT = path.resolve(process.env.WILDBOUND_REPO || path.resolve(__dirname, '../../..'));
@@ -622,7 +623,9 @@ async function handleControl(req, res) {
     if ([...jobs.values()].some(job => job.status === 'running' || job.status === 'cancelling')) {
       return controlJson(res, 409, { error: 'A local handoff is already running. Let it finish or cancel it before starting another; Ollama is configured for one model request at a time.' });
     }
-    const id = String(payload.taskId || crypto.randomUUID()).slice(0, 100);
+    let id;
+    try { id = normalizeJobId(payload.taskId, crypto.randomUUID()); }
+    catch (error) { return controlJson(res, 400, { error: error.message }); }
     const job = { id, status: 'running', task: payload.task.trim(), createdAt: new Date().toISOString(), result: null, error: null };
     jobs.set(id, job);
     appendActivity({ agent: 'local', event: 'started', task: job.task.slice(0, 500), taskId: id, details: `Assigned to ${DEFAULT_MODEL}` });
@@ -633,7 +636,7 @@ async function handleControl(req, res) {
     });
     return controlJson(res, 202, { id, status: job.status, poll: `/v1/jobs/${id}` });
   }
-  const cancelMatch = url.pathname.match(/^\/v1\/jobs\/([0-9a-f-]+)\/cancel$/i);
+  const cancelMatch = url.pathname.match(new RegExp(`^/v1/jobs/(${JOB_ID_SEGMENT})/cancel$`));
   if (req.method === 'POST' && cancelMatch) {
     const job = jobs.get(cancelMatch[1]);
     if (!job) return controlJson(res, 404, { error: 'Job not found or expired.' });
@@ -645,7 +648,7 @@ async function handleControl(req, res) {
     if (controller) controller.abort(new Error('The local handoff was cancelled by its caller.'));
     return controlJson(res, 202, { id: job.id, status: job.status });
   }
-  const match = url.pathname.match(/^\/v1\/jobs\/([0-9a-f-]+)$/i);
+  const match = url.pathname.match(new RegExp(`^/v1/jobs/(${JOB_ID_SEGMENT})$`));
   if (req.method === 'GET' && match) {
     const job = jobs.get(match[1]);
     return job ? controlJson(res, 200, job) : controlJson(res, 404, { error: 'Job not found or expired.' });
