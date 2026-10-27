@@ -275,6 +275,7 @@ body { background: var(--garage-bg); color: var(--garage-text); }
 .creative-library-panel p { margin:0; color:#a7b9a1; font-size:10px; }
 .creative-library-status,.creative-library-missing,.creative-library-records { grid-column:1 / -1; }
 .creative-library-status { color:#c5d7ba; font-size:10px; }
+.creative-library-status.offline { padding:10px 12px; border:1px solid #ad654d; border-radius:8px; background:#351f1d; color:#ffd6bd; line-height:1.5; }
 .creative-library-missing { display:grid; gap:7px; }
 .missing-reference { padding:9px 11px; border:1px solid #8a6945; border-radius:8px; background:#312719; color:#f0d9ad; font-size:10px; }
 .missing-reference strong,.missing-reference span { display:block; margin-bottom:4px; }

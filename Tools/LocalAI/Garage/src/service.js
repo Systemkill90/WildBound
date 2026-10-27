@@ -9,6 +9,7 @@ const {pipeline}=require('node:stream/promises');
 const {Pipeline,TEAMS}=require('./pipeline');
 const {adapters,json}=require('./adapters');
 const {CreativeLibrary}=require('./creative-library');
+const {LocalProductionManager}=require('./local-production-manager');
 
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'garage.config.json'),'utf8'));
@@ -22,6 +23,8 @@ const token=fs.readFileSync(path.join(config.dashboardRoot,'runtime','control-to
 const jobsRoot=path.join(root,'runtime','jobs');
 const lock=path.join(root,'runtime','production.lock.json');
 const library=new CreativeLibrary({nasRoot:config.libraryNasRoot||process.env.WILDBOUND_LIBRARY_NAS_ROOT||null,repoRoot:config.libraryRepoRoot||config.repoRoot,stateRoot:path.join(root,'runtime','creative-library')});
+const managerRepoRoot=path.resolve(config.libraryRepoRoot||config.repoRoot);
+const localManager=new LocalProductionManager({repoRoot:managerRepoRoot,garageRoot:path.join(managerRepoRoot,'Tools','LocalAI','Garage'),dashboardRoot:path.join(managerRepoRoot,'Tools','LocalAI','Dashboard'),runtimeRoot:path.dirname(root),engineRoot:config.engineRoot,nasRoot:config.libraryNasRoot||null,auditRoot:path.join(root,'runtime','local-production-manager'),model:config.model});
 let queue;
 queue=new Pipeline(jobsRoot,adapters(config,jobsRoot,j=>queue.save(j)),library);
 queue.on('active',j=>fs.writeFileSync(lock,JSON.stringify({pid:process.pid,job:j.id,updatedAt:new Date().toISOString()})));
@@ -65,7 +68,8 @@ async function status(){
   const audio=probes[2].status==='fulfilled'?probes[2].value:null;
   const engineRoot=path.join(config.engineRoot,'Engine','Binaries','Win64','UnrealEditor-Cmd.exe');
   const recoveryRoot=path.join(jobsRoot,'recovery');let recovery=false;try{fs.mkdirSync(recoveryRoot,{recursive:true});fs.accessSync(recoveryRoot,fs.constants.W_OK);recovery=true;}catch{}
-  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&dashboard?.modelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),recovery,rigging:false};
+  const configuredModelAvailable=Array.isArray(dashboard?.models)&&dashboard.models.includes(config.model);
+  const checks={ollama:Boolean(dashboard?.ollamaAvailable&&configuredModelAvailable),library:library.status().available,image:Boolean(image?.available!==false&&image),audio:Boolean(audio?.available!==false&&audio&&((audio.supports||[]).some(x=>['music','ambience'].includes(x)))),voice:Boolean(audio?.voiceAvailable),sfx:sfxReady(),text3d:tripoReady(),blender:fs.existsSync(config.blender),python:fs.existsSync(config.python),unreal:fs.existsSync(engineRoot),recovery,rigging:false};
   const agents=TEAMS.map(agent=>({...agent,...agentReadiness(agent.id,checks)}));
   const capabilities=[
     {id:'image',name:'Image / texture production',available:checks.image&&checks.ollama,reason:checks.image?'Requires the local text model and Image Studio.':'Image Studio is offline.'},
@@ -91,7 +95,7 @@ async function status(){
     {id:'handoff',name:'Handoff',ready:checks.recovery,detail:'Release Manager writes a final evidence ledger after verification and archival.'}
   ];
   const interrupted=queue.list().filter(job=>job.status==='interrupted').length;
-  return {name:'WildBound AI Garage',version:'2.6.0-stabilization',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
+  return {name:'WildBound AI Garage',version:'2.8.2-metahuman-save-guardrail',pid:process.pid,activeJob:queue.active,recovery:{interrupted,resumeAvailable:interrupted>0},localManager:localManager.status(),teams:agents,agents,voices:require('../../Dashboard/voice-catalog.json').voices,casting:queue.casting(),library:library.status(),capabilities,lifecycle,freeRamGiB:os.freemem()/1024**3,repoRoot:config.repoRoot,ollama:dashboard,audio,image,blenderAvailable:checks.blender,pythonAvailable:checks.python,unrealAvailable:checks.unreal,limits:capabilities.filter(x=>!x.available).map(x=>x.name+': '+x.reason)};
 }
 async function sendArtifact(res,id,kind){
   if(!validId(id))return reply(res,400,{error:'Invalid task ID.'});
@@ -141,6 +145,13 @@ async function handle(req,res){
   if(req.headers.authorization!=='Bearer '+token)return reply(res,401,{error:'Authentication required.'});
   const url=new URL(req.url,'http://127.0.0.1:'+config.port);
   if(req.method==='GET'&&url.pathname==='/status')return reply(res,200,await status());
+  if(req.method==='GET'&&url.pathname==='/local-manager')return reply(res,200,localManager.status());
+  if(req.method==='POST'&&url.pathname==='/local-manager/plan'){
+    const payload=await body(req);try{return reply(res,200,await localManager.plan(payload.task));}catch(error){return reply(res,409,{error:error.message});}
+  }
+  if(req.method==='POST'&&url.pathname==='/local-manager/run'){
+    const payload=await body(req);try{return reply(res,200,await localManager.execute(String(payload.actionId||''),{dryRun:payload.dryRun!==false,confirmation:payload.confirmation||null}));}catch(error){return reply(res,409,{error:error.message,record:error.managerRecord||null});}
+  }
   if(req.method==='GET'&&url.pathname==='/library')return reply(res,200,library.status());
   const recordMatch=url.pathname.match(/^\/library\/records\/([a-z0-9][a-z0-9-]{2,79})$/);
   if(req.method==='GET'&&recordMatch){const record=library.record(recordMatch[1]);return record?reply(res,200,record):reply(res,404,{error:'Design record not found.'});}
@@ -164,12 +175,12 @@ async function handle(req,res){
   if(req.method==='GET'&&fileMatch)return sendArtifact(res,fileMatch[1],fileMatch[2]);
   const sourceMatch=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})\/source$/);
   if(req.method==='POST'&&sourceMatch)return attachUploadedModel(req,res,sourceMatch[1],url);
-  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|retry-import))?$/);
+  const match=url.pathname.match(/^\/jobs\/([0-9a-f-]{36})(?:\/(approve|reject|revise|cancel|attach|prepare-plan|retry-import))?$/);
   if(match){
     if(req.method==='GET'&&!match[2])return reply(res,200,queue.get(match[1]));
     if(req.method==='POST'){
       const payload=await body(req),action=match[2];
-      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach', 'retry-import':'retryImport'};
+      const functions={approve:'approve',reject:'reject',revise:'revise',cancel:'cancel',attach:'attach','prepare-plan':'preparePlan','retry-import':'retryImport'};
       if(action&&functions[action])return reply(res,200,action==='revise'?queue.revise(match[1],payload.feedback,payload.voice):queue[functions[action]](match[1],payload.sourcePath));
     }
   }

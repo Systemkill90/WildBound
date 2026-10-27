@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-26T16:45:00Z",
+  "garageVersion": "2.7.0-local-manager-pilot",
+  "scope": "Small executable slice of PR #22 Project Manager and worker orchestration",
+  "actions": [
+    "repository-status",
+    "garage-tests",
+    "archive-character-evidence"
+  ],
+  "boundaries": {
+    "callerSuppliedCommands": false,
+    "callerSuppliedPaths": false,
+    "dryRunDefault": true,
+    "writeApprovalRequired": true,
+    "auditEveryAttempt": true,
+    "gitMergeOrPublish": false,
+    "creativeOrLicensingDecisions": false
+  },
+  "localPlanner": {
+    "model": "qwen3.5:9b",
+    "authority": "select-fixed-action-only",
+    "canSupplyCommandsPathsOrApproval": false,
+    "liveCases": [
+      { "request": "repository status", "selected": "repository-status", "approvalRequired": false },
+      { "request": "bounded Garage tests", "selected": "garage-tests", "approvalRequired": false },
+      { "request": "archive Female Homesteader evidence", "selected": "archive-character-evidence", "approvalRequired": true }
+    ]
+  },
+  "verification": {
+    "garageAndDashboardTests": { "passed": 51, "failed": 0 },
+    "javascriptSyntax": "passed",
+    "diffWhitespace": "passed",
+    "desktopDeployment": "passed",
+    "dashboardHttpStatus": 200,
+    "liveReadOnlyAction": "completed after Qwen plan selection",
+    "liveAuditRecords": 5
+  },
+  "prReview": {
+    "implementedAgainst": 24,
+    "architectureSource": 22,
+    "gapClosureGuidance": 25,
+    "overlapDecision": "Implement as a bounded PR #24 slice; do not duplicate the future autonomous planner."
+  }
+}

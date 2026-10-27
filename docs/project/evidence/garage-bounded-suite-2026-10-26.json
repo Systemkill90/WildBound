@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-26",
+  "version": "2.7.4-review-safety",
+  "scope": "Bounded non-MetaHuman Garage verification",
+  "verified": {
+    "officialLauncherControlTokenAlignment": true,
+    "workLogWrite": true,
+    "localRouter": {
+      "status": "completed",
+      "model": "qwen3.5:9b",
+      "promptTokens": 2085,
+      "responseTokens": 497,
+      "elapsedMs": 32856.2141,
+      "resultUsedForImplementation": false,
+      "reason": "Retrieved excerpts did not include the Garage sources."
+    },
+    "nativeReferenceDialog": true,
+    "nativeTexturePreview": {
+      "visible": true,
+      "width": 1024,
+      "height": 1024
+    },
+    "nativeVoiceReview": {
+      "controlsVisible": true,
+      "sampleRate": 48000,
+      "bitDepth": 24,
+      "channels": 2
+    },
+    "sourceTests": {
+      "passed": 59,
+      "failed": 0
+    },
+    "nativeBuild": true
+  },
+  "bounded3DTest": {
+    "taskId": "aaba4729-e6e3-48d8-98df-46675e04b842",
+    "requestedKind": "text-to-3d",
+    "finalStatus": "blocked_capability",
+    "agentRuns": 0,
+    "artifactCreated": false,
+    "cause": "The negative phrase 'No ... character' was incorrectly classified as positive character intent.",
+    "fix": "Explicit negative character clauses are removed before positive character-intent detection.",
+    "retried": false
+  },
+  "remainingBlockers": [
+    "No fresh static-prop artifact was produced in this bounded pass.",
+    "MetaHuman Creator Core Data still requires at-workstation Windows UAC approval.",
+    "No production player-character mesh exists yet."
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-26T17:15:00Z",
+  "decision": "Use Unreal 5.8 MetaHuman Creator as the first-player human foundation with custom Female Homesteader art.",
+  "projectPlugin": "MetaHumanCharacter",
+  "projectPluginEnabled": true,
+  "enginePluginVersion": "1.0.0",
+  "bundledContentFiles": 2588,
+  "bundledContentBytes": 6908421540.0,
+  "unrealCommandletAvailable": true,
+  "machine": {
+    "physicalMemoryBytes": 34254295040,
+    "logicalProcessors": 16,
+    "videoController": "AMD Radeon RX 7600 XT"
+  },
+  "localManager": {
+    "action": "metahuman-foundation-preflight",
+    "qwenSelectedCorrectAction": true,
+    "execution": "completed",
+    "approvalRequired": false,
+    "outputReadyForEditorValidation": true
+  },
+  "editorProbe": {
+    "commandletExitCode": 1,
+    "metaHumanPluginMounted": true,
+    "metaHumanErrors": 0,
+    "fatalErrors": 0,
+    "editorModuleBuild": {
+      "result": "succeeded",
+      "actions": 18,
+      "errors": 0,
+      "parallelActions": 1
+    },
+    "pluginInitialization": "verified_after_core_data_install",
+    "blockedBy": null,
+    "unrelatedExistingWarnings": [
+      "Review worktree lacks locally linked Quinn mannequin assets.",
+      "Review worktree lacks locally linked deer assets.",
+      "The intentionally nonexistent probe package caused the commandlet exit code."
+    ],
+    "retryPolicy": "The post-install no-save probe was run once. MetaHuman modules mounted without a fatal error or missing-Optional warning; the scripted Quit hung after startup and the bounded process was stopped without retry."
+  },
+  "coreDataInstallAttempt": {
+    "source": "Epic Games Launcher installation options for Unreal Engine 5.8.4",
+    "componentTag": "metahuman_content",
+    "requestedDownloadBytes": 5333270000,
+    "queued": false,
+    "completed": true,
+    "result": "installed_and_checksum_inventory_verified",
+    "errorCode": null,
+    "launcherDetail": "The owner completed the existing Epic Games Launcher update. The installed Optional tree contains 1,816 files totaling 6,177,414,710 bytes.",
+    "directoryOwnerMatchesCurrentUser": true,
+    "directoryAccessVerified": "Authenticated Users already have Modify and Synchronize access.",
+    "boundedRetry": "One owner-authorized Apply action was used after the prior canceled attempt; installation completed. No additional install retry was made.",
+    "requiredOwnerAction": null
+  },
+  "garagePrerequisiteResume": {
+    "version": "2.7.1-prerequisite-resume",
+    "preflightReadyForEditorValidation": true,
+    "optionalContentAvailable": true,
+    "optionalContentFiles": 1816,
+    "optionalContentBytes": 6177414710.0,
+    "liveServiceState": "ready",
+    "liveDesktopBannerVerified": true,
+    "postInstallAction": "Run the fixed read-only Verify again action; the status becomes ready only when the official Optional content tree exists.",
+    "focusedChecks": {
+      "foundationPreflight": "passed after the reviewed MetaHumanCharacter entry was deployed to the active project",
+      "localManagerTests": "11 passed, 0 failed",
+      "dashboardContractTests": "2 passed, 0 failed",
+      "javascriptSyntax": "passed",
+      "liveFixedAction": "completed and displayed in Recent Local Work",
+      "noSaveEditorProbe": "MetaHumanCharacter, MetaHumanCharacterEditor, MetaHumanDefaultPipeline, and MetaHumanDefaultEditorPipeline mounted with zero fatal errors; scripted Quit hung after startup and the bounded process was stopped without retry"
+    }
+  },
+  "firstCharacterAssetAttempt": {
+    "assetIntent": "/Game/Characters/MHC_FemaleHomesteader_v01",
+    "referenceVersion": "female-homesteader-player-anchor@v1",
+    "creatorOpened": true,
+    "editableHumanVisible": true,
+    "saveCompleted": false,
+    "assetFileCreated": false,
+    "crashType": "OutOfMemory",
+    "crashStage": "TextureFormatOodle during MetaHuman Character asset save",
+    "error": "The paging file is too small for this operation to complete.",
+    "pageFileAllocatedMiB": 2560,
+    "freePhysicalMemoryKiB": 21169108,
+    "freeVirtualMemoryKiB": 15135776,
+    "retried": false,
+    "cleanup": "No partial MetaHuman uasset was present. Two unintended empty NewFolder directories were removed after containment and content checks; the intended empty Player directory remains.",
+    "nextAction": "Increase Windows virtual-memory capacity, restart if required, then make one new bounded character-asset attempt."
+  },
+  "characterSaveGuardrail": {
+    "garageVersion": "2.8.2-metahuman-save-guardrail",
+    "auditId": "d50b2fc9-fb18-42f4-9e71-2d092e110476",
+    "auditStatus": "blocked",
+    "readyForEditorValidation": true,
+    "readyForCharacterSave": false,
+    "pageFileAllocatedBytes": 2684354560,
+    "characterSavePageFileGuardrailBytes": 17179869184,
+    "freePhysicalMemoryBytes": 21666082816,
+    "freeVirtualMemoryBytes": 15173787648,
+    "liveDesktopActionVerified": true,
+    "liveRecentWorkVerified": true,
+    "retryPerformed": false,
+    "tests": {
+      "localProductionManager": "15 passed, 0 failed",
+      "combinedGarageAndDashboard": "65 passed, 0 failed",
+      "javascriptSyntax": "passed",
+      "diffCheck": "passed"
+    },
+    "nextAction": "Increase Windows virtual-memory capacity, restart if required, then rerun the fixed read-only verification before one new character asset attempt."
+  },
+  "postRestartCharacterSaveReadiness": {
+    "configuredInitialBytes": 17179869184,
+    "configuredMaximumBytes": 34359738368,
+    "activeAllocatedBytes": 16564355072,
+    "readyForEditorValidation": true,
+    "readyForCharacterSave": true,
+    "liveGarageAction": "completed",
+    "characterRetryPerformed": false,
+    "note": "The guardrail accepts the configured guaranteed minimum because Windows reports the active allocation slightly below the configured value after reboot."
+  },
+  "femaleHomesteaderWorkerPackage": {
+    "garageVersion": "2.7.2-reference-package",
+    "jobId": "46102b78-2a77-44e5-92b1-cf4d33a7d328",
+    "status": "needs_source",
+    "referenceVersion": "female-homesteader-player-anchor@v1",
+    "missingReferences": 0,
+    "referenceConflicts": 0,
+    "mediaSha256": "48e98a159fabea701d5940da14257e03503733d2b1bf0cb705f5233b91fdb210",
+    "ui": "Collapsed task panel shows production requirements, coverage and media checksum without exposing local paths.",
+    "focusedChecks": {
+      "dashboardContractTests": "2 passed, 0 failed",
+      "javascriptSyntax": "passed",
+      "liveServedSource": "reference package panel and checksum rendering present",
+      "liveJobPackage": "approved version resolved with no missing or conflicting references"
+    }
+  },
+  "tests": { "passed": 65, "failed": 0 },
+  "notYetVerified": [
+    "Epic cloud auto-rigging and texture-synthesis services are reachable and authorized",
+    "A Female Homesteader MetaHuman asset exists",
+    "Custom outfit, hair, materials, review renders, animation and Unreal gameplay integration"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-26",
+  "garageVersion": "2.8.0-supervised-autopilot",
+  "workflow": {
+    "id": "garage-autopilot-check",
+    "steps": [
+      "repository-status",
+      "garage-tests",
+      "dashboard-tests"
+    ],
+    "attemptsPerStep": 1,
+    "automaticRetry": false,
+    "failurePolicy": "stop-on-first-failure",
+    "auditRecovery": "running records become interrupted after restart"
+  },
+  "verification": {
+    "nodeTestsPassed": 61,
+    "nodeTestsFailed": 0,
+    "nativeBuild": "passed",
+    "diffCheck": "passed",
+    "liveWorkflow": {
+      "status": "failed",
+      "completedSteps": [
+        "repository-status"
+      ],
+      "failedStep": "garage-tests",
+      "pendingSteps": [
+        "dashboard-tests"
+      ],
+      "automaticRetryPerformed": false,
+      "finding": "The installed runtime contained older test/source files, so the workflow target was corrected to the reviewable Git source tree. The failed live pass was not rerun."
+    }
+  },
+  "authorityBoundary": {
+    "arbitraryCommands": false,
+    "callerSuppliedPaths": false,
+    "gitPublish": false,
+    "unrealMutation": false,
+    "uacInteraction": false,
+    "creativeApproval": false
+  },
+  "localModelReview": {
+    "started": false,
+    "reason": "The deterministic router kept the implementation and security review in Codex. No Ollama retry was attempted."
+  }
+}

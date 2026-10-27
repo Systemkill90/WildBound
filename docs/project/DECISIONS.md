@@ -2,6 +2,7 @@
 
 | Date | Decision | Reason |
 | :-- | :-- | :-- |
+| 2026-10-26 | Use Unreal 5.8 MetaHuman Creator as the first-player human foundation, with a custom Female Homesteader outfit, hair and materials | The owner approved the recommended higher-quality path after two MPFB wardrobe attempts failed visual review. MetaHuman supplies the human body, face and rig foundation; it does not replace the approved concept, custom costume work, bounded validation or owner visual approval. |
 | 2026-10-22 | Center Greenveil's next bounded playable slice on a small starter village | The player needs believable, useful testing grounds: arrival point, enterable home/work spaces, garden edge, creek crossing, and a short forest loop. Keep animals deferred and preserve the existing tested map/package as rollback. |
 | 2026-10-23 | Grow Greenveil cumulatively from its current playable starting area | `/Game/Maps/GreenveilExplorationPolish` is intended to become the actual Greenveil world. Add the starter village and future surrounding map to it; use Git revisions and preserved packages for recovery instead of a disposable parallel test world. Keep the in-world traversal route useful for QA. |
 | 2026-10-22 | Evaluate the free Quixel Medieval Village Megascans Sample as a village shell, not as a drop-in final map | It may provide realistic authored buildings and street dressing missing from the Electric Dreams forest sample; verify actual downloaded content, license, UE 5.8 behavior, and bounded performance before adoption. |
