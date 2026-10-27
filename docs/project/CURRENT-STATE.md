@@ -6,7 +6,7 @@ Branch `feature/garage-asset-pipeline-backbone` adds explicit, review-gated rout
 
 Scope is explicit: skybox output is source art, not an Unreal cubemap/material; VFX output is source art, not Niagara; rigging/animation routes inspect and preserve supplied GLB/FBX content, and do not author new rigs/clips. Player/creature text-to-3D remains blocked because prior TripoSR quality was unacceptable. No generation or Unreal import was run during this source change.
 
-Verification on the feature branch: **71/71 Garage + Dashboard Node tests pass**; JavaScript syntax checks pass; Python source compilation passes using the installed local TripoSR Python runtime. No Unreal import/commandlet smoke test was run. W: maps to `\\192.168.4.43\Wildbound` and TCP 445 is reachable, but Windows denies this session reads (`UnauthorizedAccessException`); NAS writes are unverified and the Creative Library remains unavailable pending the NAS account/share ACL fix. No NAS content or credentials were changed.
+Verification on the feature branch: **71/71 Garage + Dashboard Node tests pass**; JavaScript syntax checks and Python source compilation pass; the native Windows Garage compiles successfully. Its updated UI filters the asset picker from live capabilities and now previews the new image/model kinds. The native executable was not launched from this review worktree, and no Unreal import/commandlet or generated-media smoke test was run. W: maps to `\\192.168.4.43\Wildbound` and TCP 445 is reachable, but Windows denies this session reads (`UnauthorizedAccessException`); NAS writes are unverified and the Creative Library remains unavailable pending the NAS account/share ACL fix. No NAS content or credentials were changed.
 
 ## October 26 Garage NAS access check
 

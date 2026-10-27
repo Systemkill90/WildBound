@@ -64,4 +64,10 @@ test('native desktop Garage exposes model planning without expanding the main la
   assert.match(native,/\/local-manager\/run/);
   assert.match(native,/artifact checksums/);
   assert.match(native,/archive originals/);
+  assert.match(native,/ApplyKindOptions/);
+  assert.match(native,/new AssetKindOption\("concept-art"/);
+  assert.match(native,/new AssetKindOption\("rigging"/);
+  assert.match(native,/new AssetKindOption\("animation"/);
+  assert.match(native,/Quality Supervisor:/);
+  assert.match(native,/"concept-art","texture","skybox","vfx-source"/);
 });
