@@ -24,6 +24,9 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(html,/id="productionStudioButton"/);
   assert.match(html,/id="productionStudioView"/);
   assert.match(app,/showView\('production-studio'\)/);
+  assert.match(app,/initialView==='production-studio'\?'production-studio':'activity'/);
+  assert.match(studio,/new URLSearchParams\(window\.location\.search\)\.get\('job'\)/);
+  assert.match(studio,/state\.selectedId\|\|requestedJobId/);
   for(const action of ['approve','reject','cancel','retry-import','attach','prepare-plan'])assert.ok(studio.includes(action),`UI is missing the ${action} action.`);
   assert.match(html,/id="localManagerActions"/);
   assert.match(html,/id="productionPrerequisites"/);
@@ -34,6 +37,8 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/archive originals/);
   assert.match(studio,/function renderReferencePackage/);
   assert.match(studio,/function renderProductionPlan/);
+  assert.match(studio,/LIBRARY STORAGE UNAVAILABLE/);
+  assert.match(studio,/classList\.toggle\('offline'/);
   assert.match(studio,/Worker reference package/);
   assert.match(studio,/SHA-256/);
   assert.doesNotMatch(studio,/media\.localPath/);

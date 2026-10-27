@@ -1,5 +1,11 @@
 # Wildbound session handoff
 
+## Garage continuation — October 26
+
+The Dashboard now shows a prominent Creative Library storage error rather than a false healthy count when the private NAS is inaccessible. Live diagnosis: the Garage API returns `EPERM` creating its configured inbox; Windows reports the `W:` mapping as OK, but read checks fail for both `W:` and the equivalent UNC path in the current session. No credential or mapping was modified. Restore Windows SMB read/write access for the Garage's logon, then click **Update Idea Board** and verify an archived original/checksum before reopening AI Librarian tasks. The current branch is `feature/garage-character-next-session`, which already has open PR #24; this turn's changes are local until committed/pushed. Combined focused Dashboard and Creative Library tests pass 11/11.
+
+The local suite review queue contains outputs for texture, voice, music, ambience, and isolated SFX. One bounded local TripoSR run created static seed-storage-box prop `98694cac-602a-4ef6-8d27-fbcaec911c4e`; inspection found one mesh, 74,628 vertices, 90,248 triangles, no rig/animation, and a 0.95 m maximum bound. SHA-256 is `365763ed4f78467db6a68212c562e8f02a54d9cec186a04bfffb2690ebb5d9ef`. It initially reached `awaiting_review`, then the live Garage marked it `rejected`; Codex did not call the rejection action. It was not imported, approved, or canon. The Production Team page retained the prior selected **Homesteader voice** task, so its preview was audio. A direct review route now supports `/?view=production-studio&job=<task-id>` and selects the intended item on load. No character-quality claim is made.
+
 ## Garage stabilization handoff — October 26
 
 Garage `2.6.0-stabilization` is deployed to the local runtime. Character or creature requests using Auto or Text → 3D now stop at deterministic preflight before the director, local model, or 3D backend runs. Supplied character models proceed only through the existing reviewed GLB/FBX path, and the new Quality Supervisor blocks owner approval when approved references, geometry, rig, animation, or plausible scale are missing. The desktop Production Team view shows the gate and its evidence rather than a misleading model preview.

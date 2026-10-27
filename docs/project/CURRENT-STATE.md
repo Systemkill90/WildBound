@@ -1,5 +1,11 @@
 # Wildbound current state
 
+## October 26 Garage NAS access check
+
+The live Garage reports Creative Library unavailable with `EPERM` while creating its configured inbox. Windows reports the `W:` mapping as OK, but this session cannot read either the mapped drive or the equivalent UNC path; `net use` shows zero open files. This points to Windows SMB session/permission configuration, not an offline NAS device. The Garage UI now displays this access failure prominently, keeps indexed designs and missing-reference requests visible, and tells the owner to restore the Garage user's Windows/SMB access before retrying **Update Idea Board**. No NAS data, credentials, or mappings were changed. The combined focused Dashboard and Creative Library checks pass 11/11. End-to-end NAS archival remains blocked until Windows file access works for the Garage process.
+
+The requested local production review sweep has review-ready texture, voice, music, ambience, and SFX outputs in the shared queue. A bounded static-prop attempt also completed successfully: seed-storage-box task `98694cac-602a-4ef6-8d27-fbcaec911c4e`, 90,248 triangles, 74,628 vertices, one mesh, approximately 0.95 m tall, SHA-256 `365763ed4f78467db6a68212c562e8f02a54d9cec186a04bfffb2690ebb5d9ef`. It first reached `awaiting_review`, then the live Garage changed it to `rejected`; no rejection was initiated by Codex, and no Unreal import or approval was performed. Character modeling and new rig/animation authoring remain unavailable, and are not represented by this static prop sample.
+
 ## October 26 Garage stabilization checkpoint
 
 Garage `2.6.0-stabilization` now prevents character-shaped prompt-to-3D requests from reaching any worker or model. The Quality Supervisor records a visible preflight decision, accepts only supplied GLB/FBX character sources, and rejects outputs before owner review unless they have approved Creative Library references, mesh geometry, an armature, at least one animation clip, and a plausible 1.2–2.5 m review scale. A failed output remains revisable but cannot be approved or imported. This closes the path that previously presented a gray static mesh as if it were a player character.
