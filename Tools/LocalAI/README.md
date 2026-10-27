@@ -10,6 +10,8 @@ The workstation installation remains outside this game repository. Do not copy r
 - `Garage/src/` — production queue, specialist adapters, local service, validation, and Unreal import helpers.
 - `Garage/tests/` and `Dashboard/tests/` — source-level regression checks.
 
+The Production Team review batch covers eight non-3D deliverables: 2D concept art, texture/material, skybox source art, VFX source art, voice, music, musical ambience, and isolated SFX. A fresh batch hides earlier task rows from that view without deleting their records or files; the full history can be shown again. The queue produces one task per type serially. Objective non-3D Quality Supervisor failures get one automatic recook, after which the output remains blocked for owner review. Skybox and VFX jobs produce source artwork only, and the deterministic supervisor does not judge artistic quality.
+
 The tracked defaults resolve the WildBound checkout relative to this source tree or the `WILDBOUND_REPO` environment variable. Local model, image, voice, Blender, and Unreal paths must be supplied by the workstation installation. This source package does not include the models or the local launcher configuration.
 
 Run the JavaScript checks from this directory with Node.js:

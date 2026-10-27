@@ -27,7 +27,8 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(app,/initialView==='production-studio'\?'production-studio':'activity'/);
   assert.match(studio,/new URLSearchParams\(window\.location\.search\)\.get\('job'\)/);
   assert.match(studio,/state\.selectedId\|\|requestedJobId/);
-  for(const action of ['approve','reject','cancel','retry-import','attach','prepare-plan'])assert.ok(studio.includes(action),`UI is missing the ${action} action.`);
+  for(const action of ['approve','reject','cancel','retry-import','retry-image','attach','prepare-plan'])assert.ok(studio.includes(action),`UI is missing the ${action} action.`);
+  assert.match(studio,/Recovered after GPU memory error/);
   assert.match(html,/id="localManagerActions"/);
   assert.match(html,/id="productionPrerequisites"/);
   assert.match(studio,/local-manager\/run/);
@@ -41,7 +42,31 @@ test('dashboard exposes the same Production Team queue to its local UI',()=>{
   assert.match(studio,/classList\.toggle\('offline'/);
   assert.match(studio,/Worker reference package/);
   assert.match(studio,/SHA-256/);
+  assert.match(studio,/structural checks/);
+  assert.match(studio,/a pass is not approval/);
   assert.doesNotMatch(studio,/media\.localPath/);
+  assert.match(html,/id="reviewBatchPipelines"/);
+  assert.match(html,/id="runNon3DSamples"/);
+  assert.match(html,/<script src="\/review-batch\.js" defer><\/script>/);
+  assert.match(studio,/Start fresh review/);
+  assert.match(studio,/Show all history/);
+  assert.match(studio,/one automatic recook/);
+  assert.match(fs.readFileSync(path.resolve(__dirname,'..','server.js'),'utf8'),/review-batch\.js/);
+  const dashboardServer=fs.readFileSync(path.resolve(__dirname,'..','server.js'),'utf8');
+  assert.match(dashboardServer,/status\?\.activeJob\) return/,'Dashboard close handling must leave local workers running while Garage has active work.');
+  assert.ok(dashboardServer.includes('(?:resume|local-manager\\/(?:plan|run))'), 'Dashboard proxy must allow the resume and fixed Local Production Manager actions.');
+  assert.ok(dashboardServer.includes('|local-manager)$/'), 'Dashboard proxy must allow read-only Local Production Manager status.');
+  assert.ok(dashboardServer.includes('local-manager\\/(?:plan|run)'), 'Dashboard proxy must allow only the fixed Local Production Manager plan/run actions.');
+  const garageService=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','service.js'),'utf8');
+  const pipeline=fs.readFileSync(path.resolve(__dirname,'..','..','Garage','src','pipeline.js'),'utf8');
+  assert.match(garageService,/id:'skybox'[^\n]*stage:'source-only'/);
+  assert.match(garageService,/id:'text-to-3d'[^\n]*stage:'experimental'/);
+  assert.match(studio,/stageLabels/);
+  assert.match(studio,/routes configured/);
+  assert.match(garageService,/redo-quality/);
+  assert.match(garageService,/retry-image/);
+  assert.match(pipeline,/prepareQualityRecook/);
+  assert.match(pipeline,/after the one allowed recook/);
 });
 
 test('Garage readiness checks its configured Ollama model instead of the dashboard default',()=>{
@@ -64,4 +89,10 @@ test('native desktop Garage exposes model planning without expanding the main la
   assert.match(native,/\/local-manager\/run/);
   assert.match(native,/artifact checksums/);
   assert.match(native,/archive originals/);
+  assert.match(native,/ApplyKindOptions/);
+  assert.match(native,/new AssetKindOption\("concept-art"/);
+  assert.match(native,/new AssetKindOption\("rigging"/);
+  assert.match(native,/new AssetKindOption\("animation"/);
+  assert.match(native,/Quality Supervisor:/);
+  assert.match(native,/"concept-art","texture","skybox","vfx-source"/);
 });

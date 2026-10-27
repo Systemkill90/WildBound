@@ -93,7 +93,7 @@
               <label for="productionPrompt">What should the team make or prepare?</label>
               <textarea id="productionPrompt" rows="4" maxlength="4000" required placeholder="Describe the asset, its purpose, and any WildBound identity or biome constraints."></textarea>
               <div class="production-fields">
-                <label>Asset type<select id="productionKind"><option value="auto">Let the director choose</option><option value="texture">Texture</option><option value="voice">Character voice</option><option value="music">Music</option><option value="ambience">Musical ambience</option><option value="sfx" disabled>Isolated sound effect</option><option value="text-to-3d" disabled>Generate a 3D asset from text</option><option value="model">Prepare a supplied 3D model</option></select></label>
+                <label>Asset type<select id="productionKind"><option value="auto">Let the director choose</option><option value="concept-art">2D concept art</option><option value="texture">Texture / material</option><option value="skybox">Skybox source image</option><option value="vfx-source">VFX source artwork</option><option value="voice">Character voice</option><option value="music">Music</option><option value="ambience">Musical ambience</option><option value="sfx" disabled>Isolated sound effect</option><option value="text-to-3d" disabled>Generate a 3D static prop</option><option value="model">Prepare a supplied 3D model</option><option value="rigging">Inspect supplied rig</option><option value="animation">Inspect supplied animation</option></select></label>
                 <label>Biome<select id="productionBiome"><option value="greenveil">Greenveil</option><option value="drowned_march">Drowned March</option><option value="emberstep">Emberstep</option><option value="gloamwood">Gloamwood</option></select></label>
                 <label>Voice<select id="productionVoice"><option value="auto">Auto cast a unique voice</option></select></label>
                 <label>Audio length<select id="productionSeconds"><option value="8">8 seconds</option><option value="12">12 seconds</option><option value="16">16 seconds</option><option value="20">20 seconds</option></select></label>
@@ -106,7 +106,12 @@
             <details class="production-card production-agent-panel"><summary>Connected workers <span id="agentReadinessSummary" class="production-muted"></span></summary><div id="productionAgents" class="production-agent-list"></div></details>
           </div>
           <div class="production-right">
-            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">SHARED QUEUE</div><h2>Recent tasks</h2></div><select id="productionFilter" aria-label="Filter production tasks"><option value="all">All tasks</option><option value="active">Active</option><option value="awaiting_review">Awaiting review</option><option value="completed">Completed</option><option value="failed">Needs attention</option></select></div><div id="productionJobs" class="production-jobs" aria-live="polite"></div></div>
+            <div class="production-card review-batch-card" aria-label="Non-3D pipeline review batch">
+              <div class="production-card-heading"><div><div class="eyebrow">DELIVERABLE CHECK</div><h2>Non-3D review batch</h2><small id="reviewBatchSummary" class="production-muted">Eight supported output types · old history stays recoverable</small></div></div>
+              <div class="review-batch-actions"><button id="startReviewBatch" class="production-secondary" type="button">Start fresh review</button><button id="showAllReviewHistory" class="production-secondary" type="button" hidden>Show all history</button><button id="runNon3DSamples" class="production-primary" type="button">Generate one of each</button></div>
+              <div id="reviewBatchPipelines" class="review-batch-pipelines" aria-live="polite"></div>
+            </div>
+            <div class="production-card"><div class="production-card-heading"><div><div class="eyebrow">SHARED QUEUE</div><h2>Review items</h2></div><select id="productionFilter" aria-label="Filter production tasks"><option value="all">All in this batch</option><option value="active">Active</option><option value="awaiting_review">Awaiting review</option><option value="completed">Completed</option><option value="failed">Needs attention</option></select></div><div id="productionJobs" class="production-jobs" aria-live="polite"></div></div>
             <div id="productionDetails" class="production-card production-details"><div class="production-empty">Select a task to follow its handoffs, review its output, and approve or reject the Unreal import.</div></div>
           </div>
         </div>
@@ -156,6 +161,7 @@
       <footer class="footer-line"><span>WildBound AI Garage</span><span>Running on your PC</span></footer>
     </main>
   </div>
+  <script src="/review-batch.js" defer></script>
   <script src="/production-studio.js" defer></script>
 </body>
 </html>
