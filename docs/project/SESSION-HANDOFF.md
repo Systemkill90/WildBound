@@ -105,4 +105,10 @@ Portable C++ and static checks, with their scope clearly separated from gameplay
 3. Manually check cottage doorways, bridge banks, paths and edges, then repeat the packaged route/performance check after substantive collision or asset changes.
 4. Keep animal gameplay, multiplayer, persistence and large-world expansion deferred until the village baseline is reviewed.
 
+## AI Garage asset-pipeline backbone — October 26
+
+The current branch is `feature/garage-asset-pipeline-backbone`, based on the open Garage stack. It adds typed image/source-art paths (concept art, texture, skybox, VFX), production and inspection routes for voice/music/ambience/SFX, static-prop generation, and supplied model/rig/animation inspection. Quality Supervisor pass/fail is persisted by revision; unsupported local workers are capability-blocked before specialist/production work. Dashboard options follow live capability status. Skybox and VFX remain source-art only, supplied rigs/clips are inspected rather than authored, and text-to-3D characters stay blocked.
+
+The combined Garage + Dashboard suite passes **71/71**. JavaScript syntax checks and Python compilation pass. Unreal import and generated-media acceptance were not run. NAS check confirms W: is mapped and TCP 445 responds, while this Windows session is denied read access; no write was attempted. Next: verify the account/share ACL for `\\192.168.4.43\Wildbound` from the Garage user's Windows session, then restart Garage, smoke-test one enabled workflow from each available family, and confirm approved imports/recovery only where safe. Preserve the separate dirty Unreal checkout and do not resume animal gameplay.
+
 The current package path is recorded in the daily log. No Git commit or push was made. Keep project, engine, build and temp work on the configured non-C: volumes.

@@ -1,5 +1,13 @@
 # Wildbound current state
 
+## October 26 AI Garage asset-pipeline backbone
+
+Branch `feature/garage-asset-pipeline-backbone` adds explicit, review-gated routes for 2D concept art, textures, skybox source images, VFX source art, voice, music, musical ambience, isolated SFX, generated static props, supplied 3D models, and supplied rig/animation inspection. The Creative Library receives version-pinned approved references before specialist work; unavailable local workers block before specialist/production handoffs. The Quality Supervisor now records an auditable per-revision pass/fail with evidence and checks image dimensions, 2:1 skybox source shape, audio format/silence, mesh geometry, armature and clips, plus the existing character-specific reference/scale/rig/animation contract. The Dashboard exposes each route dynamically from live capabilities and previews its image, audio, or 3D result.
+
+Scope is explicit: skybox output is source art, not an Unreal cubemap/material; VFX output is source art, not Niagara; rigging/animation routes inspect and preserve supplied GLB/FBX content, and do not author new rigs/clips. Player/creature text-to-3D remains blocked because prior TripoSR quality was unacceptable. No generation or Unreal import was run during this source change.
+
+Verification on the feature branch: **71/71 Garage + Dashboard Node tests pass**; JavaScript syntax checks pass; Python source compilation passes using the installed local TripoSR Python runtime. No Unreal import/commandlet smoke test was run. W: maps to `\\192.168.4.43\Wildbound` and TCP 445 is reachable, but Windows denies this session reads (`UnauthorizedAccessException`); NAS writes are unverified and the Creative Library remains unavailable pending the NAS account/share ACL fix. No NAS content or credentials were changed.
+
 ## October 26 Garage NAS access check
 
 The live Garage reports Creative Library unavailable with `EPERM` while creating its configured inbox. Windows reports the `W:` mapping as OK, but this session cannot read either the mapped drive or the equivalent UNC path; `net use` shows zero open files. This points to Windows SMB session/permission configuration, not an offline NAS device. The Garage UI now displays this access failure prominently, keeps indexed designs and missing-reference requests visible, and tells the owner to restore the Garage user's Windows/SMB access before retrying **Update Idea Board**. No NAS data, credentials, or mappings were changed. The combined focused Dashboard and Creative Library checks pass 11/11. End-to-end NAS archival remains blocked until Windows file access works for the Garage process.

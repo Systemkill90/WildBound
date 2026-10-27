@@ -23,8 +23,8 @@
     const lifecycle=state.status?.lifecycle||[];
     $('#productionLifecycle').innerHTML=lifecycle.map(item=>`<article class="production-capability ${item.ready?'ready':'limited'}"><span>${item.ready?'READY':'BLOCKED'}</span><strong>${escape(item.name)}</strong><small>${escape(item.detail)}</small></article>`).join('');
     $('#lifecycleSummary').textContent=`${lifecycle.filter(item=>item.ready).length} of ${lifecycle.length} ready`;
-    const sfxOption=$('#productionKind option[value="sfx"]');if(sfxOption)sfxOption.disabled=!items.some(item=>item.id==='sfx'&&item.available);
-    const text3dOption=$('#productionKind option[value="text-to-3d"]');if(text3dOption)text3dOption.disabled=!items.some(item=>item.id==='text-to-3d'&&item.available);
+    const optionCapabilities={'concept-art':'concept-art',texture:'image',skybox:'skybox','vfx-source':'vfx-source',voice:'voice',music:'audio',ambience:'audio',sfx:'sfx','text-to-3d':'text-to-3d',model:'model',rigging:'rigging',animation:'animation'};
+    for(const [value,id] of Object.entries(optionCapabilities)){const option=$(`#productionKind option[value="${value}"]`);if(option)option.disabled=!items.some(item=>item.id===id&&item.available);}
     const agents=state.status?.agents||state.status?.teams||[];
     const availableCount=agents.filter(agent=>agent.ready).length;
     $('#agentReadinessSummary').textContent=`${availableCount} of ${agents.length} available`;
@@ -90,6 +90,7 @@
     const id=encodeURIComponent(job.id),kind=job.artifact.kind;
     if(kind==='texture')return `<div class="artifact-preview"><img alt="Generated texture preview" src="/api/garage/jobs/${id}/files/preview"><a href="/api/garage/jobs/${id}/files/preview" download>Download texture</a></div>`;
     if(['voice','music','ambience','sfx'].includes(kind))return `<div class="artifact-preview audio-preview"><div><strong>${kind==='voice'?'Character voice':kind==='music'?'Music':kind==='sfx'?'Sound effect':'Musical ambience'}</strong><small>${escape(job.checks?.seconds??'')} seconds · ${escape(job.checks?.sampleRate??'')} Hz</small></div><audio controls preload="metadata" src="/api/garage/jobs/${id}/files/preview"></audio><a href="/api/garage/jobs/${id}/files/preview" download>Download WAV</a></div>`;
+    if(['concept-art','skybox','vfx-source'].includes(kind))return `<div class="artifact-preview"><img alt="Generated ${escape(kind)} preview" src="/api/garage/jobs/${id}/files/preview"><a href="/api/garage/jobs/${id}/files/preview" download>Download source artwork</a>${job.artifact.limits?`<small>${escape(job.artifact.limits)}</small>`:''}</div>`;
     return `<div class="artifact-preview model-preview"><canvas id="modelPreviewCanvas" width="720" height="460" aria-label="Interactive 3D model preview"></canvas><small>Drag to orbit · scroll to zoom · material colors previewed without Unreal lighting</small><a href="/api/garage/jobs/${id}/files/source" download>Download prepared model</a></div>`;
   }
   function renderReferencePackage(job) {
@@ -112,7 +113,7 @@
     const status=labels[job.status]||job.status;
     const checks=job.checks;
     let report='';
-    if(checks){report=['model','text-to-3d'].includes(job.artifact?.kind)?`${checks.triangles||0} triangles · ${checks.meshes||0} meshes · ${checks.armatures||0} armatures · ${checks.animations?.length||0} animation clips`:job.artifact?.kind==='texture'?`${checks.width} × ${checks.height} · ${checks.format||'image'}`:`${Number(checks.seconds||0).toFixed(1)} seconds · ${checks.sampleRate} Hz · ${checks.bitDepth}-bit · ${checks.channels} channels`;}
+    if(checks){report=['model','text-to-3d','rigging','animation'].includes(job.artifact?.kind)?`${checks.triangles||0} triangles · ${checks.meshes||0} meshes · ${checks.armatures||0} armatures · ${checks.animations?.length||0} animation clips`:['concept-art','texture','skybox','vfx-source'].includes(job.artifact?.kind)?`${checks.width} × ${checks.height} · ${checks.format||'image'}`:`${Number(checks.seconds||0).toFixed(1)} seconds · ${checks.sampleRate} Hz · ${checks.bitDepth}-bit · ${checks.channels} channels`;}
     const engineAssets=job.engine?.assets||[];
     const actionButtons=[];
     if(job.status==='awaiting_review')actionButtons.push('<button data-job-action="approve" class="production-primary">Approve &amp; import</button>','<button data-job-action="reject" class="production-secondary">Reject</button>');
@@ -127,7 +128,7 @@
     const revision=['awaiting_review','quality_failed'].includes(job.status)?`<div class="production-revision"><label for="productionRevision">Request specific changes for version ${escape(job.revision||1)}</label><textarea id="productionRevision" maxlength="2000" rows="2" placeholder="Describe what to change in the next pass."></textarea>${job.brief?.kind==='voice'?`<select id="productionRevisionVoice" aria-label="Voice for the next take"><option value="auto">Try a different unique voice</option>${(state.status?.voices||[]).filter(item=>item.id!==job.voice).map(item=>`<option value="${escape(item.id)}">${escape(item.name)} · ${escape(item.accent)}</option>`).join('')}</select>`:''}${job.brief?.kind==='model'?'<small>Geometry edits need an updated GLB or FBX after you submit the feedback.</small>':''}<button type="button" data-job-action="revise" class="production-secondary">Request changes</button></div>`:'';
     const quality=job.preflight||job.quality?`<div class="engine-evidence"><strong>Quality Supervisor</strong><span>Preflight: ${escape(job.preflight?.passed?'passed':'blocked')}${job.quality?` · Output: ${escape(job.quality.passed?'passed':'rejected')}`:''}${job.quality?.issues?.length?`<br>${escape(job.quality.issues.join(' '))}`:''}</span></div>`:'';
     $('#productionDetails').innerHTML=`<div class="production-detail-heading"><div><div class="eyebrow">TASK REVIEW · VERSION ${escape(job.revision||1)}</div><h2>${escape(summary(job))}</h2><span class="job-state ${escape(job.status)}">${escape(status)} · ${escape(kindLabel(job))}</span></div><button class="quiet-refresh" data-job-action="refresh" type="button">↻</button></div>${live}${voice}${job.error?`<p class="production-error">${escape(job.error)}</p>`:''}${report?`<p class="asset-report">${escape(report)}</p>`:''}${quality}<div class="production-job-actions">${actionButtons.join('')}</div>${renderReferencePackage(job)}${renderProductionPlan(job)}${revision}<div class="production-preview">${renderPreview(job)}</div><details class="production-process"><summary>Production stages and agent handoffs</summary>${renderSteps(job)}${renderAgentRuns(job)}</details>${job.revisionHistory?.length?`<details class="production-process"><summary>Earlier reviews (${job.revisionHistory.length})</summary>${job.revisionHistory.map(entry=>`<p>Version ${escape(entry.revision)} · ${escape(entry.feedback)}</p>`).join('')}</details>`:''}${engineAssets.length?`<div class="engine-evidence"><strong>Unreal verified</strong><span>${engineAssets.map(a=>escape(a.class)+' · '+escape(a.path)).join('<br>')}</span></div>`:''}`;
-    if(['model','text-to-3d'].includes(job.artifact?.kind))loadModelPreview(job);
+    if(['model','text-to-3d','rigging','animation'].includes(job.artifact?.kind))loadModelPreview(job);
   }
   async function loadModelPreview(job) {
     const canvas=$('#modelPreviewCanvas');if(!canvas)return;

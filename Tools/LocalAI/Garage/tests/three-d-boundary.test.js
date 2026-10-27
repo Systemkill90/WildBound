@@ -14,5 +14,6 @@ test('prompt-to-3D uses OBJ export and prepares it through Blender',()=>{
   assert.match(source,/HF_HOME:huggingfaceHome/);
   assert.match(blender,/endswith\(\('\.glb', '\.gltf'\)\)/);
   assert.match(blender,/bpy\.ops\.wm\.obj_import\(filepath=source\)/);
-  assert.match(dashboard,/\['model','text-to-3d'\]\.includes\(job\.artifact\?\.kind\)\)loadModelPreview\(job\)/);
+  assert.match(dashboard,/\['model','text-to-3d','rigging','animation'\]\.includes\(job\.artifact\?\.kind\)\)loadModelPreview\(job\)/);
+  assert.match(source,/\['model','rigging','animation'\]\.includes\(kind\)/);
 });
